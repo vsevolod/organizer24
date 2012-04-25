@@ -4,6 +4,7 @@ class CreateOrganizations < ActiveRecord::Migration
       t.string :name
       t.references :activity
       t.string :subdomain
+      t.references :owner
 
       t.timestamps
     end
