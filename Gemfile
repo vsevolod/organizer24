@@ -9,6 +9,8 @@ gem "haml"
 gem "activeadmin"
 
 gem "ancestry"
+gem "aasm"
+gem "squeel"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
