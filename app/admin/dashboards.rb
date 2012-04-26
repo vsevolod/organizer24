@@ -1,3 +1,4 @@
+# coding: utf-8
 ActiveAdmin::Dashboards.build do
 
   # Define your dashboard sections here. Each block will be
@@ -7,13 +8,14 @@ ActiveAdmin::Dashboards.build do
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
   #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
+  section "Последние организации" do
+    ul do
+      Organization.limit(5).order(:created_at.desc).collect do |org|
+        li link_to(org.name, admin_organization_path(org))
+      end
+    end
+    strong { link_to "Посмотреть все", admin_organizations_path }
+  end
   
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can

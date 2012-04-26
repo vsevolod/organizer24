@@ -1,0 +1,55 @@
+ru:
+  activerecord:
+    models:
+      active_admin_comment: Комментарии (адм.)
+      admin_user: Админинстраторы системы
+      appointment: Записи
+      dictionary: Словари
+      executor: Исполнители
+      organization: Организации
+      service: Услуги
+      user: Пользователи
+      working_hour: Время работы
+    attributes:
+      active_admin_comment:
+        resource: Ресурс
+        author: Автор
+        body: Содержание
+      admin_user:
+        email: Email
+      appointment:
+        start: Время начала
+        showing_time: Общая продолжительность
+        status: Статус
+        user: Пользователь
+        organization: Организация
+      dictionary:
+        name: Название
+        tag: Тэг
+        ancestry: Предок
+        names_depth_cache: Путь
+      executor:
+        name: ФИО
+        phone: Телефон
+        organization: Организация
+      organization:
+        name: Название
+        activity: Деятельность
+        subdomain: Поддомен
+        owner: Владелец
+      service:
+        name: Название
+        showing_time: Продолжительность
+        cost: Стоимость
+        organization: Организация
+      user:
+        email: Email
+        phone: Телефон
+        role: Роль
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+      working_hour:
+        week_day: День недели
+        begin_time: Время начала
+        end_time: Время конца
+        organization: Организация
