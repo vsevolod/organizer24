@@ -1,7 +1,7 @@
 # coding: utf-8
 class ShowingTimeValidator < ActiveModel::EachValidator
 
-  # Пересячение прямых: max( 0, max( A1, An ) - min( B1, Bn ) )
+  # Пересечение прямых: max( 0, max( A1, An ) - min( B1, Bn ) )
   # FIXME исправить для нескольких исполнителей
   # DESCRIPTION Валидация на продолжительность. Занято ли место или нет
 
