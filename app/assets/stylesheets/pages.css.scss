@@ -1,0 +1,37 @@
+.header {
+  background: url('top_img.jpg') no-repeat scroll 50% 0 transparent;
+  width: 100%;
+  position: relative;
+  padding-top: 40px;
+  .fx-header {
+    background-image: url('sl-t.png');
+    bottom: 0;
+    height: 45px;
+    position: relative;
+    width: 100%;
+  }
+}
+
+.main-upper {
+  background-image: url('bg-light.png');
+  .fx-main-upper {
+    background-image: url('sl-b.png');
+    background-repeat: repeat-x;
+    height: 20px;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.main-lower {
+  background-image: url('bg-white.png');
+  .fx-main-lower {
+    background-image: url('sl2.png');
+    background-repeat: repeat-x;
+    height: 20px;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+}
