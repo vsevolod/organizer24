@@ -2,18 +2,22 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.0'
 
+gem 'twitter-bootstrap-rails'
+gem 'kickstrap_rails'
+gem 'therubyracer'
+gem 'cocoon'
+
+gem 'haml'
+gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+gem 'russian'
+
+gem 'activeadmin'
+gem 'formtastic', '~> 2.1.1' # FIXME должны исправить в версии activeadmin больше (0.4.3)
+
+gem 'ancestry'
+gem 'aasm'
 gem 'pg'
-gem "twitter-bootstrap-rails"
-gem "kickstrap_rails"
-gem "therubyracer"
-gem "haml"
-
-gem "activeadmin"
-gem "formtastic", "~> 2.1.1" # FIXME должны исправить в версии activeadmin больше (0.4.3)
-
-gem "ancestry"
-gem "aasm"
-gem "squeel"
+gem 'squeel'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

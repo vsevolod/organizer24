@@ -1,8 +1,8 @@
 .header {
-  background: url('top_img.jpg') no-repeat scroll 50% 0 transparent;
   width: 100%;
   position: relative;
   padding-top: 40px;
+  background: no-repeat scroll 50% 0 transparent;
   .fx-header {
     background-image: url('sl-t.png');
     bottom: 0;
@@ -10,6 +10,15 @@
     position: relative;
     width: 100%;
   }
+}
+
+.pages_index .header {
+  background-image: url('top_img.jpg');
+}
+
+.devise_registrations_new .header {
+  background-color: #F9F9F9;
+  background-image: url('top_img2.jpg');
 }
 
 .main-upper {

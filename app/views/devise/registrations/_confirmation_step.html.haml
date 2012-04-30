@@ -1,0 +1,30 @@
+- user = f.object
+- org = user.my_organization
+- working_hours = org.working_hours
+
+%h3 Подтверждение
+%h5 Пользователь
+%ul
+  %li= user.name
+  %li= user.email
+  %li= user.phone
+
+%h5 Организация
+%ul
+  %li= link_to org.name, organization_path( org )
+  %li= org.activity.name
+
+%h5 Время работы
+%table
+  %thead
+    %tr
+      %th День недели
+      %th Время
+  %tbody
+    - working_hours.each do |wh|
+      %tr
+        %td= t('date.standalone_day_names')[wh.week_day]
+        %td
+          = human_time wh.begin_time
+          &mdash;
+          = human_time wh.end_time
