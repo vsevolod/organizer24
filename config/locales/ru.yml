@@ -50,6 +50,7 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         my_organization: Организация
+        remember_me: Запомнить
       working_hour:
         week_day: День недели
         begin_time: Время начала

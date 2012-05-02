@@ -11,11 +11,25 @@
       .navbar-inner
         .container
           = link_to 'Organizer24', '/', :class => 'brand'
+          .nav-collapse
+            %ul.nav
+              - if current_user
+                %li= link_to 'Выход', destroy_user_session_path, :method => :delete
+                %li= link_to 'Кабинет', "/dashboard"
+              - else
+                %li= link_to 'Вход', new_user_session_path
+                %li= link_to 'Регистрация', new_user_registration_path
     - if content_for? :header
       .header
         .container
           = yield :header
       .fx-header
+    - else
+      %br/
+      %br/
+      .row{ :style => 'height: 300px' }= yield :header_title
+      %br/
+      %br/
     - if content_for? :upper
       .main-upper
         .fx-main-upper

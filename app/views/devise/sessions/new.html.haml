@@ -1,16 +1,11 @@
-%h2 Sign in
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  %div
-    = f.label :email
-    %br/
-    = f.email_field :email
-  %div
-    = f.label :password
-    %br/
-    = f.password_field :password
-  - if devise_mapping.rememberable?
-    %div
-      = f.check_box :remember_me
-      = f.label :remember_me
-  %div= f.submit "Sign in"
-= render "links"
+- content_for :header_title do
+  %h2 Вход
+
+- content_for :upper do
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    = f.input :email
+    = f.input :password
+    - if devise_mapping.rememberable?
+      = f.input :remember_me, :as => :boolean
+    .form-actions= f.submit "Войти"
+  = render "links"

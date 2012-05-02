@@ -4,6 +4,8 @@
 
 - content_for :header do
   %br/
+  - if current_user && current_user.owner?( @organization )
+    = link_to 'Редактировать', [:edit, @organization], :class => 'btn btn-primary'
 
 %h1= @organization.name
 

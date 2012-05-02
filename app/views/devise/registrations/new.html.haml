@@ -1,10 +1,5 @@
-- content_for :header do
-  %br/
-  %br/
-  .row{ :style => 'height: 300px' }
-    %h2 Зарегистрироваться
-  %br/
-  %br/
+- content_for :header_title do
+  %h2 Зарегистрироваться
 
 - content_for :upper do
   %br/
@@ -14,7 +9,8 @@
     = devise_error_messages!
     = render "#{f.object.current_step}_step", :f => f
 
-    %div= f.submit "Дальше"
-    - unless f.object.first_step?
-      %div= f.submit "Назад", :name => 'back_button'
+    .form-actions
+      = f.submit "Дальше"
+      - unless f.object.first_step?
+        = f.submit "Назад", :name => 'back_button'
   = render "links"

@@ -15,7 +15,11 @@ $ ->
     },
     firstDay: 1,
     aspectRatio: 1.5,
-    defaultView: 'basicWeek',
+    defaultView: 'agendaWeek',
+    allDaySlot: false,
+    minTime: 9,
+    maxTime: 21,
+    slotMinutes: 15,
 
     timeFormat: {
       agenda: 'H:mm{ - H:mm}',
@@ -25,7 +29,7 @@ $ ->
       week: "dd.MM.yyyy '<br/>' dddd",
     }
     titleFormat: {
-      week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy",
+      week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
     }
     buttonText: {
       today: 'Сегодня'

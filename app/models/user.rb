@@ -60,4 +60,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def owner?( organization )
+    self.my_organization == organization
+  end
+
 end

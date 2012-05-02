@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
 
+  store :settings, accessors: [:slotMinutes]
+
   belongs_to :activity, :class_name => "Dictionary"
   belongs_to :owner, :class_name => "User"
   has_many :executors

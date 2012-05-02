@@ -1,5 +1,6 @@
 Organizer::Application.routes.draw do
   match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+  match '/dashboard', :to => 'users#dashboard'
 
   root :to => 'pages#index'
   devise_for :users, :controllers => { :registrations => "registrations" }
