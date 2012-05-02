@@ -32,7 +32,7 @@ class RegistrationsController < Devise::RegistrationsController
       render "new"
     else
       session[:user_step] = session[:user_params] = nil
-      redirect_to resource.organization, :notice => 'Вы успешно зарегистрировались'
+      redirect_to resource.my_organization, :notice => 'Вы успешно зарегистрировались'
     end
   end
 

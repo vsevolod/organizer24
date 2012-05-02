@@ -1,0 +1,10 @@
+- content_for :js do
+  = stylesheet_link_tag    'fullcalendar'
+  = javascript_include_tag 'fullcalendar', 'calendar'
+
+- content_for :header do
+  %br/
+
+%h1= @organization.name
+
+#calendar{ :style => 'width:900px;margin:0 auto;' }

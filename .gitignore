@@ -17,3 +17,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Swap files
+*.swp
+Gemfile.lock
