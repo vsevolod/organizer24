@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_step? }
   validates_format_of :email, :with => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_step? }
 
+  validates_format_of :phone, :with => /^[\d\W]+$/, :allow_blank => true, :if => lambda{|u| u.phone_changed? && u.first_step? }
+
   validates_presence_of :password, :if => :first_step?
   validates_confirmation_of :password, :if => :first_step?
   validates_length_of :password, :within => 3..100, :allow_blank => true, :if => :first_step?
