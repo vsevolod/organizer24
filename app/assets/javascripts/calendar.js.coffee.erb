@@ -1,39 +1,38 @@
-$ ->
-  $('#calendar').fullCalendar({
-    events: [
-      {
-        title: 'Тест',
-        start: '2012-05-03T14:30:00',
-        end: '2012-05-03T17:20:00',
-        allDay: false
-      }
-    ],
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: ''
-    },
-    firstDay: 1,
-    aspectRatio: 1.5,
-    defaultView: 'agendaWeek',
-    allDaySlot: false,
-    minTime: 9,
-    maxTime: 21,
-    slotMinutes: 15,
+$('#calendar').fullCalendar({
+  events: [
+    {
+      title: 'Тест',
+      start: '2012-05-03T14:30:00',
+      end: '2012-05-03T17:20:00',
+      allDay: false
+    }
+  ],
+  header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: ''
+  },
+  firstDay: 1,
+  aspectRatio: 1.5,
+  defaultView: 'agendaWeek',
+  allDaySlot: false,
+  minTime: 9,
+  maxTime: 21,
+  slotMinutes: start_calendar_options.slotMinutes,
 
-    timeFormat: {
-      agenda: 'H:mm{ - H:mm}',
-      '': 'H(:mm)'
-    }
-    columnFormat: {
-      week: "dd.MM.yyyy '<br/>' dddd",
-    }
-    titleFormat: {
-      week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
-    }
-    buttonText: {
-      today: 'Сегодня'
-    }
-    monthNames: <%= I18n.t('date.standalone_month_names').compact %>
-    dayNames: <%= I18n.t('date.standalone_day_names').compact %>
-  })
+  timeFormat: {
+    agenda: 'H:mm{ - H:mm}',
+    '': 'H(:mm)'
+  }
+  columnFormat: {
+    week: "dd.MM.yyyy '<br/>' dddd",
+  }
+  titleFormat: {
+    week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
+  }
+  buttonText: {
+    today: 'Сегодня'
+  }
+  monthNames: <%= I18n.t('date.standalone_month_names').compact %>
+  dayNames: <%= I18n.t('date.standalone_day_names').compact %>
+})

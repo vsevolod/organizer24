@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
+  ACCESSORS = [:slot_minutes]
 
-  store :settings, accessors: [:slotMinutes]
+  store :settings, accessors: ACCESSORS
 
   belongs_to :activity, :class_name => "Dictionary"
   belongs_to :owner, :class_name => "User"
@@ -16,6 +17,10 @@ class Organization < ActiveRecord::Base
   validates :name, :presence => true
   validates :activity, :presence => true
 
-  attr_accessible :name, :activity_id, :subdomain, :owner_id, :activity, :working_hours_attributes
+  attr_accessible :name, :activity_id, :subdomain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
+
+  def calendar_settings
+    {:slotMinutes => self.slot_minutes.to_i}
+  end
 
 end

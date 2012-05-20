@@ -13,4 +13,15 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
   end
 
+  def update
+    @organization = Organization.find(params[:id])
+    if current_user.owner?( @organization)
+      if @organization.update_attributes( params[:organization] )
+        redirect_to @organization
+      else
+        render :edit
+      end
+    end
+  end
+
 end

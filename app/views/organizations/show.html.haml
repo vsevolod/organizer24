@@ -1,11 +1,13 @@
-- content_for :js do
+- content_for :bottom_js do
+  :javascript
+    var start_calendar_options = #{@organization.calendar_settings.to_json};
   = stylesheet_link_tag    'fullcalendar'
   = javascript_include_tag 'fullcalendar', 'calendar'
 
 - content_for :header do
   %br/
   - if current_user && current_user.owner?( @organization )
-    = link_to 'Редактировать', [:edit, @organization], :class => 'btn btn-primary'
+    = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
 
 %h1= @organization.name
 
