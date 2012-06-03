@@ -6,7 +6,20 @@ Organizer::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :pages
-  resources :organizations
+  resources :organizations do
+    resources :appointments do
+      collection do
+        get :by_week
+      end
+    end
+    resources :working_hours do
+      collection do
+        get :by_week
+      end
+    end
+  end
+
+  resources :appointments
 
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

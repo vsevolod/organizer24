@@ -1,9 +1,3 @@
 %h3 Время работы
 = f.simple_fields_for :my_organization do |mo|
-  #working_hours
-    - if mo.object.working_hours.empty?
-      - week_days_for_select.each do |text, num|
-        - mo.object.working_hours.build( :week_day => num.to_i )
-    = mo.simple_fields_for :working_hours do |ws|
-      = render 'working_hour_fields', :f => ws
-    .links= link_to_add_association 'Добавить время работы', mo, :working_hours
+  = render 'working_hours_list', :f => mo

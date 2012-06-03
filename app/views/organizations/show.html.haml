@@ -11,4 +11,11 @@
 
 %h1= @organization.name
 
+.row
+  - [:free, :taken, :inaccessible].each do |state|
+    .span16
+      %span{ :class => "legend legend-#{state}" }
+      = I18n.t("activerecord.attributes.appointment.status.#{state}")
+
+%br/
 #calendar{ :style => 'width:900px;margin:0 auto;' }

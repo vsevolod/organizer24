@@ -20,7 +20,14 @@ ru:
       appointment:
         start: Время начала
         showing_time: Общая продолжительность
-        status: Статус
+        status:
+          free: Свободно
+          taken: Занято
+          inaccessible: Недоступно
+          offer: Есть заявка
+          aproove: Подтверждено
+          complete: Выполнено
+          missing: Пропущено. Клиент не пришёл
         user: Пользователь
         organization: Организация
       dictionary:

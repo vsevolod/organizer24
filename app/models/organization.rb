@@ -20,7 +20,16 @@ class Organization < ActiveRecord::Base
   attr_accessible :name, :activity_id, :subdomain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
 
   def calendar_settings
-    {:slotMinutes => self.slot_minutes.to_i}
+    minTime  = self.working_hours.pluck(:begin_time).min
+    maxTime  = self.working_hours.pluck(:end_time).max
+    sminutes = (self.slot_minutes || 30).to_i
+    {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => self.id}
   end
+
+  private
+
+    def to_Date( seconds )
+      {:hours => seconds/60/60, :minutes => seconds/60%60}
+    end
 
 end

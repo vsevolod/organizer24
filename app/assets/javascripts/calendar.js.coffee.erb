@@ -1,12 +1,4 @@
 $('#calendar').fullCalendar({
-  events: [
-    {
-      title: 'Тест',
-      start: '2012-05-03T14:30:00',
-      end: '2012-05-03T17:20:00',
-      allDay: false
-    }
-  ],
   header: {
     left: 'prev,next today',
     center: 'title',
@@ -16,23 +8,33 @@ $('#calendar').fullCalendar({
   aspectRatio: 1.5,
   defaultView: 'agendaWeek',
   allDaySlot: false,
-  minTime: 9,
-  maxTime: 21,
+  allDayDefault: false,
+  minTime: start_calendar_options.minTime*1.0/(60*60),
+  maxTime: start_calendar_options.maxTime*1.0/(60*60),
   slotMinutes: start_calendar_options.slotMinutes,
+  monthNames: <%= I18n.t('date.standalone_month_names').compact %>,
+  dayNames: <%= I18n.t('date.standalone_day_names').compact %>,
 
   timeFormat: {
     agenda: 'H:mm{ - H:mm}',
     '': 'H(:mm)'
-  }
+  },
   columnFormat: {
     week: "dd.MM.yyyy '<br/>' dddd",
-  }
+  },
   titleFormat: {
     week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
-  }
+  },
   buttonText: {
     today: 'Сегодня'
-  }
-  monthNames: <%= I18n.t('date.standalone_month_names').compact %>
-  dayNames: <%= I18n.t('date.standalone_day_names').compact %>
+  },
+  eventSources: [
+    {
+      url: '/organizations/'+start_calendar_options.organization_id+'/working_hours/by_week',
+      backgroundColor: '#ccc',
+      borderColor: '#ccc'
+    }
+  ],
+  selectable: true,
+  selectHelper: true
 })

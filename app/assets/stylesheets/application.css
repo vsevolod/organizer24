@@ -3,4 +3,5 @@
  *= require kickstrap
  *= require kickstrap/themes/cerulean
  *= require pages
+ *= require calendar
 */

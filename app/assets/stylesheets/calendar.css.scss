@@ -1,0 +1,15 @@
+.legend {
+  width: 10px;
+  padding-left: 15px;
+  margin-right: 10px;
+  height: 10px;
+  border: 1px solid #000;
+}
+
+.legend-free { background: #fff; }
+.legend-taken { background: #f00; }
+.legend-inaccessible { background: #ccc; }
+.legend-offer { background: #ff0; }
+.legend-aproove { background: #0f0; }
+.legend-complete { background: #00f; }
+.legend-missing { background: #333; }
