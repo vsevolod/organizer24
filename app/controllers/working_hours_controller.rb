@@ -3,8 +3,9 @@ class WorkingHoursController < ApplicationController
 
   respond_to :html, :json
 
+  before_filter :find_organization
+
   def by_week
-    @organization = Organization.find( params[:organization_id] )
     @start = Time.at( params[:start].to_i )
     @periods = (0..6).to_a.map do |t|
                  wh = @organization.working_hours.where(:week_day => t).first

@@ -1,0 +1,4 @@
+- if object.errors.messages.any?
+  %ul
+    - object.errors.messages.each_pair do |field, message|
+      %li= message

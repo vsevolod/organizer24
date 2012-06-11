@@ -17,6 +17,7 @@ Organizer::Application.routes.draw do
         get :by_week
       end
     end
+    resources :executors
   end
 
   resources :appointments

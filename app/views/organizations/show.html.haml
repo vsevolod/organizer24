@@ -8,6 +8,7 @@
   %br/
   - if current_user && current_user.owner?( @organization )
     = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
+    = link_to 'Исполнители', [@organization, :executors], :class => 'btn btn-primary'
 
 %h1= @organization.name
 

@@ -1,0 +1,24 @@
+- content_for :header_title do
+  %h2 Исполнители
+
+- content_for :header do
+  %br/
+  - if current_user && current_user.owner?( @organization )
+    = link_to 'Добавить исполнителя', [:new, @organization, :executor], :class => 'btn btn-primary'
+
+- content_for :upper do
+  %table
+    %thead
+      %tr
+        %th ФИО
+        %th телефон
+    %tbody
+      - @executors.each do |executor|
+        %tr
+          %td= executor.name
+          %td= executor.phone
+          %td
+            = link_to [:edit, @organization, executor] do
+              .icon-edit
+            = link_to [@organization, executor], :method => :delete do
+              .icon-trash
