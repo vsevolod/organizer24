@@ -9,6 +9,7 @@
   - if current_user && current_user.owner?( @organization )
     = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
     = link_to 'Исполнители', [@organization, :executors], :class => 'btn btn-primary'
+    = link_to 'Услуги', [@organization, :services], :class => 'btn btn-primary'
 
 %h1= @organization.name
 
@@ -16,7 +17,12 @@
   - [:free, :taken, :inaccessible].each do |state|
     .span16
       %span{ :class => "legend legend-#{state}" }
-      = I18n.t("activerecord.attributes.appointment.status.#{state}")
+        = I18n.t("activerecord.attributes.appointment.status.#{state}")
+
+.check_services
+  - @organization.services.each do |service|
+    = check_box_tag "service[#{service.id}]", service.id, false, "data-cost" => service.cost, "data-time" => service.showing_time
+    = label_tag "service[#{service.id}]", service.name
 
 %br/
 #calendar{ :style => 'width:900px;margin:0 auto;' }

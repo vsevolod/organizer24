@@ -1,0 +1,26 @@
+- content_for :header_title do
+  %h2 Услуги 
+
+- content_for :header do
+  %br/
+  - if current_user && current_user.owner?( @organization )
+    = link_to 'Добавить услугу', [:new, @organization, :service], :class => 'btn btn-primary'
+
+- content_for :upper do
+  %table
+    %thead
+      %tr
+        %th Наименование
+        %th Продолжительность
+        %th Стоимость
+    %tbody
+      - @services.each do |service|
+        %tr
+          %td= service.name
+          %td= service.showing_time
+          %td= service.cost
+          %td
+            = link_to [:edit, @organization, service] do
+              .icon-edit
+            = link_to [@organization, service], :method => :delete do
+              .icon-trash

@@ -3,3 +3,4 @@
 //= require kickstrap
 //= require cocoon
 //= require pages
+//= require organizations

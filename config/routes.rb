@@ -18,6 +18,7 @@ Organizer::Application.routes.draw do
       end
     end
     resources :executors
+    resources :services
   end
 
   resources :appointments

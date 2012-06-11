@@ -1,0 +1,6 @@
+$ ->
+  $('.check_services input').click ->
+    cost = 0
+    $('.check_services input:checked').each ->
+      cost += $(this).data('cost')
+    console.log(cost)

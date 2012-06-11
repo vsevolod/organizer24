@@ -39,14 +39,4 @@ class ExecutorsController < ApplicationController
     redirect_to [@organization, Executor]
   end
 
-
-  private 
-
-    def redirect_if_not_owner
-      if !current_user.owner?( @organization )
-        redirect_to [@organization, Executor]
-      end
-    end
-
-
 end
