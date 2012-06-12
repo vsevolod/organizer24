@@ -7,11 +7,12 @@
     = link_to 'Добавить исполнителя', [:new, @organization, :executor], :class => 'btn btn-primary'
 
 - content_for :upper do
-  %table
+  %table.table
     %thead
       %tr
         %th ФИО
         %th телефон
+        %th
     %tbody
       - @executors.each do |executor|
         %tr

@@ -1,6 +1,34 @@
 $ ->
   $('.check_services input').click ->
     cost = 0
+    time = 0
+    values = []
     $('.check_services input:checked').each ->
-      cost += $(this).data('cost')
-    console.log(cost)
+      values.push( parseInt( $(this).val() ) )
+    # Проходим по всем коллекциям
+    for cs in collections_services
+      equal = true # если equal - true, значит совпадает
+      # Проходим по каждому ID в коллекции
+      $.each(cs[0], (index, value) ->
+        equal = equal && ($.inArray(value, values) != -1)
+      )
+      if equal
+        cost += cs[1]
+        time += cs[2]
+        values = values.filter (x) ->
+          return cs[0].indexOf(x) < 0
+
+    $('#total_time').html("Время: "+time+" мин.")
+    $('#total_time').data('value', time)
+
+    $('#total_cost').html("Стоимость: "+cost+" руб.")
+    $('#total_cost').data('value', cost)
+
+    event = $('.external-event').first()
+    eventObject = { title: "Время: "+time+" мин.\nСтоимость: "+cost+" руб.", duration: time }
+    event.data('eventObject', eventObject)
+    event.draggable({
+      zIndex: 999,
+      revert: true,
+      revertDuration: 0
+    })

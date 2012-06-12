@@ -5,17 +5,22 @@
   %br/
   - if current_user && current_user.owner?( @organization )
     = link_to 'Добавить услугу', [:new, @organization, :service], :class => 'btn btn-primary'
+    = link_to 'Добавить коллекцию', new_organization_service_path( @organization, :service => { :is_collection => true } ), :class => 'btn btn-primary'
 
 - content_for :upper do
-  %table
+  %table.table
     %thead
       %tr
+        %th
         %th Наименование
         %th Продолжительность
         %th Стоимость
     %tbody
-      - @services.each do |service|
+      - @services.order(:is_collection).each do |service|
         %tr
+          %td
+            - if service.is_collection?
+              \+
           %td= service.name
           %td= service.showing_time
           %td= service.cost

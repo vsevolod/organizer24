@@ -1,7 +1,18 @@
-= simple_form_for [@organization, @service] do |f|
-  = f.input :name
-  = f.input :showing_time, :hint => "Количество * #{@organization.slot_minutes} минут"
-  = f.input :cost
+#service
+  = simple_form_for [@organization, @service] do |f|
+    = f.hidden_field :is_collection
 
-  .form-actions
-    = f.submit "Завершить"
+    - if @service.is_collection?
+      %h3 Коллекция
+      #collections.controls
+        - @organization.services.not_collections.each do |service|
+          %label.checkbox
+            = check_box_tag "service[service_ids][]", service.id, @service.services.include?( service ), "data-cost" => service.cost, "data-showing_time" => service.showing_time
+            = service.name
+
+    = f.input :name
+    = f.input :showing_time, :hint => "Количество минут"
+    = f.input :cost
+
+    .form-actions
+      = f.submit "Завершить"

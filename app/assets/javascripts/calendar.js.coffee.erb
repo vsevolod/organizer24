@@ -15,6 +15,7 @@ $('#calendar').fullCalendar({
   monthNames: <%= I18n.t('date.standalone_month_names').compact %>,
   dayNames: <%= I18n.t('date.standalone_day_names').compact %>,
 
+  axisFormat: 'HH:mm',
   timeFormat: {
     agenda: 'H:mm{ - H:mm}',
     '': 'H(:mm)'
@@ -36,5 +37,24 @@ $('#calendar').fullCalendar({
     }
   ],
   selectable: true,
-  selectHelper: true
+  selectHelper: true,
+  editable: false,
+  droppable: true,
+  drop: ((date, allDay) ->
+    originalEventObject = $(this).data('eventObject')
+    copiedEventObject = $.extend({
+      editable: false,
+      disableDragging: true,
+      disableResizing: true
+    }, originalEventObject)
+    copiedEventObject.start = date
+    copiedEventObject.end = date.valueOf()/1000 + originalEventObject.duration*60
+    copiedEventObject.allDay = allDay
+    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+    #$(this).remove()
+  ),
+  eventAfterRender: (event, element, view) ->
+    console.log( event )
+    console.log( element )
+    console.log( view )
 })

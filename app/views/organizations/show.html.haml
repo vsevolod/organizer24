@@ -1,3 +1,6 @@
+- content_for :js do
+  :javascript
+    var collections_services = #{@organization.services.map{ |s| [(s.is_collection? ? s.collections_services.pluck(:service_id) : [s.id]), s.cost, s.showing_time] }.sort_by{|cs| 1000-cs.first.size}.to_json};
 - content_for :bottom_js do
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
@@ -14,15 +17,27 @@
 %h1= @organization.name
 
 .row
+  .span4
+    %h3 На что хотите записаться:
+    .check_services
+      - @organization.services.not_collections.order(:name).each do |service|
+        %label.checkbox
+          = check_box_tag "service[#{service.id}]", service.id, false
+          = service.name
+  .span4.well.external-event
+    .fc-event.fc-event-skin.fc-event-vert.fc-corner-top.fc-corner-bottom.weekend
+      .fc-event-innerfc-event-skin
+        .disableResizing
+          .disableResizing Итог:
+        .fc-event-content
+          .fc-event-title
+            #total_time Время: 0 мин.
+            #total_cost Стоимость: 0 руб.
+
+.row
   - [:free, :taken, :inaccessible].each do |state|
     .span16
       %span{ :class => "legend legend-#{state}" }
         = I18n.t("activerecord.attributes.appointment.status.#{state}")
-
-.check_services
-  - @organization.services.each do |service|
-    = check_box_tag "service[#{service.id}]", service.id, false, "data-cost" => service.cost, "data-time" => service.showing_time
-    = label_tag "service[#{service.id}]", service.name
-
 %br/
 #calendar{ :style => 'width:900px;margin:0 auto;' }

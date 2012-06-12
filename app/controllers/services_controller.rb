@@ -8,7 +8,7 @@ class ServicesController < ApplicationController
   end
 
   def new
-    @service = @organization.services.build
+    @service = @organization.services.build( params[:service] )
   end
 
   def edit
@@ -17,7 +17,6 @@ class ServicesController < ApplicationController
 
   def create
     @service = @organization.services.build( params[:service] )
-    @service.showing_time = @service.showing_time*@organization.slot_minutes.to_i
     if @service.save
       redirect_to [@organization, Service]
     else
@@ -28,7 +27,6 @@ class ServicesController < ApplicationController
   def update
     @service = @organization.services.find( params[:id] )
     @service.attributes   = params[:service]
-    @service.showing_time = @service.showing_time*@organization.slot_minutes.to_i
     if @service.save
       redirect_to [@organization, Service]
     else
