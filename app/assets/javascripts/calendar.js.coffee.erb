@@ -1,3 +1,9 @@
+to_i = (date_or_number) ->
+  if typeof( date_or_number ) == 'number'
+    date_or_number
+  else
+    date_or_number.valueOf() / 1000
+
 $('#calendar').fullCalendar({
   header: {
     left: 'prev,next today',
@@ -43,18 +49,41 @@ $('#calendar').fullCalendar({
   drop: ((date, allDay) ->
     originalEventObject = $(this).data('eventObject')
     copiedEventObject = $.extend({
-      editable: false,
+      editable: true,
       disableDragging: true,
-      disableResizing: true
+      disableResizing: true,
+      _id: 100000
     }, originalEventObject)
     copiedEventObject.start = date
     copiedEventObject.end = date.valueOf()/1000 + originalEventObject.duration*60
     copiedEventObject.allDay = allDay
-    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-    #$(this).remove()
+    intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
+      if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
+        return el
+    )
+    end_date = new Date( copiedEventObject.end*1000)
+    if intersection.length > 0
+      alert('Запись на этот период невозможна')
+    else
+      if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+        $(this).hide()
+        $('.check_services input').attr('disabled', true)
+        $('.buttons_to_confirm').show()
+      else
+        alert('Рабочий день заканчивается')
   ),
   eventAfterRender: (event, element, view) ->
-    console.log( event )
-    console.log( element )
-    console.log( view )
+    #console.log( event )
+    #console.log( element )
+    #console.log( view )
 })
+
+$('.confirm_calendar').click ->
+  alert('asd')
+
+$('.cancel_calendar').click ->
+  $(this).parent().hide()
+  $(this).parent().next().show()
+  $('.check_services input').attr('disabled', false)
+  $('#calendar').fullCalendar( 'removeEvents', 100000 )

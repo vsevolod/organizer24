@@ -9,6 +9,10 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
   end
 
+  def calendar
+    @organization = Organization.find(params[:id])
+  end
+
   def edit
     @activities = Dictionary.find_by_tag('activity').try(:children)
     @organization = Organization.find(params[:id])

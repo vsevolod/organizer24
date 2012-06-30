@@ -19,6 +19,9 @@ Organizer::Application.routes.draw do
     end
     resources :executors
     resources :services
+    member do
+      get :calendar
+    end
   end
 
   resources :appointments
