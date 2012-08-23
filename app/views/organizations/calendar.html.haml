@@ -10,27 +10,41 @@
 %h1= @organization.name
 
 - content_for :header do
-  %h3 На что хотите записаться:
-  .row
-    .check_services
-      - services = @organization.services.not_collections.order(:name)
-      - services.each_slice( services.size/2 ).each do |group_services|
-        .span3
-          - group_services.each do |service|
-            %label.checkbox
-              = check_box_tag "service[#{service.id}]", service.id, false
-              = service.name
-    .span4.buttons_to_confirm{ :style => 'display:none;' }
-      = link_to 'Подтвердить', '#', :class => 'btn btn-success confirm_calendar'
-      = link_to 'Отменить', '#', :class => 'btn btn-danger cancel_calendar'
-    .span4.external-event
-      #total_time Время: 0 мин.
-      #total_cost Стоимость: 0 руб.
+  #first
+    %form.well.form-horizontal
+      .span2
+        %b Ваши контактные данные:
+      .hidden= text_field_tag :check_if_empty
+      .control-group
+        .controls
+          = text_field_tag :name, '', :class => 'span3', :placeholder => 'Ваше имя'
+      .control-group
+        .controls
+          = text_field_tag :phone, '', :class => 'span3', :placeholder => 'Телефон'
+      = link_to 'Дальше', '#', :class => 'ShowSecond btn btn-success'
+  #second.hidden
+    %h3 На что хотите записаться:
+    .row
+      .check_services
+        - services = @organization.services.not_collections.order(:name)
+        - services.each_slice( services.size/2 ).each do |group_services|
+          .span3
+            - group_services.each do |service|
+              %label.checkbox
+                = check_box_tag "service[#{service.id}]", service.id, false
+                = service.name
+      .span4.buttons_to_confirm{ :style => 'display:none;' }
+        = link_to 'Подтвердить', '#', :class => 'btn btn-success confirm_calendar'
+        = link_to 'Отменить', '#', :class => 'btn btn-danger cancel_calendar'
+      .span4.external-event
+        #total_time Время: 0 мин.
+        #total_cost Стоимость: 0 руб.
 
-.row
-  - [:free, :taken, :inaccessible].each do |state|
-    .span16
-      %span{ :class => "legend legend-#{state}" }
-        = I18n.t("activerecord.attributes.appointment.status.#{state}")
-%br/
-#calendar{ :style => 'width:900px;margin:0 auto;' }
+#third
+  .row
+    - [:free, :taken, :inaccessible].each do |state|
+      .span16
+        %span{ :class => "legend legend-#{state}" }
+          = I18n.t("activerecord.attributes.appointment.status.#{state}")
+  %br/
+  #calendar{ :style => 'width:900px;margin:0 auto;' }

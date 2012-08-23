@@ -49,7 +49,7 @@ $('#calendar').fullCalendar({
   drop: ((date, allDay) ->
     originalEventObject = $(this).data('eventObject')
     copiedEventObject = $.extend({
-      editable: true,
+      editable: false,
       disableDragging: true,
       disableResizing: true,
       _id: 100000
@@ -64,14 +64,15 @@ $('#calendar').fullCalendar({
     end_date = new Date( copiedEventObject.end*1000)
     if intersection.length > 0
       alert('Запись на этот период невозможна')
+    else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
+      alert('Период равен 0. Выберите какой-нибудь сервис')
+    else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+      $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+      $(this).hide()
+      $('.check_services input').attr('disabled', true)
+      $('.buttons_to_confirm').show()
     else
-      if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
-        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-        $(this).hide()
-        $('.check_services input').attr('disabled', true)
-        $('.buttons_to_confirm').show()
-      else
-        alert('Рабочий день заканчивается')
+      alert('Рабочий день заканчивается')
   ),
   eventAfterRender: (event, element, view) ->
     #console.log( event )
@@ -87,3 +88,13 @@ $('.cancel_calendar').click ->
   $(this).parent().next().show()
   $('.check_services input').attr('disabled', false)
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
+
+$('.ShowSecond').click ->
+  if $('#name').val() && $('#phone').val()
+    $('#name, #phone').parents('.control-group').removeClass('error')
+    $('#second').show()
+  else
+    if !$('#name').val()
+      $('#name').parents('.control-group').addClass('error')
+    if !$('#phone').val()
+      $('#phone').parents('.control-group').addClass('error')

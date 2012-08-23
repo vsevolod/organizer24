@@ -1,7 +1,11 @@
 /*
  *= require_self
  *= require kickstrap
- *= require kickstrap/themes/cerulean
+ *= require kickstrap/themes/simplex
  *= require pages
  *= require calendar
 */
+
+.hidden {
+  display: none;
+}

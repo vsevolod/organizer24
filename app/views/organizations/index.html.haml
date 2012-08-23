@@ -1,4 +1,4 @@
-- content_for :header_title do
+- content_for :header do
   %h2 Список организаций
 
 - @activities.each do |activity|
@@ -6,4 +6,6 @@
     %h3= activity.name
     %ul
       - activity.organizations.each do |org|
-        %li= link_to org.name, org
+        %li
+          = link_to org.name, org
+          = link_to 'Записаться', [:calendar, org]
