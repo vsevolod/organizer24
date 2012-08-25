@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.maskedinput
 //= require kickstrap
 //= require cocoon
 //= require pages
