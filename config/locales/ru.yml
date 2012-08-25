@@ -18,6 +18,7 @@ ru:
       admin_user:
         email: Email
       appointment:
+        cost: Стоимость
         start: Время начала
         showing_time: Общая продолжительность
         status:

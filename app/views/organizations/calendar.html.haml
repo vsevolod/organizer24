@@ -1,6 +1,6 @@
 - content_for :js do
   :javascript
-    var collections_services = #{@organization.services.map{ |s| [(s.is_collection? ? s.collections_services.pluck(:service_id) : [s.id]), s.cost, s.showing_time] }.sort_by{|cs| 1000-cs.first.size}.to_json};
+    var collections_services = #{@organization.get_services.to_json};
 - content_for :bottom_js do
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
@@ -16,6 +16,7 @@
         .span3
           %b Номер телефона для связи:
         .hidden= text_field_tag :check_if_empty
+        = hidden_field_tag :start
         .control-group
           .controls
             = text_field_tag 'user[phone]', '', :class => 'span3'

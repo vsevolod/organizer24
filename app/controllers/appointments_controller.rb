@@ -1,16 +1,12 @@
 class AppointmentsController < ApplicationController
 
   def create
-    # TODO что делать с пользователем - регестрировать его или нет?
-    user = if signed_in?
-             current_user
-           else
-             User.where( :phone => params[:phone] ).first
-           end
-    if user
-      raise user.errors.inspect
-      raise "STOP"
-    end
+    @organization = Organization.find( params[:organization_id] )
+    @user = User.where( params[:user] ).first_or_initialize
+    @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
+    @appointment.service_ids = params[:service].keys
+    @appointment.cost, @appointment.showing_time = @organization.cost_time_by_services
+    raise @appointment.inspect
     raise "SA"
   end
 

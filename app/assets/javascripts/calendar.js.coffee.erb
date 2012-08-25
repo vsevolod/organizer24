@@ -105,8 +105,8 @@ $('#calendar').fullCalendar({
 $('.confirm_calendar').live('click', ->
   if $('#user_phone').val()
     $('#user_phone').parents('.control-group').removeClass('error')
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
     $('#first').parent().submit()
-    console.log( $('#first') )
   else
     if !$('#user_phone').val()
       $('#user_phone').parents('.control-group').addClass('error')

@@ -26,6 +26,25 @@ class Organization < ActiveRecord::Base
     {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => self.id}
   end
 
+  def get_services
+    self.services.map{ |s| [(s.is_collection? ? s.collections_services.pluck(:service_id) : [s.id]), s.cost, s.showing_time] }.sort_by{|cs| 1000-cs.first.size}
+  end
+
+  # Возвращаем стоимость и время в зависимости от колекций.
+  def cost_time_by_services
+    cost = 0
+    time = 0
+    values = self.service_ids.dup
+    self.get_services.each do |cs|
+      if (cs[0] & values).size == cs.size
+        cost += cs[1]
+        time += cs[2]
+        values = values - cs[0]
+      end
+    end
+    [cost, time]
+  end
+
   private
 
     def to_Date( seconds )

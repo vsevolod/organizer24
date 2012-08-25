@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_one :my_organization, :class_name => "Organization", :foreign_key => :owner_id, :dependent => :destroy, :validate => false
   has_many :organization
+  has_many :appointments
   accepts_nested_attributes_for :my_organization
 
   validates_presence_of :email, :if => :first_step?
