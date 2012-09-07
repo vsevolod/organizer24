@@ -30,6 +30,7 @@ drop_div = ( date, allDay ) ->
       alert('Период равен 0. Выберите какой-нибудь сервис')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+      $('#start').val(copiedEventObject.start)
       $('#second').hide()
     else
       alert('Рабочий день заканчивается')
@@ -89,7 +90,7 @@ $('#calendar').fullCalendar({
       $.each( $('.check_services input:checked').parent(), (id, el) ->
         text += $(el).text() + '<br/>'
       )
-      element.popover( {
+      element.children().first().popover( {
         content: text + '<hr/>' + element.find('.fc-event-title').text() + event.confirm,
         title: 'Подтвердить',
         trigger: 'manual',

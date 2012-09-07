@@ -29,6 +29,7 @@ end
 group :development do
   gem 'erb2haml'
   gem 'pry'
+  gem 'debugger'
 end
 
 gem 'jquery-rails'

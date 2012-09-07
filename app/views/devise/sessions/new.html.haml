@@ -2,10 +2,4 @@
   %h2 Вход
 
 - content_for :upper do
-  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-    = f.input :phone
-    = f.input :password
-    - if devise_mapping.rememberable?
-      = f.input :remember_me, :as => :boolean
-    .form-actions= f.submit "Войти"
-  = render "links"
+  = render '/devise/sessions/new_form'

@@ -34,9 +34,10 @@ check_serices_inputs = ->
 
 $ ->
 
-  check_serices_inputs()
-  $('.check_services input').each ->
-    $(this).attr('disabled', false)
-
-  $('.check_services input').click ->
+  if $('.check_services input').length > 0
     check_serices_inputs()
+    $('.check_services input').each ->
+      $(this).attr('disabled', false)
+
+    $('.check_services input').click ->
+      check_serices_inputs()

@@ -7,9 +7,9 @@ class User < ActiveRecord::Base
   has_many :appointments
   accepts_nested_attributes_for :my_organization
 
-  validates_presence_of :email, :if => :first_step?
-  validates_uniqueness_of :email, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_step? }
-  validates_format_of :email, :with => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_step? }
+  validates_presence_of :email, :if => :first_admin_step?
+  validates_uniqueness_of :email, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }
+  validates_format_of :email, :with => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }
 
   validates_format_of :phone, :with => /^[\d\W]+$/, :allow_blank => true, :if => lambda{|u| u.phone_changed? && u.first_step? }
 
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :name, :phone
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :name, :phone, :role
 
   attr_writer :current_step
 
@@ -48,6 +48,11 @@ class User < ActiveRecord::Base
 
   def first_step?
     self.current_step == steps.first
+  end
+
+  # FIXME надо проверять на == admin, а не != client
+  def first_admin_step?
+    self.role != 'client' && self.current_step == steps.first
   end
 
   def last_step?
