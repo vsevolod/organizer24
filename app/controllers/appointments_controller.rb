@@ -40,10 +40,4 @@ class AppointmentsController < ApplicationController
     @appointments = @organization.appointments.where( :start.gteq => @start )
   end
 
-  private
-
-    def find_organization
-      @organization = Organization.find( params[:organization_id] )
-    end
-
 end

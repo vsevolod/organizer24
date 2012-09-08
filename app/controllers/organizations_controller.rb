@@ -1,5 +1,6 @@
 # coding: utf-8
 class OrganizationsController < ApplicationController
+  layout 'company'
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)

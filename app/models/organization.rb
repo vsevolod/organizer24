@@ -1,5 +1,5 @@
 class Organization < ActiveRecord::Base
-  ACCESSORS = [:slot_minutes, :last_day]
+  ACCESSORS = [:slot_minutes, :last_day, :theme]
 
   store :settings, accessors: ACCESSORS
 

@@ -41,10 +41,11 @@ ru:
         phone: Телефон
         organization: Организация
       organization:
-        name: Название
         activity: Деятельность
-        subdomain: Поддомен
+        name: Название
         owner: Владелец
+        subdomain: Поддомен
+        theme: Тема оформления
       service:
         name: Название
         showing_time: Продолжительность
