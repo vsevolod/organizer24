@@ -11,15 +11,7 @@
 
 - content_for :header do
   = form_tag organization_appointments_path( @organization ) do
-    #first
-      .well.form-horizontal
-        .span3
-          %b Номер телефона для связи:
-        .hidden= text_field_tag :check_if_empty
-        = hidden_field_tag :start
-        .control-group
-          .controls
-            = text_field_tag 'user[phone]', '', :class => 'span3'
+    = hidden_field_tag :start
     #second
       %h3 На что хотите записаться:
       .row
@@ -40,6 +32,18 @@
         .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
           #total_time Время: 0 мин.
           #total_cost Стоимость: 0 руб.
+    #first
+      - if current_user
+        = hidden_field_tag 'user[phone]', current_user.phone
+      - else
+        .row
+          .form-horizontal
+            .span3
+              %b Номер телефона для связи:
+            .hidden= text_field_tag :check_if_empty
+            .control-group
+              .controls
+                = text_field_tag 'user[phone]', '', :class => 'span3'
 
 #third
   .row

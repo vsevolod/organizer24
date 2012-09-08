@@ -1,0 +1,15 @@
+- content_for :header do
+  %h2 Личный кабинет
+
+- if organization = @user.my_organization
+  %h3 Организация
+  = link_to organization.name, organization
+
+  %h3 Заявки
+  = render 'appointments/list', :appointments => organization.appointments
+
+- if @user.appointments.any?
+  %h3 Ваши заявки
+  = render 'appointments/list', :appointments => @user.appointments
+  
+

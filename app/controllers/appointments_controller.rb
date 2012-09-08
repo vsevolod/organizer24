@@ -5,9 +5,13 @@ class AppointmentsController < ApplicationController
   def show
     @appointment = Appointment.find( params[:id] )
     @can_edit = current_user && ( @appointment.user == current_user || current_user.owner?( @organization ) )
-    if current_user && @appointment.user_by_phone == current_user && @appointment.free?
-      # Если зашли под создателем в только что созданную заявку - делаем её доступной
-      @appointment.first_owner_view!
+    if @appointment.free?
+      if (current_user && @appointment.user_by_phone == current_user && @appointment.free?) || (@appointment.phone.blank? && session[:appointment_new] == params[:id].to_i)
+        # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
+        @appointment.user = current_user
+        @appointment.first_owner_view
+        @appointment.save
+      end
     end
   end
 
@@ -18,7 +22,7 @@ class AppointmentsController < ApplicationController
     @appointment.service_ids = params[:service].keys
     @appointment.cost_time_by_services!
     if @user == current_user
-      @appointment.first_owner_view! 
+      @appointment.first_owner_view
     else
       session[:phone] = params[:user][:phone]
     end

@@ -1,0 +1,12 @@
+%table.table
+  %thead
+    %tr
+      %th Клиент
+      %th Услуги
+      %th Время
+      %th Стоимость
+  - appointments.group_by(&:status).each do |status, status_appointments|
+    %tr
+      %td{ :colspan => 4, :style => 'background: #ccc; text-align:center;' }= status_appointments.first.aasm_human_state
+    - status_appointments.each do |appointment|
+      = render appointment

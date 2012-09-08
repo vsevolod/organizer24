@@ -104,13 +104,9 @@ $('#calendar').fullCalendar({
 })
 
 $('.confirm_calendar').live('click', ->
-  if $('#user_phone').val()
-    $('#user_phone').parents('.control-group').removeClass('error')
-    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
-    $('#first').parent().submit()
-  else
-    if !$('#user_phone').val()
-      $('#user_phone').parents('.control-group').addClass('error')
+  $('#user_phone').parents('.control-group').removeClass('error')
+  $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
+  $('#first').parent().submit()
 )
 
 $('.cancel_calendar').live('click', ->

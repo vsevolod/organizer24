@@ -18,6 +18,9 @@ class WorkingHoursController < ApplicationController
           res = []
           res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, :className => 'weekend' } if min_wt != wh.begin_time
           res << { :title => 'закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, :className => 'weekend' } if wh.end_time != max_wt
+          @organization.appointments.where('date(start) = ?', (@start+index.days).to_date).where( :status.not_eq => 'free' ).each do |appointment|
+            res << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, :className => 'work' }
+          end
           res
         else
           { :title => 'выходной', :className => 'weekend' }.merge( full_day )

@@ -6,6 +6,7 @@ Organizer::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :pages
+  resources :users
   resources :organizations do
     resources :appointments do
       collection do

@@ -15,9 +15,12 @@ class Appointment < ActiveRecord::Base
     state :taken        # Занято
     state :inaccessible # Недоступно
     state :offer        # Есть заявка
-    state :aproove      # Подтверждено
-    state :complete     # Выполнено
-    state :missing      # Пропущено. Клиент не пришёл
+    state :aproove      # Подтверждена
+    state :complete     # Выполнена
+    state :missing      # Пропущена. Клиент не пришёл
+    state :lated        # Задержана. Клиент опоздал
+    state :cancel_client# Отменена клиентом
+    state :cancel_owner # Отменена владельцем
 
     event :first_owner_view do
       transitions :to => :offer, :from => :free
@@ -44,6 +47,10 @@ class Appointment < ActiveRecord::Base
     end
     self.cost = cost
     self.showing_time = time
+  end
+
+  def _end
+    self.start + self.showing_time.minutes
   end
 
 end

@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    session[:user_params].deep_merge!( params[:user] ) if params[:user]
+    (session[:user_params] || {}).deep_merge!( params[:user] ) if params[:user]
     build_resource( session[:user_params] )
 
     if resource.role == 'client'

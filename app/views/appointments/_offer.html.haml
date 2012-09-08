@@ -1,0 +1,38 @@
+%h2 Заявка
+
+.span5
+  %h3 Информация
+  %table.table
+    %tbody
+      %tr
+        %td Статус
+        %td= @appointment.aasm_human_state
+      %tr
+        %td Дата
+        %td= Russian.strftime( @appointment.start, "%d %B %Y (%A)" )
+      %tr
+        %td Время начала
+        %td= Russian.strftime( @appointment.start, "%H:%M" )
+      %tr
+        %td Время окончания
+        %td= Russian.strftime( @appointment.start + (@appointment.showing_time.minutes ), "%H:%M" )
+
+.span6
+  %h3 Услуги
+  %table.table
+    %thead
+      %th Название услуги
+      %th Стоимость (р.)
+      %th Продолжительность
+    %tbody
+      - @appointment.services.each do |service|
+        %tr
+          %td= service.name
+          %td= service.cost
+          %td= show_time( service.showing_time )
+      %tr
+        %td Итого
+        %td
+          %b= @appointment.cost
+        %td
+          %b= show_time( @appointment.showing_time )
