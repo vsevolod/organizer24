@@ -7,6 +7,7 @@ class Appointment < ActiveRecord::Base
   has_and_belongs_to_many :services # Услуги
 
   accepts_nested_attributes_for :services
+  before_save :update_complete_time
 
   #before_validation :count_cost_time
 
@@ -52,5 +53,13 @@ class Appointment < ActiveRecord::Base
   def _end
     self.start + self.showing_time.minutes
   end
+
+  private
+
+    def update_complete_time
+      if self.status_changed? && %w{complete missing lated cancel_owner cancel_client}.include?( self.status )
+        self.complete_time = Time.now
+      end
+    end
 
 end

@@ -1,7 +1,51 @@
-- content_for :header_title do
-  %h2 Заявка
+%h1 Заявка
 
-- content_for :header do
-  %br/
+%div{ :class => @appointment.complete_time ? 'alert alert-danger' : 'alert alert-notice' }
+  %h2
+    = @appointment.aasm_human_state
+    - if @appointment.complete_time
+      %code
+        = Appointment.human_attribute_name(:complete_time)
+        = Russian.strftime( @appointment.complete_time, ': %d %B %Y в %H:%M' )
 
-= render "appointments/#{@appointment.status}"
+- if @appointment.free?
+  = render "appointments/free"
+- else
+  = appointment_links( @appointment, ' ' )
+  .span5
+    .row
+      %h2 Информация
+      %table.table
+        %tbody
+          %tr
+            %td Статус
+            %td= @appointment.aasm_human_state
+          %tr
+            %td Дата
+            %td= Russian.strftime( @appointment.start, "%d %B %Y (%A)" )
+          %tr
+            %td Время начала
+            %td= Russian.strftime( @appointment.start, "%H:%M" )
+          %tr
+            %td Время окончания
+            %td= Russian.strftime( @appointment.start + (@appointment.showing_time.minutes ), "%H:%M" )
+
+    .row
+      %h2 Услуги
+      %table.table
+        %thead
+          %th Название услуги
+          %th Стоимость руб.
+          %th Продолжительность
+        %tbody
+          - @appointment.services.each do |service|
+            %tr
+              %td= service.name
+              %td= service.cost
+              %td= show_time( service.showing_time )
+          %tr
+            %td Итого
+            %td
+              %b= @appointment.cost
+            %td
+              %b= show_time( @appointment.showing_time )

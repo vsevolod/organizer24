@@ -1,10 +1,8 @@
 - content_for :header_title do
   %h2= @organization.name
 
-- content_for :header do
-  %br/
-  = link_to 'Записаться на услугу', [:calendar, @organization], :class => 'btn btn-success'
-  - if current_user && current_user.owner?( @organization )
-    = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
-    = link_to 'Исполнители', [@organization, :executors], :class => 'btn btn-primary'
-    = link_to 'Услуги', [@organization, :services], :class => 'btn btn-primary'
+= link_to 'Записаться на услугу', [:calendar, @organization], :class => 'btn btn-success'
+- if current_user && current_user.owner?( @organization )
+  = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
+  = link_to 'Исполнители', [@organization, :executors], :class => 'btn btn-primary'
+  = link_to 'Услуги', [@organization, :services], :class => 'btn btn-primary'

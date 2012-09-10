@@ -9,41 +9,40 @@
 
 %h1= @organization.name
 
-- content_for :header do
-  = form_tag organization_appointments_path( @organization ) do
-    = hidden_field_tag :start
-    #second
-      %h3 На что хотите записаться:
+= form_tag organization_appointments_path( @organization ) do
+  = hidden_field_tag :start
+  #second
+    %h3 На что хотите записаться:
+    .row
+      .check_services
+        - services = @organization.services.not_collections.order(:name)
+        - services.each_slice( services.size/2 ).each do |group_services|
+          .span3
+            - group_services.each do |service|
+              %label.checkbox
+                = check_box_tag "service[#{service.id}]", service.id, false
+                = service.name
+      .span4.buttons_to_confirm{ :style => 'display:none;' }
+        = link_to '#', :class => 'btn btn-success confirm_calendar' do
+          %span.icon-ok
+        = link_to '#', :class => 'btn btn-danger cancel_calendar' do
+          %span.icon-remove
+        %br/
+      .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
+        #total_time Время: 0 мин.
+        #total_cost Стоимость: 0 руб.
+  #first
+    - if current_user
+      = hidden_field_tag 'user[phone]', current_user.phone
+    - else
       .row
-        .check_services
-          - services = @organization.services.not_collections.order(:name)
-          - services.each_slice( services.size/2 ).each do |group_services|
-            .span3
-              - group_services.each do |service|
-                %label.checkbox
-                  = check_box_tag "service[#{service.id}]", service.id, false
-                  = service.name
-        .span4.buttons_to_confirm{ :style => 'display:none;' }
-          = link_to '#', :class => 'btn btn-success confirm_calendar' do
-            %span.icon-ok
-          = link_to '#', :class => 'btn btn-danger cancel_calendar' do
-            %span.icon-remove
-          %br/
-        .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
-          #total_time Время: 0 мин.
-          #total_cost Стоимость: 0 руб.
-    #first
-      - if current_user
-        = hidden_field_tag 'user[phone]', current_user.phone
-      - else
-        .row
-          .form-horizontal
-            .span3
-              %b Номер телефона для связи:
-            .hidden= text_field_tag :check_if_empty
-            .control-group
-              .controls
-                = text_field_tag 'user[phone]', '', :class => 'span3'
+        .form-horizontal
+          .span3
+            %b Номер телефона для связи:
+          .hidden= text_field_tag :check_if_empty
+          .control-group
+            .controls
+              = text_field_tag 'user[phone]', '', :class => 'span3'
 
 #third
   .row

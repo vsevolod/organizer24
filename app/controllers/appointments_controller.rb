@@ -1,16 +1,19 @@
 #coding: utf-8
 class AppointmentsController < ApplicationController
-  before_filter :find_organization, :only => [:show, :create, :by_week]
+  layout 'company'
+  before_filter :find_organization, :only => [:show, :create, :by_week, :change_status]
 
   def show
     @appointment = Appointment.find( params[:id] )
     @can_edit = current_user && ( @appointment.user == current_user || current_user.owner?( @organization ) )
     if @appointment.free?
-      if (current_user && @appointment.user_by_phone == current_user && @appointment.free?) || (@appointment.phone.blank? && session[:appointment_new] == params[:id].to_i)
-        # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
-        @appointment.user = current_user
-        @appointment.first_owner_view
-        @appointment.save
+      if current_user
+        if (@appointment.user_by_phone == current_user && @appointment.free?) || (@appointment.phone.blank? && session[:appointment_new] == params[:id].to_i)
+          # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
+          @appointment.user = current_user
+          @appointment.first_owner_view
+          @appointment.save
+        end
       end
     end
   end
@@ -31,6 +34,17 @@ class AppointmentsController < ApplicationController
       redirect_to [@organization, @appointment]
     else
       redirect_to :back, notice: 'При сохранении возникла ошибка'
+    end
+  end
+
+  def change_status
+    @appointment = Appointment.find( params[:id] )
+    if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
+      @appointment.status = params[:state]
+      @appointment.save
+      redirect_to [@organization, @appointment], :notice => 'Статус успешно изменен'
+    else
+      redirect_to :back, :alert => 'У вас не достаточно прав'
     end
   end
 

@@ -18,6 +18,7 @@ ru:
       admin_user:
         email: Email
       appointment:
+        complete_time: Время изменения статуса
         cost: Стоимость
         start: Время начала
         showing_time: Общая продолжительность
@@ -29,6 +30,8 @@ ru:
           aproove: Подтверждена
           complete: Выполнено
           missing: Пропущено. Клиент не пришёл
+          cancel_client: Отменена клиентом 
+          cancel_owner: Отменена владельцем
         user: Пользователь
         organization: Организация
       dictionary:

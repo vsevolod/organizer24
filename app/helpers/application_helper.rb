@@ -24,4 +24,25 @@ module ApplicationHelper
     end
   end
 
+  def appointment_links( appointment, joins = '<br/>' )
+    org = appointment.organization
+    arr = []
+    if current_user.owner?( org )
+      arr << link_to( 'Заявка выполнена', short_csoap(org, appointment, :complete ), :class => 'btn btn-success', :method => :post )
+      arr << link_to( 'Отменена владельцем',  short_csoap(org, appointment, :cancel_owner ), :class => 'btn', :method => :post )
+      arr << link_to( 'Отменена клиентом',   short_csoap(org, appointment, :cancel_client ), :class => 'btn btn-warning', :method => :post )
+      arr << link_to( 'Клиент не пришёл', short_csoap(org, appointment, :missing ), :class => 'btn btn-danger', :method => :post )
+      arr << link_to( 'Клиент опоздал',   short_csoap(org, appointment, :lated ), :class => 'btn btn-info', :method => :post )
+    elsif current_user == appointment.user
+      arr << link_to( 'Отменить', short_csoap(org, appointment, :cancel_client ), :class => 'btn btn-danger', :method => :post )
+    end
+    arr.join(joins).html_safe
+  end
+
+  private
+
+    def short_csoap( org, appointment, state)
+      change_status_organization_appointment_path(org, appointment, :state => state)
+    end
+
 end

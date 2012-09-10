@@ -1,6 +1,6 @@
 # coding: utf-8
 class OrganizationsController < ApplicationController
-  layout 'company'
+  layout 'company', :except => [:index]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)
