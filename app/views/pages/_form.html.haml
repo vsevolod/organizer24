@@ -1,0 +1,7 @@
+= simple_form_for([@organization, @page], :wrapper => :bootstrap) do |f|
+  = show_errors( @page )
+  = f.input :name
+  = f.input :permalink
+  = f.input :content
+  .form-actions
+    = f.submit nil, :class => 'btn btn-success'

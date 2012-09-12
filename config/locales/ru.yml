@@ -7,6 +7,7 @@ ru:
       dictionary: Словари
       executor: Исполнители
       organization: Организации
+      page: Статическая страница
       service: Услуги
       user: Пользователи
       working_hour: Время работы
@@ -49,6 +50,12 @@ ru:
         owner: Владелец
         subdomain: Поддомен
         theme: Тема оформления
+      page:
+        name: Название
+        permalink: Ссылка
+        content: Содержание
+        organization: Организация
+        organization_id: Организация
       service:
         name: Название
         showing_time: Продолжительность

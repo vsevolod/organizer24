@@ -1,24 +1,15 @@
-- content_for :header do
-  %br/
-  %br/
-  .row{ :style => 'height: 260px' }
-    .span12
-      #HeadCarousel.carousel
-        .carousel-inner
-          .active.item
-            Наш сервис разработан таким образом, что бы сокращать процесс участия Вас в записи до минимума. Вы можете лишь несколько раз в день бегло просматривать свой график, только тогда, когда это удобно именно Вам.
-          .item
-            Сервис работает круглосуточно. Значит Ваш клиент в любое время может осуществить запись.
-          .item
-            Вы заранее можете ограничить возможность для записи. Как по дням недели, так и по праздничным дням.
-  %br/
-  %br/
+= link_to 'Добавить новую', new_organization_page_path( @organization ), :class => 'btn btn-success'
 
-- content_for :upper do
-  %br/
-  .row
-    .span6.offset3
-      = link_to 'Зарегистрировать организацию', new_user_registration_path, :class => 'btn btn-success btn-large'
-      = link_to 'Записаться на прием', Organization, :class => 'btn btn-primary btn-large'
-  %br/
-  %br/
+%h1 Список ваших страниц
+%table.table
+  %tr
+    %th Имя
+    %th Ссылка
+  - @pages.each do |page|
+    %tr
+      %td= link_to page.name, [@organization, page]
+      %td= page.permalink
+      - if  current_user && current_user.owner?( @organization )
+        %td
+          = link_to 'Редактировать', [:edit, @organization, @page], :class => 'btn btn-success'
+          = link_to 'Удалить', [@organization, page], method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

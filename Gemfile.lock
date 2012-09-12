@@ -216,6 +216,7 @@ DEPENDENCIES
   event-calendar
   formtastic (~> 2.1.1)
   haml
+  has_scope
   jquery-rails
   kickstrap_rails
   pg

@@ -2,12 +2,12 @@ Organizer::Application.routes.draw do
   match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
   match '/dashboard', :to => 'users#dashboard'
 
-  root :to => 'pages#index'
+  root :to => 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations" }
 
-  resources :pages
   resources :users
   resources :organizations do
+    resources :pages
     resources :appointments do
       collection do
         get :by_week

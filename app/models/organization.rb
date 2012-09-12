@@ -10,6 +10,7 @@ class Organization < ActiveRecord::Base
   has_many :services
   has_many :users
   has_many :working_hours
+  has_many :pages
 
   accepts_nested_attributes_for :working_hours, :reject_if => :all_blank
   validates_associated :working_hours, :if => lambda{ |u| u.working_hours.any? }

@@ -39,6 +39,10 @@ module ApplicationHelper
     arr.join(joins).html_safe
   end
 
+  def show_errors( object )
+    render 'layouts/errors', :object => object
+  end
+
   private
 
     def short_csoap( org, appointment, state)

@@ -1,4 +1,8 @@
-- if object.errors.messages.any?
-  %ul
-    - object.errors.messages.each_pair do |field, message|
-      %li= message
+- if @page.errors.any?
+  #error_explanation.alert.alert-warning
+    %h2
+      = Russian::p( object.errors.count, "Возникла", "Возникло", "Возникло")
+      == #{object.errors.count} #{Russian::p( object.errors.count, "ошибка", "ошибки", "ошибок")}:
+    %ul
+      - object.errors.full_messages.each do |msg|
+        %li= msg

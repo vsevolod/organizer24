@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_if_not_owner
-      if !current_user.owner?( @organization )
-        redirect_to [@organization, Executor]
+      if !current_user || !current_user.owner?( @organization )
+        redirect_to @organization
       end
     end
 end

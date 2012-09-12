@@ -1,0 +1,6 @@
+- if current_user && current_user.owner?( @organization )
+  = link_to 'Редактировать', [:edit, @organization, @page]
+
+%h2= @page.name
+
+= @page.content

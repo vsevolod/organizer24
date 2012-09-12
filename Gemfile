@@ -7,6 +7,7 @@ gem 'kickstrap_rails'
 gem 'therubyracer'
 gem 'cocoon'
 gem 'event-calendar', :require => 'event_calendar'
+gem 'has_scope'
 
 gem 'haml'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
