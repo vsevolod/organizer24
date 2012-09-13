@@ -1,0 +1,6 @@
+= simple_form_for([@organization, @category_photo], :wrapper => :bootstrap) do |f|
+  = show_errors( @category_photo )
+  = f.input :name
+  = f.input :parent_id, :as => :select, :collection => @ancestry_category_photos
+  .form-actions
+    = f.submit nil, :class => 'btn btn-success'

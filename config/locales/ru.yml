@@ -4,6 +4,7 @@ ru:
       active_admin_comment: Комментарии (адм.)
       admin_user: Админинстраторы системы
       appointment: Записи
+      category_photo: Категории для фотогалерей
       dictionary: Словари
       executor: Исполнители
       organization: Организации
@@ -36,6 +37,10 @@ ru:
           lated: Клиент опоздал
         user: Пользователь
         organization: Организация
+      category_photo:
+        name: Название
+        parent_id: Предок
+        organization_id: Организация
       dictionary:
         name: Название
         tag: Тэг

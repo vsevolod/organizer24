@@ -1,0 +1,4 @@
+= link_to 'Добавить новую', new_organization_category_photo_path( @organization ), :class => 'btn btn-success'
+
+%h1 Список ваших категорий для фотогалерей
+= render 'list', :objects => @category_photos

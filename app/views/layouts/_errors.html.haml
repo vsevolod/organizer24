@@ -1,4 +1,4 @@
-- if @page.errors.any?
+- if object.errors.any?
   #error_explanation.alert.alert-warning
     %h2
       = Russian::p( object.errors.count, "Возникла", "Возникло", "Возникло")

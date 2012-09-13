@@ -12,4 +12,14 @@ class ApplicationController < ActionController::Base
         redirect_to @organization
       end
     end
+
+    def ancestry_options(items)
+      result = []
+      items.map do |item, sub_items|
+        result << [yield(item), item.id]
+        #this is a recursive call:
+        result += ancestry_options(sub_items) {|i| "#{'-' * i.depth} #{i.name}" } if sub_items
+      end
+      result
+    end
 end

@@ -9,7 +9,6 @@ Organizer::Application.routes.draw do
 
   resources :users
   resources :organizations do
-    resources :pages, :except => [:show]
     resources :appointments do
       collection do
         get :by_week
@@ -18,15 +17,17 @@ Organizer::Application.routes.draw do
         post :change_status
       end
     end
+    resources :category_photos
+    resources :executors
+    resources :pages, :except => [:show]
+    resources :services
+    member do
+      get :calendar
+    end
     resources :working_hours do
       collection do
         get :by_week
       end
-    end
-    resources :executors
-    resources :services
-    member do
-      get :calendar
     end
   end
   get '/organizations/:organization_id/:id', :to => 'pages#show'

@@ -1,6 +1,5 @@
 = link_to 'Записаться на услугу', [:calendar, @organization], :class => 'btn btn-success'
 - if current_user && current_user.owner?( @organization )
   = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
-  = link_to 'Исполнители', [@organization, :executors], :class => 'btn btn-primary'
-  = link_to 'Услуги', [@organization, :services], :class => 'btn btn-primary'
-  = link_to 'Страницы', [@organization, :pages], :class => 'btn btn-primary'
+  - [Executor, Service, Page, CategoryPhoto].each do |klass|
+    = link_to klass.model_name.human, [@organization, klass], :class => 'btn btn-primary'
