@@ -9,7 +9,7 @@ Organizer::Application.routes.draw do
 
   resources :users
   resources :organizations do
-    resources :pages
+    resources :pages, :except => [:show]
     resources :appointments do
       collection do
         get :by_week
@@ -29,8 +29,7 @@ Organizer::Application.routes.draw do
       get :calendar
     end
   end
-
-  resources :appointments
+  get '/organizations/:organization_id/:id', :to => 'pages#show'
 
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

@@ -7,7 +7,7 @@
     %th Ссылка
   - @pages.each do |page|
     %tr
-      %td= link_to page.name, [@organization, page]
+      %td= link_to page.name, page.show_page_link
       %td= page.permalink
       - if  current_user && current_user.owner?( @organization )
         %td

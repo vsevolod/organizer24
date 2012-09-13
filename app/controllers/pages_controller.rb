@@ -11,4 +11,14 @@ class PagesController < InheritedResources::Base
     create! { collection_url }
   end
 
+  def update
+    update! { collection_url }
+  end
+
+  protected
+
+    def resource
+      @page ||= Page.find_by_permalink( params[:id] )
+    end
+
 end
