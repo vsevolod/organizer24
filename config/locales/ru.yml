@@ -29,10 +29,11 @@ ru:
           inaccessible: Недоступно
           offer: Есть заявка
           aproove: Подтверждена
-          complete: Выполнено
-          missing: Пропущено. Клиент не пришёл
+          complete: Заявка выполнена
+          missing: Клиент не пришёл
           cancel_client: Отменена клиентом 
           cancel_owner: Отменена владельцем
+          lated: Клиент опоздал
         user: Пользователь
         organization: Организация
       dictionary:

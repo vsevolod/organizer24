@@ -1,9 +1,11 @@
 %tr
-  %td= link_to full_user_name( appointment.user, '<br/>' ).html_safe, appointment.user
+  %td
+    - if appointment.user
+      = link_to full_user_name( appointment.user, '<br/>' ).html_safe, appointment.user
   %td= appointment.services.pluck(:name).join(', ')
   %td= Russian.strftime( appointment.start )
   %td= appointment.cost
 - if current_user
   %tr
     %td{ :colspan => 4 }
-      = appointment_links
+      = appointment_links( appointment, ' ' )

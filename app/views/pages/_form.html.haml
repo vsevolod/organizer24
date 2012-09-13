@@ -2,6 +2,6 @@
   = show_errors( @page )
   = f.input :name
   = f.input :permalink
-  = f.input :content
+  = f.input :content, :as => :ckeditor
   .form-actions
     = f.submit nil, :class => 'btn btn-success'

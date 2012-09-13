@@ -1,6 +1,6 @@
 - if current_user && current_user.owner?( @organization )
-  = link_to 'Редактировать', [:edit, @organization, @page]
+  = link_to 'Редактировать', [:edit, @organization, @page], :class => 'btn btn-primary'
 
 %h2= @page.name
 
-= @page.content
+= @page.content.html_safe

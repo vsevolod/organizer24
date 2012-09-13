@@ -28,11 +28,9 @@ module ApplicationHelper
     org = appointment.organization
     arr = []
     if current_user.owner?( org )
-      arr << link_to( 'Заявка выполнена', short_csoap(org, appointment, :complete ), :class => 'btn btn-success', :method => :post )
-      arr << link_to( 'Отменена владельцем',  short_csoap(org, appointment, :cancel_owner ), :class => 'btn', :method => :post )
-      arr << link_to( 'Отменена клиентом',   short_csoap(org, appointment, :cancel_client ), :class => 'btn btn-warning', :method => :post )
-      arr << link_to( 'Клиент не пришёл', short_csoap(org, appointment, :missing ), :class => 'btn btn-danger', :method => :post )
-      arr << link_to( 'Клиент опоздал',   short_csoap(org, appointment, :lated ), :class => 'btn btn-info', :method => :post )
+      { :complete => 'btn-success', :cancel_owner => '', :cancel_client => 'btn-warning', :missing => 'btn-danger', :lated => 'btn-info'}.each do |state, html_class|
+        arr << link_to( t("activerecord.attributes.appointment.status.#{state}"), short_csoap(org, appointment, state ), :class => "btn #{html_class}", :method => :post ) if appointment.aasm_read_state != state
+     end
     elsif current_user == appointment.user
       arr << link_to( 'Отменить', short_csoap(org, appointment, :cancel_client ), :class => 'btn btn-danger', :method => :post )
     end

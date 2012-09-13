@@ -11,5 +11,5 @@
       %td= page.permalink
       - if  current_user && current_user.owner?( @organization )
         %td
-          = link_to 'Редактировать', [:edit, @organization, @page], :class => 'btn btn-success'
+          = link_to 'Редактировать', [:edit, @organization, page], :class => 'btn btn-success'
           = link_to 'Удалить', [@organization, page], method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

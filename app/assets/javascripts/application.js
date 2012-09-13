@@ -8,6 +8,7 @@
 //= require pages
 //= require services 
 //= require organizations
+//= require ckeditor/init
 
 
 Array.max = function( array ){

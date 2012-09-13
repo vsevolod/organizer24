@@ -21,3 +21,5 @@
 # Swap files
 *.swp
 Gemfile.lock
+
+public/ckeditor_assets

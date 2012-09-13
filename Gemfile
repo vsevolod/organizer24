@@ -12,6 +12,8 @@ gem 'has_scope'
 gem 'haml'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'russian'
+gem "ckeditor", "3.7.1"
+gem "paperclip"
 
 gem 'activeadmin'
 gem 'formtastic', '~> 2.1.1' # FIXME должны исправить в версии activeadmin больше (0.4.3)
