@@ -17,7 +17,6 @@ gem "paperclip"
 
 gem 'activeadmin'
 gem 'formtastic', '~> 2.1.1' # FIXME должны исправить в версии activeadmin больше (0.4.3)
-
 gem 'ancestry'
 gem 'aasm'
 gem 'pg'

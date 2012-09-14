@@ -1,9 +1,14 @@
 Organizer::Application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
+  match '/appointments/(:id)' => 'appointments#show', constraints: {subdomain: /.+/}
+
+  match '/calendar' => 'organizations#calendar', constraints: {subdomain: /.+/}
   match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
   match '/dashboard', :to => 'users#dashboard'
+  
 
+  match '', to: 'organizations#show', constraints: {subdomain: /.+/}
   root :to => 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations" }
 

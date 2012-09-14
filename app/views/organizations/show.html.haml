@@ -1,4 +1,4 @@
-= link_to 'Записаться на услугу', [:calendar, @organization], :class => 'btn btn-success'
+= link_to 'Записаться на услугу', ((@organization.subdomain.blank?)? [:calendar, @organization] : root_url(subdomain: @organization.subdomain) + "calendar"), :class => 'btn btn-success'
 - if current_user && current_user.owner?( @organization )
   = link_to 'Опции', [:edit, @organization], :class => 'btn btn-primary'
   - [Executor, Service, Page, CategoryPhoto].each do |klass|

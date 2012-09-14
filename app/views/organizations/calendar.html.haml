@@ -8,7 +8,7 @@
   = javascript_include_tag 'fullcalendar', 'calendar'
 
 %h1= @organization.name
-
+//- form_url = (@organization.subdomain.blank?)? organization_appointments_path(@organization) : appointments_path(@organization)
 = form_tag organization_appointments_path( @organization ) do
   = hidden_field_tag :start
   #second

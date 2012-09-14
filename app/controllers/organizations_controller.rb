@@ -7,11 +7,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = Organization.find(params[:id])
+    @organization = (request.subdomain.blank?)? Organization.find(params[:id]) : Organization.find_by_subdomain(request.subdomain)
   end
 
   def calendar
-    @organization = Organization.find(params[:id])
+    @organization = (request.subdomain.blank?)? Organization.find(params[:id]) : Organization.find_by_subdomain(request.subdomain)
   end
 
   def edit
