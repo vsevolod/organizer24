@@ -18,7 +18,8 @@
                 %li= link_to 'Выход', destroy_user_session_path, :method => :delete
                 %li= link_to 'Кабинет', "/dashboard"
               - else
-                %li= link_to 'Вход', new_user_session_path(:subdomain => false)
+                // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
+                %li= link_to 'Вход', new_user_session_path
                 %li= link_to 'Регистрация', new_user_registration_path
     .container= yield
     = yield :bottom_js
