@@ -6,3 +6,6 @@
 %h2= @category_photo.name
 
 = render 'list', :objects => @category_photo.children
+
+- @photos.each do |photo|
+  = image_tag photo.photo.url(:thumb)

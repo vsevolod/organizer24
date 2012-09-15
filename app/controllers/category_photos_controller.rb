@@ -7,6 +7,11 @@ class CategoryPhotosController < InheritedResources::Base
   before_filter :redirect_if_not_owner, :only => [:new, :edit, :create, :update, :destroy]
   before_filter :find_ancestry_dictionaries, :only => [:new, :edit]
 
+  def show
+    @category_photo = CategoryPhoto.find( params[:id] )
+    @photos = Photo.where( :category_photo_id => @category_photo.children.push(@category_photo) )
+  end
+
   private
 
     def find_ancestry_dictionaries

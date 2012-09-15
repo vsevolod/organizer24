@@ -4,15 +4,15 @@ class PagesController < InheritedResources::Base
   belongs_to :organization
   has_scope :limit, :default => 8
 
-  before_filter :find_organization, :except => :index
+  before_filter :find_organization
   before_filter :redirect_if_not_owner, :only => [:new, :edit, :create, :update, :destroy]
 
   def create
-    create! { collection_url }
+    create! { "/#{@page.permalink}" }
   end
 
   def update
-    update! { collection_url }
+    update! { "/#{@page.permalink}" }
   end
 
   protected

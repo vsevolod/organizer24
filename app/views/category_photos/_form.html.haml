@@ -2,5 +2,10 @@
   = show_errors( @category_photo )
   = f.input :name
   = f.input :parent_id, :as => :select, :collection => @ancestry_category_photos
+  #photos
+    = f.simple_fields_for :photos do |p|
+      = render 'photo_fields', f: p
+    .links
+      = link_to_add_association 'Добавить фото', f, :photos
   .form-actions
     = f.submit nil, :class => 'btn btn-success'

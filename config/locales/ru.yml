@@ -9,6 +9,7 @@ ru:
       executor: Исполнители
       organization: Организации
       page: Статическая страница
+      photo: Фотография
       service: Услуги
       user: Пользователи
       working_hour: Время работы
@@ -62,6 +63,8 @@ ru:
         content: Содержание
         organization: Организация
         organization_id: Организация
+      photo:
+        photo: Файл
       service:
         name: Название
         showing_time: Продолжительность
