@@ -1,6 +1,6 @@
 - if current_user && current_user.owner?( @organization )
-  = link_to 'Редактировать', [:edit, @organization, @category_photo], :class => 'btn btn-primary'
-  = link_to 'Добавить новую', new_organization_category_photo_path( @organization, :category_photo => { :parent_id => @category_photo.id } ), :class => 'btn btn-success'
+  = link_to 'Редактировать', [:edit, @category_photo], :class => 'btn btn-primary'
+  = link_to 'Добавить новую', new_category_photo_path( :category_photo => { :parent_id => @category_photo.id } ), :class => 'btn btn-success'
 
 -#TODO add breadcrumbs to all pages
 %h2= @category_photo.name

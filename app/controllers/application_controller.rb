@@ -4,12 +4,24 @@ class ApplicationController < ActionController::Base
   private
 
     def find_organization
-      @organization = (request.subdomain.blank?)? Organization.find(params[:organization_id]) : Organization.find_by_subdomain(request.subdomain)
+      @organization = if Subdomain.matches?(request)
+                        Organization.find_by_subdomain(request.subdomain)
+                      else
+                        Organization.find(params[:organization_id])
+                      end
+    end
+
+    def organization_root
+      if Subdomain.matches?(request)
+        root_path
+      else
+        @organization || root_path
+      end
     end
 
     def redirect_if_not_owner
       if !current_user || !current_user.owner?( @organization )
-        redirect_to @organization
+        redirect_to organization_root
       end
     end
 

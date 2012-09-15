@@ -1,29 +1,26 @@
 # coding: utf-8
 class OrganizationsController < ApplicationController
   layout 'company', :except => [:index]
+  before_filter :find_organization, :only => [:show, :calendar, :edit, :update]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)
   end
 
   def show
-    @organization = (request.subdomain.blank?)? Organization.find(params[:id]) : Organization.find_by_subdomain(request.subdomain)
   end
 
   def calendar
-    @organization = (request.subdomain.blank?)? Organization.find(params[:id]) : Organization.find_by_subdomain(request.subdomain)
   end
 
   def edit
     @activities = Dictionary.find_by_tag('activity').try(:children)
-    @organization = Organization.find(params[:id])
   end
 
   def update
-    @organization = Organization.find(params[:id])
     if current_user.owner?( @organization)
       if @organization.update_attributes( params[:organization] )
-        redirect_to @organization
+        redirect_to organization_root
       else
         render :edit
       end

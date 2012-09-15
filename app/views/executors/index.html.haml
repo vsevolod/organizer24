@@ -4,7 +4,7 @@
 - content_for :header do
   %br/
   - if current_user && current_user.owner?( @organization )
-    = link_to 'Добавить исполнителя', [:new, @organization, :executor], :class => 'btn btn-primary'
+    = link_to 'Добавить исполнителя', [:new, :executor], :class => 'btn btn-primary'
 
 - content_for :upper do
   %table.table
@@ -19,7 +19,7 @@
           %td= executor.name
           %td= executor.phone
           %td
-            = link_to [:edit, @organization, executor] do
+            = link_to [:edit, executor] do
               .icon-edit
-            = link_to [@organization, executor], :method => :delete do
+            = link_to executor, :method => :delete do
               .icon-trash

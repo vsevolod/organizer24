@@ -18,7 +18,7 @@ class ServicesController < ApplicationController
   def create
     @service = @organization.services.build( params[:service] )
     if @service.save
-      redirect_to [@organization, Service]
+      redirect_to Service
     else
       render 'new'
     end
@@ -28,7 +28,7 @@ class ServicesController < ApplicationController
     @service = @organization.services.find( params[:id] )
     @service.attributes   = params[:service]
     if @service.save
-      redirect_to [@organization, Service]
+      redirect_to Service
     else
       render 'edit'
     end
@@ -37,7 +37,7 @@ class ServicesController < ApplicationController
   def destroy
     @service = @organization.services.find( params[:id] )
     @service.destroy
-    redirect_to [@organization, Service]
+    redirect_to Service
   end
 
 
@@ -45,7 +45,7 @@ class ServicesController < ApplicationController
 
     def redirect_if_not_owner
       if !current_user.owner?( @organization )
-        redirect_to [@organization, Service]
+        redirect_to Service
       end
     end
 

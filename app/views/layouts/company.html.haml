@@ -11,7 +11,7 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          = link_to @organization.name, ((@organization.subdomain.blank?)? @organization: root_url(subdomain: @organization.subdomain)), :class => 'brand'
+          = link_to @organization.name, root_url(subdomain: @organization.subdomain), :class => 'brand'
           .nav-collapse
             %ul.nav
               - if current_user

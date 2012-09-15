@@ -1,4 +1,4 @@
-= simple_form_for([@organization, @page], :wrapper => :bootstrap) do |f|
+= simple_form_for(@page, :wrapper => :bootstrap) do |f|
   = show_errors( @page )
   = f.input :name
   = f.input :permalink

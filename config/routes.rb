@@ -1,19 +1,12 @@
 Organizer::Application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
-  match '/appointments/(:id)' => 'appointments#show', constraints: {subdomain: /.+/}
-
-  match '/calendar' => 'organizations#calendar', constraints: {subdomain: /.+/}
-  match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
-  match '/dashboard', :to => 'users#dashboard'
-  
-
-  match '', to: 'organizations#show', constraints: {subdomain: /.+/}
-  root :to => 'main#index'
-  devise_for :users, :controllers => { :registrations => "registrations" }
-
-  resources :users
-  resources :organizations do
+  constraints(Subdomain) do
+    root :to => 'organizations#show'
+    resources :appointments
+    match '/calendar' => 'organizations#calendar', :as => :calendar
+    match '/edit'=> 'organizations#edit', :as => :edit
+    match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
     resources :appointments do
       collection do
         get :by_week
@@ -26,16 +19,23 @@ Organizer::Application.routes.draw do
     resources :executors
     resources :pages, :except => [:show]
     resources :services
-    member do
-      get :calendar
-    end
     resources :working_hours do
       collection do
         get :by_week
       end
     end
+    get ':id', :to => 'pages#show'
   end
-  get '/organizations/:organization_id/:id', :to => 'pages#show'
+
+  match '/dashboard', :to => 'users#dashboard'
+  root :to => 'main#index'
+  devise_for :users, :controllers => { :registrations => "registrations" }
+  resources :users
+  resources :organizations, :except => [:show] do
+    member do
+      get :calendar
+    end
+  end
 
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

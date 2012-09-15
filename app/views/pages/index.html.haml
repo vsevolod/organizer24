@@ -1,4 +1,4 @@
-= link_to 'Добавить новую', new_organization_page_path( @organization ), :class => 'btn btn-success'
+= link_to 'Добавить новую', [:new, :page], :class => 'btn btn-success'
 
 %h1 Список ваших страниц
 %table.table
@@ -11,5 +11,5 @@
       %td= page.permalink
       - if  current_user && current_user.owner?( @organization )
         %td
-          = link_to 'Редактировать', [:edit, @organization, page], :class => 'btn btn-success'
-          = link_to 'Удалить', [@organization, page], method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
+          = link_to 'Редактировать', [:edit, page], :class => 'btn btn-success'
+          = link_to 'Удалить', page, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

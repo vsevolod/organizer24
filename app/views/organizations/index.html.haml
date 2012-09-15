@@ -7,8 +7,8 @@
     %ul
       - activity.organizations.each do |org|
         %li
-          = link_to org.name, ((org.subdomain.blank?)? org: root_url(subdomain: org.subdomain))
+          = link_to org.name, root_url(subdomain: org.subdomain)
           - if org.subdomain.blank?
             = link_to "Записаться", [:calendar, org]
           - else
-            = link_to 'Записаться', root_url(subdomain: org.subdomain) + "calendar"
+            = link_to 'Записаться', calendar_url(subdomain: org.subdomain)

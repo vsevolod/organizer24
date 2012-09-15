@@ -4,8 +4,8 @@
 - content_for :header do
   %br/
   - if current_user && current_user.owner?( @organization )
-    = link_to 'Добавить услугу', [:new, @organization, :service], :class => 'btn btn-primary'
-    = link_to 'Добавить коллекцию', new_organization_service_path( @organization, :service => { :is_collection => true } ), :class => 'btn btn-primary'
+    = link_to 'Добавить услугу', [:new, :service], :class => 'btn btn-primary'
+    = link_to 'Добавить коллекцию', new_service_path( :service => { :is_collection => true } ), :class => 'btn btn-primary'
 
 - content_for :upper do
   %table.table
@@ -25,7 +25,7 @@
           %td= service.showing_time
           %td= service.cost
           %td
-            = link_to [:edit, @organization, service] do
+            = link_to [:edit, service] do
               .icon-edit
-            = link_to [@organization, service], :method => :delete do
+            = link_to service, :method => :delete do
               .icon-trash

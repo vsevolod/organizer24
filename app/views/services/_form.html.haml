@@ -1,5 +1,5 @@
 #service
-  = simple_form_for [@organization, @service] do |f|
+  = simple_form_for @service do |f|
     = f.hidden_field :is_collection
 
     - if @service.is_collection?

@@ -31,7 +31,7 @@ class AppointmentsController < ApplicationController
     end
     if @appointment.save
       session[:appointment_new] = @appointment.id
-      redirect_to [@organization, @appointment]
+      redirect_to @appointment
     else
       redirect_to :back, notice: 'При сохранении возникла ошибка'
     end
@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
     if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       @appointment.save
-      redirect_to [@organization, @appointment], :notice => 'Статус успешно изменен'
+      redirect_to @appointment, :notice => 'Статус успешно изменен'
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'
     end

@@ -18,7 +18,7 @@ class ExecutorsController < ApplicationController
   def create
     @executor = @organization.executors.build( params[:executor] )
     if @executor.save
-      redirect_to [@organization, Executor]
+      redirect_to Executor
     else
       render 'new'
     end
@@ -27,7 +27,7 @@ class ExecutorsController < ApplicationController
   def update
     @executor = @organization.executors.find( params[:id] )
     if @executor.update_attributes( params[:executor] )
-      redirect_to [@organization, Executor]
+      redirect_to Executor
     else
       render 'edit'
     end
@@ -36,7 +36,7 @@ class ExecutorsController < ApplicationController
   def destroy
     @executor = @organization.executors.find( params[:id] )
     @executor.destroy
-    redirect_to [@organization, Executor]
+    redirect_to Executor
   end
 
 end
