@@ -1,5 +1,28 @@
-= link_to 'Записаться на услугу', '/calendar', :class => 'btn btn-success'
-- if current_user && current_user.owner?( @organization )
-  = link_to 'Опции', :edit, :class => 'btn btn-primary'
-  - [Executor, Service, Page, CategoryPhoto].each do |klass|
-    = link_to klass.model_name.human, klass, :class => 'btn btn-primary'
+.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li= link_to 'Записаться на услугу', '/calendar'
+      - if current_user && current_user.owner?( @organization )
+        %li= link_to 'Опции', :edit
+        - [Executor, Service, Page, CategoryPhoto].each do |klass|
+          %li= link_to klass.model_name.human, klass
+
+%hr/
+
+.thumbnails
+  .span4
+    .thumbnail
+      %h2 Услуги и их стоимость
+      %ul
+        - @services.each do |s|
+          %li
+            %b= s.name
+            = s.cost
+
+
+  - @category_photos.each do |cp|
+    .span4
+      .thumbnail
+        %h2= cp.name
+        = link_to cp do
+          = image_tag cp.photos.last.photo.url(:medium)

@@ -18,6 +18,7 @@ class Organization < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :activity, :presence => true
+  validates :subdomain, :presence => true, :uniqueness => true
 
   attr_accessible :name, :activity_id, :subdomain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
 

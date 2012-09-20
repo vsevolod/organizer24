@@ -8,6 +8,8 @@ class OrganizationsController < ApplicationController
   end
 
   def show
+    @category_photos = @organization.category_photos.joins(:photos).uniq
+    @services = @organization.services.not_collections
   end
 
   def calendar

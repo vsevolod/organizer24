@@ -7,5 +7,10 @@
 
 = render 'list', :objects => @category_photo.children
 
-- @photos.each do |photo|
-  = image_tag photo.photo.url(:thumb)
+#myCarousel.carousel.span4
+  .carousel-inner
+    - @photos.each_with_index do |photo, index|
+      %div{ :class => "item #{'active' if index.zero?}" }
+        = image_tag photo.photo.url(:thumb)
+        - if photo.name
+          .carousel-caption= photo.name
