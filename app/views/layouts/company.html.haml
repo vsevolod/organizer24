@@ -20,7 +20,7 @@
                 %li= link_to 'Кабинет', "/dashboard"
               - else
                 // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
-                %li= link_to 'Вход', new_user_session_path
+                %li= link_to 'Вход', new_user_session_path, :data => { :colorbox => true }
                 %li= link_to 'Регистрация', new_user_registration_path
     .container= yield
     = yield :bottom_js

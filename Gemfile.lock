@@ -7,6 +7,14 @@ GIT
       activemodel (~> 3.0)
 
 GIT
+  remote: git://github.com/stevo/colorbox-rails.git
+  revision: 788dfa6f26451312fb1d665ceb1881f1984c0a53
+  specs:
+    colorbox-rails (0.0.9)
+      jquery-rails
+      rails (>= 3.1.1)
+
+GIT
   remote: https://github.com/seyhunak/twitter-bootstrap-rails.git
   revision: dd7598bf684473b079e838d2abd2c276f25d53bf
   specs:
@@ -227,6 +235,7 @@ DEPENDENCIES
   ckeditor (= 3.7.1)
   cocoon
   coffee-rails (~> 3.2.1)
+  colorbox-rails!
   debugger
   erb2haml
   event-calendar

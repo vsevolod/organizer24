@@ -53,6 +53,7 @@ ru:
         organization: Организация
       organization:
         activity: Деятельность
+        registration_before: Доступ к записи только после регистрации/входа
         name: Название
         owner: Владелец
         subdomain: Поддомен

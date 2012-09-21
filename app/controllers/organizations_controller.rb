@@ -9,10 +9,12 @@ class OrganizationsController < ApplicationController
 
   def show
     @category_photos = @organization.category_photos.joins(:photos).uniq
-    @services = @organization.services.not_collections
   end
 
   def calendar
+    if !current_user && @organization.registration_before?
+      redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
+    end
   end
 
   def edit

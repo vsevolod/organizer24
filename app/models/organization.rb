@@ -1,5 +1,5 @@
 class Organization < ActiveRecord::Base
-  ACCESSORS = [:slot_minutes, :last_day, :theme]
+  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before]
 
   store :settings, accessors: ACCESSORS
 
@@ -31,6 +31,10 @@ class Organization < ActiveRecord::Base
 
   def get_services
     self.services.map{ |s| [(s.is_collection? ? s.collections_services.pluck(:service_id) : [s.id]), s.cost, s.showing_time] }.sort_by{|cs| 1000-cs.first.size}
+  end
+
+  def registration_before?
+    self.registration_before.to_i == 1
   end
 
   private

@@ -2,6 +2,6 @@
   = f.input :phone
   = f.input :password
   - if devise_mapping.rememberable?
-    = f.input :remember_me, :as => :boolean
+    = f.input :remember_me, :as => :boolean, :wrapper => :checkbox
   .form-actions= f.submit "Войти"
 = render "/devise/links"

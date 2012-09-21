@@ -1,24 +1,20 @@
 - content_for :nav_bar do
-  %li= link_to 'Записаться на услугу', '/calendar'
   - if current_user && current_user.owner?( @organization )
     %li= link_to 'Опции', :edit
     - [Executor, Service, Page, CategoryPhoto].each do |klass|
       %li= link_to klass.model_name.human, klass
 
-.thumbnails
-  .span4
-    .thumbnail
-      %h2 Услуги и их стоимость
-      %ul
-        - @services.each do |s|
-          %li
-            %b= s.name
-            = s.cost
+.span2
+  - if current_user || !@organization.registration_before?
+    = link_to 'Записаться на услугу', '/calendar', :class => 'btn btn-large btn-success'
+  - else
+    = link_to 'Вход для записи', new_user_session_path, :class => 'btn btn-large btn-success', :data => { :colorbox => true }
 
-
-  - @category_photos.each do |cp|
-    .span4
-      .thumbnail
-        %h2= cp.name
-        = link_to cp do
-          = image_tag cp.photos.last.photo.url(:medium)
+.span8
+  .thumbnails
+    - @category_photos.each do |cp|
+      .span4
+        .thumbnail
+          %h2= cp.name
+          = link_to cp do
+            = image_tag cp.photos.last.photo.url(:medium)

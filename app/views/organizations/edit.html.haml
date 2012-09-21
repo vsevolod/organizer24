@@ -6,6 +6,7 @@
   = f.input :activity_id, :collection => @activities, :include_blank => false, :label => false
   = f.input :name
   = f.input :subdomain
+  = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
   = f.input :theme, :collection => %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
 
   %h3 Шаг календаря

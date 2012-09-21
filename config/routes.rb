@@ -32,7 +32,7 @@ Organizer::Application.routes.draw do
 
   match '/dashboard', :to => 'users#dashboard'
   root :to => 'main#index'
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" }
   resources :users
   resources :organizations, :except => [:show] do
     member do

@@ -35,3 +35,4 @@ group :development do
 end
 
 gem 'jquery-rails'
+gem "colorbox-rails", :git => "git://github.com/stevo/colorbox-rails.git"
