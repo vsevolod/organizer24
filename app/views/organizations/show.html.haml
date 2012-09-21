@@ -1,13 +1,9 @@
-.navbar.navbar-static-top
-  .navbar-inner
-    %ul.nav
-      %li= link_to 'Записаться на услугу', '/calendar'
-      - if current_user && current_user.owner?( @organization )
-        %li= link_to 'Опции', :edit
-        - [Executor, Service, Page, CategoryPhoto].each do |klass|
-          %li= link_to klass.model_name.human, klass
-
-%hr/
+- content_for :nav_bar do
+  %li= link_to 'Записаться на услугу', '/calendar'
+  - if current_user && current_user.owner?( @organization )
+    %li= link_to 'Опции', :edit
+    - [Executor, Service, Page, CategoryPhoto].each do |klass|
+      %li= link_to klass.model_name.human, klass
 
 .thumbnails
   .span4

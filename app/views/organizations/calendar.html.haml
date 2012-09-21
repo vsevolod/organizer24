@@ -10,7 +10,7 @@
 %h1= @organization.name
 // TODO: здесь и на следующей странице регистрации при условии существования поддомена нужно не указывать в URL'е "organizations/(:id)", как-то так:
 //- form_url = (@organization.subdomain.blank?)? organization_appointments_path(@organization) : appointments_path(@organization)
-= form_tag organization_appointments_path( @organization ) do
+= form_tag appointments_path do
   = hidden_field_tag :start
   #second
     %h3 На что хотите записаться:

@@ -44,7 +44,7 @@ module ApplicationHelper
   private
 
     def short_csoap( org, appointment, state)
-      change_status_organization_appointment_path(org, appointment, :state => state)
+      change_status_appointment_path(appointment, :state => state)
     end
 
 end

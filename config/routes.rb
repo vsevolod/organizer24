@@ -4,10 +4,12 @@ Organizer::Application.routes.draw do
 
   constraints(Subdomain) do
     root :to => 'organizations#show'
-    resources :appointments
+
     match '/calendar' => 'organizations#calendar', :as => :calendar
     match '/edit'=> 'organizations#edit', :as => :edit
     match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+    match '/dashboard', :to => 'users#dashboard'
+
     resources :appointments do
       collection do
         get :by_week
