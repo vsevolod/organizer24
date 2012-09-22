@@ -9,7 +9,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     # передаётся хэш, где :start - дата начала, а :showing_time - продолжительность
     start = record.send( options[:start] )
     showing_time = record.send( options[:showing_time] )
-    duplicate_record = record.class.where( <<-SQL, {:start => start.to_s, :stop => (start+showing_time*60).to_s} )
+    duplicate_record = record.class.where( <<-SQL, {:start => start.to_s, :stop => (start+showing_time*60).to_s} ).where( :status => ['offer', 'approve', 'taken'] )
       GREATEST( :start, "#{options[:start]}" ) < LEAST( :stop, "#{options[:start]}"+CONCAT(#{options[:showing_time]},' second')::interval )
     SQL
     unless duplicate_record.count.zero?

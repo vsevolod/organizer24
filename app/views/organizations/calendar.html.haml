@@ -8,8 +8,6 @@
   = javascript_include_tag 'fullcalendar', 'calendar'
 
 %h1= @organization.name
-// TODO: здесь и на следующей странице регистрации при условии существования поддомена нужно не указывать в URL'е "organizations/(:id)", как-то так:
-//- form_url = (@organization.subdomain.blank?)? organization_appointments_path(@organization) : appointments_path(@organization)
 = form_tag appointments_path do
   = hidden_field_tag :start
   #second
@@ -47,11 +45,11 @@
 
 #third
   .row
-    - [:free, :taken, :inaccessible].each do |state|
+    - [:free, :taken, :inaccessible, :'your-offer'].each do |state|
       .span16
         %span{ :class => "legend legend-#{state}" }
-          = I18n.t("activerecord.attributes.appointment.status.#{state}")
-  %br/
+          = I18n.t("legend.status.#{state}")
+.row
   #calendar{ :style => 'width:900px;margin:0 auto;' }
   %br/
   %br/

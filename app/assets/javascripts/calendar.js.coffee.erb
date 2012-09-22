@@ -69,7 +69,6 @@ $('#calendar').fullCalendar({
   eventSources: [
     {
       url: '/working_hours/by_week',
-      backgroundColor: '#ccc',
       borderColor: '#ccc'
     }
   ],
@@ -85,22 +84,36 @@ $('#calendar').fullCalendar({
   ),
   eventRender: (event, element) ->
     element.find('.fc-event-title').html(element.find('.fc-event-title').text())
+    element.find('.fc-event-inner').addClass( event['data-inner-class'])
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
       $.each( $('.check_services input:checked').parent(), (id, el) ->
         text += $(el).text() + '<br/>'
       )
-      element.children().first().popover( {
+      element.popover( {
         content: text + '<hr/>' + element.find('.fc-event-title').text() + event.confirm,
         title: 'Подтвердить',
         trigger: 'manual',
         placement: 'right' }).popover('show')
+      popover = $('.popover.right')
+      top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
+      popover.css( 'top', top )
+      console.log($('.popover.right').css('top') )
       element.find('.fc-event-title').html('')
     element
   eventAfterRender: (event, element, view) ->
     #console.log( event )
     #console.log( element )
     #console.log( view )
+  eventClick: (event, jsEvent, view) ->
+    element = $(jsEvent.currentTarget)
+    if event['data-inner-class'] == 'legend-your-offer'
+      element.popover( {
+        title: 'Возможные действия',
+        content: '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client">Отменить запись</a>',
+        trigger: 'manual',
+        placement: 'in left'
+      }).popover('show')
 })
 
 $('.confirm_calendar').live('click', ->

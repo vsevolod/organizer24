@@ -16,17 +16,27 @@ class WorkingHoursController < ApplicationController
       @periods << if Date.today + @organization.last_day.to_i.days <= (@start + index.days).to_date
         if wh
           res = []
-          res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, :className => 'weekend' } if min_wt != wh.begin_time
-          res << { :title => 'закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, :className => 'weekend' } if wh.end_time != max_wt
+          res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
+          res << { :title => 'закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
           @organization.appointments.where('date(start) = ?', (@start+index.days).to_date).where( :status.not_eq => 'free' ).each do |appointment|
-            res << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, :className => 'work' }
+            next unless ['approve', 'offer', 'taken'].include? appointment.status
+            data_inner_class = if current_user == appointment.user
+                                 if appointment.offer?
+                                   'legend-your-offer'
+                                 else
+                                   'legend-inaccessible'
+                                 end
+                               else
+                                 'legend-taken'
+                               end
+            res << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
           end
           res
         else
-          { :title => 'выходной', :className => 'weekend' }.merge( full_day )
+          { :title => 'выходной', 'data-inner-class' => 'legend-inaccessible' }.merge( full_day )
         end
       else
-        { :title => 'Запись невозможна', :className => 'old_days' }.merge( full_day )
+        { :title => 'Запись невозможна', 'data-inner-class' => 'legend-old-day' }.merge( full_day )
       end
     end
     respond_with( @periods.flatten.compact )

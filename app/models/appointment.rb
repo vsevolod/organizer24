@@ -16,7 +16,7 @@ class Appointment < ActiveRecord::Base
     state :taken        # Занято
     state :inaccessible # Недоступно
     state :offer        # Есть заявка
-    state :aproove      # Подтверждена
+    state :approve     # Подтверждена
     state :complete     # Выполнена
     state :missing      # Пропущена. Клиент не пришёл
     state :lated        # Задержана. Клиент опоздал

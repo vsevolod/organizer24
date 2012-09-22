@@ -1,4 +1,11 @@
 ru:
+  legend:
+    status:
+      free: Свободно
+      taken: Занято
+      inaccessible: Недоступно
+      old-day: Нет записи
+      your-offer: Ваша заявка
   activerecord:
     models:
       active_admin_comment: Комментарии (адм.)
@@ -30,7 +37,7 @@ ru:
           taken: Занято
           inaccessible: Недоступно
           offer: Есть заявка
-          aproove: Подтверждена
+          approve: Подтверждена
           complete: Заявка выполнена
           missing: Клиент не пришёл
           cancel_client: Отменена клиентом 
