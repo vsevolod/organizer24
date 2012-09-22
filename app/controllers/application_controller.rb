@@ -34,4 +34,5 @@ class ApplicationController < ActionController::Base
       end
       result
     end
+
 end

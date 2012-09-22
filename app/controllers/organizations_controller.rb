@@ -1,7 +1,6 @@
 # coding: utf-8
-class OrganizationsController < ApplicationController
-  layout 'company', :except => [:index]
-  before_filter :find_organization, :only => [:show, :calendar, :edit, :update]
+class OrganizationsController < CompanyController
+  skip_before_filter :find_organization, :only => [:index]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)

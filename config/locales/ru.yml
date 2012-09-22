@@ -80,7 +80,8 @@ ru:
         organization: Организация
       user:
         email: Email
-        name: ФИО
+        firstname: Имя
+        lastname: Фамилия
         phone: Телефон
         role: Роль
         password: Пароль

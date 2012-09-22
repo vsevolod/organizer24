@@ -7,12 +7,11 @@
   = stylesheet_link_tag    'fullcalendar'
   = javascript_include_tag 'fullcalendar', 'calendar'
 
-%h1= @organization.name
 = form_tag appointments_path do
   = hidden_field_tag :start
-  #second
+  %section.utopia-widget#second
     %h3 На что хотите записаться:
-    .row
+    .row-fluid
       .check_services
         - services = @organization.services.not_collections.order(:name)
         - services.each_slice( services.size/2 ).each do |group_services|
@@ -34,7 +33,7 @@
     - if current_user
       = hidden_field_tag 'user[phone]', current_user.phone
     - else
-      .row
+      .row-fluid
         .form-horizontal
           .span3
             %b Номер телефона для связи:
@@ -43,16 +42,15 @@
             .controls
               = text_field_tag 'user[phone]', '', :class => 'span3'
 
-#third
-  .row
-    - [:free, :taken, :inaccessible, :'your-offer'].each do |state|
-      .span16
-        %span{ :class => "legend legend-#{state}" }
-          = I18n.t("legend.status.#{state}")
-.row
-  #calendar{ :style => 'width:900px;margin:0 auto;' }
-  %br/
-  %br/
-  %br/
-  %br/
-  %br/
+.row-fluid
+  %hr/
+  .span1
+    #third
+      - [:free, :taken, :inaccessible, :'your-offer'].each do |state|
+        = I18n.t("legend.status.#{state}")
+        %div{ :class => "legend legend-#{state}" }
+        %br/
+  .span10
+    #calendar{ :style => 'width:900px;margin:0 auto;' }
+.span4
+  = image_tag 'kickstrap/themes/beauty/second_img.jpg'

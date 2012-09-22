@@ -1,20 +1,34 @@
-- content_for :nav_bar do
-  - if current_user && current_user.owner?( @organization )
-    %li= link_to 'Опции', :edit
-    - [Executor, Service, Page, CategoryPhoto].each do |klass|
-      %li= link_to klass.model_name.human, klass
-
-.span2
-  - if current_user || !@organization.registration_before?
-    = link_to 'Записаться на услугу', '/calendar', :class => 'btn btn-large btn-success'
+.span6
+  .utopia-login-info= image_tag "kickstrap/themes/beauty/left-logo.jpg"
+.span6
+  - if current_user
+    .utopia-login
+      %h1 Ваши действия
+      .utopia
+        %p
+          = link_to "/dashboard", :class => 'btn btn-normal span12' do
+            %i.icon-home
+            Личный кабинет
+        &nbsp;
+        %p
+          = link_to "/calendar", :class => 'btn btn-normal span12' do
+            %i.icon-calendar
+            Записаться
+        &nbsp;
+        %p
+          = link_to destroy_user_session_path, :method => :delete, :class => 'btn btn-normal span12' do
+            %i.icon-off
+            Выход
+        &nbsp;
   - else
-    = link_to 'Вход для записи', new_user_session_path, :class => 'btn btn-large btn-success', :data => { :colorbox => true }
-
-.span8
-  .thumbnails
-    - @category_photos.each do |cp|
-      .span4
-        .thumbnail
-          %h2= cp.name
-          = link_to cp do
-            = image_tag cp.photos.last.photo.url(:medium)
+    .utopia-login
+      %h1 Вход для записи
+      .utopia
+        = simple_form_for(User.new, :url => session_path(User)) do |f|
+          = f.input :phone
+          = f.input :password
+          = f.submit 'Войти', :class => 'btn btn-normal'
+          %br/
+          = link_to "Зарегистрироваться", new_registration_path(User)
+          %br/
+          = link_to "Забыли пароль?", new_password_path(User)

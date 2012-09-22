@@ -2,8 +2,11 @@
 %html{ :lang => I18n.locale }
   %head
     %title= @organization.name
-    = stylesheet_link_tag    "application", :media => "all"
-    = stylesheet_link_tag    "kickstrap/themes/#{@organization.theme || 'simplex'}"
+    = stylesheet_link_tag  "application", :media => "all"
+    = stylesheet_link_tag  "kickstrap/themes/#{@organization.theme || 'simplex'}"
+    /- if Organization::THEMES.include?( @organization.theme || 'simplex' )
+    /- else
+    /  = stylesheet_link_tag  "#{@organization.theme}/style.css"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js

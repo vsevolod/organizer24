@@ -1,7 +1,5 @@
 #coding: utf-8
-class AppointmentsController < ApplicationController
-  layout 'company'
-  before_filter :find_organization, :only => [:show, :create, :by_week, :change_status]
+class AppointmentsController < CompanyController
 
   def show
     @appointment = Appointment.find( params[:id] )

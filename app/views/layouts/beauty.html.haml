@@ -1,0 +1,29 @@
+!!!
+%html{ :lang => I18n.locale }
+  %head
+    %title= @organization.name
+    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "kickstrap/themes/beauty"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = yield :js
+  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_') }
+    .container-fluid
+      .row-fluid
+        .span12
+          .utopia-login-message
+            %h1
+              Добро пожаловать на
+              = link_to 'Depilate.ru', '/'
+            - unless current_user
+              %p Войдите, чтобы продолжить
+      .row-fluid
+        .span12
+          .row-fluid
+            = yield
+    = yield :bottom_js
+    - flash.each do |name, msg|
+      :javascript
+        $(function() {
+          $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: name, theme:  name});
+        });

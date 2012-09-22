@@ -1,6 +1,5 @@
-class ExecutorsController < ApplicationController
+class ExecutorsController < CompanyController
 
-  before_filter :find_organization
   before_filter :redirect_if_not_owner, :except => [:index]
 
   def index

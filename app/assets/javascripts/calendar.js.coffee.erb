@@ -98,7 +98,6 @@ $('#calendar').fullCalendar({
       popover = $('.popover.right')
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
-      console.log($('.popover.right').css('top') )
       element.find('.fc-event-title').html('')
     element
   eventAfterRender: (event, element, view) ->

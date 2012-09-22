@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
   ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before]
+  THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
 
   store :settings, accessors: ACCESSORS
 

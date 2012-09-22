@@ -7,7 +7,7 @@
   = f.input :name
   = f.input :subdomain
   = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
-  = f.input :theme, :collection => %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
+  = f.input :theme, :collection => Organization::THEMES+['beauty']
 
   %h3 Шаг календаря
   = f.collection_radio_buttons :slot_minutes, [[5,'5 минут'],[10,'10 минут'],[15,'15 минут'],[20,'20 минут'],[30,'пол часа'],[60,'час']], :first, :last

@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < CompanyController
   before_filter :authenticate_user!
 
   def dashboard

@@ -26,9 +26,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :name, :phone, :role
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role
 
   attr_writer :current_step
+
+  def name
+    [firstname, lastname]*' '
+  end
 
   def current_step
     @current_step || steps.first
