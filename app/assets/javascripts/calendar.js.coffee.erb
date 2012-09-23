@@ -4,6 +4,11 @@ to_i = (date_or_number) ->
   else
     date_or_number.valueOf() / 1000
 
+drop_draggable = ( date, allDay ) ->
+  originalEventObject = Organizer.draggable_item
+  #originalEventObject._id = 100000
+  #originalEventObject.
+
 drop_div = ( date, allDay ) ->
   if $('.ui-draggable').css('display') != 'none'
     originalEventObject = $('.ui-draggable').data('eventObject')
@@ -73,7 +78,10 @@ $('#calendar').fullCalendar({
     }
   ],
   dayClick: (date, allDay, jsEvent, view) ->
-    drop_div( date, allDay)
+    if Organizer.calendar_draggable
+      drop_draggable( date, allDay )
+    else
+      drop_div( date, allDay)
     false
   selectable: false,
   selectHelper: true,
@@ -109,11 +117,20 @@ $('#calendar').fullCalendar({
     if event['data-inner-class'] == 'legend-your-offer'
       element.popover( {
         title: 'Возможные действия',
-        content: '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client">Отменить запись</a>',
+        content: '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/><a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a>',
         trigger: 'manual',
-        placement: 'in left'
+        placement: 'bottom'
       }).popover('show')
 })
+
+$('.move_appointment').live('click', ->
+  $(this).parents('.popover').remove()
+  Organizer.draggable_item = $('#calendar').fullCalendar( 'clientEvents', $(this).data('id') )
+  Organizer.calendar_draggable = true
+  $('#calendar').addClass('draggable_calendar')
+  $('#calendar').fullCalendar( 'removeEvents', $(this).data('id') )
+  false
+)
 
 $('.confirm_calendar').live('click', ->
   $('#user_phone').parents('.control-group').removeClass('error')

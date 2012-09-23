@@ -24,7 +24,7 @@ Organizer::Application.routes.draw do
     resources :services
     resources :working_hours do
       collection do
-        get :by_week
+        get :by_week, :self_by_month
       end
     end
     get ':id', :to => 'pages#show'

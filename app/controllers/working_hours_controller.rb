@@ -1,10 +1,23 @@
 # coding: utf-8
 class WorkingHoursController < CompanyController
+  before_filter :prepare_calendar_options
 
   respond_to :html, :json
 
+  def self_by_month
+    @periods = []
+    current_user.appointments.where(:start.gteq => @start, :start.lteq => @end, :status.in => %w{approve offer taken} ).each do |appointment|
+      data_inner_class = if appointment.offer?
+                           'legend-your-offer'
+                         else
+                           'legend-inaccessible'
+                         end
+      @periods << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+    end
+    respond_with( @periods )
+  end
+
   def by_week
-    @start = Time.at( params[:start].to_i )
     min_wt = @organization.working_hours.pluck(:begin_time).min
     max_wt = @organization.working_hours.pluck(:end_time).max
     @periods = []
@@ -16,8 +29,7 @@ class WorkingHoursController < CompanyController
           res = []
           res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
           res << { :title => 'закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
-          @organization.appointments.where('date(start) = ?', (@start+index.days).to_date).where( :status.not_eq => 'free' ).each do |appointment|
-            next unless ['approve', 'offer', 'taken'].include? appointment.status
+          @organization.appointments.where('date(start) = ?', (@start+index.days).to_date).where( :status.in => %w{approve offer taken} ).each do |appointment|
             data_inner_class = if current_user == appointment.user
                                  if appointment.offer?
                                    'legend-your-offer'
@@ -39,5 +51,12 @@ class WorkingHoursController < CompanyController
     end
     respond_with( @periods.flatten.compact )
   end
+
+  private
+
+    def prepare_calendar_options
+      @start = Time.at( params[:start].to_i )
+      @end = Time.at( params[:end].to_i )
+    end
 
 end

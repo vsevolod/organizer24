@@ -1,6 +1,6 @@
 class CompanyController < ApplicationController
-  before_filter :find_organization, :only => [:show, :calendar, :edit, :update]
-  layout :company, :except => [:index]
+  before_filter :find_organization
+  layout :company
 
   private
 

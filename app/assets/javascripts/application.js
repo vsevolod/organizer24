@@ -11,6 +11,7 @@
 //= require ckeditor/init
 //= require colorbox-rails
 
+var Organizer = { calendar_draggable: false, draggable_item: null};
 
 Array.max = function( array ){
   return Math.max.apply( Math, array );

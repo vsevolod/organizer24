@@ -4,8 +4,12 @@
 - content_for :bottom_js do
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
-  = stylesheet_link_tag    'fullcalendar'
   = javascript_include_tag 'fullcalendar', 'calendar'
+  - if defined? @str_day
+    :javascript
+      $(function(){
+        $('#calendar').fullCalendar( 'gotoDate', #{@str_day} )
+      })
 
 = form_tag appointments_path do
   = hidden_field_tag :start

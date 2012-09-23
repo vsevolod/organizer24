@@ -1,3 +1,5 @@
+- content_for :bottom_js do
+  = javascript_include_tag 'fullcalendar', 'month_calendar'
 .span6
   .utopia-login-info= image_tag "kickstrap/themes/beauty/left-logo.jpg"
 .span6
@@ -20,6 +22,7 @@
             %i.icon-off
             Выход
         &nbsp;
+    #month_calendar.span10.offset1
   - else
     .utopia-login
       %h1 Вход для записи
