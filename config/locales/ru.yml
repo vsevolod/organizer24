@@ -1,4 +1,6 @@
 ru:
+  notice: Сообщение
+  alert: Внимание
   legend:
     status:
       free: Свободно
@@ -26,7 +28,7 @@ ru:
         author: Автор
         body: Содержание
       admin_user:
-        email: Email
+        email: E-mail
       appointment:
         complete_time: Время изменения статуса
         cost: Стоимость
@@ -79,7 +81,7 @@ ru:
         cost: Стоимость
         organization: Организация
       user:
-        email: Email
+        email: E-mail
         firstname: Имя
         lastname: Фамилия
         phone: Телефон

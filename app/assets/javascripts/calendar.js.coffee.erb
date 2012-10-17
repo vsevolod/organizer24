@@ -4,11 +4,42 @@ to_i = (date_or_number) ->
   else
     date_or_number.valueOf() / 1000
 
+# Перенос события
 drop_draggable = ( date, allDay ) ->
   originalEventObject = Organizer.draggable_item
-  #originalEventObject._id = 100000
-  #originalEventObject.
+  period = originalEventObject.end.valueOf() - originalEventObject.start.valueOf()
+  copiedEventObject = $.extend({
+    _id: 100000,
+    start: date,
+    end: new Date( date.valueOf() + period ),
+    _start: date,
+    _end: new Date( date.valueOf() + period ),
+    confirm: $('.buttons_to_confirm').html(),
+    allDay: false,
+    editable: false
+    title: originalEventObject.title,
+    'data-id': originalEventObject.id,
+    'data-inner-class': originalEventObject['data-inner-class']
+  }, {})
+  intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
+    if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
+      return el
+  )
+  end_date = new Date( copiedEventObject.end)
+  if intersection.length > 0
+    alert('Запись на этот период невозможна')
+  else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
+    alert('Не получается перенести запись с периодом = 0')
+  else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+    Organizer.draggable_item = null
+    Organizer.calendar_draggable = false
+    $('#calendar').removeClass('draggable_calendar')
+    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+    #TODO >>> update event date. and show services for current event
+  else
+    alert('Рабочий день заканчивается')
 
+# Создание нового события
 drop_div = ( date, allDay ) ->
   if $('.ui-draggable').css('display') != 'none'
     originalEventObject = $('.ui-draggable').data('eventObject')
@@ -22,7 +53,7 @@ drop_div = ( date, allDay ) ->
     if originalEventObject.duration <= 30
       copiedEventObject.title = ''
     copiedEventObject.start = date
-    copiedEventObject.end = date.valueOf()/1000 + originalEventObject.duration*60
+    copiedEventObject.end = to_i(date) + originalEventObject.duration*60
     copiedEventObject.allDay = allDay
     intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
       if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
@@ -34,6 +65,7 @@ drop_div = ( date, allDay ) ->
     else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
       alert('Период равен 0. Выберите какой-нибудь сервис')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+      console.log( copiedEventObject )
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start)
       $('#second').hide()
@@ -125,7 +157,7 @@ $('#calendar').fullCalendar({
 
 $('.move_appointment').live('click', ->
   $(this).parents('.popover').remove()
-  Organizer.draggable_item = $('#calendar').fullCalendar( 'clientEvents', $(this).data('id') )
+  Organizer.draggable_item = $('#calendar').fullCalendar( 'clientEvents', $(this).data('id') )[0]
   Organizer.calendar_draggable = true
   $('#calendar').addClass('draggable_calendar')
   $('#calendar').fullCalendar( 'removeEvents', $(this).data('id') )

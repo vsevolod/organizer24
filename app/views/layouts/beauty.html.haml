@@ -25,5 +25,5 @@
     - flash.each do |name, msg|
       :javascript
         $(function() {
-          $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: name, theme:  name});
+          $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: "#{t(name)}"});
         });

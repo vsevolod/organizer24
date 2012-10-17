@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :appointments
   accepts_nested_attributes_for :my_organization
 
+  validates_presence_of :phone, :if => :first_step?
   validates_presence_of :email, :if => :first_admin_step?
   validates_uniqueness_of :email, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }
   validates_format_of :email, :with => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }

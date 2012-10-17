@@ -1,16 +1,25 @@
 # coding: utf-8
 class RegistrationsController < Devise::RegistrationsController
+  include SetLayout
+  before_filter :find_organization
+  layout :company
 
   # Тут регаются только админы
   def new
     session[:user_params] ||= {}
-    session[:user_params]['role'] = 'admin'
     # очищать сессию на первом шаге
     #session[:user_params] = {}
     #session[:user_step] = nil
     resource = build_resource( session[:user_params] )
-    resource.current_step = session[:user_step]
-    respond_with resource
+    if defined? @organization
+      resource.role = 'client'
+      resource.current_step = 1
+      render :action => :edit
+    else
+      resource.role = 'admin'
+      resource.current_step = session[:user_step]
+      respond_with resource
+    end
   end
 
   def create
@@ -20,9 +29,10 @@ class RegistrationsController < Devise::RegistrationsController
     if resource.role == 'client'
       if resource.save
         sign_in resource
-        redirect_to :back, notice: 'Вы успешно зарегистрированы'
+        redirect_to '/', notice: 'Вы успешно зарегистрированы'
       else
-        redirect_to :back, alert: 'При регистрации возникли ошибки'
+        redirect_to :back, notice: 'Вы успешно зарегистрированы'
+        #render :action => :edit, alert: 'При регистрации возникли ошибки'
       end
     else
       resource.build_my_organization unless resource.my_organization
