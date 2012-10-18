@@ -81,12 +81,12 @@ drop_div = ( date, allDay ) ->
     if intersection.length > 0
       alert('Запись на этот период невозможна')
     else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
-      alert('Период равен 0. Выберите какой-нибудь сервис')
+      alert('Период равен 0. Выберите какую-нибудь услугу')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
-      console.log( copiedEventObject )
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start)
-      $('#second').hide()
+      #$('#second').hide()
+      $('#second').css('opacity', 0.1)
     else
       alert('Рабочий день заканчивается')
 
@@ -128,10 +128,11 @@ $('#calendar').fullCalendar({
     }
   ],
   dayClick: (date, allDay, jsEvent, view) ->
-    if Organizer.calendar_draggable
-      drop_draggable( date, allDay )
-    else
-      drop_div( date, allDay)
+    if $('.popover-inner').length == 0
+      if Organizer.calendar_draggable
+        drop_draggable( date, allDay )
+      else
+        drop_div( date, allDay)
     false
   selectable: false,
   selectHelper: true,
@@ -211,7 +212,7 @@ $('.confirm_calendar').live('click', ->
 )
 
 $('.cancel_calendar').live('click', ->
-  $('#second').show()
+  $('#second').css('opacity', 1)
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
   $(this).parents('.popover').remove()
   false

@@ -6,8 +6,8 @@
   = link_to organization.name, organization
 
   %h3 Заявки
-  = render 'appointments/list', :appointments => organization.appointments
+  = render 'appointments/list', :appointments => organization.appointments, :show_client => true
 
 - if @user.appointments.any?
   %h3 Ваши заявки
-  = render 'appointments/list', :appointments => @user.appointments
+  = render 'appointments/list', :appointments => @user.appointments, :show_client => false
