@@ -31,7 +31,7 @@ module ApplicationHelper
       { :complete => 'btn-success', :cancel_owner => '', :cancel_client => 'btn-warning', :missing => 'btn-danger', :lated => 'btn-info'}.each do |state, html_class|
         arr << link_to( t("activerecord.attributes.appointment.status.#{state}"), short_csoap(org, appointment, state ), :class => "btn #{html_class}", :method => :post ) if appointment.aasm_read_state != state
      end
-    elsif current_user == appointment.user
+    elsif current_user == appointment.user && !appointment.cancel_client?
       arr << link_to( 'Отменить', short_csoap(org, appointment, :cancel_client ), :class => 'btn btn-danger', :method => :post )
     end
     arr.join(joins).html_safe

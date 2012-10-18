@@ -4,21 +4,42 @@ to_i = (date_or_number) ->
   else
     date_or_number.valueOf() / 1000
 
+# Показываем существующие услуги у события
+show_appointment_services = (event, options) ->
+  text = ''
+  if ( event['data-services'] )
+    if !options['hide_title']
+      text += '<b>Услуги:</b> <br/>'
+    cost = 0
+    showing_time = 0
+    $.each( JSON.parse(event['data-services']) , (id, el) ->
+      text += el.name + '<br/>'
+      cost += el.cost
+      showing_time += el.showing_time
+    )
+    text += '<hr/>'
+    if cost > 0
+      text += "Время: "+showing_time+" мин.<br/> Стоимость: "+cost+" руб.<br/>"
+  text
+
 # Перенос события
 drop_draggable = ( date, allDay ) ->
   originalEventObject = Organizer.draggable_item
   period = originalEventObject.end.valueOf() - originalEventObject.start.valueOf()
+  originalEventObject.start = date
+  originalEventObject.end = new Date( date.valueOf() + period )
   copiedEventObject = $.extend({
     _id: 100000,
-    start: date,
-    end: new Date( date.valueOf() + period ),
-    _start: date,
-    _end: new Date( date.valueOf() + period ),
+    start: originalEventObject.start,
+    end: originalEventObject.end,
+    _start: originalEventObject.start,
+    _end: originalEventObject.end,
     confirm: $('.buttons_to_confirm').html(),
     allDay: false,
-    editable: false
+    editable: false,
+    'data-services': originalEventObject['data-services'],
     title: originalEventObject.title,
-    'data-id': originalEventObject.id,
+    'data-id': originalEventObject['data-id'],
     'data-inner-class': originalEventObject['data-inner-class']
   }, {})
   intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
@@ -31,11 +52,8 @@ drop_draggable = ( date, allDay ) ->
   else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
     alert('Не получается перенести запись с периодом = 0')
   else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
-    Organizer.draggable_item = null
-    Organizer.calendar_draggable = false
-    $('#calendar').removeClass('draggable_calendar')
     $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-    #TODO >>> update event date. and show services for current event
+    #TODO >>> update event date
   else
     alert('Рабочий день заканчивается')
 
@@ -130,8 +148,15 @@ $('#calendar').fullCalendar({
       $.each( $('.check_services input:checked').parent(), (id, el) ->
         text += $(el).text() + '<br/>'
       )
+      sas = show_appointment_services(event, {hide_title: true})
+      if (sas != '')
+        text += sas
+      else
+        text += element.find('.fc-event-title').text()
+
+      text += event.confirm
       element.popover( {
-        content: text + '<hr/>' + element.find('.fc-event-title').text() + event.confirm,
+        content: text,
         title: 'Подтвердить',
         trigger: 'manual',
         placement: 'right' }).popover('show')
@@ -147,9 +172,10 @@ $('#calendar').fullCalendar({
   eventClick: (event, jsEvent, view) ->
     element = $(jsEvent.currentTarget)
     if event['data-inner-class'] == 'legend-your-offer'
+      sas = show_appointment_services(event, {})
       element.popover( {
         title: 'Возможные действия',
-        content: '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/><a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a>',
+        content: sas+'<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/><a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a>',
         trigger: 'manual',
         placement: 'bottom'
       }).popover('show')
@@ -165,9 +191,23 @@ $('.move_appointment').live('click', ->
 )
 
 $('.confirm_calendar').live('click', ->
-  $('#user_phone').parents('.control-group').removeClass('error')
-  $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
-  $('#first').parent().submit()
+  if Organizer.calendar_draggable
+    $('#calendar').removeClass('draggable_calendar')
+    options = {_method: 'PUT', appointment: {
+      start: Organizer.draggable_item.start
+    } }
+    popover = $(this).parents('.popover')
+    $.post( '/appointments/'+Organizer.draggable_item['data-id'], options, (data, textStatus) ->
+      if textStatus == 'success'
+        Organizer.draggable_item = null
+        Organizer.calendar_draggable = false
+        popover.remove()
+    )
+    false
+  else
+    $('#user_phone').parents('.control-group').removeClass('error')
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
+    $('#first').parent().submit()
 )
 
 $('.cancel_calendar').live('click', ->

@@ -52,4 +52,19 @@ class AppointmentsController < CompanyController
     @appointments = @organization.appointments.where( :start.gteq => @start )
   end
 
+  def update
+    @appointment = Appointment.find(params[:id])
+
+    respond_to do |wants|
+      if @appointment.update_attributes(params[:appointment])
+        flash[:notice] = 'Appointment was successfully updated.'
+        wants.html { redirect_to(@appointment) }
+        wants.xml  { head :ok }
+      else
+        wants.html { render :action => "edit" }
+        wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end
