@@ -1,9 +1,11 @@
 - content_for :js do
   :javascript
     var collections_services = #{@organization.get_services.to_json};
+
 - content_for :bottom_js do
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
+    $('#second check_services').affix();
   = javascript_include_tag 'fullcalendar', 'calendar'
   - if defined? @str_day
     :javascript
@@ -11,12 +13,12 @@
         $('#calendar').fullCalendar( 'gotoDate', #{@str_day} )
       })
 
-= form_tag appointments_path do
+= form_tag appointments_path, :remote => true do
   = hidden_field_tag :start
   %section.utopia-widget#second
     %h3 На что хотите записаться:
     .row-fluid
-      .check_services
+      .check_services{ 'data-spy' => 'affix', 'data-offset-top' => '200'}
         - services = @organization.services.not_collections.order(:name)
         - services.each_slice( services.size/2 ).each do |group_services|
           .span3

@@ -1,5 +1,6 @@
 class SessionsController < Devise::SessionsController
-
-  layout 'colorbox'
+  include SetLayout
+  before_filter :find_organization
+  layout :company
 
 end

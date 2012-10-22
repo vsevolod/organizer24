@@ -31,8 +31,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in resource
         redirect_to '/', notice: 'Вы успешно зарегистрированы'
       else
-        redirect_to :back, notice: 'Вы успешно зарегистрированы'
-        #render :action => :edit, alert: 'При регистрации возникли ошибки'
+        render :action => :edit, alert: 'При регистрации возникли ошибки'
       end
     else
       resource.build_my_organization unless resource.my_organization

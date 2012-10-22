@@ -27,11 +27,15 @@ class AppointmentsController < CompanyController
     else
       session[:phone] = params[:user][:phone]
     end
-    if @appointment.save
-      session[:appointment_new] = @appointment.id
-      redirect_to @appointment
-    else
-      redirect_to :back, notice: 'При сохранении возникла ошибка'
+    respond_to do |format|
+      if @appointment.save
+        session[:appointment_new] = @appointment.id
+        format.html{ redirect_to @appointment }
+        format.js{ render :js => "$('.cancel_calendar').trigger('click');$('#calendar').fullCalendar( 'refetchEvents' )" }
+      else
+        format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
+        format.js{ render :text => 'cancel' }
+      end
     end
   end
 

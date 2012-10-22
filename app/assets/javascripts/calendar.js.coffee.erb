@@ -81,11 +81,10 @@ drop_div = ( date, allDay ) ->
     if intersection.length > 0
       alert('Запись на этот период невозможна')
     else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
-      alert('Период равен 0. Выберите какую-нибудь услугу')
+      alert('Для начала выберите услугу')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start)
-      #$('#second').hide()
       $('#second').css('opacity', 0.1)
     else
       alert('Рабочий день заканчивается')
@@ -174,13 +173,20 @@ $('#calendar').fullCalendar({
     element = $(jsEvent.currentTarget)
     if event['data-inner-class'] == 'legend-your-offer'
       sas = show_appointment_services(event, {})
+      sas += '<a class="btn btn-warning change_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
+      sas += '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/>'
+      sas += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
       element.popover( {
         title: 'Возможные действия',
-        content: sas+'<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/><a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a>',
+        content: sas,
         trigger: 'manual',
-        placement: 'bottom'
+        placement: 'right'
       }).popover('show')
 })
+
+$('.change_appointment').live('click', ->
+  alert('a')
+)
 
 $('.move_appointment').live('click', ->
   $(this).parents('.popover').remove()
@@ -204,11 +210,11 @@ $('.confirm_calendar').live('click', ->
         Organizer.calendar_draggable = false
         popover.remove()
     )
-    false
   else
     $('#user_phone').parents('.control-group').removeClass('error')
     $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
     $('#first').parent().submit()
+  false
 )
 
 $('.cancel_calendar').live('click', ->
