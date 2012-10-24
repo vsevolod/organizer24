@@ -16,6 +16,13 @@ class AppointmentsController < CompanyController
     end
   end
 
+  def edit
+    @appointment = Appointment.find( params[:id] )
+    respond_to do |format|
+      format.js { render :inline => "$('#popover_for_change').html('<%= escape_javascript(render 'form', appointment: @appointment) %>')" }
+    end
+  end
+
   def create
     @user = current_user || User.where( params[:user] ).first_or_initialize
     @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
@@ -31,7 +38,7 @@ class AppointmentsController < CompanyController
       if @appointment.save
         session[:appointment_new] = @appointment.id
         format.html{ redirect_to @appointment }
-        format.js{ render :js => "$('.cancel_calendar').trigger('click');$('#calendar').fullCalendar( 'refetchEvents' )" }
+        format.js{ render :js => refresh_calendar(@appointment.id) }
       else
         format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
         format.js{ render :text => 'cancel' }
@@ -61,14 +68,21 @@ class AppointmentsController < CompanyController
 
     respond_to do |wants|
       if @appointment.update_attributes(params[:appointment])
-        flash[:notice] = 'Appointment was successfully updated.'
-        wants.html { redirect_to(@appointment) }
+        wants.html { redirect_to @appointment, notice:'Appointment was successfully updated.' }
+        wants.js  { render :js => refresh_calendar( @appointment.id ) }
         wants.xml  { head :ok }
       else
         wants.html { render :action => "edit" }
+        wants.js  {  render :text => "alert('Не изменено');" }
         wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
       end
     end
   end
+
+  private
+
+    def refresh_calendar(id)
+      "Organizer.destroy_popover_by_id(#{id});$('#calendar').fullCalendar( 'refetchEvents' );"
+    end
 
 end

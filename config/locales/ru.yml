@@ -32,8 +32,9 @@ ru:
       appointment:
         complete_time: Время изменения статуса
         cost: Стоимость
-        start: Время начала
+        services: Услуги
         showing_time: Общая продолжительность
+        start: Время начала
         status:
           free: Свободно
           taken: Занято

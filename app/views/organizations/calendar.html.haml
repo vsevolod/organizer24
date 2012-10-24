@@ -5,7 +5,7 @@
 - content_for :bottom_js do
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
-    $('#second check_services').affix();
+    //$('#second check_services').affix();
   = javascript_include_tag 'fullcalendar', 'calendar'
   - if defined? @str_day
     :javascript

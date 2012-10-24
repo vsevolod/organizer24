@@ -4,6 +4,15 @@ to_i = (date_or_number) ->
   else
     date_or_number.valueOf() / 1000
 
+Organizer.destroy_popover_by_id = ( appointment_id ) ->
+  el = $('div[data-id="'+appointment_id+'"]').popover('destroy')
+  return $('div[data-id="'+appointment_id+'"]')
+
+find_event = (event_id) ->
+  event = $.grep( $('#calendar').fullCalendar( 'clientEvents' ), (item) ->
+    return item._id == event_id
+  )[0]
+
 # Показываем существующие услуги у события
 show_appointment_services = (event, options) ->
   text = ''
@@ -143,6 +152,7 @@ $('#calendar').fullCalendar({
   eventRender: (event, element) ->
     element.find('.fc-event-title').html(element.find('.fc-event-title').text())
     element.find('.fc-event-inner').addClass( event['data-inner-class'])
+    element.attr('data-id', event['data-id'])
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
       $.each( $('.check_services input:checked').parent(), (id, el) ->
@@ -185,7 +195,16 @@ $('#calendar').fullCalendar({
 })
 
 $('.change_appointment').live('click', ->
-  alert('a')
+  event = find_event( $(this).data('id') )
+  appointment_id = event['data-id']
+  Organizer.destroy_popover_by_id( appointment_id ).popover( {
+    title: 'Изменение',
+    content: '<div id="popover_for_change"></div>',
+    trigger: 'manual',
+    placement: 'right'
+  }).popover('show')
+  $.getScript( '/appointments/'+appointment_id+'/edit/' )
+  false
 )
 
 $('.move_appointment').live('click', ->
@@ -200,16 +219,21 @@ $('.move_appointment').live('click', ->
 $('.confirm_calendar').live('click', ->
   if Organizer.calendar_draggable
     $('#calendar').removeClass('draggable_calendar')
-    options = {_method: 'PUT', appointment: {
-      start: Organizer.draggable_item.start
-    } }
-    popover = $(this).parents('.popover')
-    $.post( '/appointments/'+Organizer.draggable_item['data-id'], options, (data, textStatus) ->
-      if textStatus == 'success'
-        Organizer.draggable_item = null
-        Organizer.calendar_draggable = false
-        popover.remove()
-    )
+    appointment_id = Organizer.draggable_item['data-id']
+    $(this).parents('.popover').remove()
+    $.ajax( {
+      url: '/appointments/'+appointment_id,
+      type: 'POST',
+      dataType: 'script',
+      data: { appointment: {
+        start: Organizer.draggable_item.start
+      } },
+      complete: (data, textStatus) ->
+        if textStatus == 'success'
+          Organizer.draggable_item = null
+          Organizer.calendar_draggable = false
+          Organizer.destroy_popover_by_id( appointment_id )
+    }  )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
     $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
@@ -221,5 +245,13 @@ $('.cancel_calendar').live('click', ->
   $('#second').css('opacity', 1)
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
   $(this).parents('.popover').remove()
+  false
+)
+
+$('.close_popover').live('click', ->
+  if appointment_id = $(this).data('id')
+    Organizer.destroy_popover_by_id( appointment_id )
+  else
+    $(this).parents('.popover').remove()
   false
 )

@@ -5,9 +5,10 @@ class Appointment < ActiveRecord::Base
   belongs_to :user_by_phone, :class_name => 'User', :foreign_key => :phone, :primary_key => :phone # Клиент по номеру телефона
   belongs_to :organization          # Организация
   has_and_belongs_to_many :services # Услуги
-
   accepts_nested_attributes_for :services
+
   before_save :update_complete_time
+  before_save :cost_time_by_services!
 
   #before_validation :count_cost_time
 
@@ -32,7 +33,7 @@ class Appointment < ActiveRecord::Base
   validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
-  attr_accessible :start, :organization_id, :appointment_services, :showing_time
+  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!
