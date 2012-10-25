@@ -2,6 +2,8 @@
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
 
+  respond_to :html, :json
+
   def show
     @appointment = Appointment.find( params[:id] )
     @can_edit = current_user && ( @appointment.user == current_user || current_user.owner?( @organization ) )
@@ -28,10 +30,11 @@ class AppointmentsController < CompanyController
   def by_week
     @is_owner = current_user.owner?( @organization )
     @appointments = if @is_owner
-                      @organization.appointments
+                      @organization.appointments.where( :status.in => params[:statuses] )
                     else
-                      @organization.appointments.where( :status.in => %w{approve offer taken} )
-                    end.where('date(start) >= ? AND date(start) < ', @start.to_date, @end.to_date)
+                      # Обычный пользователь просматривает только все что >= сегодняшнего дня
+                      @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Date.today)
+                    end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     @periods = @appointments.map do |appointment|
       data_inner_class = if current_user == appointment.user
                            if appointment.offer?

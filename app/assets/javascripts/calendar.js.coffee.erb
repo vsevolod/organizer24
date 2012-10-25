@@ -13,6 +13,16 @@ find_event = (event_id) ->
     return item._id == event_id
   )[0]
 
+show_checkboxes = ->
+  params = '/appointments/by_week'
+  if $('.show_statuses')
+    params += "?"
+    params += $.map( $('.show_statuses .checkbox input:checked'), (el, index) ->
+      return "statuses[]="+$(el).val()
+    ).join('&')
+  Organizer.old_event_source = params
+  params
+
 # Показываем существующие услуги у события
 show_appointment_services = (event, options) ->
   text = ''
@@ -135,7 +145,7 @@ $('#calendar').fullCalendar({
       borderColor: '#ccc'
     },
     {
-      url: '/appointments/by_week',
+      url: show_checkboxes(),
       borderColor: '#ccc'
     }
   ],
@@ -251,3 +261,7 @@ $('.close_popover').live('click', ->
     $(this).parents('.popover').remove()
   false
 )
+
+$('.show_statuses .checkbox input').change ->
+  $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
+  $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
