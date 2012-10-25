@@ -16,7 +16,7 @@ Organizer::Application.routes.draw do
       end
       member do
         post :change_status
-        post :update
+        post :change_start_time
       end
     end
     resources :category_photos

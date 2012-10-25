@@ -63,17 +63,32 @@ class AppointmentsController < CompanyController
     @appointments = @organization.appointments.where( :start.gteq => @start )
   end
 
+  # POST appointments/:id/change_start_time JS
+  def change_start_time
+    @appointment = Appointment.find(params[:id])
+    @appointment.start = params[:start]
+    if @appointment.save
+      render :text => <<-JS
+        Organizer.draggable_item = null;
+        Organizer.calendar_draggable = false;
+        Organizer.destroy_popover_by_id( appointment_id );
+      JS
+    else
+      render :text => 'alert("не верная дата")'
+    end
+  end
+
   def update
     @appointment = Appointment.find(params[:id])
 
     respond_to do |wants|
       if @appointment.update_attributes(params[:appointment])
         wants.html { redirect_to @appointment, notice:'Appointment was successfully updated.' }
-        wants.js  { render :js => refresh_calendar( @appointment.id ) }
+        wants.js   { render :text => refresh_calendar( @appointment.id ) }
         wants.xml  { head :ok }
       else
         wants.html { render :action => "edit" }
-        wants.js  {  render :text => "alert('Не изменено');" }
+        wants.js   { render :text => "alert('Не изменено');" }
         wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
       end
     end
@@ -82,7 +97,7 @@ class AppointmentsController < CompanyController
   private
 
     def refresh_calendar(id)
-      "Organizer.destroy_popover_by_id(#{id});$('#calendar').fullCalendar( 'refetchEvents' );"
+      "Organizer.destroy_popover_by_id(#{id});$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' );"
     end
 
 end

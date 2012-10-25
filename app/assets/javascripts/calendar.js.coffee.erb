@@ -222,18 +222,11 @@ $('.confirm_calendar').live('click', ->
     appointment_id = Organizer.draggable_item['data-id']
     $(this).parents('.popover').remove()
     $.ajax( {
-      url: '/appointments/'+appointment_id,
+      url: '/appointments/'+appointment_id+'/change_start_time',
       type: 'POST',
       dataType: 'script',
-      data: { appointment: {
-        start: Organizer.draggable_item.start
-      } },
-      complete: (data, textStatus) ->
-        if textStatus == 'success'
-          Organizer.draggable_item = null
-          Organizer.calendar_draggable = false
-          Organizer.destroy_popover_by_id( appointment_id )
-    }  )
+      data: { start: Organizer.draggable_item.start }
+    } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
     $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
