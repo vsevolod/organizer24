@@ -4,13 +4,12 @@ to_i = (date_or_number) ->
   else
     date_or_number.valueOf() / 1000
 
-Organizer.destroy_popover_by_id = ( appointment_id ) ->
-  el = $('div[data-id="'+appointment_id+'"]').popover('destroy')
-  return $('div[data-id="'+appointment_id+'"]')
+Organizer.destroy_all_popovers = ( appointment_id ) ->
+  $('div.fc-event[data-id]').popover('destroy')
 
-find_event = (event_id) ->
+find_event = (event_id, field) ->
   event = $.grep( $('#calendar').fullCalendar( 'clientEvents' ), (item) ->
-    return item._id == event_id
+    return item[field] == event_id
   )[0]
 
 show_checkboxes = ->
@@ -59,7 +58,8 @@ drop_draggable = ( date, allDay ) ->
     'data-services': originalEventObject['data-services'],
     title: originalEventObject.title,
     'data-id': originalEventObject['data-id'],
-    'data-inner-class': originalEventObject['data-inner-class']
+    'data-inner-class': originalEventObject['data-inner-class'],
+    'is_owner': originalEventObject['is_owner']
   }, {})
   intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
     if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
@@ -72,7 +72,6 @@ drop_draggable = ( date, allDay ) ->
     alert('Не получается перенести запись с периодом = 0')
   else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
     $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-    #TODO >>> update event date
   else
     alert('Рабочий день заканчивается')
 
@@ -150,6 +149,7 @@ $('#calendar').fullCalendar({
     }
   ],
   dayClick: (date, allDay, jsEvent, view) ->
+    Organizer.destroy_all_popovers()
     if $('.popover-inner').length == 0
       if Organizer.calendar_draggable
         drop_draggable( date, allDay )
@@ -179,6 +179,7 @@ $('#calendar').fullCalendar({
         text += element.find('.fc-event-title').text()
 
       text += event.confirm
+      Organizer.destroy_all_popovers()
       element.popover( {
         content: text,
         title: 'Подтвердить',
@@ -193,24 +194,34 @@ $('#calendar').fullCalendar({
     #console.log( element )
     #console.log( view )
   eventClick: (event, jsEvent, view) ->
+    Organizer.destroy_all_popovers()
     element = $(jsEvent.currentTarget)
-    if event['data-inner-class'] == 'legend-your-offer'
-      sas = show_appointment_services(event, {})
-      sas += '<a class="btn btn-warning change_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
-      sas += '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/>'
-      sas += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
+    popup_text = show_appointment_services(event, {})
+    if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
+      popup_text += '<a class="btn btn-warning change_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
+      popup_text += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
+    if event['is_owner']
+      <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
+        popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
+      <% end %>
+    else
+      if event['data-inner-class'] == 'legend-your-offer'
+        popup_text += '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/>'
+    if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
+      Organizer.destroy_all_popovers()
       element.popover( {
         title: 'Возможные действия',
-        content: sas,
+        content: popup_text,
         trigger: 'manual',
         placement: 'right'
       }).popover('show')
 })
 
 $('.change_appointment').live('click', ->
-  event = find_event( $(this).data('id') )
+  event = find_event( $(this).data('id'), '_id' )
   appointment_id = event['data-id']
-  Organizer.destroy_popover_by_id( appointment_id ).popover( {
+  Organizer.destroy_all_popovers()
+  $('div[data-id="'+appointment_id+'"]').popover( {
     title: 'Изменение',
     content: '<div id="popover_for_change"></div>',
     trigger: 'manual',
@@ -221,6 +232,7 @@ $('.change_appointment').live('click', ->
 )
 
 $('.move_appointment').live('click', ->
+  Organizer.destroy_all_popovers()
   $(this).parents('.popover').remove()
   Organizer.draggable_item = $('#calendar').fullCalendar( 'clientEvents', $(this).data('id') )[0]
   Organizer.calendar_draggable = true
@@ -230,10 +242,13 @@ $('.move_appointment').live('click', ->
 )
 
 $('.confirm_calendar').live('click', ->
+  $(this).parents('.popover').remove()
   if Organizer.calendar_draggable
     $('#calendar').removeClass('draggable_calendar')
     appointment_id = Organizer.draggable_item['data-id']
-    $(this).parents('.popover').remove()
+    event = find_event( appointment_id, 'data-id' )
+    event.confirm = false
+    Organizer.destroy_all_popovers()
     $.ajax( {
       url: '/appointments/'+appointment_id+'/change_start_time',
       type: 'POST',
@@ -250,18 +265,20 @@ $('.confirm_calendar').live('click', ->
 $('.cancel_calendar').live('click', ->
   $('#second').css('opacity', 1)
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
+  Organizer.destroy_all_popovers()
   $(this).parents('.popover').remove()
   false
 )
 
 $('.close_popover').live('click', ->
-  if appointment_id = $(this).data('id')
-    Organizer.destroy_popover_by_id( appointment_id )
-  else
-    $(this).parents('.popover').remove()
+  Organizer.destroy_all_popovers()
   false
 )
 
+# FIXME - может не через session, а через cookies сделать? :D
 $('.show_statuses .checkbox input').change ->
-  $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
-  $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
+  ##$.post('/main/set_session', { key: 'show_'+$(this).val(), value: $(this).is(':checked') } )
+  ##$('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
+  ##$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
+  document.location.href = '/main/set_session?key=show_' + $(this).val() + '&value=' + $(this).is(':checked')
+

@@ -41,6 +41,8 @@ Organizer::Application.routes.draw do
     end
   end
 
+  match '/main/set_session' => 'main#set_session', :via => [:get]
+
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
 

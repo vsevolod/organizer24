@@ -15,7 +15,7 @@ class Integer
                 when 1 then 24
                 when 2 then 30
                 end
-      result = show_time( interval / divisor, level + 1)
+      result = (interval / divisor).show_time(level + 1)
       result += " #{interval % divisor} #{Russian.p( interval % divisor, *MINUTE_LEVEL[level] )}"unless (interval % divisor ).zero?
       result
     end

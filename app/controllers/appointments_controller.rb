@@ -36,21 +36,17 @@ class AppointmentsController < CompanyController
                       @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Date.today)
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     @periods = @appointments.map do |appointment|
-      data_inner_class = if current_user == appointment.user
-                           if appointment.offer?
-                             'legend-your-offer'
-                           else
-                             'legend-inaccessible'
-                           end
+      data_inner_class = if current_user == appointment.user && appointment.offer?
+                           'legend-your-offer'
                          else
-                           'legend-taken'
+                           "legend-#{appointment.status}"
                          end
       title = if ( @is_owner && ['taken', 'your-offer', 'offer', 'approve'].include?( appointment.status ) ) || ( !@is_owner && data_inner_class == 'legend-your-offer' )
                 appointment.services.pluck('name').join('<br/>')
               else
                 appointment.aasm_human_state
               end
-      { :title => title, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id, 'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
+      { :title => title, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'is_owner' => @is_owner, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id, 'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
     end
     respond_with( @periods )
   end
@@ -70,7 +66,7 @@ class AppointmentsController < CompanyController
       if @appointment.save
         session[:appointment_new] = @appointment.id
         format.html{ redirect_to @appointment }
-        format.js{ render :js => refresh_calendar(@appointment.id) }
+        format.js{ render :js => refresh_calendar }
       else
         format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
         format.js{ render :text => 'cancel' }
@@ -80,10 +76,14 @@ class AppointmentsController < CompanyController
 
   def change_status
     @appointment = Appointment.find( params[:id] )
+    # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
     if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
-      @appointment.save
-      redirect_to @appointment, :notice => 'Статус успешно изменен'
+      if @appointment.save
+        redirect_to "/calendar?date=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен'
+      else
+        redirect_to "/calendar?date=#{@appointment.start.to_i}", :notice => 'При сохранении произошла ошибка'
+      end
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'
     end
@@ -109,12 +109,12 @@ class AppointmentsController < CompanyController
 
     respond_to do |wants|
       if @appointment.update_attributes(params[:appointment])
-        wants.html { redirect_to @appointment, notice:'Appointment was successfully updated.' }
-        wants.js   { render :text => refresh_calendar( @appointment.id ) }
+        wants.html { redirect_to @appointment, notice:'Запись успешно изменена.' }
+        wants.js   { render :js => refresh_calendar }
         wants.xml  { head :ok }
       else
         wants.html { render :action => "edit" }
-        wants.js   { render :text => "alert('Не сохранено: #{@appointment.errors.full_messages.join('; ')}');" }
+        wants.js   { render :js => "alert('Не сохранено: #{@appointment.errors.full_messages.join('; ')}');" }
         wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
       end
     end
@@ -122,8 +122,8 @@ class AppointmentsController < CompanyController
 
   private
 
-    def refresh_calendar(id)
-      "Organizer.destroy_popover_by_id(#{id});$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' );"
+    def refresh_calendar
+      "Organizer.destroy_all_popovers();$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' );"
     end
 
 end

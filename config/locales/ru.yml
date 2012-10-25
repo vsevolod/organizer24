@@ -8,6 +8,10 @@ ru:
       inaccessible: Недоступно
       old-day: Нет записи
       your-offer: Ваша заявка
+    do_status:
+      complete: Заявка выполнена
+      missing: Клиент не пришёл
+      cancel_owner: Отменена
   activerecord:
     models:
       active_admin_comment: Комментарии (адм.)
