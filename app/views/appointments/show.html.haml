@@ -42,10 +42,10 @@
             %tr
               %td= service.name
               %td= service.cost
-              %td= show_time( service.showing_time )
+              %td= service.showing_time.show_time
           %tr
             %td Итого
             %td
               %b= @appointment.cost
             %td
-              %b= show_time( @appointment.showing_time )
+              %b= @appointment.showing_time.show_time

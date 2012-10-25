@@ -1,11 +1,12 @@
 # coding: utf-8
-module CustomHelper
+class Integer
 
   MINUTE_LEVEL = [ %w{минута минуты минут},
                    %w{час часа часов},
                    %w{день дня дней} ]
 
-  def show_time( interval, level = 0 )
+  def show_time( level = 0 )
+    interval = self
     if interval.zero?
       ''
     else
@@ -19,5 +20,6 @@ module CustomHelper
       result
     end
   end
+
 
 end

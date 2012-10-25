@@ -133,6 +133,10 @@ $('#calendar').fullCalendar({
     {
       url: '/working_hours/by_week',
       borderColor: '#ccc'
+    },
+    {
+      url: '/appointments/by_week',
+      borderColor: '#ccc'
     }
   ],
   dayClick: (date, allDay, jsEvent, view) ->
@@ -173,7 +177,6 @@ $('#calendar').fullCalendar({
       popover = $('.popover.right')
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
-      element.find('.fc-event-title').html('')
     element
   eventAfterRender: (event, element, view) ->
     #console.log( event )

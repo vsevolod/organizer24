@@ -1,5 +1,6 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
+  before_filter :prepare_calendar_options, :only => :by_week
 
   def show
     @appointment = Appointment.find( params[:id] )
@@ -21,6 +22,34 @@ class AppointmentsController < CompanyController
     respond_to do |format|
       format.js { render :inline => "$('#popover_for_change').html('<%= escape_javascript(render 'form', appointment: @appointment) %>')" }
     end
+  end
+
+  # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
+  def by_week
+    @is_owner = current_user.owner?( @organization )
+    @appointments = if @is_owner
+                      @organization.appointments
+                    else
+                      @organization.appointments.where( :status.in => %w{approve offer taken} )
+                    end.where('date(start) >= ? AND date(start) < ', @start.to_date, @end.to_date)
+    @periods = @appointments.map do |appointment|
+      data_inner_class = if current_user == appointment.user
+                           if appointment.offer?
+                             'legend-your-offer'
+                           else
+                             'legend-inaccessible'
+                           end
+                         else
+                           'legend-taken'
+                         end
+      title = if ( @is_owner && ['taken', 'your-offer', 'offer', 'approve'].include?( appointment.status ) ) || ( !@is_owner && data_inner_class == 'legend-your-offer' )
+                appointment.services.pluck('name').join('<br/>')
+              else
+                appointment.aasm_human_state
+              end
+      { :title => title, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id, 'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
+    end
+    respond_with( @periods )
   end
 
   def create
@@ -55,12 +84,6 @@ class AppointmentsController < CompanyController
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'
     end
-  end
-
-  def by_week
-    @start = Time.at( params[:start].to_i )
-    @stop  = Time.at( params[:stop].to_i )
-    @appointments = @organization.appointments.where( :start.gteq => @start )
   end
 
   # POST appointments/:id/change_start_time JS

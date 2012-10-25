@@ -1,6 +1,5 @@
 # coding: utf-8
 class ShowingTimeValidator < ActiveModel::EachValidator
-  include CustomHelper
 
   # Пересечение прямых: max( 0, max( A1, An ) - min( B1, Bn ) )
   # FIXME исправить для нескольких исполнителей
@@ -14,7 +13,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
       GREATEST( :start, "#{options[:start]}" ) < LEAST( :stop, "#{options[:start]}"+CONCAT(#{options[:showing_time]},' second')::interval )
     SQL
     unless duplicate_record.count.zero?
-      record.errors[:base] = "Продолжительность: #{show_time( showing_time )}; Данное время уже занято"
+      record.errors[:base] = "Продолжительность: #{showing_time.show_time}; Данное время уже занято"
     end
   end
 

@@ -35,6 +35,7 @@
       .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
         #total_time Время: 0 мин.
         #total_cost Стоимость: 0 руб.
+    
   #first
     - if current_user
       = hidden_field_tag 'user[phone]', current_user.phone
@@ -56,6 +57,12 @@
         = I18n.t("legend.status.#{state}")
         %div{ :class => "legend legend-#{state}" }
         %br/
+      - if current_user.owner? @organization
+        .show_statuses
+          - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
+            %label.checkbox
+              = check_box_tag :state, state, 1
+              = t "activerecord.attributes.appointment.status.#{state}"
   .span10
     #calendar{ :style => 'width:900px;margin:0 auto;' }
 .span4
