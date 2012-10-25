@@ -8,16 +8,14 @@ class Appointment < ActiveRecord::Base
   accepts_nested_attributes_for :services
 
   before_save :update_complete_time
-  before_save :cost_time_by_services!
-
-  #before_validation :count_cost_time
+  before_validation :cost_time_by_services!
 
   aasm :column => :status do
     state :free, :initial => true # Свободно
     state :taken        # Занято
     state :inaccessible # Недоступно
     state :offer        # Есть заявка
-    state :approve     # Подтверждена
+    state :approve      # Подтверждена
     state :complete     # Выполнена
     state :missing      # Пропущена. Клиент не пришёл
     state :lated        # Задержана. Клиент опоздал

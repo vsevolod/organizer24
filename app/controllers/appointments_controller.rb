@@ -88,7 +88,7 @@ class AppointmentsController < CompanyController
         wants.xml  { head :ok }
       else
         wants.html { render :action => "edit" }
-        wants.js   { render :text => "alert('Не изменено');" }
+        wants.js   { render :text => "alert('Не сохранено: #{@appointment.errors.full_messages.join('; ')}');" }
         wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
       end
     end
