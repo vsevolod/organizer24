@@ -1,6 +1,7 @@
 # coding: utf-8
 class OrganizationsController < CompanyController
   skip_before_filter :find_organization, :only => [:index]
+  add_breadcrumb 'На главную', '/', :except => [:index, :show]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)
@@ -11,6 +12,7 @@ class OrganizationsController < CompanyController
   end
 
   def calendar
+    add_breadcrumb 'Календарь', '/calendar'
     if !current_user && @organization.registration_before?
       redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
     end

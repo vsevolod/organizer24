@@ -15,6 +15,13 @@ GIT
       rails (>= 3.1.1)
 
 GIT
+  remote: https://github.com/dexion/breadcrumbs.git
+  revision: ea38cd8b21bdeddb128d436c45e10d805f649981
+  specs:
+    breadcrumbs (1.0.1)
+      rails (>= 3.0.0)
+
+GIT
   remote: https://github.com/seyhunak/twitter-bootstrap-rails.git
   revision: 52a85ef94b995d0091761aaac73aa63e8ae24fb3
   specs:
@@ -232,6 +239,7 @@ DEPENDENCIES
   aasm
   activeadmin
   ancestry
+  breadcrumbs!
   ckeditor (= 3.7.1)
   cocoon
   coffee-rails (~> 3.2.1)

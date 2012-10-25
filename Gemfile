@@ -21,6 +21,7 @@ gem 'ancestry'
 gem 'aasm'
 gem 'pg'
 gem 'squeel'
+gem 'breadcrumbs', :git => 'https://github.com/dexion/breadcrumbs.git'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

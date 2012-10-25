@@ -17,6 +17,9 @@
               = link_to 'Depilate.ru', '/'
             - unless current_user
               %p Войдите, чтобы продолжить
+      - if @breadcrumbs && @breadcrumbs.any?
+        %ul.breadcrumb
+          = breadcrumbs
       .row-fluid
         .span12
           .row-fluid
