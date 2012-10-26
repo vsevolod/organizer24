@@ -52,6 +52,9 @@ ru:
           lated: Клиент опоздал
         user: Пользователь
         organization: Организация
+        phone: Номер телефона для связи
+        firstname: Имя
+        lastname: Фамилия
       category_photo:
         name: Название
         parent_id: Предок

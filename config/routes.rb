@@ -13,6 +13,7 @@ Organizer::Application.routes.draw do
     resources :appointments do
       collection do
         get :by_week
+        get :phonebook
       end
       member do
         post :change_status

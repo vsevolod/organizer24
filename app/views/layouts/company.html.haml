@@ -12,19 +12,7 @@
     = yield :js
   %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_'), :style => 'padding-top:40px;'}
     .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          = link_to @organization.name, root_url(subdomain: @organization.subdomain), :class => 'brand'
-          .nav-collapse
-            %ul.nav
-              = yield :nav_bar
-              - if current_user
-                %li= link_to 'Выход', destroy_user_session_path, :method => :delete
-                %li= link_to 'Кабинет', "/dashboard"
-              - else
-                // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
-                %li= link_to 'Вход', new_user_session_path, :data => { :colorbox => true }
-                %li= link_to 'Регистрация', new_user_registration_path
+      = render 'layouts/top_menu'
     .container= yield
     = yield :bottom_js
     - flash.each do |name, msg|

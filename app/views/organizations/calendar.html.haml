@@ -13,6 +13,7 @@
         $('#calendar').fullCalendar( 'gotoDate', #{@str_day} )
       })
 
+-# FIXME change it to form_for
 = form_tag appointments_path, :remote => true do
   = hidden_field_tag :start
   %section.utopia-widget#second
@@ -37,17 +38,18 @@
         #total_cost Стоимость: 0 руб.
     
   #first
-    - if current_user
-      = hidden_field_tag 'user[phone]', current_user.phone
+    - if current_user && !current_user.owner?( @organization )
+      - [:phone, :firstname, :lastname].each do |field|
+        = hidden_field_tag "user[#{field}]", current_user.send(field)
     - else
       .row-fluid
-        .form-horizontal
-          .span3
-            %b Номер телефона для связи:
-          .hidden= text_field_tag :check_if_empty
-          .control-group
-            .controls
-              = text_field_tag 'user[phone]', '', :class => 'span3'
+        - [:phone, :firstname, :lastname].each do |field|
+          .form-horizontal
+            .span3
+              %b= Appointment.human_attribute_name field
+            .control-group
+              .controls
+                = text_field_tag "user[#{field}]", '', :class => 'span3'
 
 .row-fluid
   %hr/

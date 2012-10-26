@@ -51,10 +51,15 @@ class AppointmentsController < CompanyController
     respond_with( @periods )
   end
 
+  # GET список телефонных номеров и их владельцев
+  def phonebook
+    @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
+  end
+
   def create
-    @user = current_user || User.where( params[:user] ).first_or_initialize
+    @user = current_user || User.where( params[:user][:phone] ).first_or_initialize( params[:user] )
     @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
-    @appointment.phone = @user.phone
+    @appointment.attributes = params[:user]
     @appointment.service_ids = params[:service].keys
     @appointment.cost_time_by_services!
     if @user == current_user
@@ -69,7 +74,7 @@ class AppointmentsController < CompanyController
         format.js{ render :js => refresh_calendar }
       else
         format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
-        format.js{ render :text => 'cancel' }
+        format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');" }
       end
     end
   end

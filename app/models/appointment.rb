@@ -28,10 +28,12 @@ class Appointment < ActiveRecord::Base
   end
 
   validates :start, :presence => true
+  validates :phone, :presence => true
+  validates :firstname, :presence => true
   validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
-  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids
+  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!

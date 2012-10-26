@@ -1,0 +1,22 @@
+%table.table
+  %thead
+    %tr
+      %th Фамилия Имя
+      %th Телефон
+  %tbody
+    - @phonebook.each do |appointment|
+      %tr
+        %td
+          - if appointment.user
+            - if appointment.user.owner?( @organization )
+              = appointment.lastname
+              = appointment.firstname
+            - else
+              = link_to appointment.user do
+                = appointment.user.lastname
+                = appointment.user.firstname
+          - else
+            = appointment.lastname
+            = appointment.firstname
+        %td
+          = appointment.phone

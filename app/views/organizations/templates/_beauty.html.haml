@@ -1,0 +1,43 @@
+- content_for :bottom_js do
+  = javascript_include_tag 'fullcalendar', 'month_calendar'
+.span6
+  .utopia-login-info= image_tag "kickstrap/themes/beauty/left-logo.jpg"
+.span6
+  - if current_user
+    .utopia-login
+      %h1 Ваши действия
+      .utopia
+        - if current_user.owner?( @organization )
+          %p
+            = link_to "/appointments/phonebook", :class => 'btn btn-normal span12' do
+              %i.icon-list-alt
+              Телефонная книга 
+          &nbsp;
+        %p
+          = link_to "/dashboard", :class => 'btn btn-normal span12' do
+            %i.icon-home
+            Личный кабинет
+        &nbsp;
+        %p
+          = link_to "/calendar", :class => 'btn btn-normal span12' do
+            %i.icon-calendar
+            Записаться
+        &nbsp;
+        %p
+          = link_to destroy_user_session_path, :method => :delete, :class => 'btn btn-normal span12' do
+            %i.icon-off
+            Выход
+        &nbsp;
+    #month_calendar.span10.offset1
+  - else
+    .utopia-login
+      %h1 Вход для записи
+      .utopia
+        = simple_form_for(User.new, :url => session_path(User)) do |f|
+          = f.input :phone
+          = f.input :password
+          = f.submit 'Войти', :class => 'btn btn-normal'
+          %br/
+          = link_to "Зарегистрироваться", new_registration_path(User)
+          %br/
+          = link_to "Забыли пароль?", new_password_path(User)
