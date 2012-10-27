@@ -9,6 +9,9 @@ class OrganizationsController < CompanyController
 
   def show
     @category_photos = @organization.category_photos.joins(:photos).uniq
+    if !@organization.theme
+      redirect_to "/edit"
+    end
   end
 
   def calendar

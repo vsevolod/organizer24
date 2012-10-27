@@ -7,11 +7,22 @@
     .utopia-login
       %h1 Ваши действия
       .utopia
+        -# FIXME убрать порнографию ниже
         - if current_user.owner?( @organization )
           %p
-            = link_to "/appointments/phonebook", :class => 'btn btn-normal span12' do
+            = link_to "/appointments/phonebook", :class => 'btn btn-warning span12' do
               %i.icon-list-alt
               Телефонная книга 
+          &nbsp;
+          %p
+            = link_to "/edit", :class => 'btn btn-warning span12' do
+              %i.icon-pencil
+              Редактировать организацию
+          &nbsp;
+          %p
+            = link_to "/services", :class => 'btn btn-warning span12' do
+              %i.icon-list-alt
+              Список услуг
           &nbsp;
         %p
           = link_to "/dashboard", :class => 'btn btn-normal span12' do

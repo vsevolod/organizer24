@@ -4,7 +4,6 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :find_organization
   layout :company
 
-  # Тут регаются только админы
   def new
     session[:user_params] ||= {}
     # очищать сессию на первом шаге
@@ -45,13 +44,17 @@ class RegistrationsController < Devise::RegistrationsController
           resource.next_step
         end
         session[:user_step] = resource.current_step
+      else
+        if params[:back_button]
+          resource.previous_step
+        end
       end
 
       if resource.new_record?
         render "new"
       else
         session[:user_step] = session[:user_params] = nil
-        redirect_to calendar_url(subdomain: org.subdomain), :notice => 'Вы успешно зарегистрировались'
+        redirect_to calendar_url(subdomain: resource.my_organization.subdomain), :notice => 'Вы успешно зарегистрировались'
       end
     end
   end

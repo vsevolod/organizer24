@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
   private
 
     def find_organization
-      @organization = if Subdomain.matches?(request)
-                        Organization.find_by_subdomain(request.subdomain)
-                      else
-                        Organization.find(params[:organization_id])
-                      end
+      if Subdomain.matches?(request)
+        @organization = Organization.find_by_subdomain(request.subdomain)
+      elsif params[:organization_id]
+        @organization = Organization.find(params[:organization_id])
+      end
     end
 
     def organization_root
