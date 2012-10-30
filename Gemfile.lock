@@ -98,6 +98,7 @@ GEM
     coffee-script-source (1.3.3)
     columnize (0.3.6)
     commonjs (0.2.6)
+    daemons (1.1.8)
     debugger (1.2.1)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -105,6 +106,11 @@ GEM
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.4)
+    delayed_job (3.0.3)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.2)
+      activerecord (> 2.1.0)
+      delayed_job (~> 3.0.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -244,7 +250,9 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 3.2.1)
   colorbox-rails!
+  daemons
   debugger
+  delayed_job_active_record
   erb2haml
   event-calendar
   formtastic (~> 2.1.1)

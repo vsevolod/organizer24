@@ -55,6 +55,10 @@ class Appointment < ActiveRecord::Base
     self.start + self.showing_time.minutes
   end
 
+  def fullname
+    [self.firstname, self.lastname].join(' ')
+  end
+
   private
 
     def update_complete_time

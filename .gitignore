@@ -9,6 +9,7 @@
 
 # Ignore files in config dir
 /config/database.yml
+/config/smsru.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -24,3 +25,5 @@ Gemfile.lock
 
 public/ckeditor_assets
 public/system
+
+script/delayed_job

@@ -37,3 +37,6 @@ end
 
 gem 'jquery-rails'
 gem "colorbox-rails", :git => "git://github.com/stevo/colorbox-rails.git"
+
+gem 'daemons'
+gem 'delayed_job_active_record'
