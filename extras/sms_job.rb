@@ -16,7 +16,6 @@ class SmsJob < Struct.new(:appointment_id, :sms_type)
              TEXT
            end.strip
     sms = Smsru.new( text ) #@appointment.phone, @organization.user.phone
-    #sms.send
-    puts text
+    sms.send
   end
 end

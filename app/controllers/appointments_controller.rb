@@ -75,7 +75,7 @@ class AppointmentsController < CompanyController
         format.js{ render :js => refresh_calendar }
       else
         format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
-        format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');" }
+        format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');$('.cancel_calendar').trigger('click');" }
       end
     end
   end

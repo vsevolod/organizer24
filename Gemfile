@@ -7,6 +7,7 @@ gem 'kickstrap_rails'
 gem 'therubyracer'
 gem 'cocoon'
 gem 'event-calendar', :require => 'event_calendar'
+#gem 'inherited_resource'
 gem 'has_scope'
 
 gem 'haml'
@@ -33,6 +34,19 @@ group :development do
   gem 'erb2haml'
   gem 'pry'
   gem 'debugger'
+  gem 'guard-rspec'
+end
+
+group :test do
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'rspec-rails'
+  gem 'simplecov'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'guard-rspec'
 end
 
 gem 'jquery-rails'

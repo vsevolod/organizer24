@@ -1,0 +1,91 @@
+---
+3:
+  id: '1'
+  name: Подмышки
+  showing_time: '0'
+  cost: '150'
+  organization_id: '1'
+  created_at: '2012-10-26 08:57:57.969629'
+  updated_at: '2012-10-26 08:57:57.969629'
+  is_collection: false 
+4:
+  id: '2'
+  name: Бикини
+  showing_time: '30'
+  cost: '550'
+  organization_id: '1'
+  created_at: '2012-10-26 08:58:11.345771'
+  updated_at: '2012-10-26 08:58:11.345771'
+  is_collection: false 
+5:
+  id: '5'
+  name: Голень
+  showing_time: '0'
+  cost: '300'
+  organization_id: '1'
+  created_at: '2012-10-26 09:00:38.45834'
+  updated_at: '2012-10-26 09:00:38.45834'
+  is_collection: false 
+6:
+  id: '6'
+  name: Бедро
+  showing_time: '0'
+  cost: '200'
+  organization_id: '1'
+  created_at: '2012-10-26 09:05:08.769796'
+  updated_at: '2012-10-26 09:05:08.769796'
+  is_collection: false 
+7:
+  id: '7'
+  name: Руки
+  showing_time: '0'
+  cost: '200'
+  organization_id: '1'
+  created_at: '2012-10-26 09:05:26.234534'
+  updated_at: '2012-10-26 09:05:26.234534'
+  is_collection: false 
+8:
+  id: '8'
+  name: Ноги полностью
+  showing_time: '30'
+  cost: '500'
+  organization_id: '1'
+  created_at: '2012-10-26 09:06:25.173714'
+  updated_at: '2012-10-26 09:06:25.173714'
+  is_collection: true
+9:
+  id: '9'
+  name: Руки + Бедро + Подмышки
+  showing_time: '30'
+  cost: '550'
+  organization_id: '1'
+  created_at: '2012-10-26 09:08:09.217546'
+  updated_at: '2012-10-26 09:08:09.217546'
+  is_collection: true
+10:
+  id: '10'
+  name: Руки + голень + подмышки
+  showing_time: '30'
+  cost: '650'
+  organization_id: '1'
+  created_at: '2012-10-26 09:08:36.027306'
+  updated_at: '2012-10-26 09:08:36.027306'
+  is_collection: true
+11:
+  id: '11'
+  name: Усики
+  showing_time: '0'
+  cost: '150'
+  organization_id: '1'
+  created_at: '2012-10-26 09:09:25.152824'
+  updated_at: '2012-10-26 09:09:25.152824'
+  is_collection: false 
+12:
+  id: '12'
+  name: Тату (стоимость в зависимость от размера)
+  showing_time: '0'
+  cost: '0'
+  organization_id: '1'
+  created_at: '2012-10-26 09:12:02.36373'
+  updated_at: '2012-10-26 09:13:20.740655'
+  is_collection: false 

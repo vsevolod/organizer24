@@ -11,6 +11,8 @@
   .carousel-inner
     - @photos.each_with_index do |photo, index|
       %div{ :class => "item #{'active' if index.zero?}" }
+        = image_tag photo.photo.url(:gallery)
+        = image_tag photo.photo.url(:medium)
         = image_tag photo.photo.url(:thumb)
         - if photo.name
           .carousel-caption= photo.name

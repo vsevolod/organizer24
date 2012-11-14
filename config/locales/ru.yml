@@ -74,6 +74,7 @@ ru:
         name: Название
         owner: Владелец
         subdomain: Поддомен
+        show_photogallery: Показывать фотогалерею
         theme: Тема оформления
       page:
         name: Название
