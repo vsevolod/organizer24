@@ -1,7 +1,11 @@
-= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  = f.input :phone
-  = f.input :password
-  - if devise_mapping.rememberable?
-    = f.input :remember_me, :as => :boolean, :wrapper => :checkbox
-  .form-actions= f.submit "Войти"
-= render "/devise/links"
+.bs-docs-example
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    - if f.object.phone.blank?
+      = f.input :phone
+    - else
+      = f.input :phone, :input_html => { :data => { :old_phone => f.object.phone } }
+      = f.input :password
+      - if devise_mapping.rememberable?
+        = f.input :remember_me, :as => :boolean, :wrapper => :checkbox
+      .form-actions= f.submit "Войти", :class => 'btn btn-primary'
+      = render "/devise/links"

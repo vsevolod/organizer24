@@ -2,28 +2,23 @@
 %html{ :lang => I18n.locale }
   %head
     %title= @organization.name
+    -# TODO удалить bootstrap откуда-нить. сейчас 2 раза грузится
     = stylesheet_link_tag "application", :media => "all"
     = stylesheet_link_tag "kickstrap/themes/beauty"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js
   %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_') }
+    .organization_big_name
+      = link_to @organization.name+'.ru', root_url(subdomain: @organization.subdomain), :class => 'brand'
+      .subtext Индустрия красоты
+    .navbar.navbar-fixed-top
+      = render 'layouts/top_menu', :show_big_organization_name => true
     .container-fluid
-      .row-fluid
-        .span12
-          .utopia-login-message
-            %h1
-              Добро пожаловать на
-              = link_to 'Depilate.ru', '/'
-            - unless current_user
-              %p Войдите, чтобы продолжить
       - if @breadcrumbs && @breadcrumbs.any?
         %ul.breadcrumb
           = breadcrumbs
-      .row-fluid
-        .span12
-          .row-fluid
-            = yield
+      = yield
     = yield :bottom_js
     - flash.each do |name, msg|
       :javascript

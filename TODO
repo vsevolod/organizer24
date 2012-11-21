@@ -1,3 +1,7 @@
 1) Add gritter notifications https://github.com/RobinBrouwer/gritter
 2) Add customization for photo galleries (default: Carousel)
 3) Add Breadcrumbs
+
+== Organizations customization
+* add big_organization_name boolean for layout
+* customize watermark by uploading of user

@@ -10,7 +10,7 @@
       = f.input :lastname
       = f.input :firstname
       = f.input :email
-      = f.input :phone
+      = f.input :phone, :input_html => { :data => { :old_phone => f.object.phone } }
       = f.input :password, :as => :password
       = f.input :password_confirmation, :as => :password
       - if resource.new_record?

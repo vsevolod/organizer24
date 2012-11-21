@@ -1,5 +1,7 @@
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
+//= require bootstrap
 //= require jquery-ui
 //= require jquery.maskedinput
 //= require jquery.jgrowl_minimized

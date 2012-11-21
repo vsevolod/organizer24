@@ -13,7 +13,8 @@ class RegistrationsController < Devise::RegistrationsController
     if defined? @organization
       resource.role = 'client'
       resource.current_step = 1
-      render :action => :edit
+      resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
+      render :action => :edit, :layout => false
     else
       resource.role = 'admin'
       resource.current_step = session[:user_step]
