@@ -1,39 +1,37 @@
 - content_for :bottom_js do
   = javascript_include_tag 'fullcalendar', 'month_calendar'
-%header.beauty.offset1
-  .first_str  BEAUTY IS 
-  .second_str EVERYWHERE
-  .subtext
-    Здравствуйте, я Золотарёва Анна. Работаю в индустрии красоты с 2009 года. На этом сайте вы можете увидеть мои работы, узнать о моих услугах и записаться на них в удобное для вас время. Спасибо, что Вы остаетесь моим клиентом.
 
-  = link_to 'Записаться', '/users/sign_in', :class => 'btn btn-primary btn-large', :data => { :colorbox => true }
-.hero-unit
-
-.span6
-  &nbsp;
-  -#.utopia-login-info= image_tag "kickstrap/themes/beauty/left-logo.jpg"
-.span6
+- content_for :nav_bar do
   - if current_user
-    .utopia-login
-      %h1 Ваши действия
-      .utopia
-        - if current_user.owner?( @organization )
-          = link_to "/appointments/phonebook", :class => 'btn btn-warning span12' do
-            %i.icon-list-alt
-            Телефонная книга 
-          = link_to "/edit", :class => 'btn btn-warning span12' do
-            %i.icon-pencil
-            Редактировать организацию
-          = link_to "/services", :class => 'btn btn-warning span12' do
-            %i.icon-list-alt
-            Список услуг
-        = link_to "/dashboard", :class => 'btn btn-normal span12' do
-          %i.icon-home
-          Личный кабинет
-        = link_to "/calendar", :class => 'btn btn-normal span12' do
-          %i.icon-calendar
-          Записаться
-        = link_to destroy_user_session_path, :method => :delete, :class => 'btn btn-normal span12' do
-          %i.icon-off
-          Выход
-    #month_calendar.span10.offset1
+    - if current_user.owner?( @organization )
+      %li
+        = link_to "/appointments/phonebook" do
+          %i.icon-list-alt
+          Телефонная книга 
+      %li
+        = link_to "/edit" do
+          %i.icon-pencil
+          Редактировать организацию
+      %li
+        = link_to "/services" do
+          %i.icon-list-alt
+          Список услуг
+    %li
+      = link_to "/calendar" do
+        %i.icon-calendar
+        Записаться
+
+- if current_user
+  %br/
+  %br/
+  %br/
+  %br/
+  #month_calendar.span10.offset1
+- else
+  %header.beauty.offset1
+    .first_str  BEAUTY IS 
+    .second_str EVERYWHERE
+    .subtext
+      Здравствуйте, я Золотарёва Анна. Работаю в индустрии красоты с 2009 года. На этом сайте вы можете увидеть мои работы, узнать о моих услугах и записаться на них в удобное для вас время. Спасибо, что Вы остаетесь моим клиентом.
+
+    = link_to 'Записаться', '/users/sign_in?remote=true', :class => 'btn btn-primary btn-large', :data => { :colorbox => true }

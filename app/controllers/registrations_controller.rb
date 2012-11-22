@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
       resource.role = 'client'
       resource.current_step = 1
       resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
-      render :action => :edit, :layout => false
+      render :action => :edit, :layout => params[:remote] == 'true' ? false : company
     else
       resource.role = 'admin'
       resource.current_step = session[:user_step]

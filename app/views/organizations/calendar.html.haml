@@ -16,12 +16,12 @@
 -# FIXME change it to form_for
 = form_tag appointments_path, :remote => true do
   = hidden_field_tag :start
-  %section.utopia-widget#second
+  %section#second
     %h3 На что хотите записаться:
     .row-fluid
       .check_services{ 'data-spy' => 'affix', 'data-offset-top' => '200'}
         - services = @organization.services.not_collections.order(:name)
-        - services.each_slice( services.size/2 ).each do |group_services|
+        - services.each_slice( services.size/3 ).each do |group_services|
           .span3
             - group_services.each do |service|
               %label.checkbox
@@ -55,7 +55,7 @@
   %hr/
   .span1
     #third
-      - [:free, :taken, :inaccessible, :'your-offer'].each do |state|
+      - [:taken, :inaccessible, :'your-offer'].each do |state|
         = I18n.t("legend.status.#{state}")
         %div{ :class => "legend legend-#{state}" }
         %br/
@@ -67,5 +67,3 @@
               = t "activerecord.attributes.appointment.status.#{state}"
   .span10
     #calendar{ :style => 'width:900px;margin:0 auto;' }
-.span4
-  = image_tag 'kickstrap/themes/beauty/second_img.jpg'

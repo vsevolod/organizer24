@@ -5,12 +5,12 @@ class SessionsController < Devise::SessionsController
 
   def new
     build_resource
-    if resource.phone
-      render :layout => 'company'
-    else
-      render :layout => false
-    end
     resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
+    if params[:remote] == 'true'
+      render :layout => false
+    else
+      render :layout => company
+    end
   end
 
 end

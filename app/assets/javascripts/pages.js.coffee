@@ -8,7 +8,7 @@ set_keypress_on_phone = (el) ->
     if phone.length == 12 && phone != $(this).data('old-phone')
       $.post( '/users/check_phone', { phone: phone }, (data) ->
         # Смотрим - загрузить окно входа или регистрации
-        send_data = "user[phone]="+phone
+        send_data = "remote=true&user[phone]="+phone
         url = if data == 'Exist' then 'sign_in' else 'sign_up'
         $.colorbox({
           href: '/users/'+url,
