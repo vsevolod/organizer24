@@ -6,6 +6,24 @@
       %ul.nav
         = yield :nav_bar
         - if current_user
+          - if current_user.owner?( @organization )
+            %li
+              = link_to "/appointments/phonebook" do
+                %i.icon-list-alt
+                Телефонная книга 
+            %li
+              = link_to "/edit" do
+                %i.icon-pencil
+                Редактировать организацию
+            %li
+              = link_to "/services" do
+                %i.icon-list-alt
+                Список услуг
+          - else
+            %li
+              = link_to "/calendar" do
+                %i.icon-calendar
+                Записаться
           %li
             = link_to "/dashboard" do
               %i.icon-home

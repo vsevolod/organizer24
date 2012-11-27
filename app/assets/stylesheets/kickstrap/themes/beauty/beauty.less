@@ -29,8 +29,11 @@ body {
     background-position: left top;
     background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
   }
+}
+
+body.organizations_show {
+  position: fixed;
 }
 
 body, html {
@@ -114,20 +117,22 @@ section#second {
 @legendMissing: #4c4c4c;
 @legendYour: @green;
 @legendBorder: @black;
+@ordinaryPercent: .4;
+@todayPercent: .7;
 
 //--- CSS
 
 .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {
-  .colorize_bg(@white, .2);
+  .colorize_bg(@white, @ordinaryPercent);
   &.fc-today {
-    .colorize_bg(@white, .5);
+    .colorize_bg(@white, @todayPercent);
   }
 }
 
 .fc-sat, .fc-sun {
-  .colorize_bg(@lightpink, .2);
+  .colorize_bg(@lightpink, @ordinaryPercent);
   &.fc-today {
-    .colorize_bg(@lightpink, .5);
+    .colorize_bg(@lightpink, @todayPercent);
   }
 }
 
@@ -136,7 +141,7 @@ section#second {
   padding: 0 15px;
   margin-right: 10px;
   height: 10px;
-  .box-shadow(0 5px 10px rgba(0,0,0,.5));
+  .box-shadow(0 5px 10px rgba(0,0,0, @todayPercent));
 }
 
 .legend-taken,
@@ -171,7 +176,7 @@ section#second {
   background: @legendYour;
   width: 122;
   padding: 3px;
-  .box-shadow(0 5px 10px rgba(0,0,0,.5));
+  .box-shadow(0 5px 10px rgba(0,0,0, @todayPercent));
 }
 
 //---------------- END CALENDAR --------------------------------

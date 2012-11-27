@@ -46,7 +46,15 @@ class AppointmentsController < CompanyController
               else
                 appointment.aasm_human_state
               end
-      { :title => title, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'is_owner' => @is_owner, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id, 'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
+      options = { :title => title,
+                  :start => appointment.start.to_i,
+                  :end => (appointment.start + appointment.showing_time.minutes).to_i,
+                  :editable => false,
+                  :is_owner => @is_owner,
+                  'data-client' => (@is_owner ? "#{appointment.user.name} #{appointment.user.phone}" : nil),
+                  'data-inner-class' => data_inner_class,
+                  'data-id' => appointment.id,
+                  'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
     end
     respond_with( @periods )
   end

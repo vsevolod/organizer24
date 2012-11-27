@@ -1,26 +1,6 @@
 - content_for :bottom_js do
   = javascript_include_tag 'fullcalendar', 'month_calendar'
 
-- content_for :nav_bar do
-  - if current_user
-    - if current_user.owner?( @organization )
-      %li
-        = link_to "/appointments/phonebook" do
-          %i.icon-list-alt
-          Телефонная книга 
-      %li
-        = link_to "/edit" do
-          %i.icon-pencil
-          Редактировать организацию
-      %li
-        = link_to "/services" do
-          %i.icon-list-alt
-          Список услуг
-    %li
-      = link_to "/calendar" do
-        %i.icon-calendar
-        Записаться
-
 - if current_user
   %br/
   %br/
