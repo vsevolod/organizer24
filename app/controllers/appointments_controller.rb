@@ -1,6 +1,7 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
+  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status]
 
   respond_to :html, :json
 
@@ -36,7 +37,7 @@ class AppointmentsController < CompanyController
                       @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Date.today)
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     @periods = @appointments.map do |appointment|
-      data_inner_class = if current_user == appointment.user && appointment.offer?
+      data_inner_class = if appointment.editable_by?( current_user )
                            'legend-your-offer'
                          else
                            "legend-#{appointment.status}"
@@ -89,7 +90,6 @@ class AppointmentsController < CompanyController
   end
 
   def change_status
-    @appointment = Appointment.find( params[:id] )
     # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
     if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
@@ -105,7 +105,6 @@ class AppointmentsController < CompanyController
 
   # POST appointments/:id/change_start_time JS
   def change_start_time
-    @appointment = Appointment.find(params[:id])
     @appointment.start = params[:start]
     if @appointment.save
       render :text => <<-JS
@@ -119,8 +118,6 @@ class AppointmentsController < CompanyController
   end
 
   def update
-    @appointment = Appointment.find(params[:id])
-
     respond_to do |wants|
       if @appointment.update_attributes(params[:appointment])
         wants.html { redirect_to @appointment, notice:'Запись успешно изменена.' }
@@ -138,6 +135,16 @@ class AppointmentsController < CompanyController
 
     def refresh_calendar
       "Organizer.destroy_all_popovers();$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' );"
+    end
+
+    def can_editable?
+      @appointment = Appointment.find(params[:id])
+      unless @appointment.editable_by? current_user
+        respond_to do |format|
+          fornat.html { render :text => "У вас не хватает прав" }
+          format.js   { render :text => "alert('Не хватает прав')"}
+        end
+      end
     end
 
 end

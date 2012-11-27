@@ -59,6 +59,13 @@ class Appointment < ActiveRecord::Base
     [self.firstname, self.lastname].join(' ')
   end
 
+  # Может ли пользователь редактировать конкретную запись?
+  def editable_by?(edit_user)
+    edit_user.owner?( self.organization ) ||
+    self.user == edit_user && self.offer? ||
+    self.user.owner?( self.organization ) && self.phone == edit_user.phone
+  end
+
   private
 
     def update_complete_time
