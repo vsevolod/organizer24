@@ -25,11 +25,14 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     (session[:user_params] || {}).deep_merge!( params[:user] ) if params[:user]
     build_resource( session[:user_params] )
-
     if resource.role == 'client'
       if resource.save
-        sign_in resource
-        redirect_to '/', notice: 'Вы успешно зарегистрированы'
+        if resource.confirmed?
+          sign_in resource
+          redirect_to '/', notice: 'Вы успешно зарегистрированы'
+        else
+          redirect_to [:confirm_phone, resource]
+        end
       else
         render :action => :edit, alert: 'При регистрации возникли ошибки'
       end

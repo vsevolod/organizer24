@@ -34,10 +34,14 @@ Organizer::Application.routes.draw do
 
   match '/dashboard', :to => 'users#dashboard'
   root :to => 'main#index'
-  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords" }
+  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords", :confirmations => "confirmations" }
   resources :users do
     collection do
       post :check_phone
+    end
+    member do
+      get  :confirm_phone
+      post :confirming_phone
     end
   end
   resources :organizations, :except => [:show] do

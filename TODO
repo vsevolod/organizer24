@@ -1,6 +1,7 @@
 1) Add gritter notifications https://github.com/RobinBrouwer/gritter
 2) Add customization for photo galleries (default: Carousel)
 3) Add Breadcrumbs
+4) Resend confirmation sms. Move confirmation logic to confirmations controller from users controller
 
 == Organizations customization
 * add big_organization_name boolean for layout

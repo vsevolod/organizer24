@@ -90,6 +90,7 @@ ru:
         cost: Стоимость
         organization: Организация
       user:
+        confirmation_number: Проверочное число
         email: E-mail
         firstname: Имя
         lastname: Фамилия

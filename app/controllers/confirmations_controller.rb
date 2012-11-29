@@ -1,18 +1,17 @@
-#coding: utf-8
-class UsersController < CompanyController
-  before_filter :authenticate_user!, :except => [:check_phone, :confirm_phone, :confirming_phone]
+# coding: utf-8
+class ConfirmationsController < Devise::ConfirmationsController
+  include SetLayout
+  before_filter :find_organization
+  layout :company
 
-  def dashboard
-    @user = current_user
+  def new
+    raise "S"
+    super
   end
 
-  def check_phone
-    @user = User.find_by_phone(params[:phone])
-    if @user
-      render :text => "Exist"
-    else
-      render :text => "New Member"
-    end
+  def create
+    raise "A2"
+    super
   end
 
   def confirm_phone
