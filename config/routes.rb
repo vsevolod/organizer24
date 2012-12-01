@@ -39,9 +39,11 @@ Organizer::Application.routes.draw do
     collection do
       post :check_phone
     end
+    # TODO move to confirmation controller
     member do
       get  :confirm_phone
       post :confirming_phone
+      post :resend_confirmation_sms
     end
   end
   resources :organizations, :except => [:show] do

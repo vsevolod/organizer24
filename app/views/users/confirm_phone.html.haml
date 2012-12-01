@@ -6,4 +6,4 @@
 
   .form-actions
     = submit_tag "Подтвердить", :class => 'btn btn-primary'
-    = link_to 'Отправить снова', '#', :class => 'btn btn-warning'
+    = link_to 'Отправить снова', [:resend_confirmation_sms, @user], :class => 'btn btn-warning', :method => :post

@@ -8,9 +8,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :my_organization
 
   validates_presence_of :phone, :firstname, :lastname, :if => :first_step?
-  validates_presence_of :email, :if => :first_admin_step?
-  validates_uniqueness_of :email, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }
-  validates_format_of :email, :with => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => lambda{|u| u.email_changed? && u.first_admin_step? }
+  validates :email, :presence => { :if => :email_changed_and_first_admin_step? }, :format => { :with => /\A[^@]+@[^@]+\z/, :if => :email_changed_and_first_admin_step? }
 
   validates_format_of :phone, :with => /^[\d\W]+$/, :allow_blank => true, :if => lambda{|u| u.phone_changed? && u.first_step? }
 
@@ -58,6 +56,10 @@ class User < ActiveRecord::Base
   # FIXME надо проверять на == admin, а не != client
   def first_admin_step?
     self.role != 'client' && self.current_step == steps.first
+  end
+
+  def email_changed_and_first_admin_step?
+    email_changed? && first_admin_step?
   end
 
   def last_step?
