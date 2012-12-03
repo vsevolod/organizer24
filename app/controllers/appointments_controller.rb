@@ -79,9 +79,6 @@ class AppointmentsController < CompanyController
     respond_to do |format|
       if @appointment.save
         session[:appointment_new] = @appointment.id
-        # TODO надо ли предупреждать сразу при записи?
-        #Delayed::Job.enqueue SmsJob.new( { :appointment_id => @appointment.id }, 'notification' ), :run_at => 1.minutes.from_now
-        Delayed::Job.enqueue SmsJob.new( { :appointment_id => @appointment.id }, 'notification' ), :run_at => (@appointment.start - 1.day)
         format.html{ redirect_to @appointment }
         format.js{ render :js => refresh_calendar }
       else

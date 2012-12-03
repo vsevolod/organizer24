@@ -1,3 +1,4 @@
+# coding: utf-8
 class Appointment < ActiveRecord::Base
   include AASM
 
@@ -9,6 +10,8 @@ class Appointment < ActiveRecord::Base
 
   before_save :update_complete_time
   before_validation :cost_time_by_services!
+  after_save :notify_owner
+  after_save :check_delayed
 
   aasm :column => :status do
     state :free, :initial => true # Свободно
@@ -64,6 +67,40 @@ class Appointment < ActiveRecord::Base
     edit_user.owner?( self.organization ) ||
     self.user == edit_user && self.offer? ||
     self.user.owner?( self.organization ) && self.phone == edit_user.phone
+  end
+
+  # Отправить уведомление владельцу если есть изменения
+  def notify_owner
+    text = ""
+    if self.created_at == self.updated_at
+      text += "Новая запись: #{self.fullname} (#{self.user.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
+    else
+      if start_changed?
+        text += "Время начала записи ##{self.id} изменилось. Было: #{Russian.strftime self.start_was, '%d %B %Y %R'} Стало: #{Russian.strftime self.start, '%d %B %Y %R'}"
+      end
+      if status_changed?
+        text += "Статус записи ##{self.id} изменился. Был #{Appointment.human_attribute_name(self.status_was)}, стал #{Appointment.human_attribute_name(self.status_was)}"
+      end
+      if cost_changed? || showing_time_changed?
+        text += "Список услуг записи ##{self.id} изменился: #{services.order(:name).pluck(:name).join(', ')}"
+      end
+    end
+    unless text.blank?
+      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => organization.owner.phone }, 'notify_owner' ), :run_at => Time.now
+    end
+  end
+
+  def check_delayed
+    if start_changed?
+      if notification_delayed = Delayed::Job.where( "handler ILIKE ?", "%appointment_id: #{self.id}%notification%" ).first
+        notification_delayed.destroy
+      end
+      notify_user
+    end
+  end
+
+  def notify_user
+    Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
   end
 
   private

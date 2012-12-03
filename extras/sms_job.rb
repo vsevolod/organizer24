@@ -11,16 +11,18 @@ class SmsJob < Struct.new(:options, :sms_type)
     case sms_type
     when 'notification'
       @appointment = Appointment.find( options[:appointment_id] )
-      @sender = @appointment.organization
-      sms.text = <<-TEXT
+      sms.recipient = @appointment.phone
+      sms.text = (<<-TEXT).strip
       Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб.
       TEXT
     when 'confirmation_number'
       user = User.find(options[:user_id])
-      sms.text = <<-TEXT
-      Ваш код подтверждения: #{user.confirmation_number}
-      TEXT
-    end.strip
+      sms.recipient = user.phone
+      sms.text = "Ваш код подтверждения: #{user.confirmation_number}"
+    when 'notify_owner'
+      sms.recipient = options[:phone]
+      sms.text = options[:text]
+    end
     sms.send
   end
 end
