@@ -1,9 +1,10 @@
-require "bundler/capistrano"
+#require "bundler/capistrano"
 require "rvm/capistrano"
+bundle_path = '/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/'
 
 set :default_environment, {
   'PATH' => "/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/:$PATH",
-  "BUNDLE_PATH" => '/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/'
+  "BUNDLE_PATH" => bundle_path
 }
 set :bundle_without,  [:development, :test]
 
@@ -39,7 +40,7 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} && bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
+    run "cd #{current_path} && #{bundle_path}bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
     run "kill `cat #{unicorn_pid}`"
@@ -52,6 +53,6 @@ namespace :deploy do
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
 #    stop
-#    start
+    start
   end
 end

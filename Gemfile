@@ -33,7 +33,7 @@ end
 group :development do
   gem 'erb2haml'
   gem 'pry'
-  gem 'debugger'
+  #TODO add gem 'debugger' when correct use cap
   gem 'guard-rspec'
 end
 
