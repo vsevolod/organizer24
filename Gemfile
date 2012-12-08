@@ -37,6 +37,10 @@ group :development do
   gem 'guard-rspec'
 end
 
+group :production do
+  gem 'unicorn'
+end
+
 group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
