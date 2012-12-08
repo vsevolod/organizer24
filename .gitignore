@@ -6,6 +6,7 @@
 
 # Ignore bundler config
 /.bundle
+/.rspec
 
 # Ignore files in config dir
 /config/database.yml
