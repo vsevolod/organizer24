@@ -1,3 +1,12 @@
+require "bundler/capistrano"
+require "rvm/capistrano"
+
+set :default_environment, {
+  'PATH' => "/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/:$PATH",
+  "BUNDLE_PATH" => '/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/'
+}
+set :bundle_without,  [:development, :test]
+
 set :application, "Organizer24"
 set :repository, "https://github.com/vsevolod/organizer24.git"
 
@@ -42,7 +51,7 @@ namespace :deploy do
     run "#{try_sudo} kill -s USR2 `cat #{unicorn_pid}`"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    stop
-    start
+#    stop
+#    start
   end
 end

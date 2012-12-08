@@ -23,7 +23,7 @@
 # Swap files
 *.swp
 *.swo
-Gemfile.lock
+#Gemfile.lock
 
 public/ckeditor_assets
 public/system
