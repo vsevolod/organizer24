@@ -23,6 +23,7 @@ role :db,  "organizer24.ru"
 
 after "deploy:update_code", :copy_database_config
 after "deploy:update_code", :add_log_files
+after "deploy:update_code", :precompile
 
 task :copy_database_config, roles => :app do
   run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
@@ -31,6 +32,25 @@ end
 task :add_log_files, roles => :app do
   run "ln -nfs #{shared_path}/log #{release_path}/log"
   run "ln -nfs #{shared_path}/system #{release_path}/system"
+end
+
+
+task :ln_assets do
+  run <<-CMD
+    rm -rf #{latest_release}/public/assets &&
+    mkdir -p #{shared_path}/assets &&
+    ln -s #{shared_path}/assets #{latest_release}/public/assets
+  CMD
+end
+
+task :precompile do
+  run_locally "bundle exec rake assets:precompile RAILS_ENV=production RAILS_GROUPS=assets"
+  run_locally "cd public; tar -zcvf assets.tar.gz assets"
+  top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
+  run "cd #{shared_path}; tar -zxvf assets.tar.gz"
+  ln_assets
+  run_locally "rm public/assets.tar.gz"
+  run_locally "rm -rf public/assets"
 end
 
 set :rails_env, :production
@@ -53,6 +73,6 @@ namespace :deploy do
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
 #    stop
-    start
+#    start
   end
 end
