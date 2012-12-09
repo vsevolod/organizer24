@@ -4,9 +4,8 @@ class ApplicationController < ActionController::Base
   private
 
     def find_organization
-      if Subdomain.matches?(request)
-        # REMOVE BEFORE PRODUCTION
-        @organization = Organization.find_by_subdomain("depilate")#request.subdomain)
+      if name = Subdomain.matches?(request)
+        @organization = Organization.find_by_subdomain(name) || Organization.find_by_subdomain(request.subdomain)
       elsif params[:organization_id]
         @organization = Organization.find(params[:organization_id])
       end

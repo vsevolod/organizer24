@@ -1,12 +1,8 @@
 class Subdomain
   def self.matches?(request)
-    # REMOVE BEFORE PRODUCTION
-    true
-    # case request.subdomain
-    # when 'www', '', nil
-    #   false
-    # else
-    #   true
-    # end
+    name = request.server_name.gsub(/^www\./,'')
+    if name !~ /^organizer24\./
+      name
+    end
   end
 end
