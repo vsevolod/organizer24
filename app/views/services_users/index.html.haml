@@ -1,0 +1,22 @@
+%h1
+  Настройка сервисов для пользователя
+  %br/
+  #{@user.name} (#{@user.phone})
+
+= simple_form_for [@appointment], :url => [:update_services, @appointment, :services_users] do |f|
+  = show_errors( @appointment )
+  %table.table
+    %thead
+      %tr
+        %th Сервис
+        %th Время
+        %th Стоимость
+        %th
+    %tbody#services
+      = f.fields_for :services_users do |su|
+        = render 'services_user_fields', :f => su
+      %tr.links
+        %td
+          = link_to_add_association 'Добавить сервис', f, :services_users, 'data-association-insertion-node' => '#services', :class => 'btn btn-success'
+
+  = f.submit 'Сохранить настройку', :class => 'btn btn-primary'

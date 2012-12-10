@@ -1,0 +1,14 @@
+%table
+  %tr
+    %th Сервис
+    %th Время
+    %th Стоимость
+    %th
+  - objects.each do |services_user|
+    %tr
+      %td= link_to services_user.service.name, services_user.service
+      %td= services_user.showing_time.show_time
+      %td= services_user.cost
+      - if  current_user && current_user.owner?( @organization )
+        %td
+          = link_to 'Удалить', services_user, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
