@@ -201,11 +201,12 @@ $('#calendar').fullCalendar({
     element = $(jsEvent.currentTarget)
     popup_text = show_appointment_services(event, {})
     if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
-      popup_text += '<a class="btn btn-warning change_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
+      popup_text += '<a class="btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
       popup_text += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
     if event['is_owner']
+      popup_text += '<a class="btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить время записи</a><br/>'
       <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
-        popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
+      popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
       <% end %>
     else
       if event['data-inner-class'] == 'legend-your-offer'
@@ -220,7 +221,7 @@ $('#calendar').fullCalendar({
       }).popover('show')
 })
 
-$('.change_appointment').live('click', ->
+$('.ChangeAppointment').live('click', ->
   event = find_event( $(this).data('id'), '_id' )
   appointment_id = event['data-id']
   Organizer.destroy_all_popovers()

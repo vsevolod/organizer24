@@ -5,13 +5,16 @@ class Appointment < ActiveRecord::Base
   belongs_to :user                  # Клиент
   belongs_to :user_by_phone, :class_name => 'User', :foreign_key => :phone, :primary_key => :phone # Клиент по номеру телефона
   belongs_to :organization          # Организация
+  has_many :services_users, :foreign_key => :phone, :primary_key => :phone
   has_and_belongs_to_many :services # Услуги
-  accepts_nested_attributes_for :services
 
   before_save :update_complete_time
   before_validation :cost_time_by_services!
   after_save :notify_owner
   after_save :check_delayed
+
+  accepts_nested_attributes_for :services
+  accepts_nested_attributes_for :services_users
 
   aasm :column => :status do
     state :free, :initial => true # Свободно
@@ -36,7 +39,7 @@ class Appointment < ActiveRecord::Base
   validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
-  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname
+  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!
@@ -73,7 +76,7 @@ class Appointment < ActiveRecord::Base
   def notify_owner
     text = ""
     if self.created_at == self.updated_at
-      text += "Новая запись: #{self.fullname} (#{self.user.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
+      text += "Новая запись: #{self.fullname} (#{self.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
     else
       if start_changed?
         text += "Время начала записи ##{self.id} изменилось. Было: #{Russian.strftime self.start_was, '%d %B %Y %R'} Стало: #{Russian.strftime self.start, '%d %B %Y %R'}"
@@ -101,6 +104,15 @@ class Appointment < ActiveRecord::Base
 
   def notify_user
     Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
+  end
+
+  # Берем пользователя либо создаем нового из параметров
+  def enshure_user
+    if self.user.owner? self.organization
+      User.new( :phone => self.phone, :firstname => self.firstname, :lastname => self.lastname )
+    else
+      self.user
+    end
   end
 
   private

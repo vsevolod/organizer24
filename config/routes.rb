@@ -11,6 +11,11 @@ Organizer::Application.routes.draw do
     match '/dashboard', :to => 'users#dashboard'
 
     resources :appointments do
+      resources :services_users do
+        collection do
+          put :update_services
+        end
+      end
       collection do
         get :by_week
         get :phonebook

@@ -37,6 +37,7 @@ ru:
         complete_time: Время изменения статуса
         cost: Стоимость
         services: Услуги
+        services_user: Настройка сервисов
         showing_time: Общая продолжительность
         start: Время начала
         status:
@@ -89,6 +90,10 @@ ru:
         showing_time: Продолжительность
         cost: Стоимость
         organization: Организация
+      services_user:
+        service_id: Сервис
+        user_id: Пользователь
+        organization_id: Организация
       user:
         confirmation_number: Проверочное число
         email: E-mail

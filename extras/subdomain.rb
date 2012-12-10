@@ -4,5 +4,7 @@ class Subdomain
     if name !~ /^organizer24\./
       name
     end
+    # REMOVE BEFORE PRODUCTION
+    true
   end
 end
