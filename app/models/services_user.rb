@@ -1,6 +1,6 @@
 class ServicesUser < ActiveRecord::Base
   belongs_to :service
-  belongs_to :user
+  belongs_to :user, :primary_key => :phone, :foreign_key => :phone
   belongs_to :organization
   # attr_accessible :title, :body
   

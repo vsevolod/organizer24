@@ -55,7 +55,7 @@ class AppointmentsController < CompanyController
                   'data-client' => (@is_owner ? "#{appointment.fullname} #{appointment.phone}" : "#{appointment.user.name} #{appointment.user.phone}"),
                   'data-inner-class' => data_inner_class,
                   'data-id' => appointment.id,
-                  'data-services' => appointment.services.to_json(:only => [:name, :cost, :showing_time]) }
+                  'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time]) }
     end
     respond_with( @periods )
   end

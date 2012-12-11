@@ -30,8 +30,20 @@ class Organization < ActiveRecord::Base
     {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => self.id}
   end
 
-  def get_services
-    self.services.map{ |s| [(s.is_collection? ? s.collections_services.pluck(:service_id) : [s.id]), s.cost, s.showing_time] }.sort_by{|cs| 1000-cs.first.size}
+  def get_services( phone, type = :extend )
+    services_users = ServicesUser.where( :phone => phone, :organization_id => self.id )
+    self.services.map do |s|
+      service_ids = if type == :extend && s.is_collection?
+                      s.collections_services.pluck(:service_id)
+                    else
+                      [s.id]
+                    end
+      if service_user = services_users.find{|su| su.service_id == s.id}
+        [service_ids, service_user.cost || s.cost, service_user.showing_time || s.showing_time]
+      else
+        [service_ids, s.cost, s.showing_time]
+      end
+    end.sort_by{|cs| 1000-cs.first.size}
   end
 
   def registration_before?

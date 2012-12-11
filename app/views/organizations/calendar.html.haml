@@ -1,6 +1,6 @@
 - content_for :js do
   :javascript
-    var collections_services = #{@organization.get_services.to_json};
+    var collections_services = #{@organization.get_services( current_user.phone ).to_json};
 
 - content_for :bottom_js do
   :javascript

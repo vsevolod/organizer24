@@ -9,6 +9,7 @@ class ServicesUsersController < CompanyController
 
   def update_services
     if @appointment.update_attributes( params[:appointment] )
+      @user.recount_appointments_by_organization_for_services_users!( @organization )
       redirect_to [@appointment, :services_users], :notice => 'Изменения успешно применены'
     else
       render :action => :index, :alert => 'Во время изменения произошли ошибки'

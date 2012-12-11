@@ -204,7 +204,7 @@ $('#calendar').fullCalendar({
       popup_text += '<a class="btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
       popup_text += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
     if event['is_owner']
-      popup_text += '<a class="btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить время записи</a><br/>'
+      popup_text += '<a class="btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt" />Настройка сервисов</a><br/>'
       <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
       popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
       <% end %>

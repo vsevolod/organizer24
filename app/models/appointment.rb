@@ -46,7 +46,7 @@ class Appointment < ActiveRecord::Base
     cost = 0
     time = 0
     values = self.service_ids.dup
-    self.organization.get_services.each do |cs|
+    self.organization.get_services( self.phone ).each do |cs|
       if (cs[0] & values).size == cs[0].size
         cost += cs[1]
         time += cs[2]
@@ -112,6 +112,16 @@ class Appointment < ActiveRecord::Base
       User.new( :phone => self.phone, :firstname => self.firstname, :lastname => self.lastname )
     else
       self.user
+    end
+  end
+
+  def services_by_user
+    services_users = self.organization.get_services( self.phone, :normal ).find_all{|arr| ( arr.first & self.service_ids ).any? }
+    services_users.map do |ids, cost, showing_time|
+      service = Service.find( ids.first )
+      service.cost = cost
+      service.showing_time = showing_time
+      service
     end
   end
 

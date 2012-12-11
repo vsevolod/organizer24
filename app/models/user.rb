@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_one :my_organization, :class_name => "Organization", :foreign_key => :owner_id, :dependent => :destroy, :validate => false
   has_many :organization
   has_many :appointments
+  has_many :appointments_by_phone, :class_name => "Appointment", :foreign_key => :phone, :primary_key => :phone
   has_many :services_users, :foreign_key => :phone, :primary_key => :phone
   accepts_nested_attributes_for :my_organization
 
@@ -76,6 +77,14 @@ class User < ActiveRecord::Base
 
   def owner?( organization )
     self.my_organization == organization
+  end
+
+  def recount_appointments_by_organization_for_services_users!( organization )
+    self.appointments_by_phone.joins(:services).where(:services => { :id => self.services_users.where( :organization_id => organization.id ).pluck(:service_id).uniq } ).pluck("appointments.id").uniq.each do |appointment_id|
+      appointment = Appointment.find( appointment_id )
+      appointment.cost_time_by_services!
+      appointment.save
+    end
   end
 
 end
