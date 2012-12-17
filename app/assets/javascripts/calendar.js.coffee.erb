@@ -31,11 +31,11 @@ show_appointment_services = (event, options) ->
         text += "<b>#{event['data-client']}</b><hr/>"
       text += '<b>Услуги:</b> <br/>'
     cost = 0
-    showing_time = 0
+    showing_time = event['data-showing-time']
     $.each( JSON.parse(event['data-services']) , (id, el) ->
       text += el.name + '<br/>'
       cost += el.cost
-      showing_time += el.showing_time
+      #showing_time += el.showing_time
     )
     text += '<hr/>'
     if cost > 0
@@ -59,6 +59,7 @@ drop_draggable = ( date, allDay ) ->
     editable: false,
     'data-services': originalEventObject['data-services'],
     title: originalEventObject.title,
+    'data-showing-time': originalEventObject['showing_time'],
     'data-id': originalEventObject['data-id'],
     'data-inner-class': originalEventObject['data-inner-class'],
     'data-client': originalEventObject['data-client']
@@ -204,6 +205,7 @@ $('#calendar').fullCalendar({
       popup_text += '<a class="btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
       popup_text += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
     if event['is_owner']
+      popup_text += '<a class="btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt" />Изменить время</a><br/>'
       popup_text += '<a class="btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt" />Настройка сервисов</a><br/>'
       <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
       popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
@@ -220,6 +222,12 @@ $('#calendar').fullCalendar({
         placement: 'right'
       }).popover('show')
 })
+
+$('.ChangeTimeForAppointment').live('click', ->
+  parent = $(this).parent()
+  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='span1'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
+  false
+)
 
 $('.ChangeAppointment').live('click', ->
   event = find_event( $(this).data('id'), '_id' )

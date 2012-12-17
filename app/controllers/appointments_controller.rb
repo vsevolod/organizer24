@@ -1,7 +1,7 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
-  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status]
+  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time]
 
   respond_to :html, :json
 
@@ -55,6 +55,7 @@ class AppointmentsController < CompanyController
                   'data-client' => (@is_owner ? "#{appointment.fullname} #{appointment.phone}" : "#{appointment.user.name} #{appointment.user.phone}"),
                   'data-inner-class' => data_inner_class,
                   'data-id' => appointment.id,
+                  'data-showing-time' => appointment.showing_time,
                   'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time]) }
     end
     respond_with( @periods )
@@ -109,10 +110,20 @@ class AppointmentsController < CompanyController
       render :text => <<-JS
         Organizer.draggable_item = null;
         Organizer.calendar_draggable = false;
-        Organizer.destroy_popover_by_id( appointment_id );
+        #{refresh_calendar}
       JS
     else
       render :text => 'alert("не верная дата")'
+    end
+  end
+
+  # POST appointments/:id/change_showing_time JS
+  def change_showing_time
+    @appointment.showing_time = params[:showing_time]
+    if @appointment.save
+      render :text => refresh_calendar
+    else
+      render :text => 'alert("не верное время")'
     end
   end
 

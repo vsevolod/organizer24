@@ -43,18 +43,22 @@ class Appointment < ActiveRecord::Base
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!
-    cost = 0
-    time = 0
-    values = self.service_ids.dup
-    self.organization.get_services( self.phone ).each do |cs|
-      if (cs[0] & values).size == cs[0].size
-        cost += cs[1]
-        time += cs[2]
-        values = values - cs[0]
+    # Обновлять только если не изменено время записи
+    # И статус != ожидаемый
+    if !self.showing_time_changed? && !%w{complete missing lated cancel_owner cancel_client}.include?( self.status )
+      cost = 0
+      time = 0
+      values = self.service_ids.dup
+      self.organization.get_services( self.phone ).each do |cs|
+        if (cs[0] & values).size == cs[0].size
+          cost += cs[1]
+          time += cs[2]
+          values = values - cs[0]
+        end
       end
+      self.cost = cost
+      self.showing_time = time
     end
-    self.cost = cost
-    self.showing_time = time
   end
 
   def _end
