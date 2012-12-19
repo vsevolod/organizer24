@@ -1,10 +1,11 @@
-%table
-  %tr
-    %th Название
+%ul.thumbnails
   - objects.each do |category_photo|
-    %tr
-      %td= link_to category_photo.name, category_photo
-      - if  current_user && current_user.owner?( @organization )
-        %td
-          = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
-          = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
+    - photo = category_photo.photos.order('created_at DESC').first
+    %li.span3
+      %a{ :href => url_for(category_photo), :class => 'thumbnail'}
+        = image_tag photo.photo.url(:medium)
+        .caption
+          %h4= category_photo.name
+          - if current_user && current_user.owner?( @organization )
+            = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
+            = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

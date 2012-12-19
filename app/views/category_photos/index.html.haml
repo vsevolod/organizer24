@@ -1,4 +1,6 @@
-= link_to 'Добавить новую', [:new, :category_photo], :class => 'btn btn-success'
-
-%h1 Список ваших категорий для фотогалерей
+- if current_user && current_user.owner?( @organization )
+  = link_to 'Добавить новую', [:new, :category_photo], :class => 'btn btn-success'
+  %h1 Список ваших категорий для фотогалерей
+- else
+  %h1 Фотогалерея
 = render 'list', :objects => @category_photos

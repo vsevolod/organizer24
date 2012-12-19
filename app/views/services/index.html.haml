@@ -1,31 +1,27 @@
-- content_for :header_title do
-  %h2 Услуги 
+%h2 Услуги 
+%br/
+- if current_user && current_user.owner?( @organization )
+  = link_to 'Добавить услугу', [:new, :service], :class => 'btn btn-success'
+  = link_to 'Добавить коллекцию', new_service_path( :service => { :is_collection => true } ), :class => 'btn btn-success'
 
-- content_for :header do
-  %br/
-  - if current_user && current_user.owner?( @organization )
-    = link_to 'Добавить услугу', [:new, :service], :class => 'btn btn-primary'
-    = link_to 'Добавить коллекцию', new_service_path( :service => { :is_collection => true } ), :class => 'btn btn-primary'
-
-- content_for :upper do
-  %table.table
-    %thead
+%table.table
+  %thead
+    %tr
+      %th
+      %th Наименование
+      %th Продолжительность
+      %th Стоимость
+  %tbody
+    - @services.order(:is_collection).each do |service|
       %tr
-        %th
-        %th Наименование
-        %th Продолжительность
-        %th Стоимость
-    %tbody
-      - @services.order(:is_collection).each do |service|
-        %tr
-          %td
-            - if service.is_collection?
-              \+
-          %td= service.name
-          %td= service.showing_time
-          %td= service.cost
-          %td
-            = link_to [:edit, service] do
-              .icon-edit
-            = link_to service, :method => :delete do
-              .icon-trash
+        %td
+          - if service.is_collection?
+            \+
+        %td= service.name
+        %td= service.showing_time
+        %td= service.cost
+        %td
+          = link_to [:edit, service] do
+            .icon-edit
+          = link_to service, :method => :delete do
+            .icon-trash

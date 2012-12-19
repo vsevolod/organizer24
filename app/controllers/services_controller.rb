@@ -1,6 +1,6 @@
-class ServicesController < ApplicationController
+# coding: utf-8
+class ServicesController < CompanyController
 
-  before_filter :find_organization
   before_filter :redirect_if_not_owner, :except => [:index]
 
   def index

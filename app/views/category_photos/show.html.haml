@@ -7,12 +7,14 @@
 
 = render 'list', :objects => @category_photo.children
 
-#myCarousel.carousel.span4
+#myCarousel.carousel.slide.span7{ 'data-interval' => 300 }
   .carousel-inner
     - @photos.each_with_index do |photo, index|
       %div{ :class => "item #{'active' if index.zero?}" }
         = image_tag photo.photo.url(:gallery)
-        = image_tag photo.photo.url(:medium)
-        = image_tag photo.photo.url(:thumb)
         - if photo.name
           .carousel-caption= photo.name
+  %a.carousel-control.left{ :href => '#myCarousel', 'data-side' => 'prev' } &lsaquo;
+  %a.carousel-control.right{ :href => '#myCarousel', 'data-side' => 'next' } &rsaquo;
+
+= render 'list', :objects => @category_photo.root.siblings

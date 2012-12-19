@@ -5,6 +5,11 @@
     .nav-collapse
       %ul.nav
         = yield :nav_bar
+        - if @organization.show_photogallery
+          %li
+            = link_to "/category_photos" do
+              %i.icon-th
+              Фотогалерея
         - if current_user
           - if current_user.owner?( @organization )
             %li
