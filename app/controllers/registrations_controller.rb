@@ -29,7 +29,7 @@ class RegistrationsController < Devise::RegistrationsController
       if resource.save
         if resource.confirmed?
           sign_in resource
-          redirect_to '/', notice: 'Вы успешно зарегистрированы'
+          redirect_to '/calendar', notice: 'Вы успешно зарегистрированы'
         else
           redirect_to [:confirm_phone, resource]
         end
