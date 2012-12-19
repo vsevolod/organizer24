@@ -4,7 +4,6 @@ gem 'rails', '3.2.8'
 
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'kickstrap_rails'
-gem 'therubyracer'
 gem 'cocoon'
 gem 'event-calendar', :require => 'event_calendar'
 #gem 'inherited_resource'
@@ -39,6 +38,7 @@ end
 
 group :production do
   gem 'unicorn'
+  gem 'therubyracer'
 end
 
 group :test do
