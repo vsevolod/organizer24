@@ -31,7 +31,7 @@ class WorkingHoursController < CompanyController
     [1,2,3,4,5,6,0].each_with_index do |t, index|
       full_day = {:start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false}
       wh = @organization.working_hours.where(:week_day => t ).first
-      @periods << if Date.today + @organization.last_day.to_i.days <= (@start + index.days).to_date
+      @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (@start + index.days).to_date
         if wh
           res = []
           res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time

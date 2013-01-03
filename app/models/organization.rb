@@ -1,5 +1,5 @@
 class Organization < ActiveRecord::Base
-  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery]
+  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery, :timezone]
   THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
 
   store :settings, accessors: ACCESSORS
@@ -17,6 +17,7 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :working_hours, :reject_if => :all_blank
   validates_associated :working_hours, :if => lambda{ |u| u.working_hours.any? }
 
+  validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:name)
   validates :name, :presence => true
   validates :activity, :presence => true
   validates :subdomain, :presence => true, :uniqueness => true

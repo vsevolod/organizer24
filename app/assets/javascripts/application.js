@@ -23,3 +23,5 @@ Array.max = function( array ){
 Array.min = function( array ){
  return Math.min.apply( Math, array );
 };
+
+document.cookie="offset=" + (new Date()).getTimezoneOffset();

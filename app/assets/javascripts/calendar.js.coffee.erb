@@ -106,7 +106,7 @@ drop_div = ( date, allDay ) ->
       alert('Для начала выберите услугу')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-      $('#start').val(copiedEventObject.start)
+      $('#start').val(copiedEventObject.start.toLocaleString())
       $('#second').css('opacity', 0.1)
     else
       alert('Рабочий день заканчивается')
@@ -265,11 +265,11 @@ $('.confirm_calendar').live('click', ->
       url: '/appointments/'+appointment_id+'/change_start_time',
       type: 'POST',
       dataType: 'script',
-      data: { start: Organizer.draggable_item.start }
+      data: { start: Organizer.draggable_item.start.toLocaleString() }
     } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
-    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'] )
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'].toLocaleString() )
     $('#first').parent().submit()
   false
 )

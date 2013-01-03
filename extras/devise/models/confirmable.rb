@@ -82,7 +82,7 @@ module Devise
 
         generate_confirmation_token! if self.confirmation_number.blank?
         #send_devise_notification(:confirmation_instructions)
-        Delayed::Job.enqueue SmsJob.new( { :user_id => self.id }, 'confirmation_number' ), :run_at => Time.now
+        Delayed::Job.enqueue SmsJob.new( { :user_id => self.id }, 'confirmation_number' ), :run_at => Time.zone.now
 
       end
 
@@ -134,7 +134,7 @@ module Devise
         # in models to map to a nice sign up e-mail.
         def send_on_create_confirmation_instructions
           #send_devise_notification(:confirmation_instructions)
-          Delayed::Job.enqueue SmsJob.new( { :user_id => self.id }, 'confirmation_number' ), :run_at => Time.now
+          Delayed::Job.enqueue SmsJob.new( { :user_id => self.id }, 'confirmation_number' ), :run_at => Time.zone.now
         end
 
         # Callback to overwrite if confirmation is required or not.
@@ -178,7 +178,7 @@ module Devise
         # confirmation_period_expired? # will always return false
         #
         def confirmation_period_expired?
-          self.class.allow_unconfirmed_access_for && (Time.now > self.confirmation_sent_at + self.class.allow_unconfirmed_access_for )
+          self.class.allow_unconfirmed_access_for && (Time.zone.now > self.confirmation_sent_at + self.class.allow_unconfirmed_access_for )
         end
 
         # Checks whether the record requires any confirmation.

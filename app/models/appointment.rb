@@ -93,7 +93,7 @@ class Appointment < ActiveRecord::Base
       end
     end
     unless text.blank?
-      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => organization.owner.phone }, 'notify_owner' ), :run_at => Time.now
+      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
     end
   end
 
@@ -133,7 +133,7 @@ class Appointment < ActiveRecord::Base
 
     def update_complete_time
       if self.status_changed? && %w{complete missing lated cancel_owner cancel_client}.include?( self.status )
-        self.complete_time = Time.now
+        self.complete_time = Time.zone.now
       end
     end
 

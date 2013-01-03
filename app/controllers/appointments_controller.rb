@@ -34,7 +34,7 @@ class AppointmentsController < CompanyController
                       @organization.appointments.where( :status.in => params[:statuses] )
                     else
                       # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                      @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Date.today)
+                      @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Time.zone.now.to_date)
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     @periods = @appointments.map do |appointment|
       data_inner_class = if appointment.editable_by?( current_user )
@@ -48,8 +48,8 @@ class AppointmentsController < CompanyController
                 appointment.aasm_human_state
               end
       options = { :title => title,
-                  :start => appointment.start.to_i,
-                  :end => (appointment.start + appointment.showing_time.minutes).to_i,
+                  :start => appointment.start.to_i+@utc_offset,
+                  :end => (appointment.start + appointment.showing_time.minutes).to_i+@utc_offset,
                   :editable => false,
                   :is_owner => @is_owner,
                   'data-client' => (@is_owner ? "#{appointment.fullname} #{appointment.phone}" : "#{appointment.user.name} #{appointment.user.phone}"),
@@ -68,7 +68,7 @@ class AppointmentsController < CompanyController
 
   def create
     @user = current_user || User.where( params[:user][:phone] ).first_or_initialize( params[:user] )
-    @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
+    @appointment = @user.appointments.build( :start => Time.zone.parse( params[:start] ), :organization_id => @organization.id )
     @appointment.attributes = params[:user]
     @appointment.service_ids = params[:service].keys
     @appointment.cost_time_by_services!
@@ -94,9 +94,9 @@ class AppointmentsController < CompanyController
     if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       if @appointment.save
-        redirect_to "/calendar?date=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен'
+        redirect_to "/calendar?date=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'
       else
-        redirect_to "/calendar?date=#{@appointment.start.to_i}", :notice => 'При сохранении произошла ошибка'
+        redirect_to "/calendar?date=#{@appointment.start.to_i+@utc_offset}", :notice => 'При сохранении произошла ошибка'
       end
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'

@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :appointment do
-    start Time.now
+    start Time.zone.now
     showing_time 60
     status 'free'
     cost 100

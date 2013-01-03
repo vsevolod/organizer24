@@ -10,7 +10,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     start = record.send( options[:start] )
     showing_time = record.send( options[:showing_time] )
     duplicate_record = record.class.where( <<-SQL, {:start => start.utc.to_s, :stop => (start+showing_time*60).utc.to_s} ).where( :status => ['offer', 'approve', 'taken'], :id.not_eq => record.id )
-      GREATEST( :start, "#{options[:start]}" ) < LEAST( :stop, "#{options[:start]}"+CONCAT(#{options[:showing_time]},' second')::interval )
+      GREATEST( :start, "#{options[:start]}" ) < LEAST( :stop, "#{options[:start]}"+("#{options[:showing_time]}" || ' second')::interval )
     SQL
     unless duplicate_record.count.zero?
       record.errors[:base] = "Продолжительность: #{showing_time.show_time}; Данное время уже занято"
