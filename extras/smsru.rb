@@ -18,7 +18,7 @@ class Smsru
   def send
     uri = URI('http://sms.ru/sms/send')
     # TODO добавить "from" и обработку ответа
-    res = Net::HTTP.post_form(uri, api_id: @options['api_id'], to: @recipient, text: @text )
+    res = Net::HTTP.post_form(uri, :api_id => @options['api_id'], :to => @recipient, :text => @text+"\nСайт: depilate.ru" )
     puts "SENDER: #{@sender}"
     puts "RECIPIENT: #{@recipient}"
     puts "TEXT: #{@text}"

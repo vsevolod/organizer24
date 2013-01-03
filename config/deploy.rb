@@ -72,7 +72,7 @@ namespace :deploy do
     run "#{try_sudo} kill -s USR2 `cat #{unicorn_pid}`"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
-#    stop
-#    start
+    stop
+    start
   end
 end

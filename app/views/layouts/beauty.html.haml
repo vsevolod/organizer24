@@ -11,7 +11,7 @@
     = yield :js
   %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_') }
     .organization_big_name
-      = link_to @organization.subdomain.capitalize, @organization.subdomain, :class => 'brand'
+      = link_to @organization.subdomain.capitalize, "http://#{@organization.subdomain}", :class => 'brand'
       .subtext Индустрия красоты
     .navbar.navbar-fixed-top
       = render 'layouts/top_menu', :show_big_organization_name => true
