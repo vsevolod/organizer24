@@ -39,6 +39,12 @@ class CategoryPhotosController < CompanyController
     @photos = Photo.where( :category_photo_id => @category_photo.children.push(@category_photo) )
   end
 
+  def destroy
+    @category_photo = CategoryPhoto.find( params[:id] )
+    @category_photo.destroy
+    redirect_to :action => 'index'
+  end
+
   private
 
     def find_ancestry_dictionaries
