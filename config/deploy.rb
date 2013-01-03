@@ -60,9 +60,11 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
+    run "cd #{current_path} && #{bundle_path}bundle exec script/delayed_job start"
     run "cd #{current_path} && #{bundle_path}bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
+    run "cd #{current_path} && #{bundle_path}bundle exec script/delayed_job stop"
     run "kill `cat #{unicorn_pid}`"
   end
   task :graceful_stop, :roles => :app, :except => { :no_release => true } do

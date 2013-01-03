@@ -28,5 +28,5 @@
 public/ckeditor_assets
 public/system
 
-script/delayed_job
+#script/delayed_job
 app/assets/images/photo_depilate
