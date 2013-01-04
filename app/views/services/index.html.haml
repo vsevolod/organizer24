@@ -17,6 +17,8 @@
         %td
           - if service.is_collection?
             \+
+          - if service.show_by_owner?
+            \-
         %td= service.name
         %td= service.showing_time
         %td= service.cost

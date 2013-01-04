@@ -1,17 +1,15 @@
 # coding: utf-8
 class Smsru
 
-  DEFAULT_PHONE_NUMBER = '9131991854'
-
   attr_writer :options
 
   attr_accessor :sender, :recipient, :text
 
-  def initialize( text = '', recipient = DEFAULT_PHONE_NUMBER, sender = DEFAULT_PHONE_NUMBER )
+  def initialize( text = '', recipient = nil, sender = nil )
     @options = YAML.load_file('config/smsru.yml')
     @text = text
-    @recipient = recipient
-    @sender = sender
+    @recipient = recipient || @options['login']
+    @sender = sender || @options['login']
   end
 
   # with api_id

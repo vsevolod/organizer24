@@ -92,7 +92,7 @@ class Appointment < ActiveRecord::Base
         text += "Список услуг записи ##{self.id} изменился: #{services.order(:name).pluck(:name).join(', ')}"
       end
     end
-    unless text.blank?
+    if !text.blank? || self.phone != self.organization.owner.phone # Не уведомляем если на наш телефон
       Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
     end
   end
@@ -107,7 +107,9 @@ class Appointment < ActiveRecord::Base
   end
 
   def notify_user
-    Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
+    if self.phone != self.organization.owner.phone # Не уведомляем если на наш телефон
+      Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
+    end
   end
 
   # Берем пользователя либо создаем нового из параметров

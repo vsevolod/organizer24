@@ -21,7 +21,8 @@
     .row-fluid
       .check_services
         - services = @organization.services.not_collections.order(:name)
-        - services.each_slice( services.size/3 ).each do |group_services|
+        - services = services.where( :show_by_owner => false ) unless current_user.owner?( @organization )
+        - services.each_slice( (services.size*1.0/3).ceil ).each do |group_services|
           .span3
             - group_services.each do |service|
               %label.checkbox

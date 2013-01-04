@@ -255,6 +255,7 @@ $('.move_appointment').live('click', ->
 
 $('.confirm_calendar').live('click', ->
   $(this).parents('.popover').remove()
+  $('#second').css('opacity', 1)
   if Organizer.calendar_draggable
     $('#calendar').removeClass('draggable_calendar')
     appointment_id = Organizer.draggable_item['data-id']

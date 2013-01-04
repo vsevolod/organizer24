@@ -91,6 +91,7 @@ ru:
         showing_time: Продолжительность
         cost: Стоимость
         organization: Организация
+        show_by_owner: Показывать только владельцу
       services_user:
         service_id: Сервис
         user_id: Пользователь

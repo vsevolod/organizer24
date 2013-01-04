@@ -13,6 +13,7 @@
     = f.input :name
     = f.input :showing_time, :hint => "Количество минут"
     = f.input :cost
+    = f.input :show_by_owner, :as => :boolean, :wrapper => 'checkbox'
 
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

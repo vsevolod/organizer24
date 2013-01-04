@@ -68,7 +68,7 @@ class AppointmentsController < CompanyController
 
   def create
     @user = current_user || User.where( params[:user][:phone] ).first_or_initialize( params[:user] )
-    @appointment = @user.appointments.build( :start => Time.zone.parse( params[:start] ), :organization_id => @organization.id )
+    @appointment = @user.appointments.build( :start => parse_local_time( params[:start] ), :organization_id => @organization.id )
     @appointment.attributes = params[:user]
     @appointment.service_ids = params[:service].keys
     @appointment.cost_time_by_services!
@@ -155,6 +155,15 @@ class AppointmentsController < CompanyController
           format.js   { render :text => "alert('Не хватает прав')"}
         end
       end
+    end
+
+    def parse_local_time( local_time )
+      {'янв.' => 'Jan', 'февр.' => 'Feb', 'марта' => 'Mar', 'апр.' => 'Apr', 'мая' => 'May', 'июня' => 'Jun', 'июля' => 'Jul', 'авг.' => 'Aug', 'сент.' => 'Sep', 'окт.' => 'Oct', 'нояб.' => 'Nov', 'дек.' => 'Dec'}.each_pair do |k, v|
+        if local_time.include? k
+          local_time.gsub!( k, v )
+        end
+      end
+      Time.zone.parse local_time
     end
 
 end
