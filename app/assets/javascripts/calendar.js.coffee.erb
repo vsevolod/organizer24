@@ -106,7 +106,7 @@ drop_div = ( date, allDay ) ->
       alert('Для начала выберите услугу')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-      $('#start').val(copiedEventObject.start.toLocaleString())
+      $('#start').val(copiedEventObject.start.valueOf())
       $('#second').css('opacity', 0.1)
     else
       alert('Рабочий день заканчивается')
@@ -266,11 +266,11 @@ $('.confirm_calendar').live('click', ->
       url: '/appointments/'+appointment_id+'/change_start_time',
       type: 'POST',
       dataType: 'script',
-      data: { start: Organizer.draggable_item.start.toLocaleString() }
+      data: { start: Organizer.draggable_item.start.valueOf() }
     } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
-    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'].toLocaleString() )
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'].valueOf() )
     $('#first').parent().submit()
   false
 )
@@ -294,4 +294,3 @@ $('.show_statuses .checkbox input').change ->
   ##$('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
   ##$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
   document.location.href = '/main/set_session?key=show_' + $(this).val() + '&value=' + $(this).is(':checked')
-
