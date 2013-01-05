@@ -163,7 +163,7 @@ class AppointmentsController < CompanyController
           local_time.gsub!( k, v )
         end
       end
-      Time.zone.parse local_time
+      Time.zone.parse local_time.gsub(/ GMT.+/,'')
     end
 
 end
