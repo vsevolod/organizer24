@@ -10,8 +10,9 @@ class SmsJob < Struct.new(:options, :sms_type)
     sms = Smsru.new( ) #@appointment.phone, @organization.user.phone
     case sms_type
     when 'notification'
+      # Надо Time.zone объявить до того, как найдем appointment
+      Time.zone = Organization.joins(:appointments).where( :appointments => { :id => options[:appointment_id] } ).first.timezone
       @appointment = Appointment.find( options[:appointment_id] )
-      Time.zone = @appointment.organization.timezone
       sms.recipient = @appointment.phone
       sms.text = (<<-TEXT).strip
       Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб.
