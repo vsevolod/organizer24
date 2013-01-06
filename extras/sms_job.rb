@@ -11,7 +11,7 @@ class SmsJob < Struct.new(:options, :sms_type)
     case sms_type
     when 'notification'
       @appointment = Appointment.find( options[:appointment_id] )
-      Time.zone = @appointment.organization
+      Time.zone = @appointment.organization.timezone
       sms.recipient = @appointment.phone
       sms.text = (<<-TEXT).strip
       Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб.
