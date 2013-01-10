@@ -3,6 +3,7 @@ ru:
   alert: Внимание
   legend:
     status:
+      offer: Есть заявка
       free: Свободно
       taken: Занято
       inaccessible: Недоступно

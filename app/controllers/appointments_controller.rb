@@ -72,6 +72,7 @@ class AppointmentsController < CompanyController
     @appointment.attributes = params[:user]
     @appointment.service_ids = params[:service].keys
     @appointment.cost_time_by_services!
+    check_notifier
     if @user == current_user
       @appointment.first_owner_view
     else
@@ -149,11 +150,19 @@ class AppointmentsController < CompanyController
 
     def can_editable?
       @appointment = Appointment.find(params[:id])
+      check_notifier
       unless @appointment.editable_by? current_user
         respond_to do |format|
           fornat.html { render :text => "У вас не хватает прав" }
           format.js   { render :text => "alert('Не хватает прав')"}
         end
+      end
+    end
+
+    # Не уведомляем владельца если он сам и изменял запись
+    def check_notifier
+      if current_user.owner?(@organization)
+        @appointment.can_not_notify_owner = true
       end
     end
 

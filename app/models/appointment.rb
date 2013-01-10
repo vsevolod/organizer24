@@ -10,8 +10,10 @@ class Appointment < ActiveRecord::Base
 
   before_save :update_complete_time
   before_validation :cost_time_by_services!
-  after_save :notify_owner
-  after_save :check_delayed
+  after_save :notify_owner, :if => :can_notify_owner?
+  after_save :change_start_notification, :if => :start_changed?
+
+  attr_accessor :can_not_notify_owner
 
   accepts_nested_attributes_for :services
   accepts_nested_attributes_for :services_users
@@ -32,6 +34,7 @@ class Appointment < ActiveRecord::Base
       transitions :to => :offer, :from => :free
     end
   end
+  FINISH_STATES = %w{complete missing lated cancel_owner cancel_client}
 
   validates :start, :presence => true
   validates :phone, :presence => true
@@ -86,7 +89,8 @@ class Appointment < ActiveRecord::Base
         text += "Время начала записи ##{self.id} изменилось. Было: #{Russian.strftime self.start_was, '%d %B %Y %R'} Стало: #{Russian.strftime self.start, '%d %B %Y %R'}"
       end
       if status_changed?
-        text += "Статус записи ##{self.id} изменился. Был #{Appointment.human_attribute_name(self.status_was)}, стал #{Appointment.human_attribute_name(self.status_was)}"
+        translate = Proc.new{ |_state| I18n.t "activerecord.attributes.appointment.status.#{_state}" }
+        text += "Статус записи ##{self.id} изменился. Был \"#{translate.call self.status_was}\", стал \"#{translate.call self.status}\""
       end
       if cost_changed? || showing_time_changed?
         text += "Список услуг записи ##{self.id} изменился: #{services.order(:name).pluck(:name).join(', ')}"
@@ -97,19 +101,9 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  def check_delayed
-    if start_changed?
-      if notification_delayed = Delayed::Job.where( "handler ILIKE ?", "%appointment_id: #{self.id}%notification%" ).first
-        notification_delayed.destroy
-      end
-      notify_user
-    end
-  end
-
-  def notify_user
-    if self.phone != self.organization.owner.phone # Не уведомляем если на наш телефон
-      Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
-    end
+  def change_start_notification
+    destroy_user_notifications
+    Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
   end
 
   # Берем пользователя либо создаем нового из параметров
@@ -131,12 +125,27 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def finish_state?
+    FINISH_STATES.include?( self.status )
+  end
+
   private
 
     def update_complete_time
-      if self.status_changed? && %w{complete missing lated cancel_owner cancel_client}.include?( self.status )
+      if self.status_changed? && finish_state?
+        destroy_user_notifications
         self.complete_time = Time.zone.now
       end
+    end
+
+    def destroy_user_notifications
+      if (notifications_delayed = Delayed::Job.where( "handler ILIKE ?", "%appointment_id: #{self.id}%notification%" )).count > 0
+        notifications_delayed.destroy_all
+      end
+    end
+
+    def can_notify_owner?
+      !can_not_notify_owner
     end
 
 end

@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => 3..100, :allow_blank => true, :if => :first_step?
 
   validates_associated :my_organization, :if => lambda{ |u| u.steps.index(u.current_step) >= 2 }
-  
+  before_save :check_phone
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :validatable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -86,5 +86,13 @@ class User < ActiveRecord::Base
       appointment.save
     end
   end
+
+  private
+
+    def check_phone
+      if self.phone.size == 10
+        self.phone = "+7#{self.phone}"
+      end
+    end
 
 end
