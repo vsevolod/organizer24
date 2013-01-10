@@ -17,7 +17,7 @@ set_keypress_on_phone = (el) ->
             onComplete: ->
               phone = $('#cboxWrapper input[name$="[phone]"]')
               phone.val(phone.data('old-phone').replace(/^ *\+*7/, '') )
-              phone.focus()
+              $('#cboxWrapper #user_password').focus()
           })
         )
   })

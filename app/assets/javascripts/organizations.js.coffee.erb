@@ -2,8 +2,9 @@ check_serices_inputs = ->
   cost = 0
   time = 0
   values = []
-  $('.check_services input:checked').each ->
-    values.push( parseInt( $(this).val() ) )
+  $.each( $('.check_services input:checked'), (index, value) ->
+    values.push( parseInt( $(value).val() ) )
+  )
   # Проходим по всем коллекциям
   for cs in collections_services
     equal = true # если equal - true, значит совпадает
@@ -40,4 +41,4 @@ $ ->
       $(this).attr('disabled', false)
 
     $('.check_services input').click ->
-      check_serices_inputs()
+      setTimeout(check_serices_inputs(), 50)

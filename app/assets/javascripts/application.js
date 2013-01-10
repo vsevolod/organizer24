@@ -12,6 +12,7 @@
 //= require organizations
 //= require ckeditor/init
 //= require colorbox-rails
+//= require fix_ie
 
 var Organizer = { calendar_draggable: false, draggable_item: null};
 

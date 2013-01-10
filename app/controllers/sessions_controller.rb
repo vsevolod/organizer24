@@ -13,4 +13,14 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def create
+    prepare_phone
+    super
+  end
+
+  private
+
+    def prepare_phone
+      params[:user][:phone] = '+7'+params[:user][:phone].sub(/^8/, '').sub(/^\+7/, '')
+    end
 end
