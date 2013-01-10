@@ -58,7 +58,7 @@ drop_draggable = ( date, allDay ) ->
     editable: false,
     'data-services': originalEventObject['data-services'],
     title: originalEventObject.title,
-    'data-showing-time': originalEventObject['showing_time'],
+    'data-showing-time': originalEventObject['data-showing-time'],
     'data-id': originalEventObject['data-id'],
     'data-inner-class': originalEventObject['data-inner-class'],
     'data-client': originalEventObject['data-client']
@@ -255,7 +255,7 @@ $('.move_appointment').live('click', ->
 $('.confirm_calendar').live('click', ->
   $(this).parents('.popover').remove()
   $('#second').css('opacity', 1)
-  if Organizer.calendar_draggable
+  if Organizer.calendar_draggable # Если перетаскиваем событие
     $('#calendar').removeClass('draggable_calendar')
     appointment_id = Organizer.draggable_item['data-id']
     event = find_event( appointment_id, 'data-id' )
