@@ -2,10 +2,15 @@
 class CategoryPhotosController < CompanyController
 
   before_filter :redirect_if_not_owner, :only => [:new, :edit, :create, :update, :destroy]
-  before_filter :find_ancestry_dictionaries, :only => [:new, :edit]
+  before_filter :find_ancestry_dictionaries, :only => [:new, :edit, :create, :update]
 
   def index
     @category_photos = @organization.category_photos.order( :name )
+    if !current_user || !current_user.owner?(@organization)
+      if @category_photos.count == 1
+        redirect_to @category_photos.first
+      end
+    end
   end
 
   def new
@@ -17,7 +22,7 @@ class CategoryPhotosController < CompanyController
   end
 
   def create
-    @category_photo = @organization.category_photos.build
+    @category_photo = @organization.category_photos.build(params[:category_photo])
     if @category_photo.save
       redirect_to @category_photo, :notice => 'Категория успешно добавлено'
     else

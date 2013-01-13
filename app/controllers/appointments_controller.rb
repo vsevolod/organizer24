@@ -90,14 +90,15 @@ class AppointmentsController < CompanyController
     end
   end
 
+  # TODO POST ajax query
   def change_status
     # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
     if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       if @appointment.save
-        redirect_to "/calendar?date=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'
+        redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'
       else
-        redirect_to "/calendar?date=#{@appointment.start.to_i+@utc_offset}", :notice => 'При сохранении произошла ошибка'
+        redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'При сохранении произошла ошибка'
       end
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'

@@ -1,0 +1,4 @@
+= image_tag( photo.photo.url(:thumb) )
+= link_to [photo.category_photo, photo], :class => 'btn btn-danger', :method => :delete do
+  %span.icon-trash
+%br/

@@ -26,7 +26,9 @@ Organizer::Application.routes.draw do
         post :change_showing_time
       end
     end
-    resources :category_photos
+    resources :category_photos do
+      resources :photos
+    end
     resources :executors
     resources :pages, :except => [:show]
     resources :services

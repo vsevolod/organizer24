@@ -1,11 +1,20 @@
+= content_for :js do
+  = javascript_include_tag 'photo'
+  = stylesheet_link_tag 'jquery.fileupload-ui'
+
+%h3 Свойства категории
 = simple_form_for(@category_photo, :wrapper => :bootstrap) do |f|
   = show_errors( @category_photo )
   = f.input :name
   = f.input :parent_id, :as => :select, :collection => @ancestry_category_photos
-  #photos
-    = f.simple_fields_for :photos do |p|
-      = render 'photo_fields', f: p
-    .links
-      = link_to_add_association 'Добавить фото', f, :photos
   .form-actions
     = f.submit nil, :class => 'btn btn-success'
+
+#photos
+  - @category_photo.photos.each do |photo|
+    = render photo
+
+- unless @category_photo.new_record?
+  %h3 Файлы
+  = simple_form_for [@category_photo, Photo.new], :wrapper => :bootstrap do |f|
+    = f.input :photo, :as => :file, :input_html => { :multiple => true, :name => 'photo[photo]' }

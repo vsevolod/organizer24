@@ -1,6 +1,7 @@
 %ul.thumbnails
   - objects.each do |category_photo|
     - photo = category_photo.photos.order('created_at DESC').first
+    - next unless photo
     %li.span3
       %a{ :href => url_for(category_photo), :class => 'thumbnail'}
         = image_tag photo.photo.url(:medium)
