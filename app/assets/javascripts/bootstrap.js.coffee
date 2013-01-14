@@ -3,5 +3,5 @@ jQuery ->
   $(".tooltip").tooltip()
   $("a[rel=tooltip]").tooltip()
   $('.carousel').carousel( {
-    interval: $(this).data('interval')
+    interval: false
   })

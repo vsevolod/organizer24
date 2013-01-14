@@ -7,7 +7,7 @@
 
 = render 'list', :objects => @category_photo.children
 
-#myCarousel.carousel.slide.span7{ 'data-interval' => 300 }
+#myCarousel.carousel.slide.span7
   .carousel-inner
     - @photos.each_with_index do |photo, index|
       %div{ :class => "item #{'active' if index.zero?}" }
