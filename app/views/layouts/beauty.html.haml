@@ -19,7 +19,7 @@
       - if @breadcrumbs && @breadcrumbs.any?
         %ul.breadcrumb
           = breadcrumbs
-      = yield
+      .row-fluid= yield
     = yield :bottom_js
     - flash.each do |name, msg|
       :javascript
