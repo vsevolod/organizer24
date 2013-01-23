@@ -134,7 +134,7 @@ class Appointment < ActiveRecord::Base
 
     def check_start_time
       if ['taken', 'offer', 'approve'].include? self.status
-        record.errors[:start] = "не может быть меньше текущего времени" if start <= Time.zone.now
+        self.errors[:start] = "не может быть меньше текущего времени" if start <= Time.zone.now
       end
     end
 
