@@ -9,6 +9,7 @@ class Appointment < ActiveRecord::Base
   has_and_belongs_to_many :services # Услуги
 
   before_save :update_complete_time
+  before_validation :check_start_time
   before_validation :cost_time_by_services!
   after_save :notify_owner, :if => :can_notify_owner?
   after_save :change_start_notification, :if => :start_changed?
@@ -130,6 +131,12 @@ class Appointment < ActiveRecord::Base
   end
 
   private
+
+    def check_start_time
+      if ['taken', 'offer', 'approve'].include? self.status
+        record.errors[:start] = "не может быть меньше текущего времени" if start <= Time.zone.now
+      end
+    end
 
     def update_complete_time
       if self.status_changed? && finish_state?

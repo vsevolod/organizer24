@@ -12,7 +12,7 @@ class CompanyController < ApplicationController
   private
 
     def company_time_zone( &block )
-      Time.use_zone( @organization.timezone || Time.zone ) do
+      Time.use_zone( @organization.try(:timezone) || Time.zone ) do
         @utc_offset = Time.zone.now.utc_offset + cookies["offset"].to_i*60
         block.call
       end
