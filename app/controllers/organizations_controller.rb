@@ -9,6 +9,7 @@ class OrganizationsController < CompanyController
   end
 
   def show
+    redirect_to '/edit', alert: 'Заполните данные организации' if @organization.theme.blank?
     @category_photos = @organization.category_photos.joins(:photos).uniq
   end
 

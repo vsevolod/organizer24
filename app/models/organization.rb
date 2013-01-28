@@ -51,6 +51,10 @@ class Organization < ActiveRecord::Base
     self.registration_before.to_i == 1
   end
 
+  def show_photogallery?
+    self.show_photogallery.to_i == 1
+  end
+
   private
 
     def to_Date( seconds )

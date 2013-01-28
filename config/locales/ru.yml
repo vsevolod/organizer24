@@ -75,7 +75,7 @@ ru:
         registration_before: Доступ к записи только после регистрации/входа
         name: Название
         owner: Владелец
-        domain: Поддомен
+        domain: Домен
         show_photogallery: Показывать фотогалерею
         theme: Тема оформления
         timezone: Часовой пояс

@@ -5,7 +5,7 @@
     .nav-collapse
       %ul.nav
         = yield :nav_bar
-        - if @organization.show_photogallery
+        - if @organization.show_photogallery? || current_user && current_user.owner?( @organization )
           %li
             = link_to "/category_photos" do
               %i.icon-th
@@ -26,18 +26,19 @@
                 Список услуг
           - else
             %li
-              = link_to "/calendar" do
-                %i.icon-calendar
-                Записаться
-          %li
-            = link_to "/dashboard" do
-              %i.icon-home
-              Кабинет
-          %li
-            = link_to destroy_user_session_path, :method => :delete do
-              %i.icon-off
-              Выход
+              = link_to "/dashboard" do
+                %i.icon-home
+                Кабинет
+            %li
+              = link_to destroy_user_session_path, :method => :delete do
+                %i.icon-off
+                Выход
         - else
           // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
           %li= link_to 'Вход', '/users/sign_in?remote=true', :data => { :colorbox => true }
           %li= link_to 'Регистрация', '/users/sign_up?remote=true', :data => { :colorbox => true }
+        - if !@organization.registration_before? || current_user
+          %li
+            = link_to "/calendar" do
+              %i.icon-calendar
+              Записаться
