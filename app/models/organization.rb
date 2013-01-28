@@ -17,12 +17,12 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :working_hours, :reject_if => :all_blank
   validates_associated :working_hours, :if => lambda{ |u| u.working_hours.any? }
 
-  validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:name)
+  validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:name).keys + [nil]
   validates :name, :presence => true
   validates :activity, :presence => true
-  validates :subdomain, :presence => true, :uniqueness => true
+  validates :domain, :presence => true, :uniqueness => true
 
-  attr_accessible :name, :activity_id, :subdomain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
+  attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
 
   def calendar_settings
     minTime  = self.working_hours.pluck(:begin_time).min

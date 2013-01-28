@@ -58,7 +58,7 @@ class RegistrationsController < Devise::RegistrationsController
         render "new"
       else
         session[:user_step] = session[:user_params] = nil
-        redirect_to calendar_url(subdomain: resource.my_organization.subdomain), :notice => 'Вы успешно зарегистрировались'
+        redirect_to resource.my_organization.domain, :notice => 'Вы успешно зарегистрировались'
       end
     end
   end

@@ -7,5 +7,5 @@
     %ul
       - activity.organizations.each do |org|
         %li
-          = link_to org.name, root_url(subdomain: org.subdomain)
-          = link_to 'Записаться', calendar_url(subdomain: org.subdomain)
+          = link_to org.name, domain_organization_path( org )
+          = link_to 'Записаться', domain_organization_path( org, '/calendar' )

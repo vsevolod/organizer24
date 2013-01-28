@@ -2,6 +2,7 @@
 class OrganizationsController < CompanyController
   skip_before_filter :find_organization, :only => [:index]
   add_breadcrumb 'На главную', '/', :except => [:index, :show]
+  before_filter :redirect_if_not_owner, :only => [:edit, :update]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)
@@ -9,9 +10,6 @@ class OrganizationsController < CompanyController
 
   def show
     @category_photos = @organization.category_photos.joins(:photos).uniq
-    if !@organization.theme
-      redirect_to "/edit"
-    end
   end
 
   def calendar

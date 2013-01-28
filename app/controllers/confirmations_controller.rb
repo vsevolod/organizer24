@@ -29,7 +29,7 @@ class ConfirmationsController < Devise::ConfirmationsController
       if @user.confirmation_number == params[:confirmation_number]
         @user.confirm!
       else
-        redirect_to [:confirm_phone, @user], alert: 'Введен не верный код подтверждения'
+        redirect_to [:confirm_phone, @user], alert: 'Введен неверный код подтверждения'
       end
     end
   end

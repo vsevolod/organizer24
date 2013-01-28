@@ -1,1 +1,4 @@
-= render "organizations/templates/#{@organization.theme}"
+- content_for :bottom_js do
+  = javascript_include_tag 'fullcalendar', 'month_calendar'
+
+= render "organizations/templates/#{@organization.theme || 'default'}"
