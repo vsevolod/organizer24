@@ -21,6 +21,7 @@ class OrganizationsController < CompanyController
     if params[:day]
       @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")
     end
+    @current_user = User.new
   end
 
   def edit

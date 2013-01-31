@@ -3,9 +3,9 @@
 one:
   name: MyString
   activity_id: 1
-  subdomain: MyString
+  domain: MyString
 
 two:
   name: MyString
   activity_id: 1
-  subdomain: MyString
+  domain: MyString

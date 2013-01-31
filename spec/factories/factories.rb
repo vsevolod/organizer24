@@ -50,7 +50,7 @@ FactoryGirl.define do
     sequence :name do
       Faker::Company.name
     end
-    sequence :subdomain do
+    sequence :domain do
       Faker::Lorem.words(1)
     end
     # settings
