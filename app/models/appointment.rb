@@ -41,6 +41,7 @@ class Appointment < ActiveRecord::Base
   validates :phone, :presence => true
   validates :firstname, :presence => true
   validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
+  validates_numericality_of :showing_time, :greater_than => 0
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
   attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes
