@@ -2,7 +2,10 @@ to_i = (date_or_number) ->
   if typeof( date_or_number ) == 'number'
     date_or_number
   else
-    date_or_number.valueOf() / 1000
+    if date_or_number == null
+      0
+    else
+      date_or_number.valueOf() / 1000
 
 Organizer.destroy_all_popovers = ( appointment_id ) ->
   $('div.fc-event[data-id]').popover('destroy')

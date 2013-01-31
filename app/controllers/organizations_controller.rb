@@ -15,13 +15,16 @@ class OrganizationsController < CompanyController
 
   def calendar
     add_breadcrumb 'Календарь', '/calendar'
-    if !current_user && @organization.registration_before?
-      redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
+    if !current_user
+      if @organization.registration_before?
+        redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
+      else
+        @current_user ||= User.new
+      end
     end
     if params[:day]
       @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")
     end
-    @current_user = User.new
   end
 
   def edit
