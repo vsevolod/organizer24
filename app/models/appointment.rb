@@ -35,7 +35,9 @@ class Appointment < ActiveRecord::Base
       transitions :to => :offer, :from => :free
     end
   end
+
   FINISH_STATES = %w{complete missing lated cancel_owner cancel_client}
+  STARTING_STATES = %w{taken your-offer offer approve}
 
   validates :start, :presence => true
   validates :phone, :presence => true
@@ -129,6 +131,10 @@ class Appointment < ActiveRecord::Base
 
   def finish_state?
     FINISH_STATES.include?( self.status )
+  end
+
+  def starting_state?
+    STARTING_STATES.include?( self.status )
   end
 
   private

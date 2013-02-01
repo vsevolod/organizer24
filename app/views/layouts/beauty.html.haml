@@ -9,7 +9,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js
-  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_') }
+  %body{ :class => get_class }
     .organization_big_name
       = link_to @organization.domain.capitalize, domain_organization_path( @organization ), :class => 'brand'
       .subtext Индустрия красоты

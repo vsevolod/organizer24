@@ -34,15 +34,17 @@ class AppointmentsController < CompanyController
                       @organization.appointments.where( :status.in => params[:statuses] )
                     else
                       # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                      @organization.appointments.where( :status.in => %w{approve offer taken} ).where('date(start) >= ?', Time.zone.now.to_date)
+                      @organization.appointments.where( :status.in => Appointment::STARTING_STATES ).where('date(start) >= ?', Time.zone.now.to_date)
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
+    # Находим записи
     @periods = @appointments.map do |appointment|
-      data_inner_class = if appointment.editable_by?( current_user )
+      editable = appointment.editable_by?( current_user )
+      data_inner_class = if editable
                            'legend-your-offer'
                          else
                            "legend-#{appointment.status}"
                          end
-      title = if ( @is_owner && ['taken', 'your-offer', 'offer', 'approve'].include?( appointment.status ) ) || ( !@is_owner && data_inner_class == 'legend-your-offer' )
+      title = if @is_owner && appointment.starting_state? || !@is_owner && editable
                 appointment.services.pluck('name').join('<br/>')
               else
                 appointment.aasm_human_state
@@ -51,12 +53,30 @@ class AppointmentsController < CompanyController
                   :start => appointment.start.to_i+@utc_offset,
                   :end => (appointment.start + appointment.showing_time.minutes).to_i+@utc_offset,
                   :editable => false,
-                  :is_owner => @is_owner,
-                  'data-client' => (@is_owner ? "#{appointment.fullname} #{appointment.phone}" : "#{appointment.user.name} #{appointment.user.phone}"),
+                  :is_owner => false,
                   'data-inner-class' => data_inner_class,
-                  'data-id' => appointment.id,
                   'data-showing-time' => appointment.showing_time,
-                  'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time]) }
+                  'data-id' => appointment.id
+                   }
+      if editable
+        options.merge!({ :is_owner => true,
+                        'data-client' => "#{appointment.fullname} #{appointment.phone}",
+                        'data-id' => appointment.id,
+                        'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time])
+        })
+      end
+      options
+    end
+    #Объединяем рядом стоящие чужие записи
+    if !@is_owner
+      @periods.each_with_index do |_this, index|
+        if _this && !_this[:is_owner] && ( _next = @periods.find{|p| p && p[:start] == _this[:end] && !p[:is_owner]})
+          _next[:start] = _this[:start]
+          _next['data-showing-time'] += _this['data-showing-time']
+          @periods[index] = nil
+        end
+      end
+      @periods.compact!
     end
     respond_with( @periods )
   end

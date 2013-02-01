@@ -23,6 +23,13 @@ module ApplicationHelper
     render 'layouts/errors', :object => object
   end
 
+  def get_class
+    klass = []
+    klass << "#{params[:controller]}_#{params[:action]}".gsub('/','_')
+    klass << "user_signed" if current_user
+    klass.join(' ')
+  end
+
   private
 
     def short_csoap( org, appointment, state)
