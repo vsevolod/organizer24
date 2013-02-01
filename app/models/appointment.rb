@@ -107,7 +107,9 @@ class Appointment < ActiveRecord::Base
 
   def change_start_notification
     destroy_user_notifications
-    Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
+    if self.starting_state? # Уведомляем только если запись активна
+      Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
+    end
   end
 
   # Берем пользователя либо создаем нового из параметров

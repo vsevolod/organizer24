@@ -34,14 +34,14 @@ class WorkingHoursController < CompanyController
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (@start + index.days).to_date
         if wh
           res = []
-          res << { :title => 'закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
-          res << { :title => 'закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
+          res << { :title => 'Закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
+          res << { :title => 'Закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
           res
         else
-          { :title => 'выходной', 'data-inner-class' => 'legend-inaccessible' }.merge( full_day )
+          { :title => 'Выходной', 'data-inner-class' => 'legend-inaccessible' }.merge( full_day )
         end
       else
-        { :title => 'Запись невозможна', 'data-inner-class' => 'legend-old-day' }.merge( full_day )
+        { :title => "Запись невозможна", 'data-inner-class' => 'legend-old-day' }.merge( full_day )
       end
     end
     respond_with( @periods.flatten.compact )
