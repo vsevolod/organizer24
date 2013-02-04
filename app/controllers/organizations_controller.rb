@@ -21,6 +21,10 @@ class OrganizationsController < CompanyController
       else
         @current_user ||= User.new
       end
+    else
+      if current_user.owner?( @organization )
+        @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
+      end
     end
     if params[:day]
       @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")

@@ -42,3 +42,17 @@ $ ->
 
     $('.check_services input').click ->
       setTimeout(check_serices_inputs, 50)
+
+  $('.AutoPhoneClick').live('click', ->
+    $('.AutoPhoneClick span').removeClass('label-success')
+    $(this).find('span').addClass('label-success')
+    $('#first #user_phone').val($(this).data('phone'))
+    $('#first #user_firstname').val($(this).data('firstname'))
+    $('#first #user_lastname').val($(this).data('lastname'))
+    false
+  )
+
+  $('.AutoClearText').click( ->
+    $(this).prev().val('')
+    false
+  )

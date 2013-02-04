@@ -43,14 +43,49 @@
       - [:phone, :firstname, :lastname].each do |field|
         = hidden_field_tag "user[#{field}]", current_user.send(field)
     - else
+      - [:phone, :firstname, :lastname].each do |field|
+        .row-fluid
+          .span3
+            %b= Appointment.human_attribute_name field
+          .input-append
+            = text_field_tag "user[#{field}]", ''
+            %button.btn{ :type => 'button', :class => 'btn-danger AutoClearText' } x
       .row-fluid
-        - [:phone, :firstname, :lastname].each do |field|
-          .form-horizontal
-            .span3
-              %b= Appointment.human_attribute_name field
-            .control-group
-              .controls
-                = text_field_tag "user[#{field}]", '', :class => 'span3'
+        #phone_results
+        :javascript
+          var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};
+          var autocomplete_users = function(){
+            var phone      = $('#first #user_phone').val().replace(/_+/, ''),
+                firstname  = $('#first #user_firstname').val().toLowerCase(),
+                lastname   = $('#first #user_lastname').val().toLowerCase(),
+                results    = [],
+                el         = null;
+            $('#phone_results').html('');
+            $.each( phonebook, function(index, el){
+              if (el.phone.toLowerCase().contains(phone) && el.firstname.toLowerCase().contains(firstname) && el.lastname.toLowerCase().contains(lastname)){
+                results.push(el)
+              };
+            });
+            console.log( results.length )
+            if (results.length != 0){
+              if (results.length > 9){
+                $('#phone_results').html('<span class="label label-important">'+results.length+'</span>');
+              }
+              else{
+                $.each( results, function(index, el){
+                  a = $("<a href='#' class='AutoPhoneClick'><span class='label'>"+el.phone+" "+el.firstname+" "+el.lastname+"</span></a>").data({phone: el.phone, firstname: el.firstname, lastname: el.lastname});
+                  $('#phone_results').append($('<div class="span3"/>').append(a));
+                });
+              }
+            }
+          };
+          $(function(){
+            $.each(['firstname', 'phone', 'lastname'], function(index, num){
+              $('#first #user_'+num).keyup( function(){
+                autocomplete_users()
+              });
+            });
+          });
 
 .row-fluid
   %hr/
