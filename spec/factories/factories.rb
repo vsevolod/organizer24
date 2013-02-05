@@ -6,6 +6,10 @@ FactoryGirl.define do
     cost 100
     user
 
+    after(:build) do |appointment|
+      appointment.phone = appointment.user.phone
+    end
+
     factory :with_organization do
       after(:build) do |appointment|
         appointment.organization = FactoryGirl.create( :organization_with_services )
@@ -25,7 +29,7 @@ FactoryGirl.define do
 
     end
 
-    factory :multi_appointment do
+    factory :multi_services_appointment do
       sequence :phone do |n|
         Faker::PhoneNumber.phone_number
       end
@@ -121,7 +125,7 @@ FactoryGirl.define do
 
       after(:build) do |service, evaluator|
         service_ids = Array.new(Random.new.rand(2..evaluator.services_count)) do |el|
-          fg = FactoryGirl.create( :service )
+          fg = FactoryGirl.create( :service, :organization => evaluator.organization )
           fg.id
         end
         service.service_ids = service_ids
