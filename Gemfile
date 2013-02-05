@@ -43,7 +43,6 @@ group :production do
 end
 
 group :test do
-  gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
@@ -52,6 +51,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'guard-rspec'
+  gem 'cucumber-rails'
 end
 
 gem 'jquery-rails'

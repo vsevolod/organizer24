@@ -1,27 +1,44 @@
 FactoryGirl.define do
 
   factory :appointment do
-    start Time.zone.now
-    showing_time 60
+    start Time.zone.now + Random.new.rand(1..10).hours
     status 'free'
     cost 100
-
     user
-    after(:build) do |appointment|
-      appointment.organization = FactoryGirl.create( :organization_with_services )
+
+    factory :with_organization do
+      after(:build) do |appointment|
+        appointment.organization = FactoryGirl.create( :organization_with_services )
+      end
+
+      factory :valid_appointment do
+        sequence :phone do |n|
+          Faker::PhoneNumber.phone_number
+        end
+        sequence :firstname do |n|
+          Faker::Name.first_name
+        end
+        after(:build) do |appointment, evaluator|
+          appointment.services = appointment.organization.services
+        end
+      end
+
     end
 
-    factory :valid_appointment do
+    factory :multi_appointment do
       sequence :phone do |n|
         Faker::PhoneNumber.phone_number
       end
       sequence :firstname do |n|
         Faker::Name.first_name
       end
+
       after(:build) do |appointment, evaluator|
-        appointment.services = appointment.organization.services
+        appointment.organization = FactoryGirl.create( :organization_with_multi_services )
+        appointment.services = appointment.organization.services.where( :is_collection => false )
       end
     end
+
   end
 
   factory :page do
@@ -53,11 +70,13 @@ FactoryGirl.define do
     sequence :domain do
       Faker::Lorem.words(1)
     end
+
     # settings
     registration_before 1
     theme 'beauty'
     slot_minutes 30
     last_day 0
+
     # references
     owner
     activity
@@ -68,6 +87,15 @@ FactoryGirl.define do
       end
       after(:create) do |organization, evaluator|
         FactoryGirl.create_list( :service, evaluator.services_count, :organization => organization )
+      end
+    end
+
+    factory :organization_with_multi_services do
+      ignore do
+        services_count 3
+      end
+      after(:create) do |organization, evaluator|
+        FactoryGirl.create_list( :multi_service, evaluator.services_count, :organization => organization )
       end
     end
   end
@@ -82,7 +110,24 @@ FactoryGirl.define do
     sequence :cost do |n| 
       Random.new.rand(100..1000)
     end
-    is_collection false # test only not collections. fix it
+    is_collection false
+
+    factory :multi_service do
+      is_collection true
+
+      ignore do
+        services_count 3
+      end
+
+      after(:build) do |service, evaluator|
+        service_ids = Array.new(Random.new.rand(2..evaluator.services_count)) do |el|
+          fg = FactoryGirl.create( :service )
+          fg.id
+        end
+        service.service_ids = service_ids
+      end
+
+    end
   end
 
   factory :working_hour do

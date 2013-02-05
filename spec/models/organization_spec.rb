@@ -5,7 +5,7 @@ describe Organization do
 
   context 'services' do
     it 'should show services' do
-      organization.get_services.size.should equal(3)
+      organization.get_services(Faker::PhoneNumber.phone_number).size.should equal(3)
     end
   end
 

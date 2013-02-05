@@ -5,15 +5,28 @@ describe Appointment do
 
   fixtures :services
   appointment = FactoryGirl.build( :valid_appointment )
+  multi_appointment = FactoryGirl.build( :multi_appointment )
 
   it 'should not be valid appointment' do
     appointment.should be_valid
   end
 
-  it 'should return cost and time by services' do
+  it 'should return cost and time by services after create' do
     appointment.cost_time_by_services!
     appointment.cost.should equal( appointment.services.map(&:cost).sum )
     appointment.showing_time.should equal( appointment.services.map(&:showing_time).sum )
+  end
+
+  it 'should not change cost after update time of service' do
+    appointment.cost = -1
+    appointment.start += 1.hour
+    appointment.cost_time_by_services!
+    appointment.cost.should equal( -1 )
+  end
+
+  it 'should find multi services' do
+    multi_appointment.cost_time_by_services!
+    multi_appointment.cost.should equal( multi_appointment.organization.services.where(:is_collection => true).sum(:cost) )
   end
 
   context 'validates' do
