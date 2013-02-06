@@ -59,7 +59,10 @@ FactoryGirl.define do
     sequence :email do |n|
       Faker::Internet.email
     end
-    phone "+79#{Random.new.rand(10)}#{Random.new.rand(10)}#{Random.new.rand(10)}999999"
+    sequence :phone do |n|
+      Faker::PhoneNumber.phone_number
+    end
+    #phone "+79#{Random.new.rand(10)}#{Random.new.rand(10)}#{Random.new.rand(10)}999999"
     password '1111111'
     password_confirmation '1111111'
     role 'client'

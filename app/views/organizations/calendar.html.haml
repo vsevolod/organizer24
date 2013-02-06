@@ -52,6 +52,7 @@
             %button.btn{ :type => 'button', :class => 'btn-danger AutoClearText' } x
       .row-fluid
         #phone_results
+        -# TODO move js!!!
         :javascript
           var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};
           var autocomplete_users = function(){
@@ -62,7 +63,7 @@
                 el         = null;
             $('#phone_results').html('');
             $.each( phonebook, function(index, el){
-              if (el.phone.toLowerCase().contains(phone) && el.firstname.toLowerCase().contains(firstname) && el.lastname.toLowerCase().contains(lastname)){
+              if (el.phone.toLowerCase().indexOf(phone) == 0 && el.firstname.toLowerCase().indexOf(firstname) == 0 && el.lastname.toLowerCase().indexOf(lastname) == 0){
                 results.push(el)
               };
             });

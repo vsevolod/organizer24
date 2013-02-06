@@ -14,7 +14,7 @@ class Appointment < ActiveRecord::Base
   after_save :notify_owner, :if => :can_notify_owner?
   after_save :change_start_notification, :if => :start_changed?
 
-  attr_accessor :can_not_notify_owner
+  attr_accessor :can_not_notify_owner # Не нужно уведомлять владельца
 
   accepts_nested_attributes_for :services
   accepts_nested_attributes_for :services_users
@@ -86,7 +86,7 @@ class Appointment < ActiveRecord::Base
   # Отправить уведомление владельцу если есть изменения
   def notify_owner
     text = ""
-    if self.created_at == self.updated_at
+    if self.created_at == self.updated_at # Если запись только что создана
       text += "Новая запись: #{self.fullname} (#{self.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
     else
       if start_changed?
@@ -107,7 +107,8 @@ class Appointment < ActiveRecord::Base
 
   def change_start_notification
     destroy_user_notifications
-    if self.starting_state? # Уведомляем только если запись активна
+    puts "#{self.phone} ======= #{self.organization.owner.phone}"
+    if self.starting_state? && self.phone != self.organization.owner.phone # Уведомляем только если запись активна и не на наш телефон
       Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
     end
   end

@@ -3,7 +3,6 @@ require "spec_helper"
 
 describe Appointment do
 
-  fixtures :services
   appointment = FactoryGirl.build( :valid_appointment )
   organization = appointment.organization
 
@@ -75,5 +74,20 @@ describe Appointment do
 
   end
 
+  context 'notify users' do
+    before :all do
+      appointment.can_not_notify_owner = false
+    end
+
+    it 'should send 2 notify when appointment saved' do
+      lambda{ appointment.save }.should change(Delayed::Job, :count).by(2)
+    end
+
+    it 'should not create notification when send to owner number' do
+      appointment.phone = organization.owner.phone
+      lambda{ appointment.save }.should_not change(Delayed::Job, :count)
+    end
+
+  end
 
 end
