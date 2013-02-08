@@ -53,13 +53,14 @@ class AppointmentsController < CompanyController
                   :start => appointment.start.to_i+@utc_offset,
                   :end => (appointment.start + appointment.showing_time.minutes).to_i+@utc_offset,
                   :editable => false,
+                  :splitted => false,
                   :is_owner => @is_owner,
                   'data-inner-class' => data_inner_class,
                   'data-showing-time' => appointment.showing_time,
                   'data-id' => appointment.id,
                    }
       if editable
-        options.merge!({ :editable => true,
+        options.merge!({ :splitted => true,
                          'data-client' => "#{appointment.fullname} #{appointment.phone}",
                          'data-id' => appointment.id,
                          'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time])
@@ -70,7 +71,7 @@ class AppointmentsController < CompanyController
     #Объединяем рядом стоящие чужие записи
     if !@is_owner
       @periods.each_with_index do |_this, index|
-        if _this && !_this[:editable] && ( _next = @periods.find{|p| p && p[:start] == _this[:end] && !p[:editable]})
+        if _this && !_this[:splitted] && ( _next = @periods.find{|p| p && p[:start] == _this[:end] && !p[:splitted]})
           _next[:start] = _this[:start]
           _next['data-showing-time'] += _this['data-showing-time']
           @periods[index] = nil

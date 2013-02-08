@@ -53,7 +53,10 @@ $ ->
   )
 
   $('.AutoClearText').click( ->
-    $(this).prev().val('')
+    $.each( $('.AutoClearText'), (index, el) ->
+      $(el).prev().val('')
+    )
+    $('.check_services input').attr('checked', false)
     $(this).prev().focus()
     false
   )

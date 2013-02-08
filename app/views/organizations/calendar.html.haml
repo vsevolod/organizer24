@@ -6,12 +6,19 @@
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
     //$('#second check_services').affix();
-  = javascript_include_tag 'fullcalendar', 'calendar'
+  = javascript_include_tag 'fullcalendar', 'calendar', 'calendar_autocomplete'
+  - if defined? @phonebook
+    :javascript
+      var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};
+      $(function(){
+        Organizer.add_calendar_autocomplete( phonebook );
+      });
   - if defined? @str_day
     :javascript
       $(function(){
-        $('#calendar').fullCalendar( 'gotoDate', #{@str_day} )
-      })
+        $('#calendar').fullCalendar( 'gotoDate', #{@str_day} );
+      });
+
 
 -# FIXME change it to form_for
 = form_tag appointments_path, :remote => true do
@@ -52,40 +59,6 @@
             %button.btn{ :type => 'button', :class => 'btn-danger AutoClearText' } x
       .row-fluid
         #phone_results
-        -# TODO move js!!!
-        :javascript
-          var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};
-          var autocomplete_users = function(){
-            var phone      = $('#first #user_phone').val().replace(/_+/, ''),
-                firstname  = $('#first #user_firstname').val().toLowerCase(),
-                lastname   = $('#first #user_lastname').val().toLowerCase(),
-                results    = [],
-                el         = null;
-            $('#phone_results').html('');
-            $.each( phonebook, function(index, el){
-              if (el.phone.toLowerCase().indexOf(phone) == 0 && el.firstname.toLowerCase().indexOf(firstname) == 0 && el.lastname.toLowerCase().indexOf(lastname) == 0){
-                results.push(el)
-              };
-            });
-            if (results.length != 0){
-              if (results.length > 9){
-                $('#phone_results').html('<span class="label label-important">'+results.length+'</span>');
-              }
-              else{
-                $.each( results, function(index, el){
-                  a = $("<a href='#' class='AutoPhoneClick'><span class='label'>"+el.phone+" "+el.firstname+" "+el.lastname+"</span></a>").data({phone: el.phone, firstname: el.firstname, lastname: el.lastname});
-                  $('#phone_results').append($('<div class="span3"/>').append(a));
-                });
-              }
-            }
-          };
-          $(function(){
-            $.each(['firstname', 'phone', 'lastname'], function(index, num){
-              $('#first #user_'+num).keyup( function(){
-                autocomplete_users()
-              });
-            });
-          });
 
 .row-fluid
   %hr/
