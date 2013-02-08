@@ -1,6 +1,7 @@
 # coding:utf-8
 class ServicesUsersController < CompanyController
 
+  before_filter :redirect_if_not_owner
   before_filter :find_appointment
   respond_to :html, :json
 

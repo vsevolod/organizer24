@@ -59,7 +59,7 @@ class AppointmentsController < CompanyController
                   'data-id' => appointment.id
                    }
       if editable
-        options.merge!({ :is_owner => true,
+        options.merge!({ :is_owner => @is_owner,
                         'data-client' => "#{appointment.fullname} #{appointment.phone}",
                         'data-id' => appointment.id,
                         'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time])
