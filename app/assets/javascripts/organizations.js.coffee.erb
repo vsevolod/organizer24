@@ -53,10 +53,14 @@ $ ->
   )
 
   $('.AutoClearText').click( ->
-    $.each( $('.AutoClearText'), (index, el) ->
-      $(el).prev().val('')
-    )
-    $('.check_services input').attr('checked', false)
-    $(this).prev().focus()
+    prev = $(this).prev()
+    if prev.attr('id') == 'user_showing_time'
+      prev.val('')
+    else
+      $.each( $('.AutoClearText'), (index, el) ->
+        $(el).prev().val('')
+      )
+      $('.check_services input').attr('checked', false)
+      prev.focus()
     false
   )

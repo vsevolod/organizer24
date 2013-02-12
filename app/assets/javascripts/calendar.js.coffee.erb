@@ -85,6 +85,8 @@ drop_draggable = ( date, allDay ) ->
 drop_div = ( date, allDay ) ->
   if $('.ui-draggable').css('display') != 'none'
     originalEventObject = $('.ui-draggable').data('eventObject')
+    if $('#user_showing_time').val()
+      originalEventObject.duration = $('#user_showing_time').val()
     copiedEventObject = $.extend({
       editable: false,
       disableDragging: true,
@@ -165,10 +167,10 @@ $('#calendar').fullCalendar({
   selectable: false,
   selectHelper: true,
   editable: false,
-  droppable: true,
-  drop: ((date, allDay) ->
-    drop_div( date, allDay)
-  ),
+  droppable: false,
+  # DROPABLE drop: ((date, allDay) ->
+  # DROPABLE   drop_div( date, allDay)
+  # DROPABLE ),
   eventRender: (event, element) ->
     element.find('.fc-event-title').html(element.find('.fc-event-title').text())
     element.find('.fc-event-inner').addClass( event['data-inner-class'])

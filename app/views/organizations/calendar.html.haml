@@ -50,7 +50,7 @@
       - [:phone, :firstname, :lastname].each do |field|
         = hidden_field_tag "user[#{field}]", current_user.send(field)
     - else
-      - [:phone, :firstname, :lastname].each do |field|
+      - [:phone, :firstname, :lastname, :showing_time].each do |field|
         .row-fluid
           .span3
             %b= Appointment.human_attribute_name field

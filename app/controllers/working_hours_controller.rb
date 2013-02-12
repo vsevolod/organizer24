@@ -7,6 +7,7 @@ class WorkingHoursController < CompanyController
   # TODO move to appointment controller
   def self_by_month
     @periods = []
+    @start = Date.today if @start < Date.today
 
     @appointments = if current_user.owner?( @organization )
                       @organization.appointments

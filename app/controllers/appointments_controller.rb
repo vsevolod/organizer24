@@ -88,12 +88,16 @@ class AppointmentsController < CompanyController
   end
 
   def create
-    @user = current_user || User.where( params[:user][:phone] ).first_or_initialize( params[:user] )
+    user_params = params[:user]
+    @user = current_user || User.where( user_params[:phone] ).first_or_initialize( user_params )
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
-    @appointment.attributes = params[:user]
+    @appointment.attributes = user_params
     @appointment.service_ids = params[:service].keys
-    @appointment.cost_time_by_services!
     check_notifier
+    unless @appointment.can_not_notify_owner?
+      @appointment.showing_time = nil
+    end
+    @appointment.cost_time_by_services!
     if @user == current_user
       @appointment.first_owner_view
     else
