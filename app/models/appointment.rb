@@ -140,6 +140,10 @@ class Appointment < ActiveRecord::Base
     STARTING_STATES.include?( self.status )
   end
 
+  def can_notify_owner?
+    !can_not_notify_owner
+  end
+
   private
 
     def check_start_time
@@ -159,10 +163,6 @@ class Appointment < ActiveRecord::Base
       if (notifications_delayed = Delayed::Job.where( "handler ILIKE ?", "%appointment_id: #{self.id}%notification%" )).count > 0
         notifications_delayed.destroy_all
       end
-    end
-
-    def can_notify_owner?
-      !can_not_notify_owner
     end
 
 end

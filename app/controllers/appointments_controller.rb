@@ -94,7 +94,7 @@ class AppointmentsController < CompanyController
     @appointment.attributes = user_params
     @appointment.service_ids = params[:service].keys
     check_notifier
-    unless @appointment.can_not_notify_owner?
+    unless @appointment.can_notify_owner?
       @appointment.showing_time = nil
     end
     @appointment.cost_time_by_services!
