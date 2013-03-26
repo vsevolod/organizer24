@@ -1,16 +1,13 @@
-- content_for :header_title do
-  %h2 Зарегистрироваться
+%h2 Зарегистрироваться
+%br/
+.row
+  .span6.offset3
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  = render "#{f.object.current_step}_step", :f => f
 
-- content_for :upper do
-  %br/
-  .row
-    .span6.offset3
-  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-    = devise_error_messages!
-    = render "#{f.object.current_step}_step", :f => f
-
-    .form-actions
-      = f.submit "Дальше"
-      - unless f.object.first_step?
-        = f.submit "Назад", :name => 'back_button'
-  = render "links"
+  .form-actions
+    = f.submit f.object.last_step? ? "Завершить" : "Дальше"
+    - unless f.object.first_step?
+      = f.submit "Назад", :name => 'back_button'
+= render "links"

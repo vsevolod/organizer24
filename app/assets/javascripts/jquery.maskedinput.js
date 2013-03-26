@@ -1,8 +1,9 @@
+
 /*
 	Masked Input plugin for jQuery
-	Copyright (c) 2007-@Year Josh Bush (digitalbush.com)
-	Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
-	Version: @version
+	Copyright (c) 2007-2011 Josh Bush (digitalbush.com)
+	Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license) 
+	Version: 1.3
 */
 (function($) {
 	var pasteEventName = ($.browser.msie ? 'paste' : 'input') + ".mask";
@@ -12,8 +13,8 @@
 		//Predefined character definitions
 		definitions: {
 			'9': "[0-9]",
-			'a': "[A-Za-zа-яА-Я]",
-			'*': "[A-Za-z0-9а-яА-Я]"
+                        'a': "[A-Za-zа-яА-Я]",
+                        '*': "[A-Za-z0-9а-яА-Я]"
 		},
 		dataName:"rawMaskFn"
 	};
@@ -130,7 +131,7 @@
 						var pos = input.caret(),
 							begin = pos.begin,
 							end = pos.end;
-
+						
 						if(end-begin==0){
 							begin=k!=46?seekPrev(begin):(end=seekNext(begin-1));
 							end=k==46?seekNext(end):end;

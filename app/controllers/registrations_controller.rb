@@ -43,7 +43,9 @@ class RegistrationsController < Devise::RegistrationsController
         if params[:back_button]
           resource.previous_step
         elsif resource.last_step?
-          resource.save if resource.all_valid?
+          if resource.all_valid?
+            resource.save
+          end
         else
           resource.next_step
         end
@@ -58,7 +60,7 @@ class RegistrationsController < Devise::RegistrationsController
         render "new"
       else
         session[:user_step] = session[:user_params] = nil
-        redirect_to resource.my_organization.domain, :notice => 'Вы успешно зарегистрировались'
+        redirect_to "http://#{resource.my_organization.domain}", :notice => 'Вы успешно зарегистрировались'
       end
     end
   end

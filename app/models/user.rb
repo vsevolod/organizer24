@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :my_organization
 
   validates_presence_of :phone, :firstname, :lastname, :if => :first_step?
+  validates_uniqueness_of :phone
   validates :email, :presence => { :if => :email_changed_and_first_admin_step? }, :format => { :with => /\A[^@]+@[^@]+\z/, :if => :email_changed_and_first_admin_step? }
 
   validates_format_of :phone, :with => /^[\d\W]+$/, :allow_blank => true, :if => lambda{|u| u.phone_changed? && u.first_step? }
