@@ -8,12 +8,22 @@ to_i = (date_or_number) ->
       date_or_number.valueOf() / 1000
 
 Organizer.destroy_all_popovers = ( appointment_id ) ->
-  $('div.fc-event').popover('destroy')
+  $('.popover').remove()
 
 find_event = (event_id, field) ->
   event = $.grep( $('#calendar').fullCalendar( 'clientEvents' ), (item) ->
     return item[field] == event_id
   )[0]
+
+gotoPopover = ->
+  $('html').animate({
+    'scrollTop': $('a[name="popover_title"]').offset().top-110
+  }, 500)
+
+Organizer.removeOtherElements = () ->
+  $('#second').css('opacity', 1)
+  $('#calendar').fullCalendar( 'removeEvents', 100000 )
+  Organizer.destroy_all_popovers()
 
 show_checkboxes = ->
   params = '/appointments/by_week'
@@ -163,7 +173,7 @@ $('#calendar').fullCalendar({
       else
         drop_div( date, allDay)
     else
-      Organizer.destroy_all_popovers()
+      Organizer.removeOtherElements()
     false
   selectable: false,
   selectHelper: true,
@@ -193,10 +203,12 @@ $('#calendar').fullCalendar({
       element.popover({
         html: true,
         content: text,
-        title: 'Подтвердить',
+        title: '<a name="popover_title" href="#popover_title"></a>Подтвердить',
         trigger: 'manual',
         container: '#calendar',
-        placement: 'right' }).popover('show')
+        placement: 'top'
+      }).popover('show')
+      gotoPopover()
       popover = $('.popover.right')
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
@@ -224,11 +236,14 @@ $('#calendar').fullCalendar({
     if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
       Organizer.destroy_all_popovers()
       element.popover( {
-        title: 'Описание',
+        html: true,
         content: popup_text,
+        title: '<a name="popover_title" href="#popover_title"></a>Описание',
         trigger: 'manual',
-        placement: 'right'
+        container: '#calendar',
+        placement: 'top'
       }).popover('show')
+      gotoPopover()
 })
 
 $('body').on('click', '.ChangeTimeForAppointment', ->
@@ -242,11 +257,14 @@ $('body').on('click', '.ChangeAppointment', ->
   appointment_id = event['data-id']
   Organizer.destroy_all_popovers()
   $('div[data-id="'+appointment_id+'"]').popover( {
-    title: 'Изменение',
+    html: true,
     content: '<div id="popover_for_change"></div>',
+    title: '<a name="popover_title" href="#popover_title"></a>Изменение',
     trigger: 'manual',
-    placement: 'right'
+    content: '#calendar',
+    placement: 'top'
   }).popover('show')
+  gotoPopover()
   $.getScript( '/appointments/'+appointment_id+'/edit/' )
   false
 )
@@ -284,10 +302,7 @@ $('body').on('click', '.confirm_calendar', ->
 )
 
 $('body').on('click', '.cancel_calendar', ->
-  $('#second').css('opacity', 1)
-  $('#calendar').fullCalendar( 'removeEvents', 100000 )
-  Organizer.destroy_all_popovers()
-  $(this).parents('.popover').remove()
+  Organizer.removeOtherElements()
   false
 )
 

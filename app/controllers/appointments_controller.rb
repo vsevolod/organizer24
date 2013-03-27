@@ -92,7 +92,7 @@ class AppointmentsController < CompanyController
     @user = current_user || User.where( user_params[:phone] ).first_or_initialize( user_params )
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
     @appointment.attributes = user_params
-    @appointment.service_ids = params[:service].keys
+    @appointment.service_ids = (params[:service] || {}).keys
     check_notifier
     unless @appointment.can_notify_owner?
       @appointment.showing_time = nil
@@ -110,7 +110,7 @@ class AppointmentsController < CompanyController
         format.js{ render :js => refresh_calendar }
       else
         format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
-        format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');$('.cancel_calendar').trigger('click');" }
+        format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');Organizer.removeOtherElements();" }
       end
     end
   end
