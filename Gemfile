@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.13'
 
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'kickstrap_rails'
@@ -10,18 +10,19 @@ gem 'event-calendar', :require => 'event_calendar'
 gem 'has_scope'
 
 gem 'haml'
-gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+gem 'simple_form'
 gem 'russian'
 gem "ckeditor", "3.7.1"
 gem "paperclip"
 
-gem 'activeadmin'
-gem 'formtastic', '~> 2.1.1' # FIXME должны исправить в версии activeadmin больше (0.4.3)
+#gem 'formtastic'#, '~> 2.1.1'
+gem 'devise'
 gem 'ancestry'
 gem 'aasm'
 gem 'pg'
 gem 'squeel'
 gem 'breadcrumbs', :git => 'https://github.com/dexion/breadcrumbs.git'
+gem 'less-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

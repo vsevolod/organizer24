@@ -55,6 +55,11 @@ body {
 
 .breadcrumb {
   color: @grayDark;
+  background-color: #F5F5F5;
+  border-radius: 4px 4px 4px 4px;
+  list-style: none outside none;
+  margin: 0 0 20px;
+  padding: 8px 15px;
 }
 
 .organization_big_name {
@@ -111,10 +116,6 @@ section#second {
   padding: 0 10px;
   .colorize_bg(@grayDark, .2);
   .border-radius( 10px );
-}
-
-.popover, .popover.right .arrow, .popover-title{
-  background-color: @grayLight;
 }
 
 //-------------------  CALENDAR --------------------------------
@@ -207,4 +208,8 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
   display: none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+
+.popover, .popover-title{
+  color: @grayDark;
 }
