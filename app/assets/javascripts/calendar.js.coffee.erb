@@ -8,6 +8,7 @@ to_i = (date_or_number) ->
       date_or_number.valueOf() / 1000
 
 Organizer.destroy_all_popovers = ( appointment_id ) ->
+  $('div[data-id]').popover('destroy')
   $('.popover').remove()
 
 find_event = (event_id, field) ->
@@ -199,7 +200,6 @@ $('#calendar').fullCalendar({
 
       text += event.confirm
       Organizer.destroy_all_popovers()
-      console.log( element )
       element.popover({
         html: true,
         content: text,
@@ -248,7 +248,7 @@ $('#calendar').fullCalendar({
 
 $('body').on('click', '.ChangeTimeForAppointment', ->
   parent = $(this).parent()
-  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='span1'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
+  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='span2'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
   false
 )
 
@@ -258,20 +258,18 @@ $('body').on('click', '.ChangeAppointment', ->
   Organizer.destroy_all_popovers()
   $('div[data-id="'+appointment_id+'"]').popover( {
     html: true,
-    content: '<div id="popover_for_change"></div>',
+    content: '',
     title: '<a name="popover_title" href="#popover_title"></a>Изменение',
     trigger: 'manual',
-    content: '#calendar',
-    placement: 'top'
+    container: '#calendar',
+    placement: 'right'
   }).popover('show')
-  gotoPopover()
-  $.getScript( '/appointments/'+appointment_id+'/edit/' )
+  $.getScript( '/appointments/'+appointment_id+'/edit/', gotoPopover )
   false
 )
 
 $('body').on('click', '.move_appointment', ->
   Organizer.destroy_all_popovers()
-  $(this).parents('.popover').remove()
   Organizer.draggable_item = $('#calendar').fullCalendar( 'clientEvents', $(this).data('id') )[0]
   Organizer.calendar_draggable = true
   $('#calendar').addClass('draggable_calendar')
@@ -280,7 +278,6 @@ $('body').on('click', '.move_appointment', ->
 )
 
 $('body').on('click', '.confirm_calendar', ->
-  $(this).parents('.popover').remove()
   $('#second').css('opacity', 1)
   if Organizer.calendar_draggable # Если перетаскиваем событие
     $('#calendar').removeClass('draggable_calendar')

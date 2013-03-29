@@ -36,4 +36,16 @@ module ApplicationHelper
       change_status_appointment_path(appointment, :state => state)
     end
 
+    def flash_messages
+      result = []
+      flash.each do |name, msg|
+        result << javascript_tag(<<-JS)
+          $(function() {
+            $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: "#{t(name)}", position:'bottom-right'});
+          });
+        JS
+      end
+      result.join('').html_safe
+    end
+
 end

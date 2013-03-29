@@ -21,9 +21,5 @@
           = breadcrumbs
       .row-fluid= yield
     = yield :bottom_js
-    - flash.each do |name, msg|
-      :javascript
-        $(function() {
-          $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: "#{t(name)}", position:'bottom-right'});
-        });
+    = flash_messages
     = render 'layouts/counter'

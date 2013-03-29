@@ -16,8 +16,4 @@
       = render 'layouts/top_menu'
     .container= yield
     = yield :bottom_js
-    - flash.each do |name, msg|
-      :javascript
-        $(function() {
-          $.jGrowl("#{raw(escape_javascript(msg))}",{sticky: true, header: name, theme:  name});
-        });
+    = flash_messages

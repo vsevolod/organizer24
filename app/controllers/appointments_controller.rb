@@ -23,7 +23,7 @@ class AppointmentsController < CompanyController
   def edit
     @appointment = Appointment.find( params[:id] )
     respond_to do |format|
-      format.js { render :inline => "$('#popover_for_change').html('<%= escape_javascript(render 'form', appointment: @appointment) %>')" }
+      format.js { render :inline => "$('.popover .popover-content').html('<%= escape_javascript(render 'form', appointment: @appointment) %>')" }
     end
   end
 
