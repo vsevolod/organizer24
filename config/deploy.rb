@@ -61,10 +61,12 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
+    run "source /home/vsevolod/.rvm/environments/ruby-1.9.3-p327"
     run "cd #{current_path} && /usr/bin/env PATH=$PATH:/usr/local/bin RAILS_ENV=#{rails_env} script/delayed_job start"
     run "cd #{current_path} && #{bundle_path}bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
+    run "source /home/vsevolod/.rvm/environments/ruby-1.9.3-p327"
     run "cd #{current_path} && /usr/bin/env PATH=$PATH:/usr/local/bin RAILS_ENV=#{rails_env} script/delayed_job stop"
     run "kill `cat #{unicorn_pid}`"
   end
