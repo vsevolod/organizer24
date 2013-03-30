@@ -1,0 +1,9 @@
+/*
+ *= require_self
+ *= require colorbox/colorbox_ex1
+ *= require fullcalendar
+*/
+
+.fc-event {
+  overflow: hidden;
+}

@@ -2,13 +2,11 @@
 %html{ :lang => I18n.locale }
   %head
     %title Organizer24
-    = stylesheet_link_tag    "application", :media => "all"
-    = stylesheet_link_tag    "kickstrap", :media => "all"
-    = stylesheet_link_tag    "kickstrap/themes/simplex"
+    = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js
-  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_')}
+  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_'), :style => 'padding-top:60px;'}
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -21,23 +19,6 @@
               - else
                 %li= link_to 'Вход', new_user_session_path
                 %li= link_to 'Регистрация', new_user_registration_path
-    - if content_for? :header
-      .header
-        .container
-          = yield :header
-      .fx-header
-    - else
-      %br/
-      %br/
-      .row{ :style => 'height: 300px' }= yield :header_title
-      %br/
-      %br/
-    - if content_for? :upper
-      .main-upper
-        .fx-main-upper
-        .container= yield :upper
-    .main-lower
-      .fx-main-lower
-      .container= yield
+    .container= yield
     = yield :bottom_js
     = flash_messages

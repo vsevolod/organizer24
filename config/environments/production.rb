@@ -46,7 +46,7 @@ Organizer::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w{ colorbox/colorbox_ex1.css kickstrap.css fullcalendar.js month_calendar.js calendar.js kickstrap/themes/beauty.css photo.js jquery.fileupload-ui.css calendar_autocomplete.js kickstrap/themes/simplex.css}# kickstrap/themes/simplex.css }#%w( colorbox/colorbox_ex1.css )
+  config.assets.precompile += %w{ colorbox/colorbox_ex1.css fullcalendar.js month_calendar.js calendar.js themes/beauty.css photo.js jquery.fileupload-ui.css calendar_autocomplete.jss}
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

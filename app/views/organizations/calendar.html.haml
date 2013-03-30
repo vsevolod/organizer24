@@ -6,7 +6,7 @@
   :javascript
     var start_calendar_options = #{@organization.calendar_settings.to_json};
     //$('#second check_services').affix();
-  = javascript_include_tag 'fullcalendar', 'calendar', 'calendar_autocomplete'
+  = javascript_include_tag 'fullcalendar', 'calendar'
   - if defined? @phonebook
     :javascript
       var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};

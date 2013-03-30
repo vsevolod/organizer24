@@ -2,10 +2,8 @@
 %html{ :lang => I18n.locale }
   %head
     %title= @organization.name
-    -# TODO удалить bootstrap откуда-нить. сейчас 2 раза грузится
-    = stylesheet_link_tag "application", :media => "all"
-    = stylesheet_link_tag "colorbox/colorbox_ex1"
-    = stylesheet_link_tag "kickstrap/themes/beauty"
+    = stylesheet_link_tag "company"
+    = stylesheet_link_tag "themes/beauty"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js

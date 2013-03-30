@@ -150,8 +150,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.7)
     kgio (2.8.0)
-    kickstrap_rails (0.9.0RC)
-      less-rails
     launchy (2.2.0)
       addressable (~> 2.3)
     less (2.3.1)
@@ -309,7 +307,6 @@ DEPENDENCIES
   has_scope
   jquery-fileupload-rails
   jquery-rails
-  kickstrap_rails
   launchy
   less-rails
   paperclip

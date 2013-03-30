@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
-gem 'kickstrap_rails'
 gem 'cocoon'
 gem 'event-calendar', :require => 'event_calendar'
 #gem 'inherited_resource'
