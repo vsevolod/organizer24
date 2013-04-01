@@ -18,7 +18,7 @@ find_event = (event_id, field) ->
   )[0]
 
 gotoPopover = ->
-  $('html').animate({
+  $('body,html,document').animate({
     'scrollTop': $('a[name="popover_title"]').offset().top-110
   }, 500)
 
@@ -43,8 +43,8 @@ show_appointment_services = (event, options) ->
   if ( event['data-services'] )
     if !options['hide_title']
       if event['data-client']
-        text += "<b>#{event['data-client']}</b><hr/>"
-      text += '<b>Услуги:</b> <br/>'
+        text += "<p>#{event['data-client']}</p>"
+      text += '<b>Услуги:</b><br/>'
     cost = 0
     showing_time = event['data-showing-time']
     $.each( JSON.parse(event['data-services']) , (id, el) ->
@@ -52,7 +52,7 @@ show_appointment_services = (event, options) ->
       cost += el.cost
       #showing_time += el.showing_time
     )
-    text += '<hr/>'
+    text += '<br/>'
     text += "Время: "+showing_time+" мин.<br/> Стоимость: "+cost+" руб.<br/>"
   text
 
@@ -239,7 +239,7 @@ $('#calendar').fullCalendar({
       element.popover( {
         html: true,
         content: popup_text,
-        title: '<a name="popover_title" href="#popover_title"></a>Описание',
+        title: '<a name="popover_title" href="#popover_title"></a>Описание' + ' №' + event['data-id'],
         trigger: 'manual',
         container: '#calendar',
         placement: 'top'

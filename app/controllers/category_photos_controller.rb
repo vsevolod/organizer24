@@ -18,50 +18,55 @@ class CategoryPhotosController < CompanyController
   end
 
   def edit
-    @category_photo = CategoryPhoto.find( params[:id] )
   end
 
   def create
     @category_photo = @organization.category_photos.build(params[:category_photo])
-    if @category_photo.save
-      redirect_to @category_photo, :notice => 'Категория успешно добавлено'
+    if resource.save
+      redirect_to resource, :notice => 'Категория успешно добавлено'
     else
       render :action => 'new'
     end
   end
 
   def update
-    @category_photo = CategoryPhoto.find( params[:id] )
-    if @category_photo.update_attributes( params[:category_photo] )
-      redirect_to @category_photo, :notice => 'Категория успешно изменена'
+    if resource.update_attributes( params[:category_photo] )
+      redirect_to resource, :notice => 'Категория успешно изменена'
     else
       render :action => 'edit'
     end
   end
 
   def show
-    @category_photo = CategoryPhoto.find( params[:id] )
-    @photos = Photo.where( :category_photo_id => @category_photo.children.push(@category_photo) )
+    @photos = Photo.where( :category_photo_id => resource.children.push(resource) )
   end
 
   def destroy
-    @category_photo = CategoryPhoto.find( params[:id] )
-    @category_photo.destroy
+    resource.destroy
     redirect_to :action => 'index'
   end
 
   private
 
     def find_ancestry_dictionaries
-      @ancestry_category_photos = ancestry_options(CategoryPhoto.order( 'name')) {|i| "#{'-' * i.depth} #{i.name}" }
+      @ancestry_category_photos = ancestry_options(current_user.my_organization.category_photos.order( 'name')) {|i| "#{'-' * i.depth} #{i.name}" }
     end
 
     def resource
-      @category_photo = if params[:id]
-                          CategoryPhoto.find(params[:id])
-                        else
-                          CategoryPhoto.new( params[:category_photo] )
-                        end
+      @category_photo ||= if params[:id]
+                            CategoryPhoto.find(params[:id])
+                          else
+                            CategoryPhoto.new( params[:category_photo] )
+                          end
+    end
+
+    def redirect_if_not_owner
+      super
+      if !resource.new_record?
+        if !current_user.owner?(resource.organization)
+          redirect_to :action => :index, :error => 'У вас не достаточно прав'
+        end
+      end
     end
 
 end

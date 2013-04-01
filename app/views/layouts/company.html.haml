@@ -2,11 +2,12 @@
 %html{ :lang => I18n.locale }
   %head
     %title= @organization.name
-    = stylesheet_link_tag  "application", :media => "all"
+    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "company"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js
-  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_'), :style => 'padding-top:40px;'}
+  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_'), :style => 'padding-top:80px;'}
     .navbar.navbar-fixed-top
       = render 'layouts/top_menu'
     .container= yield

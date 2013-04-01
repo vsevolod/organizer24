@@ -84,7 +84,7 @@ class AppointmentsController < CompanyController
 
   # GET список телефонных номеров и их владельцев
   def phonebook
-    @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
+    @phonebook = @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
   end
 
   def create
