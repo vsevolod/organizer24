@@ -120,15 +120,6 @@ section#second {
 
 //-------------------  CALENDAR --------------------------------
 
-//--- Variables
-@legendTaken: @blue;
-@legendInaccesible: @grayLight;
-@legendMissing: #4c4c4c;
-@legendYour: @green;
-@legendBorder: @black;
-@ordinaryPercent: .4;
-@todayPercent: .7;
-
 //--- CSS
 
 .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {
@@ -143,39 +134,6 @@ section#second {
   &.fc-today {
     .colorize_bg(@lightpink, @todayPercent);
   }
-}
-
-.legend {
-  width: 10px;
-  padding: 0 15px;
-  margin-right: 10px;
-  height: 10px;
-  .box-shadow(0 5px 10px rgba(0,0,0, @todayPercent));
-}
-
-.legend-taken,
-.legend-taken .fc-event-skin {
-  background: @legendTaken !important;
-}
-.legend-offer,
-.legend-offer .fc-event-skin {
-  background: @legendTaken  !important;
-}
-.legend-inaccessible,
-.legend-old-day,
-.legend-inaccessible .fc-event-skin,
-.legend-old-day .fc-event-skin {
-  background: @legendInaccesible !important;
-}
-.legend-missing,
-.legend-missing .fc-event-skin {
-  background: @legendMissing !important;
-}
-.legend-your-offer,
-.legend-complete,
-.legend-your-offer .fc-event-skin,
-.legend-complete .fc-event-skin {
-  background: @legendYour !important;
 }
 
 .draggable { opacity: 0.3; }

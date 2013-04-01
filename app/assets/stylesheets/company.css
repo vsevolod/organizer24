@@ -4,6 +4,14 @@
  *= require fullcalendar
 */
 
+.hidden {
+  display: none;
+}
+
+.fc-event-bg {
+  height: 100%;
+}
+
 .fc-event {
   overflow: hidden;
 }
