@@ -120,7 +120,7 @@ module Devise
       end
 
       def headers_for(action)
-        headers = super
+        headers = {}
         if action == :confirmation_instructions && pending_reconfirmation?
           headers[:to] = unconfirmed_email
         end
