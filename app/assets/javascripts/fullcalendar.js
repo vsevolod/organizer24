@@ -1258,10 +1258,10 @@ fc.formatDates = formatDates;
 -----------------------------------------------------------------------------*/
 
 var dayIDs = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-	DAY_MS = 86400000,
-	HOUR_MS = 3600000,
-	MINUTE_MS = 60000;
-	
+    DAY_MS = 86400000,
+    HOUR_MS = 3600000,
+    MINUTE_MS = 60000;
+
 
 function addYears(d, n, keepTime) {
 	d.setFullYear(d.getFullYear() + n);
