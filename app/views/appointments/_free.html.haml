@@ -1,7 +1,7 @@
 %h2 Шаг 2
 - if user = User.find_by_phone( session[:phone] )
   %h3 Вам необходимо войти под своим пользователем
-  = render '/devise/sessions/new', :resource => user, :resource_name => User
+  = render '/users/sessions/new', :resource => user, :resource_name => User
 - else
   %h3 Вам необходимо зарегистрироваться, чтобы продолжить
   - user = User.new( :phone => session[:phone], :role => 'client' )

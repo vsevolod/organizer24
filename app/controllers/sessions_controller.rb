@@ -23,4 +23,5 @@ class SessionsController < Devise::SessionsController
     def prepare_phone
       params[:user][:phone] = '+7'+params[:user][:phone].sub(/^8/, '').sub(/^\+7/, '')
     end
+
 end

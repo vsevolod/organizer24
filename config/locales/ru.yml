@@ -15,24 +15,60 @@ ru:
       cancel_owner: Отменена
   activerecord:
     models:
-      active_admin_comment: Комментарии (адм.)
-      admin_user: Админинстраторы системы
-      appointment: Записи
-      category_photo: Категории для фотогалерей
-      dictionary: Словари
-      executor: Исполнители
-      organization: Организации
-      page: Статическая страница
-      photo: Фотография
-      service: Услуги
-      user: Пользователи
-      working_hour: Время работы
+      active_admin_comment: 
+        one: Комментарий (адм.)
+        few: Комментарии (адм.)
+        other: Комментарии (адм.)
+      user_admin: 
+        one: Админинстратор системы
+        few: Админинстраторы системы
+        other: Админинстраторы системы
+      appointment: 
+        one: Запись
+        few: Записи
+        other: Записи
+      category_photo: 
+        one: Категория для фотогалерей
+        few: Категории для фотогалерей
+        other: Категории для фотогалерей
+      dictionary: 
+        one: Словарь
+        few: Словари
+        other: Словари
+      executor: 
+        one: Исполнитель
+        few: Исполнители
+        other: Исполнители
+      organization: 
+        one: Организация
+        few: Организации
+        other: Организации
+      page: 
+        one: Статическая страница
+        few: Статические страницы
+        other: Статические страницы
+      photo: 
+        one: Фотография
+        few: Фотографии
+        other: Фотографии
+      service: 
+        one: Услуга
+        few: Услуги
+        other: Услуги
+      user: 
+        one: Пользователь
+        few: Пользователи
+        other: Пользователи
+      working_hour: 
+        one: Время работы
+        few: Время работы
+        other: Время работы
     attributes:
       active_admin_comment:
         resource: Ресурс
         author: Автор
         body: Содержание
-      admin_user:
+      user_admin:
         email: E-mail
       appointment:
         complete_time: Время изменения статуса

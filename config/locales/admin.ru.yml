@@ -1,0 +1,124 @@
+ru:
+  admin:
+    home:
+      name: Органайзер
+    misc:
+      search: "Поиск"
+      filter: "Фильтр"
+      refresh: "Обновить"
+      show_all: "Показать всё"
+      add_filter: "Добавить фильтр"
+      bulk_menu_title: "Выбранные элементы"
+      remove: "Удалить"
+      add_new: "Добавить"
+      chosen: "Выбрать %{name}"
+      chose_all: "Выбрать всё"
+      clear_all: "Удалить всё"
+      up: "Up"
+      down: "Down"
+      navigation: "Навигация"
+      log_out: "Выход"
+      ago: "назад"
+    flash:
+      successful: "%{name} успешно %{action}"
+      error: "%{name} не получилось %{action}"
+      noaction: "Ничего не надо делать"
+      model_not_found: "Модель '%{model}' не найдена"
+      object_not_found: "%{model} с id '%{id}' не найдена"
+    table_headers:
+      model_name: "Название модели"
+      last_used: "Последнее использование"
+      records: "Записи"
+      username: "Пользователь"
+      changes: "Изменения"
+      created_at: "Дата/время"
+      item: "Элемент"
+      message: "Сообщение"
+    actions:
+      dashboard:
+        title: "Панель администратора"
+        menu: "Рабочее место"
+        breadcrumb: "Рабочее место"
+      index:
+        title: "Список %{model_label_plural}"
+        menu: "Список"
+        breadcrumb: "%{model_label_plural}"
+      show:
+        title: "Детали %{model_label} '%{object_label}'"
+        menu: "Показать"
+        breadcrumb: "%{object_label}"
+      show_in_app:
+        menu: "Показать в приложении"
+      new:
+        title: "Добавить %{model_label}"
+        menu: "Добавить"
+        breadcrumb: "Добавить"
+        link: "Добавить %{model_label}"
+        done: "создано"
+      edit:
+        title: "Редактировать %{model_label} '%{object_label}'"
+        menu: "Редактировать"
+        breadcrumb: "Редактировать"
+        link: "Редактировать %{model_label}"
+        done: "обновлено"
+      delete:
+        title: "Удалить %{model_label} '%{object_label}'"
+        menu: "Удалить"
+        breadcrumb: "Удалить"
+        link: "Удалить '%{object_label}'"
+        done: "удалено"
+      bulk_delete:
+        title: "Удалить %{model_label_plural}"
+        menu: "Удалить несколько"
+        breadcrumb: "Удалить несколько"
+        bulk_link: "Удалить выбранные %{model_label_plural}"
+      export:
+        title: "Выгрузка %{model_label_plural}"
+        menu: "Выгрузка"
+        breadcrumb: "Выгрузка"
+        link: "Выгрузить найденные %{model_label_plural}"
+        bulk_link: "Выгрузить выбранные %{model_label_plural}"
+        done: "выгружено"
+      history_index:
+        title: "История %{model_label_plural}"
+        menu: "История"
+        breadcrumb: "История"
+      history_show:
+        title: "История %{model_label} '%{object_label}'"
+        menu: "История"
+        breadcrumb: "История"
+    form:
+      cancel: "Отмена"
+      basic_info: "Основная информация"
+      required: "Обязательно"
+      optional: "Дополнительно"
+      one_char: "символ"
+      char_length_up_to: "длина до"
+      char_length_of: "длина"
+      save: "Сохранить"
+      save_and_add_another: "Сохранить и добавить ещё один"
+      save_and_edit: "Сохранить и редактировать"
+      all_of_the_following_related_items_will_be_deleted: "? Следующие зависимые элементы могут быть удалены:"
+      are_you_sure_you_want_to_delete_the_object: "Действительно удалить %{model_name}"
+      confirmation: "Да, я уверен"
+      bulk_delete: "Следующие элементы будут удалены, что может повлечь удаление  зависимых жлементов:"
+      new_model: "%{name} (new)"
+    export:
+      confirmation: "Выгрузить в %{name}"
+      select: "Выбрать поля для экспорта"
+      fields_from: "Поля %{name}"
+      fields_from_associated: "Поля ассоциированного %{name}"
+      display: "Отображение %{name}: %{type}"
+      options_for: "Опции  %{name}"
+      empty_value_for_associated_objects: "<пусто>"
+      click_to_reverse_selection: 'Инвертировать выбор'
+      csv:
+        header_for_root_methods: "%{name}" # 'model' is available
+        header_for_association_methods: "%{name} [%{association}]"
+        encoding_to: "Кодировка"
+        encoding_to_help: "Выберите кодировку. Оставьте пустым, если не хотите менять: (%{name})"
+        skip_header: "Без заголовка"
+        skip_header_help: "Не выводить заголовок (нет описания полей)"
+        default_col_sep: ","
+        col_sep: "Разделитель столбцов"
+        col_sep_help: "Оставьте пустым, если хотите использовать ('%{value}')" # value is default_col_sep

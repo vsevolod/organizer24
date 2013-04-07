@@ -8,4 +8,4 @@
       - if devise_mapping.rememberable?
         = f.input :remember_me, :as => :boolean, :wrapper => :checkbox
       .form-actions= f.submit "Войти", :class => 'btn btn-primary'
-      = render "/devise/links"
+      = render "/users/links"
