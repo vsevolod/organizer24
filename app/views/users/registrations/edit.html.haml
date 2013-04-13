@@ -13,6 +13,8 @@
       = f.input :phone, :input_html => { :data => { :old_phone => f.object.phone } }
       = f.input :password, :as => :password
       = f.input :password_confirmation, :as => :password
+      - if @appointment_id
+        = hidden_field_tag :appointment_id, @appointment_id
       - if resource.new_record?
         = f.submit 'Зарегистрироваться', :class => 'btn btn-normal'
       - else

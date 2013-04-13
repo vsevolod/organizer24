@@ -21,7 +21,7 @@
 
 
 -# FIXME change it to form_for
-= form_tag appointments_path, :remote => true do
+= form_tag appointments_path, :remote => !current_user.new_record? do
   = hidden_field_tag :start
   %section#second
     %h3 На что хотите записаться:
@@ -47,17 +47,14 @@
         #total_cost Стоимость: 0 руб.
     
   #first
-    - if current_user && !current_user.owner?( @organization )
-      - [:phone, :firstname, :lastname].each do |field|
-        = hidden_field_tag "user[#{field}]", current_user.send(field)
+    - if !current_user.owner?( @organization )
+      - if current_user.new_record?
+        = render 'field', :field => :phone
+      - else
+        = hidden_field_tag "user[phone]", current_user.phone
     - else
       - [:phone, :firstname, :lastname, :showing_time].each do |field|
-        .row-fluid
-          .span3
-            %b= Appointment.human_attribute_name field
-          .input-append
-            = text_field_tag "user[#{field}]", ''
-            %button.btn{ :type => 'button', :class => 'btn-danger AutoClearText' } x
+        = render 'field', :field => field
       .row-fluid
         #phone_results
 

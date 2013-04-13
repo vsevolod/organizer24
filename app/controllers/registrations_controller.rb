@@ -23,10 +23,17 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    @appointment_id = params[:appointment_id]
     (session[:user_params] || {}).deep_merge!( params[:user] ) if params[:user]
     build_resource( session[:user_params] )
     if resource.role == 'client'
       if resource.save
+        if (appointment = Appointment.find_by_id( @appointment_id )) && (!appointment.user || appointment.user == resource)
+          appointment.user = resource
+          appointment.first_owner_view
+          appointment.firstname = resource.firstname
+          appointment.save
+        end
         if resource.confirmed?
           sign_in resource
           redirect_to '/calendar', notice: 'Вы успешно зарегистрированы'

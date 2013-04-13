@@ -41,7 +41,7 @@ class Appointment < ActiveRecord::Base
 
   validates :start, :presence => true
   validates :phone, :presence => true
-  validates :firstname, :presence => true
+  validates :firstname, :presence => true, :unless => :'free?'
   validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
   validates_numericality_of :showing_time, :greater_than => 0
 

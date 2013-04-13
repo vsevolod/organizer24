@@ -1,0 +1,7 @@
+.row-fluid
+  .span3
+    %b= Appointment.human_attribute_name field
+  .input-append
+    = text_field_tag "user[#{field}]", ''
+    - unless current_user.new_record?
+      %button.btn{ :type => 'button', :class => 'btn-danger AutoClearText' } x

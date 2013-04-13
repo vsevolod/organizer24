@@ -115,6 +115,7 @@ ru:
         show_photogallery: Показывать фотогалерею
         theme: Тема оформления
         timezone: Часовой пояс
+        user_notify_text: Шаблон уведомления пользователю
       page:
         name: Название
         permalink: Ссылка

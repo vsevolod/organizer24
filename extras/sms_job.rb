@@ -1,6 +1,7 @@
 # coding: utf-8
 # TODO Добавить в организацию адрес для уведомлений
 require 'net/http'
+require 'themed_text'
 
 class SmsJob < Struct.new(:options, :sms_type)
 
@@ -29,10 +30,9 @@ class SmsJob < Struct.new(:options, :sms_type)
       # Надо Time.zone объявить до того, как найдем appointment
       Time.zone = Organization.joins(:appointments).where( :appointments => { :id => options[:appointment_id] } ).first.timezone
       @appointment = Appointment.find( options[:appointment_id] )
+      @organization = @appointment.organization
       sms.recipient = @appointment.phone
-      sms.text = (<<-TEXT).strip
-      Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб. Адрес: ул. Алексеева 29-6
-      TEXT
+      sms.text = themed_text( :user_notify, @organization.user_notify_text, @appointment )
     when 'confirmation_number'
       user = User.find(options[:user_id])
       sms.recipient = user.phone

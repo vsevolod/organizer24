@@ -24,6 +24,7 @@ gotoPopover = ->
 
 Organizer.removeOtherElements = () ->
   $('#second').css('opacity', 1)
+  $('#first').css('opacity', 1)
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
   Organizer.destroy_all_popovers()
 
@@ -118,12 +119,15 @@ drop_div = ( date, allDay ) ->
     end_date = new Date( copiedEventObject.end*1000)
     if intersection.length > 0
       alert('Запись на этот период невозможна')
+    else if $('#user_phone').val() == ''
+      alert('Заполните номер телефона')
     else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
       alert('Для начала выберите услугу')
     else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start.valueOf())
       $('#second').css('opacity', 0.1)
+      $('#first').css('opacity', 0.1)
     else
       alert('Рабочий день заканчивается')
 
@@ -281,6 +285,7 @@ $('body').on('click', '.move_appointment', ->
 
 $('body').on('click', '.confirm_calendar', ->
   $('#second').css('opacity', 1)
+  $('#first').css('opacity', 1)
   if Organizer.calendar_draggable # Если перетаскиваем событие
     $('#calendar').removeClass('draggable_calendar')
     appointment_id = Organizer.draggable_item['data-id']

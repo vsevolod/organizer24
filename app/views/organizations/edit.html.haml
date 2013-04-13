@@ -12,6 +12,9 @@
 
   = f.time_zone_select :timezone
 
+  %h3 Текст смс
+  = f.input :user_notify_text
+
   %h3 Шаг календаря
   = f.collection_radio_buttons :slot_minutes, [[5,'5 минут'],[10,'10 минут'],[15,'15 минут'],[20,'20 минут'],[30,'пол часа'],[60,'час']], :first, :last
 

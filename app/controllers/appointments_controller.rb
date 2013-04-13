@@ -29,7 +29,8 @@ class AppointmentsController < CompanyController
 
   # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
   def by_week
-    @is_owner = current_user.owner?( @organization )
+    @user = current_user || User.new
+    @is_owner = @user.owner?( @organization )
     @appointments = if @is_owner
                       @organization.appointments.where( :status.in => params[:statuses] )
                     else
@@ -38,7 +39,7 @@ class AppointmentsController < CompanyController
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     # Находим записи
     @periods = @appointments.map do |appointment|
-      editable = appointment.editable_by?( current_user )
+      editable = appointment.editable_by?( @user )
       data_inner_class = if editable
                            'legend-your-offer'
                          else
@@ -89,9 +90,10 @@ class AppointmentsController < CompanyController
 
   def create
     user_params = params[:user]
-    @user = current_user || User.where( user_params[:phone] ).first_or_initialize( user_params )
+    @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
     @appointment.attributes = user_params
+    @appointment.firstname = @user.firstname
     @appointment.service_ids = (params[:service] || {}).keys
     check_notifier
     unless @appointment.can_notify_owner?
@@ -109,7 +111,7 @@ class AppointmentsController < CompanyController
         format.html{ redirect_to @appointment }
         format.js{ render :js => refresh_calendar }
       else
-        format.html{ redirect_to :back, notice: 'При сохранении возникла ошибка' }
+        format.html{ redirect_to :back, notice: "При сохранении возникла ошибка: #{@appointment.errors.full_messages.join('; ')}" }
         format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');Organizer.removeOtherElements();" }
       end
     end
@@ -187,7 +189,7 @@ class AppointmentsController < CompanyController
 
     # Не уведомляем владельца если он сам и изменял запись
     def check_notifier
-      if current_user.owner?(@organization)
+      if (@user || current_user).owner?(@organization)
         @appointment.can_not_notify_owner = true
       end
     end
