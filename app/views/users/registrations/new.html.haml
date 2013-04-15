@@ -10,4 +10,4 @@
     = f.submit f.object.last_step? ? "Завершить" : "Дальше"
     - unless f.object.first_step?
       = f.submit "Назад", :name => 'back_button'
-= render "links"
+= render "users/links"
