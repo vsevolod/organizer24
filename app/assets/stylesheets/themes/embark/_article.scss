@@ -1,0 +1,108 @@
+// Default Variables
+
+$article_bg: #3079a0;
+$article_icon_color: white;
+$article_icon_text_shadow: 0 0 1px #333333;
+$article_color: white;
+$article_box_bg: #256c93;
+$article_box_border: none;
+$article_box_inner_shadow: 0 0 2px #033b40 inset;
+$article_h3_font_color: inherit;
+$article_h3_font_size: 28px;
+$article_h3_font_weight: 300;
+$article_p_color: white;
+
+// // Dark Sub-Theme
+
+// $article_bg: #1a1a1a;
+// $article_icon_color: #cccccc;
+// $article_icon_text_shadow: 0 0 1px #333333;
+// $article_color: white;
+// $article_box_bg: #2a2a2a;
+// $article_box_border: 1px solid #1c1c1c;
+// $article_box_inner_shadow: 0 0 6px black inset;
+// $article_h3_font_color: inherit;
+// $article_h3_font_size: 28px;
+// $article_h3_font_weight: 300;
+// $article_p_color: #f4f4f4;
+
+// // Light Sub-Theme
+
+// $article_bg: #f4f4f4;
+// $article_icon_color: #333;
+// $article_icon_text_shadow: none;
+// $article_color: white;
+// $article_box_bg: #f8f8f8;
+// $article_box_border: 1px solid #ccc;
+// $article_box_inner_shadow: 0 0 10px #ccc inset;
+// $article_h3_font_color: #333;
+// $article_h3_font_size: 28px;
+// $article_h3_font_weight: 400;
+// $article_p_color: #333;
+
+// // Red Sub-Theme
+
+// $article_bg: #610B0B;
+// $article_icon_color: white;
+// $article_icon_text_shadow: 0 0 1px #333333;
+// $article_color: white;
+// $article_box_bg: #7d1919;
+// $article_box_border: 1px solid #520707;
+// $article_box_inner_shadow: 0 0 6px #380000 inset;
+// $article_h3_font_color: inherit;
+// $article_h3_font_size: 28px;
+// $article_h3_font_weight: 300;
+// $article_p_color: white;
+
+// // Tan Sub-Theme
+
+// $article_bg: #e2dace;
+// $article_icon_color: #2C4560;
+// $article_icon_text_shadow: 0 0 1px #333333;
+// $article_color: white;
+// $article_box_bg: #F1EAE1;
+// $article_box_border: none;
+// $article_box_inner_shadow: 0 0 4px #766e64 inset;
+// $article_h3_font_color: #333;
+// $article_h3_font_size: 28px;
+// $article_h3_font_weight: 400;
+// $article_p_color: #333;
+
+// Structure
+
+article {
+  background: $article_bg;
+  padding: 20px 0 40px 0;
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      text-align: center;
+      padding-top: 20px;
+      color: $article_color;
+      i {
+        color: $article_icon_color;
+        font-size: 40px;
+        text-shadow: $article_icon_text_shadow;
+      }
+      .box {
+        margin-top: 20px;
+        padding: 10px 20px 20px 20px;
+        border-radius: 4px;
+        border: $article_box_border;
+        background: $article_box_bg;
+        box-shadow: $article_box_inner_shadow;
+        h3 {
+          color: $article_h3_font_color;
+          font-family: $base_font;
+          font-weight: $article_h3_font_weight;
+          font-size: $article_h3_font_size;
+        }
+        p {
+          color: $article_p_color;
+          line-height: 150%;
+        }
+      }
+    }
+  }
+}

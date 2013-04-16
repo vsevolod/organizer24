@@ -9,7 +9,7 @@
   = f.input :domain
   = f.input :show_photogallery, :as => :boolean, :wrapper => 'checkbox'
   = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
-  = f.input :theme, :collection => Organization::THEMES+['beauty']
+  = f.input :theme, :collection => ['embark']+['beauty']#+Organization::THEMES
 
   = f.time_zone_select :timezone
 

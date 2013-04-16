@@ -1,0 +1,20 @@
+// Resources
+
+@import "compass/css3";
+@import "compass/typography/lists/horizontal-list";
+@import "compass/utilities/general/hacks";
+@import "compass/support";
+
+// Base Styles 
+
+$base_font: "Source Sans Pro", sans-serif;
+$base_font_weight: 400;
+
+// Modules
+
+@import "embark/sub_theme"; // For demo purposes only. Please delete. 
+@import "embark/nav";
+@import "embark/header";
+@import "embark/article";
+@import "embark/footer";
+@import "embark/fonts/general_foundicons.scss";
