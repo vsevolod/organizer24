@@ -42,6 +42,9 @@ class UsersController < CompanyController
     else
       if @user.confirmation_number.to_s == params[:confirmation_number]
         @user.confirm!
+        @user.appointments.free.each do |appointment|
+          appointment.first_owner_view!
+        end
         if @user.errors.any?
           flash[:alert] = @user.errors.full_messages.join('; ')
           render :action => :confirm_phone

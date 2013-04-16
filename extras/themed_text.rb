@@ -7,6 +7,8 @@
 # 2) Текст шаблона
 # 3) Динамические параметры для шаблона
 
+USER_NOTIFY = "Здравствуйте <ИМЯ>! В <ДЕНЬ НЕДЕЛИ> <ДАТА НАЧАЛА> Вы записаны на следующие услуги: <СПИСОК УСЛУГ>. Продолжительность приема: <ПРОДОЛЖИТЕЛЬНОСТЬ>, стоимость: <СТОИМОСТЬ> руб."
+
 def themed_text(theme, text, options)
   case theme
   when :user_notify
@@ -16,10 +18,10 @@ end
 
 def user_notify(text, appointment)
   { '<ИМЯ>' => appointment.firstname,
-    '<ДЕНЬ НЕДЕЛИ>' => GENITIVE_WEEK_DAYS[appointment.start.wday],
+    '<ДЕНЬ НЕДЕЛИ>' => Organization::GENITIVE_WEEK_DAYS[appointment.start.wday],
     '<ДАТА НАЧАЛА>' => Russian.strftime( appointment.start, "%d %B в %H:%M" ),
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),
-    '<СТОИМОСТЬ>' => appointment.cost,
+    '<СТОИМОСТЬ>' => appointment.cost.to_s,
     '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time
   }.each_pair do |substring, value|
     text.gsub!(substring, value)

@@ -12,7 +12,7 @@ class Appointment < ActiveRecord::Base
   before_validation :check_start_time
   before_validation :cost_time_by_services!
   after_save :notify_owner, :if => :can_notify_owner?
-  after_save :change_start_notification, :if => :start_changed?
+  after_save :change_start_notification, :if => :start_or_status_changed
 
   attr_accessor :can_not_notify_owner # Не нужно уведомлять владельца
 
@@ -86,7 +86,7 @@ class Appointment < ActiveRecord::Base
   # Отправить уведомление владельцу если есть изменения
   def notify_owner
     text = ""
-    if self.created_at == self.updated_at # Если запись только что создана
+    if self.created_at == self.updated_at || self.status_was == 'free' && self.offer? # Если запись только что создана или подтверждена
       text += "Новая запись: #{self.fullname} (#{self.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
     else
       if start_changed?
@@ -141,7 +141,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def can_notify_owner?
-    !can_not_notify_owner
+    !can_not_notify_owner && !self.free?
   end
 
   private
@@ -163,6 +163,10 @@ class Appointment < ActiveRecord::Base
       if (notifications_delayed = Delayed::Job.where( "handler ILIKE ?", "%appointment_id: #{self.id}%notification%" )).count > 0
         notifications_delayed.destroy_all
       end
+    end
+
+    def start_or_status_changed
+      (!self.free? && self.start_changed?) || (self.status_was == 'free' && self.offer?)
     end
 
 end

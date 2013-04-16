@@ -5,8 +5,6 @@ require 'themed_text'
 
 class SmsJob < Struct.new(:options, :sms_type)
 
-  GENITIVE_WEEK_DAYS = ['', 'В понедельник', 'Во вторник', 'В среду', 'В четверг', 'В пятницу', 'В субботу', 'В воскресенье']
-
   def perform
     sms = Smsru.new( ) #@appointment.phone, @organization.user.phone
     case sms_type

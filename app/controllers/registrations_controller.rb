@@ -30,7 +30,6 @@ class RegistrationsController < Devise::RegistrationsController
       if resource.save
         if (appointment = Appointment.find_by_id( @appointment_id )) && (!appointment.user || appointment.user == resource)
           appointment.user = resource
-          appointment.first_owner_view
           appointment.firstname = resource.firstname
           appointment.save
         end
