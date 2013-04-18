@@ -1,11 +1,11 @@
 #coding: utf-8
 class Organization < ActiveRecord::Base
-  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery, :timezone, :user_notify_text]
+  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery, :timezone, :user_notify_text, :index_header]
 
   # Deprecated
   THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
 
-  GENITIVE_WEEK_DAYS = ['понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу', 'воскресенье']
+  GENITIVE_WEEK_DAYS = ['воскресенье', 'понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу']
 
   store :settings, accessors: ACCESSORS
 
