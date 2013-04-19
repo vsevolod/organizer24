@@ -18,6 +18,7 @@ end
 
 def user_notify(text, appointment)
   { '<ИМЯ>' => appointment.firstname,
+    '<ФАМИЛИЯ>' => appointment.lastname,
     '<ДЕНЬ НЕДЕЛИ>' => Organization::GENITIVE_WEEK_DAYS[appointment.start.wday],
     '<ДАТА НАЧАЛА>' => Russian.strftime( appointment.start, "%d %B в %H:%M" ),
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),

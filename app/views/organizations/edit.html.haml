@@ -41,6 +41,9 @@
       $('#template_example').html(text);
     });
 
+  %h3 Текст заголовка
+  = f.input :index_header, :as => :text
+
   %h3 Шаг календаря
   = f.collection_radio_buttons :slot_minutes, [[5,'5 минут'],[10,'10 минут'],[15,'15 минут'],[20,'20 минут'],[30,'пол часа'],[60,'час']], :first, :last
 

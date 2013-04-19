@@ -68,7 +68,7 @@ header {
     }
     form {
       padding-top: $form_padding_top;
-      input:first-child {
+      input.input_with_submit {
         @include form_styling;
         height: auto;
         padding: 11px 5px;

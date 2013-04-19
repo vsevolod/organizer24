@@ -1,1 +1,47 @@
-1
+= content_for :header do
+  - header = (@organization.index_header || '').split("\n")
+  - header.each_with_index do |line, index|
+    - if index > 0 && index == header.size-1
+      %h2= line
+    - else
+      %h1= line
+  - if current_user
+    %form
+      = link_to 'Записаться', '/calendar', :class => 'btn btn-gold'
+  - else
+    = form_for User.new, :url => session_path(User), :html => {:class => 'sign_in_index', :colorbox => true} do |f|
+      :erb
+        <%= f.text_field :phone, :autocomplete => 'off', :placeholder => "Телефон", :required => true, :class => 'input_with_submit' -%><%= f.submit 'Записаться', :class => 'btn btn-gold' -%>
+
+%article
+  .container
+    %ul.row-fluid
+      - if true || @organization.show_photogallery? || current_user && current_user.owner?( @organization )
+        %li.span3
+          = link_to '#' do
+            %i.foundicon-photo.gen-enclosed
+          .box
+            / Edit your article content here
+            %h3 Фотогалерея
+            %p Список фотографий по категориям
+      %li.span3
+        %i.foundicon-edit
+        .box
+          / Edit your article content here
+          %h3 SASS + CSS
+          %p
+            Easily customize your theme by modifying variables in SCSS files or directly changing CSS files.
+      %li.span3
+        %i.foundicon-tools
+        .box
+          / Edit your article content here
+          %h3 Modular
+          %p
+            Each section is styled by its own SCSS file allowing you to find and make changes quickly.
+      %li.span3
+        %i.foundicon-add-doc
+        .box
+          / Edit your article content here
+          %h3 Sub-Themes
+          %p
+            Embark includes four sub-themes out of the box. Just change the stylesheets or edit the SASS variables.

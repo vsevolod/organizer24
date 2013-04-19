@@ -13,104 +13,15 @@
     = csrf_meta_tags
     = yield :js
   %body{ :class => get_class }
-  %body
-    #subtheme
-      .container
-        %ul
-          %li
-            %p Select a sub-theme
-          %li
-            %button.btn-small.theme-default{:type => "button"} Default
-          %li
-            %button.btn-small.sub-theme-dark{:type => "button"} Dark
-          %li
-            %button.btn-small.sub-theme-light{:type => "button"} Light
-          %li
-            %button.btn-small.sub-theme-red{:type => "button"} Red
-          %li
-            %button.btn-small.sub-theme-tan{:type => "button"} Tan
-          %li
-            %p
-              or
-              %a{:href => "#closepanel"} close this panel
-    / End (For Demo Purposes)
     %header
       %nav
         .container
-          / Edit your brand name here
-          %a.brand{:href => "#"} Embark
+          %a.brand{:href => "/"}= @organization.name
       %section.container
-        / Edit your introduction here
-        %h1 Create a Beautiful Invite or Preview Page
-        %h2 Your product or business description here
-        %form
-          %input{:placeholder => "Enter Email", :required => "", :type => "email"}/
-          %button.btn.btn-gold{:type => "button"} Request an Invite
-    %article
-      .container
-        %ul.row-fluid
-          %li.span3
-            %i.foundicon-checkmark
-            .box
-              / Edit your article content here
-              %h3 Bootstrap
-              %p
-                This theme is built on Bootstrap 2.3.0 and is compatible with all modern browsers including IE9.
-          %li.span3
-            %i.foundicon-edit
-            .box
-              / Edit your article content here
-              %h3 SASS + CSS
-              %p
-                Easily customize your theme by modifying variables in SCSS files or directly changing CSS files.
-          %li.span3
-            %i.foundicon-tools
-            .box
-              / Edit your article content here
-              %h3 Modular
-              %p
-                Each section is styled by its own SCSS file allowing you to find and make changes quickly.
-          %li.span3
-            %i.foundicon-add-doc
-            .box
-              / Edit your article content here
-              %h3 Sub-Themes
-              %p
-                Embark includes four sub-themes out of the box. Just change the stylesheets or edit the SASS variables.
+        = yield :header
+    = yield
     %footer
       .container
-        %ul.row-fluid
-          / Edit your footer content here
-          %li
-            %a{:href => ""} About Us
-          %li
-            %a{:href => ""} Terms of Use
-          %li
-            %a{:href => ""} Privacy
-          %li
-            %a{:href => ""} Social
-          %li
-            %a{:href => ""} Contact Us
-      / Edit your copyright here
-      %p Copyright © 2013 Your Company
-   
-    / Start jQuery for sub-themes (For Demo Purposes)
-    :javascript
-      $('a[href="#closepanel"]').on('click', function () {
-          $("#subtheme").hide();
-      });
-      $('.theme-default').click(function () {
-          $('head').append("<link rel='stylesheet' type='text/css' href='stylesheets/styles.css'/>");
-      });
-      $('.sub-theme-dark').click(function () {
-          $('head').append("<link rel='stylesheet' type='text/css' href='stylesheets/sub-theme-dark.css'/>");
-      });
-      $('.sub-theme-light').click(function () {
-          $('head').append("<link rel='stylesheet' type='text/css' href='stylesheets/sub-theme-light.css'/>");
-      });
-      $('.sub-theme-red').click(function () {
-          $('head').append("<link rel='stylesheet' type='text/css' href='stylesheets/sub-theme-red.css'/>");
-      });
-      $('.sub-theme-tan').click(function () {
-          $('head').append("<link rel='stylesheet' type='text/css' href='stylesheets/sub-theme-tan.css'/>");
-      });
+        = render 'layouts/top_menu_content'
+      %p== #{@organization.name} © #{Date.today.year}
+    = yield :bottom_js

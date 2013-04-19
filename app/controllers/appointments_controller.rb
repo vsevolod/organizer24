@@ -94,6 +94,7 @@ class AppointmentsController < CompanyController
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
     @appointment.attributes = user_params
     @appointment.firstname = @user.firstname
+    @appointment.lastname = @user.lastname
     @appointment.service_ids = (params[:service] || {}).keys
     check_notifier
     unless @appointment.can_notify_owner?

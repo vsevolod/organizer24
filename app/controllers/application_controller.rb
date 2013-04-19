@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
       elsif params[:organization_id]
         @organization = Organization.find(params[:organization_id])
       end
+      raise ActiveRecord::RecordNotFound unless @organization
     end
 
     def organization_root
