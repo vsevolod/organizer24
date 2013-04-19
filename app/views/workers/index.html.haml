@@ -1,0 +1,20 @@
+%h2 Сотрудники
+%br/
+- if current_user && current_user.owner?( @organization )
+  = link_to 'Добавить сотрудника', [:new, :worker], :class => 'btn btn-success'
+
+%table.table
+  %thead
+    %tr
+      %th Имя
+      %th Список услуг
+  %tbody
+    - @workers.order(:name).each do |worker|
+      %tr
+        %td= worker.name
+        %td= worker.services.map(&:name).join(', ')
+        %td
+          = link_to [:edit, worker] do
+            .icon-edit
+          = link_to worker, :method => :delete do
+            .icon-trash

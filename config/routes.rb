@@ -31,6 +31,7 @@ Organizer::Application.routes.draw do
     resources :category_photos do
       resources :photos
     end
+    resources :workers
     resources :executors
     resources :pages, :except => [:show]
     resources :services

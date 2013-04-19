@@ -1,0 +1,14 @@
+#worker
+  = simple_form_for @worker do |f|
+    = f.input :is_enabled
+    = f.input :name
+    -# Привязка сотрудника к пользователю по телефону
+      .control-group
+        %label.control-label{ :for => "phone"} Телефон сотрудника
+        .controls= text_field_tag :phone
+    = f.simple_fields_for :services_workers do |sw|
+      = render 'services_worker_fields', :f => sw
+    .links= link_to_add_association 'Добавить услугу', f, :services_workers, :class => 'btn btn-success'
+
+    .form-actions
+      = f.submit "Завершить", :class => 'btn btn-primary'

@@ -59,6 +59,10 @@ ru:
         one: Пользователь
         few: Пользователи
         other: Пользователи
+      worker:
+        one: Сотрудник
+        few: Сотрудники
+        other: Сотрудники
       working_hour: 
         one: Время работы
         few: Время работы
@@ -145,6 +149,11 @@ ru:
         password_confirmation: Подтверждение пароля
         my_organization: Организация
         remember_me: Запомнить
+      worker:
+        user: Пользователь
+        organization: Организация
+        name: ФИО (название)
+        is_enabled: Доступен для заказа
       working_hour:
         week_day: День недели
         begin_time: Время начала

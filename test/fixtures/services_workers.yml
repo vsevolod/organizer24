@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  service: 
+  worker: 
+  cost: 1
+  showing_time: 1
+
+two:
+  service: 
+  worker: 
+  cost: 1
+  showing_time: 1

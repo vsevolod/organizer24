@@ -18,6 +18,7 @@ class Organization < ActiveRecord::Base
   has_many :working_hours
   has_many :pages
   has_many :category_photos
+  has_many :workers
 
   accepts_nested_attributes_for :working_hours, :reject_if => :all_blank
   validates_associated :working_hours, :if => lambda{ |u| u.working_hours.any? }
