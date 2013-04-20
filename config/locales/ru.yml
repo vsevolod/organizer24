@@ -63,6 +63,10 @@ ru:
         one: Сотрудник
         few: Сотрудники
         other: Сотрудники
+      working_day:
+        one: Рабочий день
+        few: Рабочие дни
+        other: Рабочие дни
       working_hour: 
         one: Время работы
         few: Время работы
@@ -120,6 +124,7 @@ ru:
         theme: Тема оформления
         timezone: Часовой пояс
         user_notify_text: Шаблон уведомления пользователю
+        index_header: Текст заголовка на первой странице
       page:
         name: Название
         permalink: Ссылка
@@ -154,6 +159,11 @@ ru:
         organization: Организация
         name: ФИО (название)
         is_enabled: Доступен для заказа
+      working_day:
+        date: Дата
+        begin_time: Время начала
+        end_time: Время конца
+        worker: Сотрудник
       working_hour:
         week_day: День недели
         begin_time: Время начала

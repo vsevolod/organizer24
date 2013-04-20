@@ -22,10 +22,10 @@ def user_notify(text, appointment)
     '<ДЕНЬ НЕДЕЛИ>' => Organization::GENITIVE_WEEK_DAYS[appointment.start.wday],
     '<ДАТА НАЧАЛА>' => Russian.strftime( appointment.start, "%d %B в %H:%M" ),
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),
-    '<СТОИМОСТЬ>' => appointment.cost.to_s,
+    '<СТОИМОСТЬ>' => appointment.cost,
     '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time
   }.each_pair do |substring, value|
-    text.gsub!(substring, value)
+    text.gsub!(substring, value.to_s)
   end
   text
 end

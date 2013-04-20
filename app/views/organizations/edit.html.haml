@@ -23,6 +23,7 @@
     var appointment = #{appointment.to_json};
     var template = {
       '<ИМЯ>': appointment.firstname,
+      '<ФАМИЛИЯ>': appointment.lastname,
       '<ДЕНЬ НЕДЕЛИ>': '#{Organization::GENITIVE_WEEK_DAYS[appointment.start.wday]}',
       '<ДАТА НАЧАЛА>': '#{Russian.strftime( appointment.start, "%d %B в %H:%M" )}',
       '<СПИСОК УСЛУГ>': '#{appointment.services.order(:name).pluck(:name).join(', ')}',
@@ -41,7 +42,6 @@
       $('#template_example').html(text);
     });
 
-  %h3 Текст заголовка
   = f.input :index_header, :as => :text
 
   %h3 Шаг календаря

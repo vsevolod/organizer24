@@ -1,3 +1,6 @@
+= content_for :bottom_js do
+  = javascript_include_tag 'fullcalendar', 'month_calendar'
+
 #worker
   = simple_form_for @worker do |f|
     = f.input :is_enabled
@@ -9,6 +12,8 @@
     = f.simple_fields_for :services_workers do |sw|
       = render 'services_worker_fields', :f => sw
     .links= link_to_add_association 'Добавить услугу', f, :services_workers, :class => 'btn btn-success'
-
+    - unless @worker.new_record?
+      %h1 Рабочие дни
+      #worker_month_calendar{:style => 'width:500px;'}
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

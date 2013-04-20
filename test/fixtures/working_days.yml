@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-04-20
+  begin_time: 1
+  end_time: 1
+  worker: 
+
+two:
+  date: 2013-04-20
+  begin_time: 1
+  end_time: 1
+  worker: 

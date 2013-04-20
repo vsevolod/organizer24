@@ -31,7 +31,13 @@ Organizer::Application.routes.draw do
     resources :category_photos do
       resources :photos
     end
-    resources :workers
+    resources :workers do
+      resources :working_days do
+        collection do
+          post :inverse_day
+        end
+      end
+    end
     resources :executors
     resources :pages, :except => [:show]
     resources :services
