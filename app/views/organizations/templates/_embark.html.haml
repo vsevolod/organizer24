@@ -5,14 +5,13 @@
       %h2= line
     - else
       %h1= line
-  - if current_user
+  - if current_user || @organization.registration_before
     %form
       = link_to 'Записаться', '/calendar', :class => 'btn btn-gold'
   - else
     = form_for User.new, :url => session_path(User), :html => {:class => 'sign_in_index', :colorbox => true} do |f|
       :erb
         <%= f.text_field :phone, :autocomplete => 'off', :placeholder => "Телефон", :required => true, :class => 'input_with_submit' -%><%= f.submit 'Записаться', :class => 'btn btn-gold' -%>
-
 %article
   .container
     %ul.row-fluid

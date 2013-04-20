@@ -9,7 +9,7 @@ set :default_environment, {
 set :bundle_without,  [:development, :test]
 
 set :application, "Organizer24"
-set :repository, "https://github.com/vsevolod/organizer24.git"
+set :repository, "git@github.com:vsevolod/organizer24.git"
 
 set :user, "vsevolod"
 set :use_sudo, false
