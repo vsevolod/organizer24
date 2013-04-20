@@ -1,4 +1,4 @@
-check_serices_inputs = ->
+check_services_inputs = ->
   cost = 0
   time = 0
   values = []
@@ -36,12 +36,13 @@ check_serices_inputs = ->
 $ ->
 
   if $('.check_services input').length > 0
-    check_serices_inputs()
+    check_services_inputs()
     $('.check_services input').each ->
       $(this).attr('disabled', false)
 
-    $('.check_services input').click ->
-      setTimeout(check_serices_inputs, 50)
+    $('#second').on('click', '.check_services input', ->
+      setTimeout(check_services_inputs, 50)
+    )
 
   $('body').on('click', '.AutoPhoneClick', ->
     $('.AutoPhoneClick span').removeClass('label-success')

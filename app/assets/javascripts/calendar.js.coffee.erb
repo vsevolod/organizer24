@@ -28,15 +28,30 @@ Organizer.removeOtherElements = () ->
   $('#calendar').fullCalendar( 'removeEvents', 100000 )
   Organizer.destroy_all_popovers()
 
+getEventSources = ->
+  [
+    {
+      url: '/working_hours/by_week',
+      borderColor: '#ccc'
+    },
+    {
+      url: show_checkboxes(),
+      borderColor: '#ccc'
+    }
+  ]
+
 show_checkboxes = ->
-  params = '/appointments/by_week'
+  params = '/appointments/by_week?'
+  params += "worker_id=#{$('#workers input:checked').val()}"
   if $('.show_statuses')
-    params += "?"
+    params += "&"
     params += $.map( $('.show_statuses .checkbox input:checked'), (el, index) ->
       return "statuses[]="+$(el).val()
     ).join('&')
   Organizer.old_event_source = params
   params
+
+Organizer.event_sources = getEventSources()
 
 # Показываем существующие услуги у события
 show_appointment_services = (event, options) ->
@@ -163,16 +178,7 @@ $('#calendar').fullCalendar({
   buttonText: {
     today: 'Сегодня'
   },
-  eventSources: [
-    {
-      url: '/working_hours/by_week',
-      borderColor: '#ccc'
-    },
-    {
-      url: show_checkboxes(),
-      borderColor: '#ccc'
-    }
-  ],
+  eventSources: Organizer.event_sources,
   dayClick: (date, allDay, jsEvent, view) ->
     if $('#calendar .popover').length == 0
       if Organizer.calendar_draggable
@@ -321,3 +327,15 @@ $('.show_statuses .checkbox input').change ->
   ##$('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
   ##$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
   document.location.href = '/main/set_session?key=show_' + $(this).val() + '&value=' + $(this).is(':checked')
+
+$('#second #workers input').change ->
+  # update services
+  $('#second .check_services').html($(this).attr('check_services'))
+  # update event sources
+  $.each(Organizer.event_sources, (id, event_source) ->
+    $('#calendar').fullCalendar('removeEventSource', event_source)
+  )
+  Organizer.event_sources = getEventSources()
+  $.each(Organizer.event_sources, (id, event_source) ->
+    $('#calendar').fullCalendar('addEventSource', event_source)
+  )

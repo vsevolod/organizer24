@@ -30,12 +30,13 @@ class AppointmentsController < CompanyController
   # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
   def by_week
     @user = current_user || User.new
+    @worker = @organization.workers.enabled.where(:id => params[:worker_id]).first
     @is_owner = @user.owner?( @organization )
     @appointments = if @is_owner
-                      @organization.appointments.where( :status.in => params[:statuses] )
+                      @worker.appointments.where( :status.in => params[:statuses] )
                     else
                       # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                      @organization.appointments.where( :status.in => Appointment::STARTING_STATES ).where('date(start) >= ?', Time.zone.now.to_date)
+                      @worker.appointments.where( :status.in => Appointment::STARTING_STATES ).where('date(start) >= ?', Time.zone.now.to_date)
                     end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
     # Находим записи
     @periods = @appointments.map do |appointment|
@@ -92,6 +93,7 @@ class AppointmentsController < CompanyController
     user_params = params[:user]
     @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
+    @appointment.worker_id = params[:worker_id] || @organization.workers.first.id
     @appointment.attributes = user_params
     @appointment.firstname = @user.firstname
     @appointment.lastname = @user.lastname

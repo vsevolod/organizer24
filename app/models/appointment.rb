@@ -5,6 +5,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :user                  # Клиент
   belongs_to :user_by_phone, :class_name => 'User', :foreign_key => :phone, :primary_key => :phone # Клиент по номеру телефона
   belongs_to :organization          # Организация
+  belongs_to :worker
   has_many :services_users, :foreign_key => :phone, :primary_key => :phone
   has_and_belongs_to_many :services # Услуги
 
@@ -46,7 +47,7 @@ class Appointment < ActiveRecord::Base
   validates_numericality_of :showing_time, :greater_than => 0
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
-  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes
+  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!

@@ -24,18 +24,19 @@
 = form_tag appointments_path, :remote => !current_user.new_record? do
   = hidden_field_tag :start
   %section#second
+    - if @enabled_workers.count > 1
+      %h3 Выберите сотрудника
+      .row#workers
+        - @enabled_workers.each do |worker|
+          %label.radio.span3
+            = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+            = worker.name
+    - else
+      = hidden_field_tag :worker_id, @worker.id
     %h3 На что хотите записаться:
     .row-fluid
-      .check_services
-        - services = @organization.services.not_collections.order(:show_by_owner, :name)
-        - services = services.where( :show_by_owner => false ) unless current_user.owner?( @organization )
-        - step = (services.size*1.0/3).ceil
-        - services.each_slice( step.zero? ? 1 : step  ).each do |group_services|
-          .span3
-            - group_services.each do |service|
-              %label.checkbox
-                = check_box_tag "service[#{service.id}]", service.id, false
-                = service.name
+      .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)
+        
       .span4.buttons_to_confirm{ :style => 'display:none;' }
         = link_to '#', :class => 'btn btn-success confirm_calendar' do
           %span.icon-ok

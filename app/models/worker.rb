@@ -4,6 +4,7 @@ class Worker < ActiveRecord::Base
   has_many :services_workers
   has_many :services, :through => :services_workers
   has_many :working_days
+  has_many :appointments
 
   accepts_nested_attributes_for :services_workers
   accepts_nested_attributes_for :working_days
@@ -11,5 +12,7 @@ class Worker < ActiveRecord::Base
   validates :name, :presence => true
 
   attr_accessible :name, :is_enabled, :services_workers_attributes
+
+  scope :enabled, where(:is_enabled => true)
 
 end

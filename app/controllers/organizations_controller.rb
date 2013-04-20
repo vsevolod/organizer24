@@ -28,6 +28,8 @@ class OrganizationsController < CompanyController
     if params[:day]
       @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")
     end
+    @enabled_workers = @organization.workers.enabled
+    @worker = @enabled_workers.where(:id => params[:worker_id]).first || @enabled_workers.first
   end
 
   def edit
