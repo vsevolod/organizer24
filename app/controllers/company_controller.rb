@@ -18,4 +18,8 @@ class CompanyController < ApplicationController
       end
     end
 
+    def get_worker
+      @organization.workers.enabled.where(:id => params[:worker_id]).first || @organization.workers.first
+    end
+
 end

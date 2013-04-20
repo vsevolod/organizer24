@@ -12,7 +12,7 @@ class WorkingHoursController < CompanyController
     @appointments = if current_user.owner?( @organization )
                       @organization.appointments
                     else
-                      current_user.appointments.where( :status.in => %w{approve offer taken} )
+                      current_user.appointments.where(:organization_id => @organization.id).where( :status.in => %w{approve offer taken} )
                     end.where(:start.gteq => @start, :start.lteq => @end)
     @appointments.each do |appointment|
       data_inner_class = if appointment.offer?
@@ -28,12 +28,13 @@ class WorkingHoursController < CompanyController
   def by_week
     min_wt = @organization.working_hours.pluck(:begin_time).min
     max_wt = @organization.working_hours.pluck(:end_time).max
+    @worker = get_worker
     @periods = []
     [1,2,3,4,5,6,0].each_with_index do |t, index|
       full_day = {:start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false}
       wh = @organization.working_hours.where(:week_day => t ).first
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (@start + index.days).to_date
-        if wh
+        if wh && (@worker.working_days.count.zero? || @worker.working_days.where(:date => @start + index.days).count > 0)
           res = []
           res << { :title => 'Закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
           res << { :title => 'Закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt

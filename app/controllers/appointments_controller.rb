@@ -30,7 +30,7 @@ class AppointmentsController < CompanyController
   # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
   def by_week
     @user = current_user || User.new
-    @worker = @organization.workers.enabled.where(:id => params[:worker_id]).first
+    @worker = get_worker
     @is_owner = @user.owner?( @organization )
     @appointments = if @is_owner
                       @worker.appointments.where( :status.in => params[:statuses] )
@@ -93,7 +93,7 @@ class AppointmentsController < CompanyController
     user_params = params[:user]
     @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
-    @appointment.worker_id = params[:worker_id] || @organization.workers.first.id
+    @appointment.worker_id = get_worker.id
     @appointment.attributes = user_params
     @appointment.firstname = @user.firstname
     @appointment.lastname = @user.lastname

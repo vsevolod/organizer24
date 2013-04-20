@@ -29,20 +29,20 @@ Organizer.removeOtherElements = () ->
   Organizer.destroy_all_popovers()
 
 getEventSources = ->
+  worker = "worker_id=#{$('#workers input:checked').val()}"
   [
     {
-      url: '/working_hours/by_week',
+      url: "/working_hours/by_week?#{worker}",
       borderColor: '#ccc'
     },
     {
-      url: show_checkboxes(),
+      url: show_checkboxes(worker),
       borderColor: '#ccc'
     }
   ]
 
-show_checkboxes = ->
-  params = '/appointments/by_week?'
-  params += "worker_id=#{$('#workers input:checked').val()}"
+show_checkboxes = (worker)->
+  params = "/appointments/by_week?#{worker}"
   if $('.show_statuses')
     params += "&"
     params += $.map( $('.show_statuses .checkbox input:checked'), (el, index) ->
