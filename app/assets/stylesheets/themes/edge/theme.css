@@ -1,0 +1,318 @@
+
+/*
+** Theme: Edge - Bootstrap Theme
+** Author: @heyallanmoreno
+*/
+
+/*
+*		$Global Styles
+*		$Base
+*		$Components
+*		$Responsive
+*/
+
+/*------------------------------------*\
+	$Global Styles
+\*------------------------------------*/
+
+body {
+	color: #808792;
+}
+h1 {
+	font-family: 'Patua One', cursive;
+	font-size: 90px;
+	margin-top: 20px;
+	line-height: 1.25;
+	color: #fff;
+	text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+}
+h2, h3, h4, h5, h6 {
+	color: #27313D;
+}
+h2 i, h3 i, h4 i, h5 i, h6 i {
+	padding-right: 5px;
+}
+a:hover {
+	text-decoration: none;
+	border-bottom: 1px dotted #808792;
+}
+hr {
+	border-top: 1px solid #DDD;
+}
+
+
+
+
+
+/*------------------------------------*\
+	$Base
+\*------------------------------------*/
+
+/* Top Section Showcase */
+.showcase {
+	position: relative;
+	z-index: -1;
+	background: transparent url('/assets/edge/main.png') center top fixed;
+		-webkit-background-size: 100%; 
+		-moz-background-size: 100%; 
+		-o-background-size: 100%; 
+		background-size: 100%; 
+		-webkit-background-size: cover; 
+		-moz-background-size: cover; 
+		-o-background-size: cover; 
+		background-size: cover;
+}
+header {
+	padding: 60px 10px 100px;
+	text-align: center;
+}
+.description {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	margin: 0;
+	line-height: 1.25;
+	color: #fff;
+	text-shadow: 0 0 3px rgba(0, 0, 0, 1);      
+}
+
+/* Strip (Call to action) */
+.strip {
+	width: auto;
+	padding: 20px;
+	text-align: center;
+	background: #232323 url("/assets/edge/texture-1.png");
+	margin-bottom: 50px;
+}
+.strip h3 {
+	color: #FFF;
+}
+.strip .btn {
+	margin-bottom: 3px;
+}
+
+/* "Our Clientes" Section */
+.customer-logo {
+	padding-right: 38px;
+	padding-bottom: 20px;
+}
+
+/* Avatar Images */
+.user-avatar {
+	float: left;
+	margin: 0 10px 10px 0;
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+	   -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Footer Section */
+footer {
+	width: auto;
+	padding: 30px 20px 20px;
+	margin-bottom: 0;
+	background: #2F353E url("/assets/edge/texture-1.png");
+}
+footer a {
+	color: #FFF;
+}
+footer a:hover {
+	text-decoration: none;
+	color: #FFF;
+	border-bottom: 1px dotted #FFF;
+}
+
+
+
+
+
+/*------------------------------------*\
+	$Components
+\*------------------------------------*/
+
+.bubble {
+	position: relative;
+	width: auto;
+	height: 100%;
+	padding: 20px 20px 10px;
+	margin-bottom: 30px;
+	color: #49535F;
+	background: #ECEFF2;
+	border: #7F7F7F solid 0px;
+	-webkit-border-radius: 4px;
+	   -moz-border-radius: 4px;
+			border-radius: 4px;
+}
+.bubble:after {
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 20px;
+	border-style: solid;
+	border-width: 10px 10px 0;
+	border-color: #ECEFF2 transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+}
+
+/* Pricing Boxes */
+.pricing {
+	padding: 15px;
+	margin-bottom: 15px;
+	background: #ECEFF2 url("/assets/edge/texture-2.png") top right no-repeat;
+	-webkit-border-radius: 4px;
+	   -moz-border-radius: 4px;
+			border-radius: 4px;
+}
+.info-panel {
+	padding: 15px;
+	color: #9099A3;
+	background: #2F353E url("/assets/edge/texture-3.png");
+	-webkit-border-radius: 4px;
+	   -moz-border-radius: 4px;
+			border-radius: 4px;
+}
+.info-panel h4 {
+	color: #FFF;
+}
+
+/* Advice Banner (Another Call To Action) */
+.img-advice {
+	margin-bottom: 20px;
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+}
+
+/* Flatten Default Button */
+.btn {
+	padding:7px 13px;
+	-webkit-border-radius: 3px;
+		 -moz-border-radius: 3px;
+					border-radius: 3px;
+	color: #FFF;
+	text-shadow: none;
+	background-image: none;
+	background-repeat: no-repeat;
+	border: none;
+	filter: none;
+	-webkit-transition: all 0.5s;
+	   -moz-transition: all 0.5s;
+		 -o-transition: all 0.5s;
+			transition: all 0.5s;
+}
+.btn:hover,
+.btn:active,
+.btn .active,
+.btn .disabled,
+.btn[disabled] {
+	color: #FFF;
+	border-bottom: none;
+	-webkit-transition: all 0.5s;
+	   -moz-transition: all 0.5s;
+		 -o-transition: all 0.5s;
+			transition: all 0.5s;
+}
+
+/* Themed Buttons */
+.btn {
+	background-color: #2F353E;
+}
+.btn:hover,
+.btn:active,
+.btn .active,
+.btn .disabled,
+.btn[disabled] {
+	background-color: #5F686F;
+}
+.btn-primary {
+	background-color: #AA0000;
+}
+.btn-primary:hover {
+	background-color: #CC0000;
+}
+.btn-info {
+	background-color: #01A9DB;
+}
+.btn-info:hover {
+	background-color: #58D3F7;
+}
+.btn-success {
+	background-color: #0B610B;
+}
+.btn-success:hover {
+	background-color: #088A08;
+}
+.btn-warning {
+	background-color: #FF8000;
+}
+.btn-warning:hover {
+	background-color: #FACC2E;
+}
+.btn-danger {
+	background-color: #B40404;
+}
+.btn-danger:hover {
+	background-color: #CD2424;
+}
+.btn-inverse {
+	background-color: #1C1C1C;
+}
+.btn-inverse:hover {
+	background-color: #424242;
+}
+
+
+
+
+
+
+/*------------------------------------*\
+	$Responsive
+\*------------------------------------*/
+
+@media (max-width: 1200px) {
+	h1 {
+		font-weight: normal; /* Avoid safari & ios double shadow and offset */
+	}
+}
+
+@media (max-width: 979px) {
+	h1 {
+		font-size: 50px; /* Resize to fit better on mobile devices */
+	}
+}
+
+@media (max-width: 768px) {
+	.showcase,
+	.strip,
+	footer {
+		margin-left: -20px; /* Maintain elements full-width */
+		margin-right: -20px;
+	}
+}
+
+/* Extra queries are for Apple devices */
+@media (max-width: 768px), only screen and (min-device-width: 768px) and (max-device-width: 1024px), (min-device-width: 320px) and (max-device-width: 480px) { 
+	.showcase {
+		background: transparent url("/assets/edge/main-mobile.png") center top scroll; /* Smaller image to load faster */
+		-webkit-background-size: 100%;
+		   -moz-background-size: 100%;
+			 -o-background-size: 100%;
+		background-size: 100%;
+		-webkit-background-size: cover;
+		   -moz-background-size: cover;
+			 -o-background-size: cover;
+				background-size: cover;
+	}
+}
+
+
+
+
+
+
+

@@ -1,6 +1,256 @@
-.row
-  .span6.offset3
-    = link_to 'Зарегистрировать организацию', new_user_registration_path, :class => 'btn btn-success btn-large'
-    = link_to 'Записаться на прием', Organization, :class => 'btn btn-primary btn-large'
-%br/
-%br/
+= content_for :bottom_js do
+  :javascript
+    $(document).ready(function(){
+      // fancy animation - fade out header content on page scroll
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 10) {
+          $('.js-animated').stop().animate({opacity: 0}, 200);
+        }
+        if ($(this).scrollTop() < 10) {
+          $('.js-animated').stop().animate({opacity: 1}, 500);
+        }
+      });
+      //bootstrap tooltip trigger
+      $('[rel="tooltip"]').tooltip();
+    });
+
+/ Showcase
+.showcase
+  .container
+    .row
+      .span12
+        %header.js-animated
+          = image_tag "edge/logo.png"
+          %h1 Автоматические записи
+          %p.description - Новое решение ваших проблем -
+/ Call to Action Strip
+%section.strip
+  .container
+    .row
+      .span12
+        %h3
+          == Пускай вашим расписанием займётся #{t "site.domain"}
+          = link_to new_user_registration_path, :class => 'btn' do
+            Зарегистрировать организацию
+            %i.icon.icon-caret-right
+= flash_messages
+/ Page Container
+.container
+  / Features Grid
+  .row
+    .span3
+      %h4
+        %i.icon.icon-beaker
+        Мгновенно
+      %p
+        Запись ведётся прямо здесь и сейчас.
+        - if nil
+          = succeed "," do
+            %a{:href => "#", :rel => "tooltip", :title => "Right away!"} on the way
+    .span3
+      %h4
+        %i.icon.icon-credit-card
+        Круглосуточно
+      %p Клиенты записываются, когда им удобно. хоть в 3 часа ночи!
+    .span3
+      %h4
+        %i.icon.icon-truck
+        Не дорого
+      %p Система запишет клиента всего за 15 рублей, в то время как вы даже не притронетесь к телефону.
+    .span3
+      %h4
+        %i.icon.icon-globe
+        Удобно
+      %p Ни вы, ни ваши клиенты не захотят больше бронировать услуги по телефону.
+  %hr/
+  / Info Row 1
+  .row
+    .span3
+      %img.img-rounded{:alt => "", :src => "assets/product-4.png"}/
+    .span9
+      %h3 Brand New Features
+      %p
+        Easy to learn. Flexible to use. Create truly modern product support with visually-engaging guides that are available to anyone on any device. Connect your community through project documentation. Allow everyone to help out while recognizing the most valuable contributors. Improve employee training with
+        %a{:href => "#", :rel => "tooltip", :title => "HTML5 & CSS3"} cutting-edge
+        work instructions that improve production quality while reducing human errors and cycle times.
+      %p Create truly modern product support with visually-engaging guides that are available to anyone on any device. Connect your community through project documentation. Allow everyone to help out while recognizing the most valuable contributors. Improve employee training with cutting-edge work instructions that improve production quality while reducing human errors and cycle times.
+      %a.btn{:href => "#"} Learn More
+  %hr/
+  / Info Row 2
+  .row
+    .span4
+      %h3 Расписание
+      = image_tag "edge/calendar.png"
+    .span4
+      %h3 Fully Customizable
+      %p
+        Wikis are useful. Unfortunately, most wikis are difficult to use and harder to organize. Unstructured documentation leads to organizational chaos and inconsistent formatting. Guidebook's elegant presentation makes your content look good from day one. Consistent layouts present instructions clearly—
+        %a{:href => "#", :rel => "tooltip", :title => "We mean it"}> on every page
+        \.
+      %a.btn{:href => "#"} Try The Demo
+    .span4
+      %img.img-rounded{:alt => "", :src => "assets/product-3.png"}/
+  %hr/
+  / Testimonials
+  .row
+    / Testimony 1
+    .span4
+      %h3 Excelent Service
+      .bubble
+        %p
+          %i.icon-comments-alt
+          For every dollar my company invests to increase usability, I receives $10-$100 in benefits
+      %img.user-avatar{:alt => "", :src => "assets/user-1.png"}/
+      %blockquote
+        %p Cooper Black
+        %small
+          Chief CEO in
+          %cite{:title => "Source Title"} Venture Corp.
+    / Testimony 2
+    .span4
+      %h3 Priority Support
+      .bubble
+        %p
+          %i.icon-comments-alt
+          Testing one user early in the project is better than testing 50 near the end.
+      %img.user-avatar{:alt => "", :src => "assets/user-2.png"}/
+      %blockquote
+        %p Calisto MT
+        %small
+          President in
+          %cite{:title => "Source Title"} Asturias Inc.
+    / Testimony 3
+    .span4
+      %h3 First Class Work
+      .bubble
+        %p
+          %i.icon-comments-alt
+          The difference between zero and even a little bit of data is astounding.
+      %img.user-avatar{:alt => "", :src => "assets/user-3.png"}/
+      %blockquote
+        %p Cambria Serif
+        %small
+          Design Manager in
+          %cite{:title => "Source Title"} Moldova Systems
+  %hr/
+  / Clients List
+  .row
+    .span12
+      %h3 Компании использующие нашим продуктом
+      %img.customer-logo{:alt => "", :src => "assets/logo-1.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-2.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-3.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-11.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-12.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-6.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-7.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-8.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-9.png"}/
+      %img.customer-logo{:alt => "", :src => "assets/logo-10.png"}/
+  %hr/
+  / Pricing
+  .row
+    .span12
+      %h3 Тарифные планы
+  .row
+    / Pricing Box 1
+    .span3
+      .pricing
+        %h4
+          Бесплатно
+          %br/
+          0 руб/мес
+        %hr/
+        %ul
+          %li Одна линия
+          %li Без абонентской платы
+          %li Без СМС уведомлений
+        = link_to 'Попробовать', '#', :class => 'btn'
+    / Pricing Box 2
+    .span3
+      .pricing
+        %h4
+          Частный бизнес
+          %br/
+          от 0 руб/мес
+          %i.icon.icon-star.muted.pull-right
+        %hr/
+        %ul
+          %li 30 дней бесплатно
+          %li Одна линия
+          %li Оплата по факту 
+          %li 1 клиент 15руб
+          %li СМС уведомления клиенту
+          %li СМС уведомления на телефон компании
+    / Pricing Box 3
+    .span3
+      .pricing
+        %h4
+          Салон
+          %br/
+          от 1000 руб/мес
+          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right
+        %hr/
+        %ul
+          %li 30 дней бесплатно
+          %li до 4х линий
+          %li 1 клиент 15руб
+          %li СМС уведомления клиенту
+          %li СМС уведомления на телефон компании
+    / Pricing Box 4
+    .span3
+      .pricing
+        %h4
+          Компания
+          %br/
+          от 5000 руб/мес
+          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right
+        %hr/
+        %ul
+          %li 30 дней бесплатно
+          %li неограниченное число линий
+          %li 1 клиент 15руб
+          %li СМС уведомления клиенту
+          %li СМС уведомления на телефон компании
+          %li Расширенная система отчетов
+    / Info Box
+    .span3
+      .info-panel
+        %h4
+          %i.icon.icon-info-sign
+          Не нашли подходящего тарифа?
+        %p
+          Наши специалисты помогут вам разобраться в вариантах и выбрать оптимальный либо настроить индивидуальный вариант.
+  / /.row
+  %hr/
+  / Contact Area
+  .row
+    / Advice Banner
+    .span6
+      %img.img-advice{:alt => "", :src => "assets/advice.png"}/
+    / Contact Form
+    .span6
+      %h4
+        %i.icon.icon-envelope-alt
+        Let's get in touch now!
+      %form.form
+        %input#userName.span3{:placeholder => "Name", :type => "text"}/
+        %input#userEmail.span3{:placeholder => "Email", :type => "text"}/
+        %textarea#message.span6{:placeholder => "Message", :rows => "7"}
+        %button.btn.btn-block{:type => "submit"} SUBMIT NOW!
+    / /.span6
+  / /.row
+  %hr/
+/ page /.container
+%footer
+  .container
+    .row
+      .span12
+        %p.pull-right
+          %a{:href => "#"} Back to top
+        %p
+          \© 2013 Designed by
+          %a{:href => "http://twitter.com/heyallanmoreno"} @heyallanmoreno

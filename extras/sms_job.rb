@@ -12,7 +12,7 @@ class SmsJob < Struct.new(:options, :sms_type)
       @organization = Organization.find(options[:organization_id])
       Time.zone = @organization.timezone
       today = Time.zone.now.at_beginning_of_day
-      @appointments = Organization.first.appointments.where(:start.gteq => today, :start.lteq => today+1.day).where( :status => ['complete', 'lated'] )
+      @appointments = @organization.appointments.where(:start.gteq => today, :start.lteq => today+1.day).where( :status => ['complete', 'lated'] )
       sms.recipient = @organization.owner.phone
       sms.text = "За сегодня (#{Russian.strftime(today, "%d.%m.%y")}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
       if today.to_date == today.to_date.at_end_of_month

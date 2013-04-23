@@ -1,24 +1,18 @@
 !!!
-%html{ :lang => I18n.locale }
+%html{:lang => "en"}
   %head
+    %meta{:charset => "utf-8"}/
     %title Organizer24
-    = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = stylesheet_link_tag "application", "themes/edge/font-awesome", "themes/edge/theme.css", "http://fonts.googleapis.com/css?family=Patua+One"
+    /[if lt IE 9]
+      <link rel="stylesheet" href="/assets/themes/edge/font-awesome-ie7.css">
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     = csrf_meta_tags
     = yield :js
-  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_'), :style => 'padding-top:60px;'}
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          = link_to 'Organizer24', '/', :class => 'brand'
-          .nav-collapse
-            %ul.nav
-              - if current_user
-                %li= link_to 'Выход', destroy_user_session_path, :method => :delete
-                %li= link_to 'Кабинет', "/dashboard"
-              - else
-                %li= link_to 'Вход', new_user_session_path
-                %li= link_to 'Регистрация', new_user_registration_path
-    .container= yield
+  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_')}
+    = yield
+    = javascript_include_tag :application
     = yield :bottom_js
-    = flash_messages
+    :plain
+      <script type="text/javascript"> _shcp = []; _shcp.push({widget_id : 585929, widget : "Chat", side : "bottom", position : "left", template : "dark" }); (function() { var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true; hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://widget.siteheart.com/apps/js/sh.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })(); </script>

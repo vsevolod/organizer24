@@ -7,6 +7,7 @@ class WorkingHoursController < CompanyController
   # TODO move to appointment controller
   def self_by_month
     @periods = []
+    @start_of_month = @start.at_beginning_of_month.to_date
     @start = Date.today if @start < Date.today
 
     @appointments = if current_user.owner?( @organization )
@@ -21,6 +22,18 @@ class WorkingHoursController < CompanyController
                            'legend-inaccessible'
                          end
       @periods << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+    end
+    if current_user.owner?( @organization )
+      (@end.to_date-@start_of_month).to_i.times do |day|
+        if @start_of_month+day == (@start_of_month+day).at_end_of_month && @start_of_month+day < Date.today
+          cost = @organization.appointments.where(:start.gteq => (@start_of_month+day).at_beginning_of_month, :start.lteq => @start_of_month+(1+day).day).where( :status => ['complete', 'lated'] ).sum(:cost)
+          @periods << {:title => "Итог за месяц:#{cost}", :allDay => true, :start => @start_of_month+day.day}
+        end
+        next if @start_of_month+day > Date.today
+        cost = @organization.appointments.where(:start.gteq => @start_of_month+day.day, :start.lteq => @start_of_month+(1+day).day).where( :status => ['complete', 'lated'] ).sum(:cost)
+        next if cost.zero?
+        @periods << {:title => "Итог:#{cost}", :allDay => true, :start => @start_of_month+day.day}
+      end
     end
     respond_with( @periods )
   end

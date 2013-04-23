@@ -1,4 +1,6 @@
 ru:
+  site:
+    domain: windo.me
   notice: Сообщение
   alert: Внимание
   legend:

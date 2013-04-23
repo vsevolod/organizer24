@@ -17,30 +17,26 @@
     %ul.row-fluid
       - if true || @organization.show_photogallery? || current_user && current_user.owner?( @organization )
         %li.span3
-          = link_to '#' do
-            %i.foundicon-photo.gen-enclosed
+          %i.foundicon-right-arrow.gen-enclosed
           .box
             / Edit your article content here
-            %h3 Фотогалерея
-            %p Список фотографий по категориям
+            %h3 Скорость
+            %p Сделаете это мгновенно, а не "перезвоните через 10 минут, я за рулём сейчас"
       %li.span3
-        %i.foundicon-edit
+        %i.foundicon-clock
         .box
           / Edit your article content here
-          %h3 SASS + CSS
-          %p
-            Easily customize your theme by modifying variables in SCSS files or directly changing CSS files.
+          %h3 24 часа
+          %p Сделаете это когда угодно и когда удобно
       %li.span3
-        %i.foundicon-tools
+        %i.foundicon-idea
         .box
           / Edit your article content here
-          %h3 Modular
-          %p
-            Each section is styled by its own SCSS file allowing you to find and make changes quickly.
+          %h3 Оповещение
+          %p Не забудете - за сутки придёт смс-напоминание
       %li.span3
-        %i.foundicon-add-doc
+        %i.foundicon-phone
         .box
           / Edit your article content here
-          %h3 Sub-Themes
-          %p
-            Embark includes four sub-themes out of the box. Just change the stylesheets or edit the SASS variables.
+          %h3 Без звонка
+          %p Общаться лучше вживую!
