@@ -7,7 +7,7 @@
   = render "#{f.object.current_step}_step", :f => f
 
   .form-actions
-    = f.submit f.object.last_step? ? "Завершить" : "Дальше"
+    = f.submit f.object.last_step? ? "Завершить" : "Дальше", :class => 'btn'
     - unless f.object.first_step?
       = f.submit "Назад", :name => 'back_button'
 = render "users/links"
