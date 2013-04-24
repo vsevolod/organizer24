@@ -4,7 +4,7 @@
     %meta{:charset => "utf-8"}/
     %title= t "site.name"
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    = stylesheet_link_tag "application", "themes/edge/font-awesome", "themes/edge/theme.css", "http://fonts.googleapis.com/css?family=Patua+One"
+    = stylesheet_link_tag "application", "themes/edge/font-awesome", "themes/edge/theme.css", "http://fonts.googleapis.com/css?family=Noto+Serif"
     /[if lt IE 9]
       <link rel="stylesheet" href="/assets/themes/edge/font-awesome-ie7.css">
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,8 +18,8 @@
           .span12
             %header.js-animated
               = image_tag "edge/logo.png"
-              %h1 Автоматические записи
-              %p.description - Новое решение ваших проблем -
+              %h1 Вы работаете - OneClickBook записывает
+              %p.description - сервис онлайн бронирования на процедуры -
     = yield
     %footer
       .container
@@ -48,5 +48,4 @@
         $('[rel="tooltip"]').tooltip();
       });
     = yield :bottom_js
-    :plain
-      <script type="text/javascript"> _shcp = []; _shcp.push({widget_id : 585929, widget : "Chat", side : "bottom", position : "left", template : "dark" }); (function() { var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true; hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://widget.siteheart.com/apps/js/sh.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hcc, s.nextSibling); })(); </script>
+    = render 'layouts/siteheart'

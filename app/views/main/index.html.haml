@@ -4,7 +4,7 @@
     .row
       .span12
         %h3
-          == Пускай вашим расписанием займётся #{t "site.domain"}
+          == Пусть вашим расписанием займётся #{t "site.domain"}
           = link_to new_user_registration_path, :class => 'btn' do
             Зарегистрировать организацию
             %i.icon.icon-caret-right
@@ -15,10 +15,10 @@
   .row
     .span3
       %h4
-        %i.icon.icon-bolt
-        Мгновенно
+        %i.icon.icon-play-circle
+        Самостоятельно
       %p
-        Запись ведётся прямо здесь и сейчас.
+        Клиенты записываются самостоятельно и без вашего участия.
         - if nil
           = succeed "," do
             %a{:href => "#", :rel => "tooltip", :title => "Right away!"} on the way
@@ -26,30 +26,27 @@
       %h4
         %i.icon.icon-time
         Круглосуточно
-      %p Клиенты записываются, когда им удобно. хоть в 3 часа ночи!
+      %p Клиент может записаться в любое время. Даже ночью или в выходной день.
     .span3
       %h4
         %i.icon.icon-heart
-        Не дорого
-      %p Система запишет клиента всего за 15 рублей, в то время как вы даже не притронетесь к телефону.
+        Заботливо
+      %p За сутки до процедуры клиент получит детализированное напоминание. Автоматически.
     .span3
       %h4
-        %i.icon.icon-umbrella
+        %i.icon.icon-globe
         Удобно
-      %p Ни вы, ни ваши клиенты не захотят больше бронировать услуги по телефону.
+      %p Доступ к вашему расписанию из любого места, где есть интернет
   %hr/
   / Info Row 1
   .row
     .span3
       %img.img-rounded{:alt => "", :src => "assets/product-4.png"}/
     .span9
-      %h3 Brand New Features
-      %p
-        Easy to learn. Flexible to use. Create truly modern product support with visually-engaging guides that are available to anyone on any device. Connect your community through project documentation. Allow everyone to help out while recognizing the most valuable contributors. Improve employee training with
-        %a{:href => "#", :rel => "tooltip", :title => "HTML5 & CSS3"} cutting-edge
-        work instructions that improve production quality while reducing human errors and cycle times.
-      %p Create truly modern product support with visually-engaging guides that are available to anyone on any device. Connect your community through project documentation. Allow everyone to help out while recognizing the most valuable contributors. Improve employee training with cutting-edge work instructions that improve production quality while reducing human errors and cycle times.
-      %a.btn{:href => "#"} Learn More
+      %h3 Новый подход к бронированию
+      %p Устали от постоянных телефонных звонков от клиентов? Не можете или не хотите брать трубку? Но ведь вы можете потерять этого клиента.
+      %p А взяв трубку надо ещё сверять его расписание со своим. Поручите эту работу OneClickBook и можете забыть об этой головной боли. Плюс ко всему у вас появится возможность автоматически оповещать клиентов о предстоящей процедуре.
+      -#%a.btn{:href => "#"} Learn More
   %hr/
   / Info Row 2
   .row
@@ -57,14 +54,12 @@
       %h3 Расписание
       = image_tag "edge/calendar.png"
     .span4
-      %h3 Fully Customizable
+      %h3 Легко настроить под себя
       %p
-        Wikis are useful. Unfortunately, most wikis are difficult to use and harder to organize. Unstructured documentation leads to organizational chaos and inconsistent formatting. Guidebook's elegant presentation makes your content look good from day one. Consistent layouts present instructions clearly—
-        %a{:href => "#", :rel => "tooltip", :title => "We mean it"}> on every page
-        \.
-      %a.btn{:href => "#"} Try The Demo
-    .span4
-      %img.img-rounded{:alt => "", :src => "assets/product-3.png"}/
+        Для того, чтобы начать работать вам нужно расписать каждую услугу по мастеру, продолжительности и цене.
+    -#
+      .span4
+        %img.img-rounded{:alt => "", :src => "assets/product-3.png"}/
   %hr/
   / Testimonials
   .row
