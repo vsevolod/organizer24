@@ -4,6 +4,10 @@ class Subdomain
     case name
     when /^organizer24\./
       false
+    when 'oneclickbook.ru'
+      false
+    when '1clickbook.ru'
+      false
     when '95.170.177.170'
       false
     else
