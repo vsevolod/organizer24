@@ -4,7 +4,7 @@
     .row
       .span12
         %h3
-          == Пусть вашим расписанием займётся #{t "site.domain"}
+          == Пусть вашим расписанием займётся #{t "site.name"}
           = link_to new_user_registration_path, :class => 'btn' do
             Зарегистрировать организацию
             %i.icon.icon-caret-right
@@ -15,7 +15,7 @@
   .row
     .span3
       %h4
-        %i.icon.icon-play-circle
+        %i.icon.icon-play-circle.orange
         Самостоятельно
       %p
         Клиенты записываются самостоятельно и без вашего участия.
@@ -24,17 +24,17 @@
             %a{:href => "#", :rel => "tooltip", :title => "Right away!"} on the way
     .span3
       %h4
-        %i.icon.icon-time
+        %i.icon.icon-time.orange
         Круглосуточно
       %p Клиент может записаться в любое время. Даже ночью или в выходной день.
     .span3
       %h4
-        %i.icon.icon-heart
+        %i.icon.icon-heart.orange
         Заботливо
       %p За сутки до процедуры клиент получит детализированное напоминание. Автоматически.
     .span3
       %h4
-        %i.icon.icon-globe
+        %i.icon.icon-globe.orange
         Удобно
       %p Доступ к вашему расписанию из любого места, где есть интернет
   %hr/
@@ -144,7 +144,7 @@
           Частный бизнес
           %br/
           от 0 руб/мес
-          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
@@ -160,8 +160,8 @@
           Салон
           %br/
           от 1000 руб/мес
-          %i.icon.icon-star.muted.pull-right
-          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right.orange
+          %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
@@ -176,9 +176,9 @@
           Компания
           %br/
           от 5000 руб/мес
-          %i.icon.icon-star.muted.pull-right
-          %i.icon.icon-star.muted.pull-right
-          %i.icon.icon-star.muted.pull-right
+          %i.icon.icon-star.muted.pull-right.orange
+          %i.icon.icon-star.muted.pull-right.orange
+          %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
@@ -197,22 +197,23 @@
           Наши специалисты помогут вам разобраться в вариантах и выбрать оптимальный либо настроить индивидуальный вариант.
   / /.row
   %hr/
-  / Contact Area
-  .row
-    / Advice Banner
-    .span6
-      %img.img-advice{:alt => "", :src => "assets/advice.png"}/
-    / Contact Form
-    .span6
-      %h4
-        %i.icon.icon-envelope-alt
-        Let's get in touch now!
-      %form.form
-        %input#userName.span3{:placeholder => "Name", :type => "text"}/
-        %input#userEmail.span3{:placeholder => "Email", :type => "text"}/
-        %textarea#message.span6{:placeholder => "Message", :rows => "7"}
-        %button.btn.btn-block{:type => "submit"} SUBMIT NOW!
-    / /.span6
-  / /.row
-  %hr/
+  -#
+    / Contact Area
+    .row
+      / Advice Banner
+      .span6
+        %img.img-advice{:alt => "", :src => "assets/advice.png"}/
+      / Contact Form
+      .span6
+        %h4
+          %i.icon.icon-envelope-alt
+          Let's get in touch now!
+        %form.form
+          %input#userName.span3{:placeholder => "Name", :type => "text"}/
+          %input#userEmail.span3{:placeholder => "Email", :type => "text"}/
+          %textarea#message.span6{:placeholder => "Message", :rows => "7"}
+          %button.btn.btn-block{:type => "submit"} SUBMIT NOW!
+      / /.span6
+    / /.row
+    %hr/
 / page /.container
