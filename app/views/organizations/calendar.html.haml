@@ -32,7 +32,8 @@
             = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
             = worker.name
     - else
-      = hidden_field_tag :worker_id, @worker.id
+      #workers
+        = hidden_field_tag :worker_id, @worker.id
     %h3 На что хотите записаться:
     .row-fluid
       .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)
