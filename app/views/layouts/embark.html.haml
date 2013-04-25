@@ -16,7 +16,10 @@
     %header
       %nav
         .container
-          %a.brand{:href => "/"}= @organization.name
+          - if @organization.name != 'demo'
+            %a.brand{:href => "/"}= @organization.name
+          - else
+            %a.brand{:href => "http://#{t 'site.domain'}"} Демонстрационный сайт. Нажмите чтобы уйти на #{t 'site.domain'}
       %section.container
         = yield :header
     = yield

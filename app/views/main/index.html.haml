@@ -41,67 +41,65 @@
   / Info Row 1
   .row
     .span3
-      %img.img-rounded{:alt => "", :src => "assets/product-4.png"}/
+      %img.img-rounded{:alt => "", :src => "assets/edge/image2.png"}/
     .span9
-      %h3 Новый подход к бронированию
-      %p Устали от постоянных телефонных звонков от клиентов? Не можете или не хотите брать трубку? Но ведь вы можете потерять этого клиента.
-      %p А взяв трубку надо ещё сверять его расписание со своим. Поручите эту работу OneClickBook и можете забыть об этой головной боли. Плюс ко всему у вас появится возможность автоматически оповещать клиентов о предстоящей процедуре.
+      %h3 Запись на процедуру в один клик
+      %p Сколько времени тратится на то, чтобы записать одного клиента? В среднем около трёх минут. Проблема в том, что таких записей в день - десятки. В итоге мы теряем время, концентрацию, в конечном счёте - деньги.
+      %p Система #{t 'site.name'} позволяет Вашим клиентам записываться онлайн, самим выбирать удобное “окно”, а также собщает итоговую стоимость и продолжительность процедуры - и всё это буквально в один клик.
+      %p #{t 'site.name'} не знает выходных - она работает 24х7, отчитываясь Вам о совершённых записях в реальном времени.
+      %p Вам необязательно иметь свой сайт, чтобы клиенты записывались к вам через интернет - Ваш онлайн-календарь доступен бесплатно.
       -#%a.btn{:href => "#"} Learn More
   %hr/
   / Info Row 2
   .row
     .span4
       %h3 Расписание
-      = image_tag "edge/calendar.png"
+      = link_to image_tag("edge/calendar.png"), 'http://demo.oneclickbook.ru/calendar'
     .span4
       %h3 Легко настроить под себя
       %p
-        Для того, чтобы начать работать вам нужно расписать каждую услугу по мастеру, продолжительности и цене.
-    -#
-      .span4
-        %img.img-rounded{:alt => "", :src => "assets/product-3.png"}/
+        Настройка системы “под себя” проста и вряд ли займёт более 30 минут. Всё, что Вам нужно сделать - описать все свои процедуры, введя продолжительность, стоимость и название каждой из них, а также Ваш режим работы. Ура, Вы только что развязали себе руки!
+    .span4
+      %img.img-rounded{:alt => "", :src => "http://cdn.sheknows.com/articles/2012/03/couple-planning-finances-horiz.jpg"}/
   %hr/
   / Testimonials
   .row
     / Testimony 1
     .span4
-      %h3 Excelent Service
+      %h3 Отличный сервис
       .bubble
         %p
           %i.icon-comments-alt
-          For every dollar my company invests to increase usability, I receives $10-$100 in benefits
-      %img.user-avatar{:alt => "", :src => "assets/user-1.png"}/
+          Из-за предварительных смсок клиенты перестали забывать о своих записях
+      %img.user-avatar{:alt => "", :src => "assets/edge/anna.jpg"}/
       %blockquote
-        %p Cooper Black
+        %p Анна Золотарева
         %small
-          Chief CEO in
-          %cite{:title => "Source Title"} Venture Corp.
+          Частный косметолог
     / Testimony 2
     .span4
-      %h3 Priority Support
+      %h3 Клиенты благодарят
       .bubble
         %p
           %i.icon-comments-alt
-          Testing one user early in the project is better than testing 50 near the end.
-      %img.user-avatar{:alt => "", :src => "assets/user-2.png"}/
+          В очередной раз упростили им жизнь. Ночью записывается около половины из них :)
+      %img.user-avatar{:alt => "", :src => "assets/edge/andrew.jpg"}/
       %blockquote
-        %p Calisto MT
+        %p Лёвкин Андрей
         %small
-          President in
-          %cite{:title => "Source Title"} Asturias Inc.
+          PR менеджер салона красоты
     / Testimony 3
     .span4
-      %h3 First Class Work
+      %h3 Без головной боли 
       .bubble
         %p
           %i.icon-comments-alt
-          The difference between zero and even a little bit of data is astounding.
-      %img.user-avatar{:alt => "", :src => "assets/user-3.png"}/
+          Раньше вели запись в тетради: как вспомню - так вздрогну
+      %img.user-avatar{:alt => "", :src => "assets/edge/misha.jpg"}/
       %blockquote
-        %p Cambria Serif
+        %p Михаил Кудряшов
         %small
-          Design Manager in
-          %cite{:title => "Source Title"} Moldova Systems
+          Управляющий парикмахерской
   %hr/
   - if nil
     / Clients List
@@ -133,68 +131,70 @@
           0 руб/мес
         %hr/
         %ul
-          %li Одна линия
+          %li Расписание для одного мастера
           %li Без абонентской платы
           %li Без СМС уведомлений
-        = link_to 'Попробовать', '#', :class => 'btn'
     / Pricing Box 2
     .span3
       .pricing
         %h4
-          Частный бизнес
+          Старт
           %br/
           от 0 руб/мес
           %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
-          %li Одна линия
+          %li Расписание для одного мастера
           %li Оплата по факту 
-          %li 1 клиент 15руб
-          %li СМС уведомления клиенту
-          %li СМС уведомления на телефон компании
+          %li Одна запись - 15 рублей
+          %li СМС-уведомления клиенту
+          %li СМС-уведомления на телефон компании
     / Pricing Box 3
     .span3
       .pricing
         %h4
-          Салон
+          Стандарт
           %br/
-          от 1000 руб/мес
+          от 3600 руб/мес
           %i.icon.icon-star.muted.pull-right.orange
           %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
-          %li до 4х линий
-          %li 1 клиент 15руб
-          %li СМС уведомления клиенту
-          %li СМС уведомления на телефон компании
+          %li До 4-х мастеров в расписании
+          %li Одна запись - 15 рублей
+          %li СМС-уведомления клиенту
+          %li СМС-уведомления на телефон компании
     / Pricing Box 4
     .span3
       .pricing
         %h4
-          Компания
+          Комплекс
           %br/
-          от 5000 руб/мес
+          от 7200 руб/мес
           %i.icon.icon-star.muted.pull-right.orange
           %i.icon.icon-star.muted.pull-right.orange
           %i.icon.icon-star.muted.pull-right.orange
         %hr/
         %ul
           %li 30 дней бесплатно
-          %li неограниченное число линий
-          %li 1 клиент 15руб
-          %li СМС уведомления клиенту
-          %li СМС уведомления на телефон компании
-          %li Расширенная система отчетов
-    / Info Box
-    .span3
-      .info-panel
-        %h4
-          %i.icon.icon-info-sign
-          Не нашли подходящего тарифа?
-        %p
-          Наши специалисты помогут вам разобраться в вариантах и выбрать оптимальный либо настроить индивидуальный вариант.
+          %li Неограниченное число мастеров в расписании
+          %li Одна запись - 12 рублей
+          %li СМС-уведомления клиенту
+          %li СМС-уведомления на телефон компании
+  .row
+    .span6
+      = link_to 'Попробовать', '#', :class => 'btn'
+    -#
+      / Info Box
+      .span3
+        .info-panel
+          %h4
+            %i.icon.icon-info-sign
+            Не нашли подходящего тарифа?
+          %p
+            Наши специалисты помогут вам разобраться в вариантах и выбрать оптимальный либо настроить индивидуальный вариант.
   / /.row
   %hr/
   -#

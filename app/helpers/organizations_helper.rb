@@ -2,7 +2,7 @@ module OrganizationsHelper
   require 'themed_text'
 
   def domain_organization_path( organization, add = '' )
-    (organization.domain.blank? ? url_for( organization ) : "http://#{organization.domain}") + add
+    (organization.domain.blank? ? url_for( organization ) : "http://#{organization.domain}.oneclickbook.ru") + add
   end
 
 end

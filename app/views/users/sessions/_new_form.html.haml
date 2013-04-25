@@ -1,6 +1,6 @@
 .bs-docs-example
   = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-    - if resource.phone.blank?
+    - if resource.phone.blank? && params[:remote] == 'true'
       = f.input :phone, :input_html => { :autocomplete => 'off' }
     - else
       = f.input :phone, :input_html => { :data => { :old_phone => resource.phone }, :autocomplete => 'off' }

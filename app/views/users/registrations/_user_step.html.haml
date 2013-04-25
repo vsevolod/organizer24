@@ -1,4 +1,8 @@
-%h3 Пользователь
+%h3
+  %i.icon.icon-user
+  Пользователь
+  %code
+    = link_to 'Уже зарегистрированы?', '/users/sign_in'
 = f.input :lastname
 = f.input :firstname
 = f.input :email
