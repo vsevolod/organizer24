@@ -95,7 +95,7 @@ class AppointmentsController < CompanyController
     @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
     @appointment.worker_id = get_worker.id
     @appointment.attributes = user_params
-    if @appointment.firstname.blank? && @appointment.name.blank?
+    if @appointment.firstname.blank? && @appointment.lastname.blank?
       @appointment.firstname = @user.firstname
       @appointment.lastname  = @user.lastname
     end
