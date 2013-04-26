@@ -31,6 +31,10 @@ class SmsJob < Struct.new(:options, :sms_type)
       @organization = @appointment.organization
       sms.recipient = @appointment.phone
       sms.text = themed_text( :user_notify, @organization.user_notify_text, @appointment )
+      case @organization.domain
+      when 'depilate'
+        sms.sender = 'depilate.ru'
+      end
     when 'confirmation_number'
       user = User.find(options[:user_id])
       sms.recipient = user.phone

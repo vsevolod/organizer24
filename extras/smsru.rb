@@ -5,7 +5,7 @@ class Smsru
 
   attr_accessor :sender, :recipient, :text
 
-  def initialize( text = '', recipient = nil, sender = nil )
+  def initialize( text = '', recipient = nil, sender = '1clickbook' )
     @options = YAML.load_file('config/smsru.yml')
     @text = text
     @recipient = recipient || @options['login']
@@ -15,8 +15,7 @@ class Smsru
   # with api_id
   def send
     uri = URI('http://sms.ru/sms/send')
-    # TODO добавить "from" и обработку ответа
-    res = Net::HTTP.post_form(uri, {:api_id => @options['api_id'], :to => @recipient, :text => @text}) unless @text.blank?
+    res = Net::HTTP.post_form(uri, {:api_id => @options['api_id'], :to => @recipient, :text => @text, :from => @sender}) unless @text.blank?
     puts "================================="
     puts "SENDER: #{@sender}"
     puts "RECIPIENT: #{@recipient}"
