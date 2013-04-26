@@ -13,19 +13,23 @@
     = csrf_meta_tags
     = yield :js
   %body{ :class => get_class }
-    %header
-      %nav
-        .container
-          - if @organization.name != 'demo'
-            %a.brand{:href => "/"}= @organization.name
-          - else
-            %a.brand{:href => "http://#{t 'site.domain'}"} Демонстрационный сайт. Нажмите чтобы уйти на #{t 'site.domain'}
-      %section.container
-        = yield :header
+    - unless @iframe
+      %header
+        %nav
+          .container
+            - if @organization.name != 'demo'
+              %a.brand{:href => "/"}= @organization.name
+            - else
+              %a.brand{:href => "http://#{t 'site.domain'}"} Демонстрационный сайт. Нажмите чтобы уйти на #{t 'site.domain'}
+        %section.container
+          = yield :header
     = yield
-    %footer
-      .container
-        = render 'layouts/top_menu_content'
-      %p== #{@organization.name} © #{Date.today.year}
+    - unless @iframe
+      %footer
+        .container
+          = render 'layouts/top_menu_content'
+        %p== #{@organization.name} © #{Date.today.year}
     = yield :bottom_js
-    = render 'layouts/siteheart'
+    - unless @iframe
+      = render 'layouts/siteheart'
+    = render 'layouts/counter'

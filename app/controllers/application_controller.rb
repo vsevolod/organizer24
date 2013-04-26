@@ -36,4 +36,10 @@ class ApplicationController < ActionController::Base
       result
     end
 
+    def check_iframe
+      if env["HTTP_REFERER"] && !(['oneclickbook.ru', '1clickbook.ru', '95.170.177.170', 'organizer24.com'].inject(false){|res, domain| (Regexp.new("//[^/]+#{domain}") =~ env["HTTP_REFERER"]) || res})
+        @iframe = true
+      end
+    end
+
 end

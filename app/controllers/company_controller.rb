@@ -1,6 +1,7 @@
 class CompanyController < ApplicationController
   include SetLayout
   before_filter :find_organization
+  before_filter :check_iframe
   around_filter :company_time_zone
   layout :company
 

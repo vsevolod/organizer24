@@ -2,8 +2,6 @@ class Subdomain
   def self.matches?(request)
     name = request.server_name.gsub(/^www\./,'').split('.').first
     case name
-    when 'organizer24'
-      false
     when 'oneclickbook'
       false
     when '1clickbook'
