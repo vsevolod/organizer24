@@ -29,6 +29,7 @@ class Organization < ActiveRecord::Base
   validates :domain, :presence => true, :uniqueness => true
 
   attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
+  before_validation :check_domain
 
   def calendar_settings
     minTime  = self.working_hours.pluck(:begin_time).min
@@ -65,6 +66,17 @@ class Organization < ActiveRecord::Base
 
     def to_Date( seconds )
       {:hours => seconds/60/60, :minutes => seconds/60%60}
+    end
+
+    def check_domain
+      if self.domain
+        if self.domain =~ /[а-яА-Я]/
+          self.domain = Russian::translit(self.domain)
+        end
+        if self.domain =~ /^[^\.]+clickbook/
+          self.domain = nil
+        end
+      end
     end
 
 end
