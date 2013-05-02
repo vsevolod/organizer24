@@ -6,6 +6,10 @@ autocomplete_users = ->
   el         = null
   $('#phone_results').html('')
   $.each( phonebook, (index, el) ->
+    unless el.firstname
+      el.firstname = ''
+    unless el.lastname
+      el.lastname = ''
     if (el.phone.toLowerCase().indexOf(phone) == 0 && el.firstname.toLowerCase().indexOf(firstname) == 0 && el.lastname.toLowerCase().indexOf(lastname) == 0)
       results.push(el)
   )

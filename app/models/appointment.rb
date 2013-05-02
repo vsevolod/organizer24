@@ -91,11 +91,11 @@ class Appointment < ActiveRecord::Base
       text += "Новая запись: #{self.fullname} (#{self.phone}). Время: #{Russian.strftime( self.start, "%d %B в %H:%M" )}\nУслуги: #{self.services.order(:name).pluck(:name).join(', ')}."
     else
       if start_changed?
-        text += "Время начала записи ##{self.id} изменилось. Было: #{Russian.strftime self.start_was, '%d %B %Y %R'} Стало: #{Russian.strftime self.start, '%d %B %Y %R'}"
+        text += "Время начала записи #{self.fullname} (#{self.phone}) изменилось. Было: #{Russian.strftime self.start_was, '%d %B %Y %R'} Стало: #{Russian.strftime self.start, '%d %B %Y %R'}"
       end
       if status_changed?
         translate = Proc.new{ |_state| I18n.t "activerecord.attributes.appointment.status.#{_state}" }
-        text += "Статус записи ##{self.id} изменился. Был \"#{translate.call self.status_was}\", стал \"#{translate.call self.status}\""
+        text += "Статус записи #{self.fullname} (#{self.phone}) изменился. Был \"#{translate.call self.status_was}\", стал \"#{translate.call self.status}\""
       end
       if cost_changed? || showing_time_changed?
         text += "Список услуг записи ##{self.id} изменился: #{services.order(:name).pluck(:name).join(', ')}"
