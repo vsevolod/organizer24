@@ -43,14 +43,15 @@ class WorkingHoursController < CompanyController
     max_wt = @organization.working_hours.pluck(:end_time).max
     @worker = get_worker
     @periods = []
-    [1,2,3,4,5,6,0].each_with_index do |t, index|
-      full_day = {:start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false}
-      wh = @organization.working_hours.where(:week_day => t ).first
-      @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (@start + index.days).to_date
-        if wh && (@worker.working_days.count.zero? || @worker.working_days.where(:date => @start + index.days).count > 0)
+    ((@start.to_date)..(@end.to_date)).each_with_index do |t, index|
+      current_day = @start + index.days
+      full_day = {:start => (current_day+min_wt).to_i, :end => (current_day+max_wt).to_i, :editable => false}
+      wh = @organization.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).first
+      @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
+        if wh && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day).count > 0)
           res = []
-          res << { :title => 'Закрыто', :start => (@start+index.days+min_wt).to_i, :end => (@start+index.days+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
-          res << { :title => 'Закрыто', :start => (@start+index.days+wh.end_time).to_i, :end => (@start+index.days+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
+          res << { :title => 'Закрыто', :start => (current_day+min_wt).to_i, :end => (current_day+wh.begin_time).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if min_wt != wh.begin_time
+          res << { :title => 'Закрыто', :start => (current_day+wh.end_time).to_i, :end => (current_day+max_wt).to_i, :editable => false, 'data-inner-class' => 'legend-inaccessible' } if wh.end_time != max_wt
           res
         else
           { :title => 'Выходной', 'data-inner-class' => 'legend-inaccessible' }.merge( full_day )

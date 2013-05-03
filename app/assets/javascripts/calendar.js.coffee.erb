@@ -150,7 +150,7 @@ $('#calendar').fullCalendar({
   header: {
     left: 'prev,next today',
     center: 'title',
-    right: ''
+    right: 'agendaDay,agendaWeek'
   },
 
   firstDay: 1,
@@ -171,12 +171,17 @@ $('#calendar').fullCalendar({
   },
   columnFormat: {
     week: "dd.MM.yyyy '<br/>' dddd",
+    day:  "dddd",
   },
   titleFormat: {
+    day: "dd.MM.yyyy -- MMMM --"
     week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
   },
   buttonText: {
     today: 'Сегодня'
+    week: 'Неделя'
+    day: 'День'
+    month: 'Месяц'
   },
   eventSources: Organizer.event_sources,
   dayClick: (date, allDay, jsEvent, view) ->
