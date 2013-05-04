@@ -5,7 +5,7 @@
       %h2= line
     - else
       %h1= line
-  - if current_user || @organization.registration_before
+  - if current_user || @organization.registration_before != '1'
     %form
       = link_to 'Записаться', '/calendar', :class => 'btn btn-gold'
   - else

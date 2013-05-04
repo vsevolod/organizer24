@@ -33,7 +33,7 @@
         Выход
   - else
     // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
-    %li= link_to 'Вход', '/users/sign_in?remote=true', :data => { :colorbox => true }
+    %li= link_to 'Вход', '/users/sign_in'
     %li= link_to 'Регистрация', '/users/sign_up?remote=true', :data => { :colorbox => true }
   - if !@organization.registration_before? || current_user
     %li
