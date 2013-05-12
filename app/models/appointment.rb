@@ -98,7 +98,7 @@ class Appointment < ActiveRecord::Base
         text += "Статус записи #{self.fullname} (#{self.phone}) изменился. Был \"#{translate.call self.status_was}\", стал \"#{translate.call self.status}\""
       end
       if cost_changed? || showing_time_changed?
-        text += "Список услуг записи ##{self.id} изменился: #{services.order(:name).pluck(:name).join(', ')}"
+        text += "Список услуг записи #{self.fullname} (#{self.phone}) изменился: #{services.order(:name).pluck(:name).join(', ')}"
       end
     end
     if !text.blank? || self.phone != self.organization.owner.phone # Не уведомляем если на наш телефон
