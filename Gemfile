@@ -15,8 +15,6 @@ gem 'russian'
 gem "ckeditor", "3.7.1"
 gem "paperclip"
 
-gem 'errorapp_notifier'
-
 #gem 'formtastic'#, '~> 2.1.1'
 gem 'devise'
 gem 'omniauth'

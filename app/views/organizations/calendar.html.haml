@@ -25,7 +25,7 @@
   = hidden_field_tag :start
   %section#second
     %div{:class => @enabled_workers.count > 1 ? '' : 'hidden' }
-      %h3 Выберите сотрудника
+      %h3 Выберите мастера
       .row#workers
         - @enabled_workers.each do |worker|
           %label.radio.span3

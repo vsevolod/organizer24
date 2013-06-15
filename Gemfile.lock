@@ -121,7 +121,6 @@ GEM
       haml
       hpricot
       ruby_parser
-    errorapp_notifier (7.0.1)
     erubis (2.7.0)
     event-calendar (2.3.3)
     execjs (1.4.0)
@@ -371,7 +370,6 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   erb2haml
-  errorapp_notifier
   event-calendar
   factory_girl_rails
   faker
