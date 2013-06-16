@@ -5,6 +5,6 @@ class ServicesUser < ActiveRecord::Base
   # attr_accessible :title, :body
   
   validates :organization, :presence => true
-  validates :service_id, :uniqueness => { :with => [:organization_id, :phone] }
+  validates :service_id, :uniqueness => { :scope => [:organization_id, :phone] }
 
 end
