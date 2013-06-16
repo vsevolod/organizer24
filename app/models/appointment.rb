@@ -65,7 +65,7 @@ class Appointment < ActiveRecord::Base
         end
       end
       self.cost = cost
-      unless self.status.complete?
+      unless self.complete?
         self.showing_time = time
       end
     end
