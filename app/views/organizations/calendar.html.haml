@@ -28,7 +28,7 @@
       %h3 Выберите мастера
       .row-fluid#workers
         .span8
-          - @enabled_workers.order(:updated_at).each do |worker|
+          - @enabled_workers.each do |worker|
             %label.radio.span3
               = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
               = worker.name
