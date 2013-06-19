@@ -5,6 +5,7 @@
   = simple_form_for @worker do |f|
     = f.input :is_enabled
     = f.input :name
+    = f.input :phone
     -# Привязка сотрудника к пользователю по телефону
       .control-group
         %label.control-label{ :for => "phone"} Телефон сотрудника

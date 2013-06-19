@@ -62,6 +62,10 @@ class Organization < ActiveRecord::Base
     self.show_photogallery.to_i == 1
   end
 
+  def owner_phones
+    self.workers.pluck(:phone).push(self.owner.phone)
+  end
+
   private
 
     def to_Date( seconds )

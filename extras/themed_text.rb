@@ -23,6 +23,7 @@ def user_notify(text, appointment)
     '<ДАТА НАЧАЛА>' => Russian.strftime( appointment.start, "%d %B в %H:%M" ),
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),
     '<СТОИМОСТЬ>' => appointment.cost,
+    '<МАСТЕР>' => appointment.worker.name,
     '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time
   }.each_pair do |substring, value|
     text.gsub!(substring, value.to_s)

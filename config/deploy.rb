@@ -1,5 +1,5 @@
 #require "bundler/capistrano"
-#require "rvm/capistrano"
+require "rvm/capistrano"
 bundle_path = '/home/vsevolod/.rvm/gems/ruby-1.9.3-p327/bin/'
 
 set :default_environment, {

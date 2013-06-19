@@ -28,7 +28,8 @@
       '<ДАТА НАЧАЛА>': '#{Russian.strftime( appointment.start, "%d %B в %H:%M" )}',
       '<СПИСОК УСЛУГ>': '#{appointment.services.order(:name).pluck(:name).join(', ')}',
       '<СТОИМОСТЬ>': appointment.cost,
-      '<ПРОДОЛЖИТЕЛЬНОСТЬ>': '#{appointment.showing_time.show_time}'
+      '<ПРОДОЛЖИТЕЛЬНОСТЬ>': '#{appointment.showing_time.show_time}',
+      '<МАСТЕР>': '#{appointment.worker.name}'
     };
     $('#template_help').html('<br/>');
     $.each( template, function(key,value){

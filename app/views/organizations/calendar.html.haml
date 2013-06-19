@@ -26,11 +26,12 @@
   %section#second
     %div{:class => @enabled_workers.count > 1 ? '' : 'hidden' }
       %h3 Выберите мастера
-      .row#workers
-        - @enabled_workers.each do |worker|
-          %label.radio.span3
-            = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
-            = worker.name
+      .row-fluid#workers
+        .span8
+          - @enabled_workers.each do |worker|
+            %label.radio.span3
+              = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+              = worker.name
     %h3 На что хотите записаться:
     .row-fluid
       .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)

@@ -45,6 +45,8 @@ end
 group :production do
   gem 'unicorn'
   gem 'therubyracer'
+  gem 'capistrano'
+  gem 'rvm-capistrano'
 end
 
 group :test do

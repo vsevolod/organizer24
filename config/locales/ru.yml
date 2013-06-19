@@ -162,6 +162,7 @@ ru:
         organization: Организация
         name: ФИО (название)
         is_enabled: Доступен для заказа
+        phone: Телефон
       working_day:
         date: Дата
         begin_time: Время начала

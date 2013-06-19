@@ -103,15 +103,14 @@ class Appointment < ActiveRecord::Base
         text += "Список услуг записи #{self.fullname} (#{self.phone}) изменился: #{services.order(:name).pluck(:name).join(', ')}"
       end
     end
-    if !text.blank? || self.phone != self.organization.owner.phone # Не уведомляем если на наш телефон
-      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
+    if !text.blank? && !self.organization.owner_phones.include?(self.phone) # Не уведомляем если на телефон мастера
+      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => self.worker.phone || organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
     end
   end
 
   def change_start_notification
     destroy_user_notifications
-    puts "#{self.phone} ======= #{self.organization.owner.phone}"
-    if self.starting_state? && self.phone != self.organization.owner.phone # Уведомляем только если запись активна и не на наш телефон
+    if self.starting_state? && !self.organization.owner_phones.include?(self.phone) # Уведомляем только если запись активна и не на наш телефон
       Delayed::Job.enqueue SmsJob.new( {:appointment_id => self.id }, 'notification' ), :run_at => (self.start - 1.day)
     end
   end
