@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   ROLES = %w{admin client}
 
   has_one :my_organization, :class_name => "Organization", :foreign_key => :owner_id, :dependent => :destroy, :validate => false
+  has_one :worker
   has_many :organizations
   has_many :appointments
   has_many :appointments_by_phone, :class_name => "Appointment", :foreign_key => :phone, :primary_key => :phone

@@ -35,14 +35,12 @@ describe Appointment do
 
   context 'validates' do
 
-    it 'should have-not save with same time and organization' do
-      appointment1 = FactoryGirl.create( :valid_appointment, :status => 'offer' )
-      appointment2 = FactoryGirl.build(  :valid_appointment, :status => 'offer' )
-      appointment2.valid?
+    it 'should have-not save with same time and organization and worker' do
+      appointment1 = FactoryGirl.create( :valid_appointment, status: 'offer', organization: organization )
+      appointment2 = FactoryGirl.build(  :valid_appointment, status: 'offer', organization: organization )
 
       appointment2.should_not be_valid
       (appointment2.errors.values * ' ').should match( 'время уже занято' )
-
     end
 
   end

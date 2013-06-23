@@ -7,17 +7,22 @@ FactoryGirl.define do
     user
 
     after(:build) do |appointment|
-      appointment.phone = appointment.user.phone
+      if appointment.user
+        appointment.phone = appointment.user.phone
+      end
     end
 
     factory :with_organization do
       after(:build) do |appointment|
-        appointment.organization = FactoryGirl.create( :organization_with_services )
+        unless appointment.organization
+          appointment.organization = FactoryGirl.create( :organization_with_services )
+        end
+        appointment.worker = appointment.organization.workers.first
       end
 
       factory :valid_appointment do
         sequence :phone do |n|
-          Faker::PhoneNumber.phone_number
+          (Random.new.rand*100000000).ceil.to_s
         end
         sequence :firstname do |n|
           Faker::Name.first_name
@@ -31,7 +36,7 @@ FactoryGirl.define do
 
     factory :multi_services_appointment do
       sequence :phone do |n|
-        Faker::PhoneNumber.phone_number
+        (Random.new.rand*100000000).ceil.to_s
       end
       sequence :firstname do |n|
         Faker::Name.first_name
@@ -47,7 +52,7 @@ FactoryGirl.define do
 
   factory :page do
     name Faker::Lorem.words(2)
-    permalink Faker::Lorem.words(1)
+    permalink Faker::Lorem.words(1).first
     content Faker::Lorem.paragraphs
   end
 
@@ -60,9 +65,8 @@ FactoryGirl.define do
       Faker::Internet.email
     end
     sequence :phone do |n|
-      Faker::PhoneNumber.phone_number
+      (Random.new.rand*100000000).ceil.to_s
     end
-    #phone "+79#{Random.new.rand(10)}#{Random.new.rand(10)}#{Random.new.rand(10)}999999"
     password '1111111'
     password_confirmation '1111111'
     role 'client'
@@ -70,12 +74,37 @@ FactoryGirl.define do
     lastname Faker::Name.last_name
   end
 
+  #factory :organizations_owner do
+  #  association(:user, :factory => :owner)
+  #  association(:my_organization, :factory => :organization)
+  #end
+
+  factory :worker do
+    organization
+    sequence :phone do |n|
+      (Random.new.rand*100000000).ceil.to_s
+    end
+    sequence :name do
+      Faker::Name.first_name
+    end
+    factory :enabled_worker do
+      is_enabled true
+    end
+  end
+
+  factory :category_photo do
+    sequence :name do
+      Faker::Company.name
+    end
+    organization
+  end
+
   factory :organization do
     sequence :name do
       Faker::Company.name
     end
     sequence :domain do
-      Faker::Lorem.words(1)
+      Faker::Lorem.words(1).first
     end
 
     # settings
@@ -85,8 +114,13 @@ FactoryGirl.define do
     last_day 0
 
     # references
-    owner
     activity
+    owner
+    after(:create) do |organization|
+      #FactoryGirl.create(:organizations_owner, my_organization: organization)
+      FactoryGirl.create(:worker, organization: organization)
+      FactoryGirl.create(:category_photo, organization: organization)
+    end
 
     factory :organization_with_services do
       ignore do
