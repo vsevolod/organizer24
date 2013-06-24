@@ -40,6 +40,7 @@ group :development do
   gem 'pry'
   #TODO add gem 'debugger' when correct use cap
   gem 'guard-rspec'
+  gem 'database_cleaner'
 end
 
 group :production do

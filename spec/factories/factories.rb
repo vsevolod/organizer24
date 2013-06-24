@@ -61,6 +61,8 @@ FactoryGirl.define do
   end
 
   factory :user, :aliases => [:owner] do
+    User.skip_callback(:create, :after, :send_confirmation_instructions)
+
     sequence :email do |n|
       Faker::Internet.email
     end
@@ -72,6 +74,10 @@ FactoryGirl.define do
     role 'client'
     firstname Faker::Name.first_name
     lastname Faker::Name.last_name
+
+    after(:create) do |user|
+      user.confirm!
+    end
   end
 
   #factory :organizations_owner do
@@ -115,9 +121,10 @@ FactoryGirl.define do
 
     # references
     activity
-    owner
+    after(:build) do |organization|
+      organization.owner = FactoryGirl.create(:owner)
+    end
     after(:create) do |organization|
-      #FactoryGirl.create(:organizations_owner, my_organization: organization)
       FactoryGirl.create(:worker, organization: organization)
       FactoryGirl.create(:category_photo, organization: organization)
     end

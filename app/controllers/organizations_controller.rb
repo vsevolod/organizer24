@@ -14,15 +14,15 @@ class OrganizationsController < CompanyController
 
   def calendar
     add_breadcrumb 'Календарь', '/calendar'
-    if !current_user
+    if signed_in?
+      if current_user.owner?( @organization )
+        @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
+      end
+    else
       if @organization.registration_before?
         redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
       else
         @current_user ||= User.new
-      end
-    else
-      if current_user.owner?( @organization )
-        @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
       end
     end
     if params[:day]
