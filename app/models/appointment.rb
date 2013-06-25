@@ -35,6 +35,10 @@ class Appointment < ActiveRecord::Base
     event :first_owner_view do
       transitions :to => :offer, :from => :free
     end
+
+    event :complete_appointment do
+      transitions :to => :complete
+    end
   end
 
   FINISH_STATES = %w{complete missing lated cancel_owner cancel_client}

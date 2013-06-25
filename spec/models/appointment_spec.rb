@@ -3,8 +3,8 @@ require "spec_helper"
 
 describe Appointment do
 
-  appointment = FactoryGirl.build( :valid_appointment )
-  organization = appointment.organization
+  let(:appointment) { FactoryGirl.build( :valid_appointment ) }
+  let(:organization){ appointment.organization }
 
   it 'should not be valid appointment' do
     appointment.should be_valid
@@ -18,11 +18,13 @@ describe Appointment do
       appointment.showing_time.should equal( appointment.services.map(&:showing_time).sum )
     end
 
-    it 'should not change cost after update time of service' do
-      appointment.cost = -1
+    it 'should not change time after update time of service for complete' do
+      appointment.complete_appointment
+      appointment.services = organization.services.limit(1)
       appointment.start += 1.hour
-      appointment.cost_time_by_services!
-      appointment.cost.should equal( -1 )
+      expect {
+        appointment.cost_time_by_services!
+      }.not_to change(appointment, :showing_time)
     end
 
     it 'should find multi services' do
@@ -47,24 +49,24 @@ describe Appointment do
 
   context 'editable by user' do
 
-    before(:all) do
-      appointment.first_owner_view
-    end
-
     it 'should be editable by owner of organization' do
+      appointment.first_owner_view
       appointment.editable_by?(organization.owner).should be_true
     end
 
     it 'should be editable by appointment user' do
+      appointment.first_owner_view
       appointment.editable_by?(appointment.user).should be_true
     end
 
     it 'should not be editable by user with same phone' do
+      appointment.first_owner_view
       user_with_phone = User.new( :phone => appointment.phone )
       appointment.editable_by?(user_with_phone).should be_false
     end
 
     it 'should be editable by user with same phone if owner create appointment' do
+      appointment.first_owner_view
       appointment.user = organization.owner
       user_with_phone = User.new( :phone => appointment.phone )
       appointment.editable_by?(user_with_phone).should be_true
@@ -73,11 +75,11 @@ describe Appointment do
   end
 
   context 'notify users' do
-    before :all do
-      appointment.can_not_notify_owner = false
-    end
 
     it 'should send 2 notify when appointment saved' do
+      appointment.user = FactoryGirl.create(:user)
+      appointment.first_owner_view
+      appointment.phone = appointment.user.phone
       lambda{ appointment.save }.should change(Delayed::Job, :count).by(2)
     end
 

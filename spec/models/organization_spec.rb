@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Organization do
-  organization = FactoryGirl.create( :organization_with_services )
+  let(:organization){ FactoryGirl.create( :organization_with_services ) }
 
   context 'services' do
     it 'should show services' do
