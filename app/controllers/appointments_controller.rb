@@ -1,22 +1,24 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
-  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time]
+  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time, :edit]
 
   respond_to :html, :json
 
   def show
     @appointment = Appointment.find( params[:id] )
-    @can_edit = current_user && ( @appointment.user == current_user || current_user.owner?( @organization ) )
+    @can_edit = current_user && ( @appointment.user_by_phone == current_user || current_user.owner?( @organization ) )
     if @appointment.free?
-      if current_user
-        if (@appointment.user_by_phone == current_user && @appointment.free?) || (@appointment.phone.blank? && session[:appointment_new] == params[:id].to_i)
-          # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
-          @appointment.user = current_user
-          @appointment.first_owner_view
-          @appointment.save
-        end
+      # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
+      if current_user && @appointment.user_by_phone == current_user
+        @appointment.user = current_user
+        @appointment.first_owner_view
+        @appointment.save
+      else
+        redirect_to root_path
       end
+    elsif !@can_edit
+      redirect_to root_path
     end
   end
 
@@ -183,10 +185,11 @@ class AppointmentsController < CompanyController
 
     def can_editable?
       @appointment = Appointment.find(params[:id])
-      check_notifier
-      unless @appointment.editable_by? current_user
+      if current_user && @appointment.editable_by?(current_user)
+        check_notifier
+      else
         respond_to do |format|
-          fornat.html { render :text => "У вас не хватает прав" }
+          format.html { render :text => "У вас не хватает прав" }
           format.js   { render :text => "alert('Не хватает прав')"}
         end
       end
