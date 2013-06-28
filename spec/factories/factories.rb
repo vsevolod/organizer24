@@ -155,7 +155,7 @@ FactoryGirl.define do
     sequence :showing_time do |n|
       Random.new.rand(1..5) * 30
     end
-    sequence :cost do |n| 
+    sequence :cost do |n|
       Random.new.rand(100..1000)
     end
     is_collection false

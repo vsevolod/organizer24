@@ -35,6 +35,7 @@ class AppointmentsController < CompanyController
     @worker = get_worker
     @is_owner = @user.owner?( @organization )
     @appointments = if @is_owner
+                      # TODO Сделать, чтобы статусы обновлялись не перегружая страницу. Как это вообще не сделано было?!
                       @worker.appointments.where( :status.in => params[:statuses] )
                     else
                       # Обычный пользователь просматривает только все что >= сегодняшнего дня
@@ -87,7 +88,9 @@ class AppointmentsController < CompanyController
   end
 
   # GET список телефонных номеров и их владельцев
+  # FIXME переместить наверно в контроллер organizations
   def phonebook
+    redirect_to root_path unless current_user.owner?(@organization)
     @phonebook = @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
   end
 
