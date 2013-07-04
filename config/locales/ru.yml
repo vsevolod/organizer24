@@ -38,10 +38,6 @@ ru:
         one: Словарь
         few: Словари
         other: Словари
-      executor: 
-        one: Исполнитель
-        few: Исполнители
-        other: Исполнители
       organization: 
         one: Организация
         few: Организации
@@ -113,10 +109,6 @@ ru:
         tag: Тэг
         ancestry: Предок
         names_depth_cache: Путь
-      executor:
-        name: ФИО
-        phone: Телефон
-        organization: Организация
       organization:
         activity: Деятельность
         registration_before: Доступ к записи только после регистрации/входа

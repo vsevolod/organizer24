@@ -8,7 +8,6 @@ describe AppointmentsController do
   before(:each) do
     @request.host = "#{organization.domain}.com"
   end
-  pending "Pending while writing other specs" do
 
   describe "GET show" do
     before(:each) do
@@ -66,8 +65,8 @@ describe AppointmentsController do
       it { response.body.should =~ /html/ }
     end
   end
-  end
 
+  pending "Pending before work commit" do
   describe "GET by_week" do
     before(:each) do
       sign_in user if defined?(user)
@@ -91,6 +90,7 @@ describe AppointmentsController do
       let(:user){ organization.owner }
       it { response.body.should =~ /html/ }
     end
+  end
   end
 
 end
