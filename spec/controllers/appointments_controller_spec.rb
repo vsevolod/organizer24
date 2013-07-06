@@ -7,11 +7,11 @@ describe AppointmentsController do
 
   before(:each) do
     @request.host = "#{organization.domain}.com"
+    sign_in user if defined?(user)
   end
 
   describe "GET show" do
     before(:each) do
-      sign_in user if defined?(user)
       get :show, :id => appointment.id
     end
 
@@ -42,7 +42,6 @@ describe AppointmentsController do
 
   describe "GET edit" do
     before(:each) do
-      sign_in user if defined?(user)
       get :edit, :format => 'js', :id => appointment.id
     end
 
@@ -69,7 +68,6 @@ describe AppointmentsController do
   pending "Pending before work commit" do
   describe "GET by_week" do
     before(:each) do
-      sign_in user if defined?(user)
       FactoryGirl.create(:valid_appointment, :organization_id => organization.id, :start => Time.now + 24.hour)
       FactoryGirl.create(:valid_appointment, :organization_id => organization.id, :start => Time.now - 24.hour)
       _start = organization.appointments.order(:start).first - 1.minute

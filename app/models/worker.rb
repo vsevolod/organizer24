@@ -12,7 +12,10 @@ class Worker < ActiveRecord::Base
   validates :name, :presence => true
   validates :phone, :presence => true
 
-  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone
+  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo
+
+  has_attached_file :photo, :styles => { :normal => "150x300>", :thumb => "100x100>"},
+                            :convert_options => { :thumb => "-quality 75 -strip" }
 
   scope :enabled, where(:is_enabled => true)
 

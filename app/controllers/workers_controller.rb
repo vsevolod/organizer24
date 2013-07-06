@@ -1,7 +1,7 @@
 # coding: utf-8
 class WorkersController < CompanyController
 
-  before_filter :redirect_if_not_owner, :except => [:index]
+  before_filter :redirect_if_not_owner
 
   def index
     @workers = @organization.workers
@@ -26,8 +26,7 @@ class WorkersController < CompanyController
 
   def update
     @worker = @organization.workers.find( params[:id] )
-    @worker.attributes = params[:worker]
-    if @worker.save
+    if @worker.update_attributes(params[:worker])
       redirect_to Worker
     else
       render 'edit'
@@ -39,14 +38,5 @@ class WorkersController < CompanyController
     @worker.destroy
     redirect_to Worker
   end
-
-
-  private 
-
-    def redirect_if_not_owner
-      if !current_user.owner?( @organization )
-        redirect_to Worker
-      end
-    end
 
 end

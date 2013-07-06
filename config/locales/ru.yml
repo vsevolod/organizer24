@@ -155,6 +155,7 @@ ru:
         name: ФИО (название)
         is_enabled: Доступен для заказа
         phone: Телефон
+        photo: Фотография
       working_day:
         date: Дата
         begin_time: Время начала

@@ -96,6 +96,12 @@ FactoryGirl.define do
     factory :enabled_worker do
       is_enabled true
     end
+
+    factory :worker_with_services do
+      after(:build) do |worker, evaluator|
+        worker.services = appointment.organization.services.where( :is_collection => false )
+      end
+    end
   end
 
   factory :category_photo do

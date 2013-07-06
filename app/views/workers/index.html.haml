@@ -7,11 +7,13 @@
   %thead
     %tr
       %th Имя
+      %th Фото
       %th Список услуг
   %tbody
     - @workers.order(:name).each do |worker|
       %tr
         %td= worker.name
+        %td= image_tag worker.photo.url(:thumb)
         %td= worker.services.map(&:name).join(', ')
         %td
           = link_to [:edit, worker] do
