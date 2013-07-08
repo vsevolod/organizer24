@@ -6,6 +6,7 @@
     = f.input :is_enabled
     = f.input :name
     = f.input :phone
+    = f.input :photo, :as => :file
     -# Привязка сотрудника к пользователю по телефону
       .control-group
         %label.control-label{ :for => "phone"} Телефон сотрудника

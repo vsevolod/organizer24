@@ -42,4 +42,8 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def need_to_login
+      redirect_to '/' unless current_user
+    end
+
 end

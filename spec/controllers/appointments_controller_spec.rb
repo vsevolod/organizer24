@@ -7,12 +7,11 @@ describe AppointmentsController do
 
   before(:each) do
     @request.host = "#{organization.domain}.com"
+    sign_in user if defined?(user)
   end
-  pending "Pending while writing other specs" do
 
   describe "GET show" do
     before(:each) do
-      sign_in user if defined?(user)
       get :show, :id => appointment.id
     end
 
@@ -43,7 +42,6 @@ describe AppointmentsController do
 
   describe "GET edit" do
     before(:each) do
-      sign_in user if defined?(user)
       get :edit, :format => 'js', :id => appointment.id
     end
 
@@ -69,7 +67,6 @@ describe AppointmentsController do
 
   describe "GET by_week" do
     before(:each) do
-      sign_in user if defined?(user)
      #app1 = appointment
       app2 = FactoryGirl.create(:valid_appointment, :organization_id => organization.id, :start => Time.now - 24.hour)
       app3 = FactoryGirl.create(:valid_appointment, :organization_id => organization.id, :start => Time.now + 24.hour)
@@ -111,7 +108,6 @@ describe AppointmentsController do
       let(:user){ organization.owner }
       it { @parsed_body.should have(5).items }
     end
-  end
   end
 
   describe "GET phonebook" do

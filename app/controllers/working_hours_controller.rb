@@ -1,6 +1,7 @@
 # coding: utf-8
 class WorkingHoursController < CompanyController
   before_filter :prepare_calendar_options
+  before_filter :need_to_login, :only => :self_by_month
 
   respond_to :html, :json
 

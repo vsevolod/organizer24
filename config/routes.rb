@@ -38,7 +38,6 @@ Organizer::Application.routes.draw do
         end
       end
     end
-    resources :executors
     resources :pages, :except => [:show]
     resources :services
     resources :working_hours do

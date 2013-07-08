@@ -96,6 +96,12 @@ FactoryGirl.define do
     factory :enabled_worker do
       is_enabled true
     end
+
+    factory :worker_with_services do
+      after(:build) do |worker, evaluator|
+        worker.services = appointment.organization.services.where( :is_collection => false )
+      end
+    end
   end
 
   factory :category_photo do
@@ -179,9 +185,21 @@ FactoryGirl.define do
   end
 
   factory :working_hour do
-    week_day     Random.new.rand(1..6)
-    begin_time   360 * Random.new.rand(8..12)
-    end_time     360 * Random.new.rand(20..255)
+    sequence :week_day do
+      Random.new.rand(1..6)
+    end
+    sequence :begin_hour do
+      Random.new.rand(8..12).to_i
+    end
+    sequence :begin_minute do
+      Random.new.rand(60).to_i
+    end
+    sequence :end_hour do
+      Random.new.rand(17..24).to_i
+    end
+    sequence :end_minute do
+      Random.new.rand(60).to_i
+    end
   end
 
 end
