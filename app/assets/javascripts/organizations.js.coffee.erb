@@ -66,12 +66,7 @@ $ ->
     false
   )
 
-  $('.modal#modal-workers li').click ->
-    div = $(this).parent()
-    div.find('img').removeClass('label-info')
+  $('#modal-workers a').click ->
     $("#workers input#worker_id_#{$(this).data('worker-id')}").click()
-    $(this).find('img').addClass('label-info')
-
-  $('.modal#modal-workers a').click ->
-    $('#calendar_show').removeClass('hidden')
-    $('.modal#modal-workers').hide()
+    $('#calendar_show').removeClass('hidden-left')
+    $.colorbox.close()

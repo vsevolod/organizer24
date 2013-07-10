@@ -7,6 +7,11 @@
   display: none;
 }
 
+.hidden-left {
+  left: -10000px;
+  position: absolute;
+}
+
 .fc-event-bg {
   height: 100%;
 }

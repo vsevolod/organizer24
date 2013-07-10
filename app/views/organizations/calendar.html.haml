@@ -21,21 +21,18 @@
 
 
 - if @show_workers
-  .modal.hide.fade#modal-workers{ tabindex: "-1", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true" }
-    .modal-header
-      %h3 Выберите мастера
-    .modal-body
-      %ul.thumbnails
-        - @enabled_workers.each do |worker|
-          %li.span6{ :data => { :worker_id => worker.id } }
-            .thumbnail
-              = image_tag worker.photo.url(:normal), :class => 'img-polaroid', :title => worker.name
-              %h3.text-center= link_to worker.name, '#'
-    .modal-footer
-      = link_to 'Выбрать', '#', :class => 'btn btn-success'
+  .hide
+    %ul.thumbnails#modal-workers
+      - @enabled_workers.each do |worker|
+        %li.span3
+          .thumbnail
+            = image_tag worker.photo.url(:normal), :title => worker.name
+            .caption
+              %p.text-center
+                = link_to worker.name, '#', :class => 'btn btn-success', :data => { :worker_id => worker.id }
   :javascript
-    $('.modal').modal({keyboard: false, show: true, backdrop: false});
-#calendar_show{:class => @show_workers ? 'hidden' : ''}
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}});
+#calendar_show{:class => @show_workers ? 'hidden-left' : ''}
   -# FIXME change it to form_for
   = form_tag appointments_path, :remote => !current_user.new_record? do
     = hidden_field_tag :start
@@ -46,6 +43,7 @@
           .span8
             - @enabled_workers.each do |worker|
               %label.radio.span3
+                = image_tag worker.photo.url(:thumb), :title => worker.name
                 = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
                 = worker.name
       %h3 На что хотите записаться:
