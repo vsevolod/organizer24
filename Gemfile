@@ -62,7 +62,7 @@ group :test do
   gem 'cucumber-rails', :require => false
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.3.0'
 gem "colorbox-rails", :git => "git://github.com/stevo/colorbox-rails.git"
 gem "inherited_resources"
 
