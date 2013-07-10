@@ -1,4 +1,8 @@
 #= require calendar_autocomplete
+
+enable_workers = () ->
+  $('#second #workers input').attr('disabled', false)
+
 to_i = (date_or_number) ->
   if typeof( date_or_number ) == 'number'
     date_or_number
@@ -334,6 +338,7 @@ $('.show_statuses .checkbox input').change ->
   document.location.href = '/main/set_session?key=show_' + $(this).val() + '&value=' + $(this).is(':checked')
 
 $('#second #workers input').change ->
+  $('#second #workers input').attr('disabled', true)
   # update services
   $('#second .check_services').html($(this).attr('check_services'))
   # update event sources
@@ -344,3 +349,4 @@ $('#second #workers input').change ->
   $.each(Organizer.event_sources, (id, event_source) ->
     $('#calendar').fullCalendar('addEventSource', event_source)
   )
+  setTimeout(enable_workers, 2000)
