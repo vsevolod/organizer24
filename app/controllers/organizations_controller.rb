@@ -29,6 +29,7 @@ class OrganizationsController < CompanyController
       @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")
     end
     @enabled_workers = @organization.workers.enabled.order(:updated_at)
+    @show_workers = @enabled_workers.size > 1
     @worker = @enabled_workers.where(:id => params[:worker_id]).first || @enabled_workers.first
   end
 

@@ -6,8 +6,8 @@ describe WorkingHoursController do
 
   before(:each) do
     @time_now = Time.parse("Sep 9 1999")
-    Time.stub!(:now).and_return(@time_now)
-    Date.stub!(:today).and_return(@time_now.to_date)
+    Time.stub(:now).and_return(@time_now)
+    Date.stub(:today).and_return(@time_now.to_date)
     @request.host = "#{organization.domain}.com"
   end
 

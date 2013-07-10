@@ -15,8 +15,7 @@
       = render 'layouts/top_menu', :show_big_organization_name => true
     .container-fluid
       - if @breadcrumbs && @breadcrumbs.any?
-        %ul.breadcrumb
-          = breadcrumbs
+        %ul.breadcrumb= breadcrumbs
       .row-fluid= yield
     = yield :bottom_js
     = flash_messages

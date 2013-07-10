@@ -2,6 +2,7 @@
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
   before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time, :edit]
+  before_filter :redirect_if_not_owner, :only => :phonebook
 
   respond_to :html, :json
 
@@ -88,9 +89,8 @@ class AppointmentsController < CompanyController
   end
 
   # GET список телефонных номеров и их владельцев
-  # FIXME переместить наверно в контроллер organizations
+  # FIXME переместить наверно в контроллер workers?!
   def phonebook
-    redirect_to root_path unless current_user.owner?(@organization)
     @phonebook = @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
   end
 

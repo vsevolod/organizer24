@@ -20,60 +20,76 @@
       });
 
 
--# FIXME change it to form_for
-= form_tag appointments_path, :remote => !current_user.new_record? do
-  = hidden_field_tag :start
-  %section#second
-    %div{:class => @enabled_workers.count > 1 ? '' : 'hidden' }
+- if @show_workers
+  .modal.hide.fade#modal-workers{ tabindex: "-1", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true" }
+    .modal-header
       %h3 Выберите мастера
-      .row-fluid#workers
-        .span8
-          - @enabled_workers.each do |worker|
-            %label.radio.span3
-              = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
-              = worker.name
-    %h3 На что хотите записаться:
-    .row-fluid
-      .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)
-        
-      .span4.buttons_to_confirm{ :style => 'display:none;' }
-        = link_to '#', :class => 'btn btn-success confirm_calendar' do
-          %span.icon-ok
-        = link_to '#', :class => 'btn btn-danger cancel_calendar' do
-          %span.icon-remove
-        %br/
-      .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
-        #total_time Время: 0 мин.
-        #total_cost Стоимость: 0 руб.
-    
-  #first
-    - if !current_user.owner?( @organization )
-      - if current_user.new_record?
-        = render 'field', :field => :phone
-      - else
-        = hidden_field_tag "user[phone]", current_user.phone
-    - else
-      - [:phone, :firstname, :lastname, :showing_time].each do |field|
-        = render 'field', :field => field
+    .modal-body
+      %ul.thumbnails
+        - @enabled_workers.each do |worker|
+          %li.span6{ :data => { :worker_id => worker.id } }
+            .thumbnail
+              = image_tag worker.photo.url(:normal), :class => 'img-polaroid', :title => worker.name
+              %h3.text-center= link_to worker.name, '#'
+    .modal-footer
+      = link_to 'Выбрать', '#', :class => 'btn btn-success'
+  :javascript
+    $('.modal').modal({keyboard: false, show: true, backdrop: false});
+#calendar_show{:class => @show_workers ? 'hidden' : ''}
+  -# FIXME change it to form_for
+  = form_tag appointments_path, :remote => !current_user.new_record? do
+    = hidden_field_tag :start
+    %section#second
+      %div{:class => @show_workers ? '' : 'hidden' }
+        %h3 Выберите мастера
+        .row-fluid#workers
+          .span8
+            - @enabled_workers.each do |worker|
+              %label.radio.span3
+                = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+                = worker.name
+      %h3 На что хотите записаться:
       .row-fluid
-        #phone_results
+        .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)
+          
+        .span4.buttons_to_confirm{ :style => 'display:none;' }
+          = link_to '#', :class => 'btn btn-success confirm_calendar' do
+            %span.icon-ok
+          = link_to '#', :class => 'btn btn-danger cancel_calendar' do
+            %span.icon-remove
+          %br/
+        .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
+          #total_time Время: 0 мин.
+          #total_cost Стоимость: 0 руб.
+      
+    #first
+      - if !current_user.owner?( @organization )
+        - if current_user.new_record?
+          = render 'field', :field => :phone
+        - else
+          = hidden_field_tag "user[phone]", current_user.phone
+      - else
+        - [:phone, :firstname, :lastname, :showing_time].each do |field|
+          = render 'field', :field => field
+        .row-fluid
+          #phone_results
 
-.row-fluid
-  %hr/
-  .span1
-    #third
-      - [:taken, :inaccessible, :'your-offer'].each do |state|
-        = I18n.t("legend.status.#{state}")
-        %div{ :class => "legend legend-#{state}" }
-        %br/
-      - if current_user.owner? @organization
-        .show_statuses
-          - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
-            %label.checkbox
-              = check_box_tag :state, state, (session["show_#{state}"] == 'false' ? nil : 1)
-              = t "activerecord.attributes.appointment.status.#{state}"
-  .span10
-    #calendar{ :style => 'width:900px;margin:0 auto;' }
-    %br/
-    %br/
-    %br/
+  .row-fluid
+    %hr/
+    .span1
+      #third
+        - [:taken, :inaccessible, :'your-offer'].each do |state|
+          = I18n.t("legend.status.#{state}")
+          %div{ :class => "legend legend-#{state}" }
+          %br/
+        - if current_user.owner? @organization
+          .show_statuses
+            - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
+              %label.checkbox
+                = check_box_tag :state, state, (session["show_#{state}"] == 'false' ? nil : 1)
+                = t "activerecord.attributes.appointment.status.#{state}"
+    .span10
+      #calendar{ :style => 'width:900px;margin:0 auto;' }
+      %br/
+      %br/
+      %br/

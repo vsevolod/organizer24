@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe AppointmentsController do
+  render_views
   let(:appointment)  {FactoryGirl.create(:valid_appointment, :status => 'offer')}
   let(:organization) {appointment.organization}
 
@@ -112,8 +113,7 @@ describe AppointmentsController do
 
   describe "GET phonebook" do
     before(:each) do
-      sign_in user if defined?(user)
-      visit :phonebook
+      get :phonebook
     end
 
     context 'when logged in as user' do
@@ -124,8 +124,7 @@ describe AppointmentsController do
     context 'when logged in as organization owner' do
       let(:user){ organization.owner }
       it 'should see users phones' do
-        binding.pry
-        response.should have_selector('table', :text => appointment.phone)
+        response.body.should have_selector('table.table', :text => appointment.phone)
       end
     end
 
