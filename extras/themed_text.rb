@@ -24,7 +24,8 @@ def user_notify(text, appointment)
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),
     '<СТОИМОСТЬ>' => appointment.cost,
     '<МАСТЕР>' => appointment.worker.name,
-    '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time
+    '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time,
+    '<ТЕЛЕФОН МАСТЕРА>' => appointment.worker.phone
   }.each_pair do |substring, value|
     text.gsub!(substring, value.to_s)
   end

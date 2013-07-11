@@ -29,7 +29,8 @@
       '<СПИСОК УСЛУГ>': '#{appointment.services.order(:name).pluck(:name).join(', ')}',
       '<СТОИМОСТЬ>': appointment.cost,
       '<ПРОДОЛЖИТЕЛЬНОСТЬ>': '#{appointment.showing_time.show_time}',
-      '<МАСТЕР>': '#{appointment.worker.name}'
+      '<МАСТЕР>': '#{appointment.worker.name}',
+      '<ТЕЛЕФОН МАСТЕРА>': '#{appointment.worker.phone}'
     };
     $('#template_help').html('<br/>');
     $.each( template, function(key,value){
