@@ -1,7 +1,7 @@
 class Subdomain
   def self.matches?(request)
     name = request.subdomain
-    if name.blank?
+    if name.blank? || name == 'www'
       name = request.domain
     end
     name = name.gsub(/^www\./,'').split('.').first
