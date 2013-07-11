@@ -109,6 +109,20 @@ FactoryGirl.define do
       Faker::Company.name
     end
     organization
+    factory :category_photo_with_photos do
+      after(:build) do |category_photo, evaluator|
+        FactoryGirl.create_list( :photo, 3, category_photo: category_photo )
+      end
+    end
+  end
+
+  factory :photo do
+    name 'photo'
+    #photo { fixture_file_upload('/files/photo.jpg', 'image/jpg') }
+    photo_file_name {'photo.jpg'}
+    photo_content_type {'image/jpg'}
+    photo_file_size 1024
+    category_photo
   end
 
   factory :organization do
@@ -136,20 +150,14 @@ FactoryGirl.define do
     end
 
     factory :organization_with_services do
-      ignore do
-        services_count 3
-      end
       after(:create) do |organization, evaluator|
-        FactoryGirl.create_list( :service, evaluator.services_count, :organization => organization )
+        FactoryGirl.create_list( :service, 3, :organization => organization )
       end
     end
 
     factory :organization_with_multi_services do
-      ignore do
-        services_count 3
-      end
       after(:create) do |organization, evaluator|
-        FactoryGirl.create_list( :multi_service, evaluator.services_count, :organization => organization )
+        FactoryGirl.create_list( :multi_service, 3, :organization => organization )
       end
     end
   end

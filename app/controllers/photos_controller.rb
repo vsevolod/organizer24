@@ -2,7 +2,10 @@ class PhotosController < CompanyController
   before_filter :redirect_if_not_owner
 
   def create
-    @photo = Photo.create( params[:photo].merge({ :category_photo_id => params[:category_photo_id] }) )
+    options = params[:photo]
+    options.merge!({ :category_photo_id => params[:category_photo_id] })
+    options[:photo] = options[:photo].first
+    @photo = Photo.create( options )
   end
 
   def destroy

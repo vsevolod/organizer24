@@ -1,12 +1,11 @@
-%ul.thumbnails
-  - objects.each do |category_photo|
-    - photo = category_photo.photos.order('created_at DESC').first
-    - next unless photo
-    %li.span3
-      %a{ :href => url_for(category_photo), :class => 'thumbnail'}
-        = image_tag photo.photo.url(:medium)
-        .caption
-          %h4= category_photo.name
-          - if current_user && current_user.owner?( @organization )
-            = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
-            = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
+- objects.each do |category_photo|
+  - photo = category_photo.photos.order('created_at DESC').first
+  - next unless photo
+  .span3.well
+    %a{ :href => url_for(category_photo) }
+      = image_tag photo.photo.url(:medium), :class => 'img-polaroid'
+      .caption.text-center
+        %h4= category_photo.name
+        - if current_user && current_user.owner?( @organization )
+          = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
+          = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
