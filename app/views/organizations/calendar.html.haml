@@ -31,7 +31,7 @@
               %p.text-center
                 = link_to worker.name, '#', :class => 'btn btn-success', :data => { :worker_id => worker.id }
   :javascript
-    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scalePhotos: false, scrolling: false, width: '590px', height: '280px'});
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '590px', height: '420px'});
 #calendar_show{:class => @presenter.show_workers ? 'hidden-left' : ''}
   -# FIXME change it to form_for
   = form_tag appointments_path, :remote => !current_user.new_record? do
