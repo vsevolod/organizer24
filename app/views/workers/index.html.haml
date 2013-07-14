@@ -7,16 +7,18 @@
   %thead
     %tr
       %th Имя
+      %th Пользователь
       %th Фото
       %th Список услуг
   %tbody
     - @workers.order(:name).each do |worker|
       %tr
         %td= worker.name
+        %td= worker.user.try(:name)
         %td= image_tag worker.photo.url(:thumb)
         %td= worker.services.map(&:name).join(', ')
         %td
-          = link_to [:edit, worker] do
+          = link_to [:edit, worker], :class => 'btn' do
             .icon-edit
-          = link_to worker, :method => :delete do
+          = link_to worker, :method => :delete, :class => 'btn btn-danger' do
             .icon-trash

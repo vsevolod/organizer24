@@ -12,7 +12,11 @@ class WorkingHoursController < CompanyController
     @start = Date.today if @start < Date.today
 
     @appointments = if current_user.owner?( @organization )
-                      @organization.appointments
+                      if current_user.worker
+                        current_user.worker.appointments
+                      else
+                        @organization.appointments
+                      end
                     else
                       current_user.appointments.where(:organization_id => @organization.id).where( :status.in => %w{approve offer taken} )
                     end.where(:start.gteq => @start, :start.lteq => @end)

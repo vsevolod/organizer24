@@ -14,23 +14,11 @@ class OrganizationsController < CompanyController
 
   def calendar
     add_breadcrumb 'Календарь', '/calendar'
-    if signed_in?
-      if current_user.owner?( @organization )
-        @phonebook = Appointment.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
-      end
-    else
-      if @organization.registration_before?
-        redirect_to organization_root, :alert => 'Для записи вам необходимо войти'
-      else
-        @current_user ||= User.new
-      end
-    end
-    if params[:day]
-      @str_day = (Time.zone.at(params[:day].to_i) - 1.month).strftime("%Y, %m, %d")
-    end
-    @enabled_workers = @organization.workers.enabled.order(:updated_at)
-    @show_workers = @enabled_workers.size > 1
-    @worker = @enabled_workers.where(:id => params[:worker_id]).first || @enabled_workers.first
+    @presenter = OrganizationsPresenters::CalendarPresenter.new({ day: params[:day],
+                                                                  worker_id: params[:worker_id],
+                                                                  organization: @organization,
+                                                                  current_user: current_user })
+    redirect_to organization_root, :alert => 'Для записи вам необходимо войти' if !signed_in? && @organization.registration_before?
   end
 
   def edit

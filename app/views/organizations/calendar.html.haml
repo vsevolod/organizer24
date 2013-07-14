@@ -1,29 +1,29 @@
 - content_for :js do
   :javascript
-    var collections_services = #{@organization.get_services( current_user.phone ).to_json};
+    var collections_services = #{@presenter.organization_services.as_json};
 
 - content_for :bottom_js do
   :javascript
-    var start_calendar_options = #{@organization.calendar_settings.to_json};
+    var start_calendar_options = #{@presenter.organization.calendar_settings.to_json};
     //$('#second check_services').affix();
   = javascript_include_tag 'fullcalendar', 'calendar'
-  - if defined? @phonebook
+  - if @presenter.phonebook
     :javascript
-      var phonebook = #{@phonebook.to_json(:only => [:phone, :firstname, :lastname])};
+      var phonebook = #{@presenter.phonebook_to_json};
       $(function(){
         Organizer.add_calendar_autocomplete( phonebook );
       });
-  - if defined? @str_day
+  - if @presenter.str_day
     :javascript
       $(function(){
-        $('#calendar').fullCalendar( 'gotoDate', #{@str_day} );
+        $('#calendar').fullCalendar( 'gotoDate', #{@presenter.str_day} );
       });
 
 
-- if @show_workers
+- if @presenter.show_workers
   .hide
     %ul.thumbnails#modal-workers
-      - @enabled_workers.each do |worker|
+      - @presenter.enabled_workers.each do |worker|
         %li.span3
           .thumbnail
             = image_tag worker.photo.url(:normal), :title => worker.name
@@ -31,24 +31,23 @@
               %p.text-center
                 = link_to worker.name, '#', :class => 'btn btn-success', :data => { :worker_id => worker.id }
   :javascript
-    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}});
-#calendar_show{:class => @show_workers ? 'hidden-left' : ''}
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scalePhotos: false, scrolling: false, width: '590px', height: '280px'});
+#calendar_show{:class => @presenter.show_workers ? 'hidden-left' : ''}
   -# FIXME change it to form_for
   = form_tag appointments_path, :remote => !current_user.new_record? do
     = hidden_field_tag :start
     %section#second
-      %div{:class => @show_workers ? '' : 'hidden' }
-        %h3 Выберите мастера
-        .row-fluid#workers
-          .span8
-            - @enabled_workers.each do |worker|
-              %label.radio.span3
-                = image_tag worker.photo.url(:thumb), :title => worker.name
-                = radio_button_tag "worker_id", worker.id, worker.id == @worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
-                = worker.name
+      %h3 Выберите мастера
+      .row-fluid#workers
+        .span8
+          - @presenter.enabled_workers.each do |worker|
+            %label.radio.span3
+              = image_tag worker.photo.url(:thumb), :title => worker.name
+              = radio_button_tag "worker_id", worker.id, worker.id == @presenter.get_worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+              = worker.name
       %h3 На что хотите записаться:
       .row-fluid
-        .check_services= render 'services_list', :services => @worker.services.not_collections.order(:show_by_owner, :name)
+        .check_services= render 'services_list', :services => @presenter.worker_services
           
         .span4.buttons_to_confirm{ :style => 'display:none;' }
           = link_to '#', :class => 'btn btn-success confirm_calendar' do
@@ -61,7 +60,7 @@
           #total_cost Стоимость: 0 руб.
       
     #first
-      - if !current_user.owner?( @organization )
+      - if !current_user.owner?( @presenter.organization )
         - if current_user.new_record?
           = render 'field', :field => :phone
         - else
@@ -80,7 +79,7 @@
           = I18n.t("legend.status.#{state}")
           %div{ :class => "legend legend-#{state}" }
           %br/
-        - if current_user.owner? @organization
+        - if current_user.owner? @presenter.organization
           .show_statuses
             - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
               %label.checkbox

@@ -151,6 +151,7 @@ ru:
         remember_me: Запомнить
       worker:
         user: Пользователь
+        user_id: Пользователь
         organization: Организация
         name: ФИО (название)
         is_enabled: Доступен для заказа

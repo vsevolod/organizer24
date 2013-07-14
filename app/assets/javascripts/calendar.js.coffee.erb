@@ -285,7 +285,7 @@ $('body').on('click', '.ChangeAppointment', ->
     container: '#calendar',
     placement: 'right'
   }).popover('show')
-  $.getScript( '/appointments/'+appointment_id+'/edit/', gotoPopover )
+  $.getScript( '/appointments/'+appointment_id+'/edit?worker_id='+$('#workers input:checked').val(), gotoPopover )
   false
 )
 

@@ -24,9 +24,10 @@ class AppointmentsController < CompanyController
   end
 
   def edit
+    @worker = @organization.workers.where(id: params[:worker_id]).first || @organization.workers.first
     @appointment = Appointment.find( params[:id] )
     respond_to do |format|
-      format.js { render :inline => "$('.popover .popover-content').html('<%= escape_javascript(render 'form', appointment: @appointment) %>')" }
+      format.js { render :inline => "$('.popover .popover-content').html('<%= escape_javascript(render 'form', appointment: @appointment, worker: @worker) %>')" }
     end
   end
 
