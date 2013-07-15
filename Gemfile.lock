@@ -113,7 +113,7 @@ GEM
     database_cleaner (1.0.1)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
-    delayed_job_active_record (0.4.4)
+    delayed_job_active_record (0.3.3)
       activerecord (>= 2.1.0, < 4)
       delayed_job (~> 3.0)
     devise (2.2.4)
@@ -388,7 +388,7 @@ DEPENDENCIES
   cucumber-rails
   daemons
   database_cleaner
-  delayed_job_active_record
+  delayed_job_active_record (~> 0.3.3)
   devise
   erb2haml
   event-calendar

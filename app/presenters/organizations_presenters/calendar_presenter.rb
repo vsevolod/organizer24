@@ -9,7 +9,7 @@ module OrganizationsPresenters
     end
 
     def phonebook
-      if @current_user.owner?( @organization )
+      if @current_user.owner?( @organization ) || @current_user.worker?( @organization )
         @phonebook ||= @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
       end
     end
@@ -50,6 +50,13 @@ module OrganizationsPresenters
 
     def organization
       @organization
+    end
+
+    def calendar_settings
+      minTime  = organization.working_hours.pluck(:begin_time).min
+      maxTime  = organization.working_hours.pluck(:end_time).max
+      sminutes = (organization.slot_minutes || 30).to_i
+      @calendar_settings = {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => organization.id}
     end
 
   end

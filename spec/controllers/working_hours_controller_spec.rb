@@ -34,11 +34,20 @@ describe WorkingHoursController do
       it { JSON.parse(response.body).size.should eq(1) }
     end
 
+    context "when signed in like worker" do
+      let(:user){ organization.workers.first.user }
+      it 'should send array' do
+        array = JSON.parse(response.body)
+        array.find_all{|x| x['data-id']}.size.should eq(3)
+        array.find{|x| x['allDay'] = true}.size.should > 0
+      end
+    end
+
     context "when signed in like owner" do
       let(:user){ organization.owner }
       it 'should send array' do
         array = JSON.parse(response.body)
-        binding.pry if array.find_all{|x| x['data-id']}.size != 3
+        #binding.pry if array.find_all{|x| x['data-id']}.size != 3
         array.find_all{|x| x['data-id']}.size.should eq(3)
         array.find{|x| x['allDay'] = true}.size.should > 0
       end

@@ -87,6 +87,7 @@ FactoryGirl.define do
 
   factory :worker do
     organization
+    user
     sequence :phone do |n|
       (Random.new.rand*100000000).ceil.to_s
     end

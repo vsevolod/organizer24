@@ -1,11 +1,9 @@
 - content_for :js do
   :javascript
     var collections_services = #{@presenter.organization_services.as_json};
+    var start_calendar_options = #{@presenter.calendar_settings.to_json};
 
 - content_for :bottom_js do
-  :javascript
-    var start_calendar_options = #{@presenter.organization.calendar_settings.to_json};
-    //$('#second check_services').affix();
   = javascript_include_tag 'fullcalendar', 'calendar'
   - if @presenter.phonebook
     :javascript
@@ -60,16 +58,15 @@
           #total_cost Стоимость: 0 руб.
       
     #first
-      - if !current_user.owner?( @presenter.organization )
-        - if current_user.new_record?
-          = render 'field', :field => :phone
-        - else
-          = hidden_field_tag "user[phone]", current_user.phone
-      - else
+      - if current_user.new_record?
+        = render 'field', :field => :phone
+      - elsif current_user.owner?( @presenter.organization ) || current_user.worker?( @presenter.organization )
         - [:phone, :firstname, :lastname, :showing_time].each do |field|
           = render 'field', :field => field
         .row-fluid
           #phone_results
+      - else
+        = hidden_field_tag "user[phone]", current_user.phone
 
   .row-fluid
     %hr/
@@ -79,7 +76,7 @@
           = I18n.t("legend.status.#{state}")
           %div{ :class => "legend legend-#{state}" }
           %br/
-        - if current_user.owner? @presenter.organization
+        - if current_user.owner?(@presenter.organization) || current_user.worker?(@presenter.organization)
           .show_statuses
             - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
               %label.checkbox

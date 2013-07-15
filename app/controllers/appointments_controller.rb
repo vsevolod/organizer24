@@ -35,7 +35,7 @@ class AppointmentsController < CompanyController
   def by_week
     @user = current_user || User.new
     @worker = get_worker
-    @is_owner = @user.owner?( @organization )
+    @is_owner = @user.owner?( @organization ) || @user.worker?( @organization )
     @appointments = if @is_owner
                       # TODO Сделать, чтобы статусы обновлялись не перегружая страницу. Как это вообще не сделано было?!
                       @worker.appointments.where( :status.in => params[:statuses] )

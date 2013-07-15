@@ -67,4 +67,4 @@ gem "colorbox-rails", :git => "git://github.com/stevo/colorbox-rails.git"
 gem "inherited_resources"
 
 gem 'daemons'
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '~> 0.3.3'

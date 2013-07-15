@@ -31,13 +31,6 @@ class Organization < ActiveRecord::Base
   attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :working_hours_attributes, *ACCESSORS
   before_validation :check_domain
 
-  def calendar_settings
-    minTime  = self.working_hours.pluck(:begin_time).min
-    maxTime  = self.working_hours.pluck(:end_time).max
-    sminutes = (self.slot_minutes || 30).to_i
-    {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => self.id}
-  end
-
   def get_services( phone, type = :extend )
     services_users = ServicesUser.where( :phone => phone, :organization_id => self.id )
     self.services.map do |s|
