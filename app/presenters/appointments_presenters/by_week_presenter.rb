@@ -10,7 +10,7 @@ module AppointmentsPresenters
       @worker = worker
       @utc_offset = utc_offset
 
-      @user_services = Hash.new([])
+      @user_services = {}
     end
 
     def render
@@ -83,7 +83,7 @@ module AppointmentsPresenters
 
       def organization_user_services( appointment )
         services = @user_services[appointment.phone] || add_to_user_services( appointment.phone )
-        services_users = services.find_all{|arr| ( arr.first & self.service_ids ).any? }
+        services_users = services.find_all{|arr| ( arr.first & appointment.service_ids ).any? }
         services_users.map do |ids, cost, showing_time|
           service = Service.find( ids.first )
           service.cost = cost
