@@ -2,6 +2,7 @@
 class Appointment < ActiveRecord::Base
   include AASM
 
+  # TODO сделать user по умолчанию через телефон. Убрать связь через user_id
   belongs_to :user                  # Клиент
   belongs_to :user_by_phone, :class_name => 'User', :foreign_key => :phone, :primary_key => :phone # Клиент по номеру телефона
   belongs_to :organization          # Организация
@@ -130,16 +131,6 @@ class Appointment < ActiveRecord::Base
       User.new( :phone => self.phone, :firstname => self.firstname, :lastname => self.lastname )
     else
       self.user
-    end
-  end
-
-  def services_by_user
-    services_users = self.organization.get_services( self.phone, :normal ).find_all{|arr| ( arr.first & self.service_ids ).any? }
-    services_users.map do |ids, cost, showing_time|
-      service = Service.find( ids.first )
-      service.cost = cost
-      service.showing_time = showing_time
-      service
     end
   end
 

@@ -156,7 +156,9 @@ $('#calendar').fullCalendar({
     center: 'title',
     right: 'agendaDay,agendaWeek'
   },
-
+  year:  new Date( start_calendar_options.initial_date ).getFullYear(),
+  month: new Date( start_calendar_options.initial_date ).getMonth(),
+  date:  new Date( start_calendar_options.initial_date ).getDate(),
   firstDay: 1,
   aspectRatio: 1.5,
   defaultView: 'agendaWeek',
@@ -330,12 +332,12 @@ $('body').on('click', '.close_popover', ->
   false
 )
 
-# FIXME - может не через session, а через cookies сделать? :D
 $('.show_statuses .checkbox input').change ->
-  ##$.post('/main/set_session', { key: 'show_'+$(this).val(), value: $(this).is(':checked') } )
-  ##$('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes())
-  ##$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
-  document.location.href = '/main/set_session?key=show_' + $(this).val() + '&value=' + $(this).is(':checked')
+  $.get("/main/set_session?key=show_#{$(this).val()}&value=#{$(this).is(':checked')}", ->
+    worker = "worker_id=#{$('#workers input:checked').val()}"
+    $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes(worker))
+    $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
+  )
 
 $('#second #workers input').change ->
   $('#second #workers input').attr('disabled', true)

@@ -49,24 +49,24 @@ describe Appointment do
 
   context 'editable by user' do
 
-    it 'should be editable by owner of organization' do
+    before(:each) do
       appointment.first_owner_view
+    end
+
+    it 'should be editable by owner of organization' do
       appointment.editable_by?(organization.owner).should be_true
     end
 
     it 'should be editable by appointment user' do
-      appointment.first_owner_view
       appointment.editable_by?(appointment.user).should be_true
     end
 
     it 'should not be editable by user with same phone' do
-      appointment.first_owner_view
       user_with_phone = User.new( :phone => appointment.phone )
       appointment.editable_by?(user_with_phone).should be_false
     end
 
     it 'should be editable by user with same phone if owner create appointment' do
-      appointment.first_owner_view
       appointment.user = organization.owner
       user_with_phone = User.new( :phone => appointment.phone )
       appointment.editable_by?(user_with_phone).should be_true

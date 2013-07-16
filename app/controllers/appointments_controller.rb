@@ -8,7 +8,6 @@ class AppointmentsController < CompanyController
 
   def show
     @appointment = Appointment.find( params[:id] )
-    @can_edit = current_user && ( @appointment.user_by_phone == current_user || current_user.owner?( @organization ) )
     if @appointment.free?
       # Если зашли под создателем в только что созданную заявку - делаем её доступной и прикрепляем пользователя
       if current_user && @appointment.user_by_phone == current_user
@@ -18,7 +17,7 @@ class AppointmentsController < CompanyController
       else
         redirect_to root_path
       end
-    elsif !@can_edit
+    elsif !editable_by?(current_user || User.new)
       redirect_to root_path
     end
   end
@@ -33,60 +32,8 @@ class AppointmentsController < CompanyController
 
   # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
   def by_week
-    @user = current_user || User.new
-    @worker = get_worker
-    @is_owner = @user.owner?( @organization ) || @user.worker?( @organization )
-    @appointments = if @is_owner
-                      # TODO Сделать, чтобы статусы обновлялись не перегружая страницу. Как это вообще не сделано было?!
-                      @worker.appointments.where( :status.in => params[:statuses] )
-                    else
-                      # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                      @worker.appointments.where( :status.in => Appointment::STARTING_STATES ).where('date(start) >= ?', Time.zone.now.to_date)
-                    end.where('date(start) >= ? AND date(start) < ?', @start.to_date, @end.to_date)
-    # Находим записи
-    @periods = @appointments.map do |appointment|
-      editable = appointment.editable_by?( @user )
-      data_inner_class = if editable
-                           'legend-your-offer'
-                         else
-                           "legend-#{appointment.status}"
-                         end
-      title = if @is_owner && appointment.starting_state? || !@is_owner && editable
-                appointment.services.pluck('name').join('<br/>')
-              else
-                appointment.aasm_human_state
-              end
-      options = { :title => title,
-                  :start => appointment.start.to_i+@utc_offset,
-                  :end => (appointment.start + appointment.showing_time.minutes).to_i+@utc_offset,
-                  :editable => false,
-                  :splitted => false,
-                  :is_owner => @is_owner,
-                  'data-inner-class' => data_inner_class,
-                  'data-showing-time' => appointment.showing_time,
-                  'data-id' => appointment.id,
-                   }
-      if editable
-        options.merge!({ :splitted => true,
-                         'data-client' => "#{appointment.fullname} #{appointment.phone}",
-                         'data-id' => appointment.id,
-                         'data-services' => appointment.services_by_user.to_json(:only => [:name, :cost, :showing_time])
-        })
-      end
-      options
-    end
-    #Объединяем рядом стоящие чужие записи
-    if !@is_owner
-      @periods.each_with_index do |_this, index|
-        if _this && !_this[:splitted] && ( _next = @periods.find{|p| p && p[:start] == _this[:end] && !p[:splitted]})
-          _next[:start] = _this[:start]
-          _next['data-showing-time'] += _this['data-showing-time']
-          @periods[index] = nil
-        end
-      end
-      @periods.compact!
-    end
-    respond_with( @periods )
+    @prepare_periods = AppointmentsPresenters::ByWeekPresenter.new(current_user, @organization, params[:statuses], @start, @end, get_worker, @utc_offset)
+    respond_with( @prepare_periods.render )
   end
 
   # GET список телефонных номеров и их владельцев
@@ -131,7 +78,7 @@ class AppointmentsController < CompanyController
   # TODO POST ajax query
   def change_status
     # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
-    if current_user.owner?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
+    if (current_user.worker?(@organization) || current_user.owner?( @organization )) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       if @appointment.save
         redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'

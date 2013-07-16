@@ -11,12 +11,6 @@
       $(function(){
         Organizer.add_calendar_autocomplete( phonebook );
       });
-  - if @presenter.str_day
-    :javascript
-      $(function(){
-        $('#calendar').fullCalendar( 'gotoDate', #{@presenter.str_day} );
-      });
-
 
 - if @presenter.show_workers
   .hide
@@ -41,11 +35,11 @@
           - @presenter.enabled_workers.each do |worker|
             %label.radio.span3
               = image_tag worker.photo.url(:thumb), :title => worker.name
-              = radio_button_tag "worker_id", worker.id, worker.id == @presenter.get_worker.id, :check_services => (render 'services_list', :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+              = radio_button_tag "worker_id", worker.id, worker.id == @presenter.get_worker.id, :check_services => (render 'services_list', :presenter => @presenter, :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
               = worker.name
       %h3 На что хотите записаться:
       .row-fluid
-        .check_services= render 'services_list', :services => @presenter.worker_services
+        .check_services= render 'services_list', :services => @presenter.worker_services, presenter: @presenter
           
         .span4.buttons_to_confirm{ :style => 'display:none;' }
           = link_to '#', :class => 'btn btn-success confirm_calendar' do
@@ -60,7 +54,7 @@
     #first
       - if current_user.new_record?
         = render 'field', :field => :phone
-      - elsif current_user.owner?( @presenter.organization ) || current_user.worker?( @presenter.organization )
+      - elsif @presenter.owner_or_worker?
         - [:phone, :firstname, :lastname, :showing_time].each do |field|
           = render 'field', :field => field
         .row-fluid
@@ -76,7 +70,7 @@
           = I18n.t("legend.status.#{state}")
           %div{ :class => "legend legend-#{state}" }
           %br/
-        - if current_user.owner?(@presenter.organization) || current_user.worker?(@presenter.organization)
+        - if @presenter.owner_or_worker?
           .show_statuses
             - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
               %label.checkbox

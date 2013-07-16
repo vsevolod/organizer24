@@ -9,19 +9,13 @@ module OrganizationsPresenters
     end
 
     def phonebook
-      if @current_user.owner?( @organization ) || @current_user.worker?( @organization )
+      if owner_or_worker?
         @phonebook ||= @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
       end
     end
 
     def phonebook_to_json
       @phonebook_to_json ||= phonebook.to_json(:only => [:phone, :firstname, :lastname])
-    end
-
-    def str_day
-      if @day
-        @str_day ||= (Time.zone.at(@day.to_i) - 1.month).strftime("%Y, %m, %d")
-      end
     end
 
     def enabled_workers
@@ -53,11 +47,29 @@ module OrganizationsPresenters
     end
 
     def calendar_settings
-      minTime  = organization.working_hours.pluck(:begin_time).min
-      maxTime  = organization.working_hours.pluck(:end_time).max
-      sminutes = (organization.slot_minutes || 30).to_i
-      @calendar_settings = {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => organization.id}
+      if @calendar_settings
+        @calendar_settings
+      else
+        minTime  = organization.working_hours.pluck(:begin_time).min
+        maxTime  = organization.working_hours.pluck(:end_time).max
+        sminutes = (organization.slot_minutes || 30).to_i
+        @calendar_settings = {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => organization.id, :initial_date => initial_date}
+      end
     end
+
+    def owner_or_worker?
+      @owner_or_worker ||= @current_user.owner?(organization) || @current_user.worker?(organization)
+    end
+
+    private
+
+      def initial_date
+        if @day
+          Time.zone.at(@day.to_i)
+        else
+          Time.now
+        end.to_i*1000
+      end
 
   end
 end

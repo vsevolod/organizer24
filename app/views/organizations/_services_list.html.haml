@@ -1,4 +1,4 @@
-- services = services.where( :show_by_owner => false ) unless current_user.owner?( @organization )
+- services = services.where( :show_by_owner => false ) unless @presenter.owner_or_worker?
 - step = (services.size*1.0/3).ceil
 - services.each_slice( step.zero? ? 1 : step  ).each do |group_services|
   .span3
