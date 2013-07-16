@@ -74,7 +74,7 @@ module AppointmentsPresenters
       end
 
       def is_owner?
-        @is_owner ||= @current_user.owner?( @organization ) || @current_user.worker?( @organization )
+        @is_owner ||= @current_user.owner_or_worker?(@organization)
       end
 
       def add_to_user_services( phone )

@@ -78,7 +78,7 @@ class AppointmentsController < CompanyController
   # TODO POST ajax query
   def change_status
     # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
-    if (current_user.worker?(@organization) || current_user.owner?( @organization )) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
+    if current_user.owner_or_worker?( @organization ) || ( current_user == @appointment.user && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       if @appointment.save
         redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'
@@ -148,7 +148,7 @@ class AppointmentsController < CompanyController
 
     # Не уведомляем владельца если он сам и изменял запись
     def check_notifier
-      if (@user || current_user).owner?(@organization)
+      if (@user || current_user).owner_or_worker?(@organization)
         @appointment.can_not_notify_owner = true
       end
     end

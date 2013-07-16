@@ -9,7 +9,7 @@
     %tr
       %td= link_to page.name, page.show_page_link
       %td= page.permalink
-      - if  current_user && current_user.owner?( @organization )
+      - if  current_user && current_user.owner_or_worker?( @organization )
         %td
           = link_to 'Редактировать', [:edit, page], :class => 'btn btn-success'
           = link_to 'Удалить', page, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

@@ -1,4 +1,4 @@
-- if current_user && current_user.owner?( @organization )
+- if current_user && current_user.owner_or_worker?( @organization )
   = link_to 'Редактировать', [:edit, @page], :class => 'btn btn-primary'
 
 %h2= @page.name

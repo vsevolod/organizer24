@@ -40,14 +40,4 @@ class ServicesController < CompanyController
     redirect_to Service
   end
 
-
-  private 
-
-    def redirect_if_not_owner
-      if !current_user.owner?( @organization )
-        redirect_to Service
-      end
-    end
-
-
 end

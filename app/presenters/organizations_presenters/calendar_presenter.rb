@@ -58,7 +58,7 @@ module OrganizationsPresenters
     end
 
     def owner_or_worker?
-      @owner_or_worker ||= @current_user.owner?(organization) || @current_user.worker?(organization)
+      @owner_or_worker ||= @current_user.owner_or_worker?(organization)
     end
 
     private

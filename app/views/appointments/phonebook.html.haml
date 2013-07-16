@@ -8,7 +8,7 @@
       %tr
         %td
           - if appointment.user
-            - if appointment.user.owner?( @organization )
+            - if appointment.user.owner_or_worker?(@organization)
               = appointment.lastname
               = appointment.firstname
             - else

@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_if_not_owner
-      if !current_user || !current_user.owner?( @organization ) && !current_user.worker?( @organization )
+      if !current_user || !current_user.owner_or_worker?( @organization )
         redirect_to organization_root
       end
     end

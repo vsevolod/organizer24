@@ -1,6 +1,6 @@
 %h2 Сотрудники
 %br/
-- if current_user && current_user.owner?( @organization )
+- if current_user && current_user.owner_or_worker?( @organization )
   = link_to 'Добавить сотрудника', [:new, :worker], :class => 'btn btn-success'
 
 %table.table

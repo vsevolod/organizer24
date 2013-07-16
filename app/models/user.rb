@@ -85,6 +85,10 @@ class User < ActiveRecord::Base
     self.worker && self.worker.organization == organization
   end
 
+  def owner_or_worker?(organization)
+    self.owner?(organization) || self.worker?(organization)
+  end
+
   def recount_appointments_by_organization_for_services_users!( organization )
     self.appointments_by_phone.joins(:services).where(:services => { :id => self.services_users.where( :organization_id => organization.id ).pluck(:service_id).uniq } ).pluck("appointments.id").uniq.each do |appointment_id|
       appointment = Appointment.find( appointment_id )

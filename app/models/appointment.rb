@@ -90,8 +90,7 @@ class Appointment < ActiveRecord::Base
 
   # Может ли пользователь редактировать конкретную запись?
   def editable_by?(edit_user)
-    edit_user.owner?( self.organization )  ||
-    edit_user.worker?( self.organization ) ||
+    edit_user.owner_or_worker?( self.organization )  ||
     self.user == edit_user && self.offer?  ||
     self.user.owner?( self.organization )  && self.phone == edit_user.phone
   end
@@ -127,7 +126,7 @@ class Appointment < ActiveRecord::Base
 
   # Берем пользователя либо создаем нового из параметров
   def enshure_user
-    if self.user.owner? self.organization
+    if self.user.owner_or_worker?(self.organization)
       User.new( :phone => self.phone, :firstname => self.firstname, :lastname => self.lastname )
     else
       self.user

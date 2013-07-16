@@ -1,4 +1,4 @@
-- if current_user && current_user.owner?( @organization )
+- if current_user && current_user.owner_or_worker?(@organization)
   = link_to 'Редактировать', [:edit, @category_photo], :class => 'btn btn-primary'
   = link_to 'Добавить новую', new_category_photo_path( :category_photo => { :parent_id => @category_photo.id } ), :class => 'btn btn-success'
 

@@ -6,6 +6,6 @@
       = image_tag photo.photo.url(:medium), :class => 'img-polaroid'
       .caption.text-center
         %h4= category_photo.name
-        - if current_user && current_user.owner?( @organization )
+        - if current_user && current_user.owner_or_worker?(@organization)
           = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
           = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

@@ -1,12 +1,12 @@
 %ul.nav
   = yield :nav_bar
-  - if @organization.show_photogallery? || current_user && current_user.owner?( @organization )
+  - if @organization.show_photogallery? || current_user && (current_user.owner_or_worker?(@organization))
     %li
       = link_to "/category_photos" do
         %i.icon-th
         Фотогалерея
   - if current_user && !current_user.new_record?
-    - if current_user.owner?( @organization )
+    - if current_user.owner_or_worker?(@organization)
       %li
         = link_to "/appointments/phonebook" do
           %i.icon-list-alt

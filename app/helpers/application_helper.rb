@@ -9,7 +9,7 @@ module ApplicationHelper
   def appointment_links( appointment, joins = '<br/>' )
     org = appointment.organization
     arr = []
-    if current_user.owner?( org )
+    if current_user.owner_or_worker?(org)
       { :complete => 'btn-success', :cancel_owner => '', :cancel_client => 'btn-warning', :missing => 'btn-danger', :lated => 'btn-info'}.each do |state, html_class|
         arr << link_to( t("activerecord.attributes.appointment.status.#{state}"), short_csoap(org, appointment, state ), :class => "btn #{html_class}", :method => :post ) if appointment.aasm_read_state != state
      end
