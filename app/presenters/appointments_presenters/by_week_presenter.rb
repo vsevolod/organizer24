@@ -23,7 +23,7 @@ module AppointmentsPresenters
         @appointments ||= if is_owner?
                             @worker.appointments.where( :status.in => @statuses )
                           else # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                            @worker.appointments.where( :status.not_eq => 'free' ).where('date(start) >= ?', Time.zone.now.to_date)
+                            @worker.appointments.where( :status.not_in => %W{free cancel_owner cancel_client missing} ).where('date(start) >= ?', Time.zone.now.to_date)
                           end.where('date(start) >= ? AND date(start) < ?', @start, @end)
       end
 
