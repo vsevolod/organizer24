@@ -17,7 +17,7 @@ class AppointmentsController < CompanyController
       else
         redirect_to root_path
       end
-    elsif !editable_by?(current_user || User.new)
+    elsif !@appointment.editable_by?(current_user || User.new)
       redirect_to root_path
     end
   end

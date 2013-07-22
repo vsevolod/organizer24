@@ -102,7 +102,7 @@ describe AppointmentsController do
 
     context 'when logged in as app4 user' do
       let(:user){ FactoryGirl.create(:user) }
-      it { @parsed_body.should have(3).items }
+      it { @parsed_body.should have(2).items }
     end
 
     context 'when logged in as organization owner' do

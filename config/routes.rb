@@ -10,7 +10,6 @@ Organizer::Application.routes.draw do
     match '/calendar' => 'organizations#calendar', :as => :calendar
     match '/edit'=> 'organizations#edit', :as => :edit
     match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
-    match '/dashboard', :to => 'users#dashboard'
 
     resources :appointments do
       resources :services_users do
@@ -48,12 +47,13 @@ Organizer::Application.routes.draw do
     get ':id', :to => 'pages#show'
   end
 
-  match '/dashboard', :to => 'users#dashboard'
+  match '/dashboard', :to => 'users#dashboard', as: 'dashboard'
   root :to => 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords", :confirmations => "confirmations" }
   resources :users do
     collection do
       post :check_phone
+      post :dashboard
     end
     # TODO move to confirmation controller
     member do

@@ -6,6 +6,12 @@ class UsersController < CompanyController
     @user = current_user
   end
 
+  def show
+    @user = User.find_by_phone(params[:id]) || User.new(:phone => params[:id])
+    redirect_to dashboard_path if current_user == @user || !current_user.owner_or_worker?(@organization)
+    @appointments = @user.appointments_by_phone
+  end
+
   def check_phone
     @user = User.find_by_phone(params[:phone])
     if @user
