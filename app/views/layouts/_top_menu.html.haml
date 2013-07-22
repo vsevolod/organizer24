@@ -1,6 +1,11 @@
 .navbar-inner
   .container
-    - unless defined?(show_big_organization_name) && show_big_organization_name
+    %button{ 'data-target' => ".nav-collapse", 'data-toggle' => "collapse", :class => 'btn btn-navbar collapsed', :type => "button"}
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    -# unless defined?(show_big_organization_name) && show_big_organization_name
+    .hidden-desktop
       = link_to @organization.name, domain_organization_path(@organization), :class => 'brand'
-    .nav-collapse
+    .nav-collapse.collapse
       = render 'layouts/top_menu_content'

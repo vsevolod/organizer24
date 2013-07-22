@@ -8,7 +8,7 @@
     = csrf_meta_tags
     = yield :js
   %body{ :class => get_class }
-    .organization_big_name
+    .organization_big_name.visible-desktop
       = link_to @organization.domain.capitalize, domain_organization_path( @organization ), :class => 'brand'
       .subtext Индустрия красоты
     .navbar.navbar-fixed-top

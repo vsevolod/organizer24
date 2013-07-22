@@ -34,11 +34,12 @@ set_keypress_on_phone = (el) ->
 $ ->
   $('.carousel').carousel()
 
-  set_phone_mask()
-  $(document).bind('cbox_complete', ->
+  if (window.outerWidth >= 980)
     set_phone_mask()
-    set_keypress_on_phone( $('#cboxWrapper input[name$="[phone]"]') )
-  )
+    $(document).bind('cbox_complete', ->
+      set_phone_mask()
+      set_keypress_on_phone( $('#cboxWrapper input[name$="[phone]"]') )
+    )
 
   $("form.sign_in_index[colorbox='true']").submit ->
     complete_mask( $(this).find('#user_phone') )
