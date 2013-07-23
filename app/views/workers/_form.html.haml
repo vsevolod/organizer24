@@ -7,12 +7,14 @@
     = f.input :name
     = f.input :phone
     = f.input :photo, :as => :file
-    -# Привязка сотрудника к пользователю по телефону
-      .control-group
-        %label.control-label{ :for => "phone"} Телефон сотрудника
-        .controls= text_field_tag :phone
-    = f.simple_fields_for :services_workers do |sw|
-      = render 'services_worker_fields', :f => sw
+    -#= f.simple_fields_for :services_workers do |sw|
+    -#  = render 'services_worker_fields', :f => sw
+    %h3 Список сервисов
+    #collections.controls
+      - @organization.services.not_collections.each do |service|
+        %label.checkbox
+          = check_box_tag "worker[service_ids][]", service.id, @worker.services.include?( service )
+          = service.name
     .links= link_to_add_association 'Добавить услугу', f, :services_workers, :class => 'btn btn-success'
     - unless @worker.new_record?
       %h1 Рабочие дни

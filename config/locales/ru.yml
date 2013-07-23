@@ -132,6 +132,8 @@ ru:
         name: Название
         showing_time: Продолжительность
         cost: Стоимость
+        bottom_cost: Минимальная стоимость
+        top_cost: Максимальная стоимость
         organization: Организация
         show_by_owner: Показывать только владельцу
       services_user:

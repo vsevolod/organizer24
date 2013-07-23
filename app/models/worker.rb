@@ -12,7 +12,7 @@ class Worker < ActiveRecord::Base
   validates :name,  :presence => true
   validates :phone, :presence => true
 
-  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo
+  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo, :service_ids
 
   has_attached_file :photo, :styles => { :normal => "230x320>", :thumb => "100x100>"},
                             :convert_options => { :thumb => "-quality 75 -strip" }
