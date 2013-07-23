@@ -1,7 +1,8 @@
 # coding: utf-8
 class WorkingHoursController < CompanyController
   before_filter :prepare_calendar_options
-  before_filter :need_to_login, :only => :self_by_month
+  before_filter :need_to_login, :only => :self_by_month #TODO может заменить на более популярный метод?
+  before_filter :find_worker
 
   respond_to :html, :json
 
@@ -41,14 +42,14 @@ class WorkingHoursController < CompanyController
   end
 
   def by_week
-    min_wt = @organization.working_hours.pluck(:begin_time).min
-    max_wt = @organization.working_hours.pluck(:end_time).max
+    min_wt = @worker.working_hours.pluck(:begin_time).min
+    max_wt = @worker.working_hours.pluck(:end_time).max
     @worker = get_worker
     @periods = []
     ((@start.to_date)..(@end.to_date)).each_with_index do |t, index|
       current_day = @start + index.days
       full_day = {:start => (current_day+min_wt).to_i, :end => (current_day+max_wt).to_i, :editable => false}
-      wh = @organization.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).first
+      wh = @worker.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).first
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         if wh && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day).count > 0)
           res = []
@@ -64,5 +65,11 @@ class WorkingHoursController < CompanyController
     end
     respond_with( @periods.flatten.compact )
   end
+
+  private
+
+    def find_worker
+      @worker = Worker.find(params[:worker_id])
+    end
 
 end

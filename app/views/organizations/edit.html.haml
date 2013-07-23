@@ -52,8 +52,6 @@
   %h3 Последний день записи
   = f.collection_radio_buttons :last_day, [[0, 'В тот же день'],[1,'За день'],[2,'За два дня'],[3,'За три дня'],[4,'За четыре дня']], :first, :last
 
-  %h3 Часы работы
-  = render 'users/registrations/working_hours_list', :f => f
   %br/
 
   = f.submit :class => 'btn btn-primary'

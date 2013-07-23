@@ -31,6 +31,11 @@ Organizer::Application.routes.draw do
       resources :photos
     end
     resources :workers do
+      resources :working_hours do
+        collection do
+          get :by_week, :self_by_month
+        end
+      end
       resources :working_days do
         collection do
           post :inverse_day
@@ -39,11 +44,6 @@ Organizer::Application.routes.draw do
     end
     resources :pages, :except => [:show]
     resources :services
-    resources :working_hours do
-      collection do
-        get :by_week, :self_by_month
-      end
-    end
     get ':id', :to => 'pages#show'
   end
 

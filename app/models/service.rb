@@ -14,7 +14,7 @@ class Service < ActiveRecord::Base
 
   validates :name, :presence => true, :uniqueness => { :scope => [:organization_id] }
   validates :showing_time, :presence => true
-  validates :cost, presence: { if: Proc.new{|service| service.bottom_cost.blank? && service.top_cost.blank? }}
+#  validates :cost, presence: { if: Proc.new{|service| service.bottom_cost.blank? && service.top_cost.blank? }}
 
   def full_info( joins = ' / ' )
     [self.name, self.showing_time.show_time, self.cost].join(joins)

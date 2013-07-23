@@ -15,9 +15,11 @@
         %label.checkbox
           = check_box_tag "worker[service_ids][]", service.id, @worker.services.include?( service )
           = service.name
-    .links= link_to_add_association 'Добавить услугу', f, :services_workers, :class => 'btn btn-success'
     - unless @worker.new_record?
       %h1 Рабочие дни
       #worker_month_calendar{:style => 'width:500px;'}
+
+    %h3 Часы работы
+    = render 'working_hours_list', :f => f
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

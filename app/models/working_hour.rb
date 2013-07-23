@@ -5,13 +5,14 @@ class WorkingHour < ActiveRecord::Base
   default_scope order( :week_day )
 
   belongs_to :organization
+  belongs_to :worker
 
   validates :week_day, :presence => true
   validates :begin_time, :presence => true
   validates :end_time, :presence => true
   before_validation :fix_time
 
-  attr_accessible :week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute
+  attr_accessible :week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute, :worker_id
 
 
   private

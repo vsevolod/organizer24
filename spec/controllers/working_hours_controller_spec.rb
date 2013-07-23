@@ -22,7 +22,7 @@ describe WorkingHoursController do
         options[:user_id] = user.id if defined?(user)
         FactoryGirl.create( :valid_appointment, options )
       end
-      get :self_by_month, :format => 'json', :start => @time_now.at_beginning_of_month.to_i, :end => @time_now.at_end_of_month.to_i
+      get :self_by_month, :format => 'json', :start => @time_now.at_beginning_of_month.to_i, :end => @time_now.at_end_of_month.to_i, :worker_id => organization.workers.first.id
     end
 
     context "when not signed in" do
@@ -57,9 +57,10 @@ describe WorkingHoursController do
 
   describe "GET by_week" do
     it "should return only working hours by week" do
+      worker_id = organization.workers.first
       working_hours_count = 5
-      FactoryGirl.create_list(:working_hour, working_hours_count, :organization_id => organization.id)
-      get :by_week, :format => 'json', :start => @time_now.at_beginning_of_week.to_i, :end => @time_now.at_end_of_week.to_i
+      FactoryGirl.create_list(:working_hour, working_hours_count, :worker_id => worker_id)
+      get :by_week, :format => 'json', :start => @time_now.at_beginning_of_week.to_i, :end => @time_now.at_end_of_week.to_i, :worker_id => worker_id
       response.status.should eq(200)
       JSON.parse(response.body).size.should >= working_hours_count
     end

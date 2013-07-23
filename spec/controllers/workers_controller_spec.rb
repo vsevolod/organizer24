@@ -37,7 +37,6 @@ describe WorkersController do
       let(:user){ organization.owner }
       subject {
         post :create, :worker => {
-          :user_id => worker_user.id,
           :organization_id => organization.id,
           :name => Faker::Name.first_name,
           :is_enabled => true,
@@ -59,7 +58,6 @@ describe WorkersController do
         new_name = Faker::Name.first_name
         expect {
           put :update, :id => worker.id, :worker => {
-            :user_id => worker_user.id,
             :name => new_name,
             :phone => (Random.new.rand*100000000).ceil.to_s,
             :photo => @photo
