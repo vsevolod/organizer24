@@ -2,7 +2,7 @@
 class WorkingHoursController < CompanyController
   before_filter :prepare_calendar_options
   before_filter :need_to_login, :only => :self_by_month #TODO может заменить на более популярный метод?
-  before_filter :find_worker
+  before_filter :find_worker, :except => :self_by_month
 
   respond_to :html, :json
 

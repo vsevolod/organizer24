@@ -33,4 +33,15 @@ describe UsersController do
     end
   end
 
+  describe "GET dashboard" do
+    before(:each) do
+      get :dashboard
+    end
+
+    context 'when logged in like user' do
+      let(:user){appointment.user}
+      it {response.status.should eq(200)}
+    end
+  end
+
 end

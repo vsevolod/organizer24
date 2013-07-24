@@ -7,6 +7,7 @@ Organizer::Application.routes.draw do
   constraints(Subdomain) do
     root :to => 'organizations#show'
 
+    match '/dashboard', :to => 'users#dashboard', as: 'dashboard'
     match '/calendar' => 'organizations#calendar', :as => :calendar
     match '/edit'=> 'organizations#edit', :as => :edit
     match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
@@ -30,10 +31,15 @@ Organizer::Application.routes.draw do
     resources :category_photos do
       resources :photos
     end
+    resources :working_hours, :only => [:show] do
+      collection do
+        get :self_by_month
+      end
+    end
     resources :workers do
       resources :working_hours do
         collection do
-          get :by_week, :self_by_month
+          get :by_week
         end
       end
       resources :working_days do
@@ -47,7 +53,6 @@ Organizer::Application.routes.draw do
     get ':id', :to => 'pages#show'
   end
 
-  match '/dashboard', :to => 'users#dashboard', as: 'dashboard'
   root :to => 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords", :confirmations => "confirmations" }
   resources :users do

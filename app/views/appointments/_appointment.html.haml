@@ -1,13 +1,14 @@
-%tr
+%tr{:style => (Time.now <= appointment.start ? 'background:green;' : '')}
   - if !defined?(show_client) || show_client
     %td
       - if appointment.user
         = link_to full_user_name( appointment.user, '<br/>' ).html_safe, appointment.user
   %td= appointment.services.pluck(:name).join(', ')
-  %td= Russian.strftime( appointment.start )
-  %td= appointment.cost
-- if current_user
-  %tr
-    %td{ :colspan => 4 }
-      = link_to 'Посмотреть', appointment, :class => 'btn btn-normal'
-      = appointment_links( appointment, ' ' )
+  %td= Russian.strftime( appointment.start, '%d %B %Y в %R' )
+  %td
+    = appointment.cost
+    руб.
+  - if current_user
+    %td
+      = link_to('Посмотреть', appointment, :class => 'btn btn-normal')
+      = appointment_links(appointment, ' ')
