@@ -129,6 +129,7 @@ ru:
       photo:
         photo: Файл
       service:
+        description: Описание
         name: Название
         showing_time: Продолжительность
         cost: Стоимость

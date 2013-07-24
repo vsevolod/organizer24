@@ -6,3 +6,9 @@
       %label.checkbox
         = check_box_tag "service[#{service.id}]", service.id, false
         = service.name
+        - unless service.description.blank?
+          %span.badge.badge-info{id: "service_help_#{service.id}"} ?
+          :javascript
+            $(function(){
+              $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', trigger: 'focus hover'})
+            });
