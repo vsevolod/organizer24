@@ -177,7 +177,7 @@ $('#calendar').fullCalendar({
     '': 'H(:mm)'
   },
   columnFormat: {
-    week: "dd.MM.yyyy '<br/>' dddd",
+    week: "dd.MM.yyyy dddd",
     day:  "dddd",
   },
   titleFormat: {
@@ -213,7 +213,7 @@ $('#calendar').fullCalendar({
     element.attr('data-id', event['data-id'])
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
-      $.each( $('.check_services input:checked').parent(), (id, el) ->
+      $.each( $('.check_services input:checked').next(), (id, el) ->
         text += $(el).text() + '<br/>'
       )
       sas = show_appointment_services(event, {hide_title: true})

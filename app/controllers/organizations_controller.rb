@@ -32,6 +32,8 @@ class OrganizationsController < CompanyController
       else
         render :edit
       end
+    else
+      raise @organization.owner.inspect
     end
   end
 
