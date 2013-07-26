@@ -5,7 +5,6 @@ class ConfirmationsController < Devise::ConfirmationsController
   layout :company
 
   def new
-    raise "S"
     super
   end
 
