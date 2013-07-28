@@ -335,8 +335,9 @@ $('body').on('click', '.close_popover', ->
 
 $('.show_statuses .checkbox input').change ->
   $.get("/main/set_session?key=show_#{$(this).val()}&value=#{$(this).is(':checked')}", ->
-    worker = "worker_id=#{$('#workers input:checked').val()}"
-    $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source).fullCalendar('addEventSource', show_checkboxes(worker))
+    worker = $('#workers input:checked').val()
+    $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source)
+    $('#calendar').fullCalendar('addEventSource', show_checkboxes(worker))
     $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
   )
 
