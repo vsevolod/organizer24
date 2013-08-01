@@ -39,7 +39,9 @@
               = worker.name
       %h3 На что хотите записаться:
       .row-fluid
-        .check_services= render 'services_list', :worker => @presenter.worker, presenter: @presenter
+        .check_services
+          - if @presenter.worker
+            = render 'services_list', :worker => @presenter.worker, presenter: @presenter
           
         .span4.buttons_to_confirm{ :style => 'display:none;' }
           = link_to '#', :class => 'btn btn-success confirm_calendar' do
