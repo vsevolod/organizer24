@@ -1,0 +1,6 @@
+.row-fluid.nested-fields
+  = f.collection_select :service_id, @organization.services, :id, :name
+  = f.input :date_off, as: 'string'
+  %p
+    = link_to_remove_association "Удалить", f, :class => 'btn btn-danger'
+  %hr

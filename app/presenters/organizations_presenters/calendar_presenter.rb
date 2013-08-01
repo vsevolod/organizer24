@@ -38,10 +38,6 @@ module OrganizationsPresenters
       @organization_services ||= @organization.get_services( @current_user.phone ).to_json
     end
 
-    def worker_services
-      @worker_services ||= get_worker.services.not_collections.order(:show_by_owner, :name)
-    end
-
     def organization
       @organization
     end

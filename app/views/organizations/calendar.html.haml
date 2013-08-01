@@ -35,11 +35,11 @@
           - @presenter.enabled_workers.each do |worker|
             %label.radio.span3
               = image_tag worker.photo.url(:thumb), :title => worker.name
-              = radio_button_tag "worker_id", worker.id, worker.id == @presenter.get_worker.id, :check_services => (render 'services_list', :presenter => @presenter, :services => worker.services.not_collections.order(:show_by_owner, :name)).squish
+              = radio_button_tag "worker_id", worker.id, worker.id == @presenter.get_worker.id, :check_services => (render 'services_list', :presenter => @presenter, :worker => worker).squish
               = worker.name
       %h3 На что хотите записаться:
       .row-fluid
-        .check_services= render 'services_list', :services => @presenter.worker_services, presenter: @presenter
+        .check_services= render 'services_list', :worker => @presenter.worker, presenter: @presenter
           
         .span4.buttons_to_confirm{ :style => 'display:none;' }
           = link_to '#', :class => 'btn btn-success confirm_calendar' do

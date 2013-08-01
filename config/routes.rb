@@ -37,6 +37,9 @@ Organizer::Application.routes.draw do
       end
     end
     resources :workers do
+      member do
+        get :services_workers
+      end
       resources :working_hours do
         collection do
           get :by_week

@@ -1,5 +1,7 @@
+- services = worker.services.not_collections.order(:show_by_owner, :name)
 - services = services.where( :show_by_owner => false ) unless @presenter.owner_or_worker?
 - step = (services.size*1.0/3).ceil
+- expired_services = worker.services_workers.can_be_expired
 - services.each_slice( step.zero? ? 1 : step  ).each do |group_services|
   .span3
     - group_services.each do |service|
@@ -11,4 +13,10 @@
           :javascript
             $(function(){
               $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', trigger: 'focus hover'})
+            });
+        - if expired_service = expired_services.find{|ws| ws.service_id == service.id}
+          %span.badge.badge-important{id: "service_expired_#{service.id}"} X
+          :javascript
+            $(function(){
+              $('#service_expired_#{service.id}').popover({placement: 'right', content: 'Запись на услугу прекращается с #{l expired_service.date_off}', trigger: 'focus hover'})
             });

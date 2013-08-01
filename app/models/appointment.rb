@@ -13,6 +13,7 @@ class Appointment < ActiveRecord::Base
   before_save :update_complete_time
   before_validation :check_start_time
   before_validation :cost_time_by_services!
+  before_validation :check_services_on_expire
   after_save :notify_owner, :if => :can_notify_owner?
   after_save :change_start_notification, :if => :start_or_status_changed
 
@@ -150,6 +151,13 @@ class Appointment < ActiveRecord::Base
     def check_start_time
       if ['taken', 'offer', 'approve'].include? self.status
         self.errors[:start] = "не может быть меньше текущего времени" if start <= Time.zone.now
+      end
+    end
+
+    # Проверка сервисов на прекращенные
+    def check_services_on_expire
+      if date_off = self.worker.services_workers.can_be_expired.where(:date_off.lteq => self.start, :service_id.in => self.service_ids).pluck(:date_off).min
+        self.errors[:start] = "не может быть больше, #{date_off}"
       end
     end
 

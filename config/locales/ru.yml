@@ -164,6 +164,9 @@ ru:
         begin_time: Время начала
         end_time: Время конца
         worker: Сотрудник
+      services_worker:
+        date_off: Дата завершения
+        service_id: Сервис
       working_hour:
         week_day: День недели
         begin_time: Время начала

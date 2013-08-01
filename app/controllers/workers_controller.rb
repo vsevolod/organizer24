@@ -15,6 +15,10 @@ class WorkersController < CompanyController
     @worker = @organization.workers.find(params[:id])
   end
 
+  def services_workers
+    @worker = @organization.workers.find(params[:id])
+  end
+
   def create
     @worker = @organization.workers.build( params[:worker] )
     if @worker.save

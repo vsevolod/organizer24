@@ -18,7 +18,9 @@
         %td= image_tag worker.photo.url(:thumb)
         %td= worker.services.map(&:name).join(', ')
         %td
-          = link_to [:edit, worker], :class => 'btn' do
+          = link_to [:edit, worker], :class => 'btn', title: 'Редактировать' do
             .icon-edit
-          = link_to worker, :method => :delete, :class => 'btn btn-danger' do
+          = link_to [:services_workers, worker], :class => 'btn btn-warning', title: 'Настройка сервисов' do
+            .icon-list
+          = link_to worker, :method => :delete, :class => 'btn btn-danger', title: 'Удалить' do
             .icon-trash
