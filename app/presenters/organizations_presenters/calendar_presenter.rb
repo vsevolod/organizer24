@@ -23,7 +23,7 @@ module OrganizationsPresenters
     end
 
     def worker
-      @worker ||= enabled_workers.where(:id => @worker_id).first || ( @current_user ? @current_user.worker : nil)
+      @worker ||= enabled_workers.where(:id => @worker_id).first || (@current_user ? @current_user.worker : nil)
     end
 
     def show_workers
