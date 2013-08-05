@@ -6,7 +6,7 @@ class Smsru
   attr_accessor :sender, :recipient, :text
 
   def initialize( text = '', recipient = nil, sender = '1clickbook' )
-    @options = YAML.load_file('config/smsru.yml')
+    @options = APP_CONFIG['smsru']
     @text = text
     @recipient = recipient || @options['login']
     @sender = sender || @options['login']

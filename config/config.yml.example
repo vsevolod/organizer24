@@ -1,0 +1,8 @@
+production:
+  smsru:
+    api_id: SMS_RU_API_KEY
+    login: LOGIN PHONE
+    password: PASSWORD
+  smtp_gmail:
+    user_name: EMAIL
+    password:  PASSWORD

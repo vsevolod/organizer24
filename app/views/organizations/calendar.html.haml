@@ -17,13 +17,14 @@
     %ul.thumbnails#modal-workers
       - @presenter.enabled_workers.each do |worker|
         %li.span3
-          .thumbnail
-            = image_tag worker.photo.url(:normal), :title => worker.name
-            .caption
-              %p.text-center
-                = link_to worker.name, '#', :class => 'btn btn-success', :data => { :worker_id => worker.id }
+          = link_to '#', :data => { :worker_id => worker.id } do
+            .thumbnail
+              = image_tag worker.photo.url(:normal), :title => worker.name
+              .caption
+                %p.text-center
+                  %button.btn= worker.name
   :javascript
-    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '590px', height: '420px'});
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '#{5+300*@presenter.enabled_workers.size}px', height: '420px'});
 #calendar_show{:class => @presenter.show_workers ? 'hidden-left' : ''}
   -# FIXME change it to form_for
   = form_tag appointments_path, :remote => !current_user.new_record? do

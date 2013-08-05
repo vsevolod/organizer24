@@ -52,6 +52,17 @@ Organizer::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => 'oneclickbook.ru' }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'oneclickbook.ru',
+    user_name:            APP_CONFIG['smtp_gmail']['user_name'],
+    password:             APP_CONFIG['smtp_gmail']['password'],
+    authentication:       'plain',
+    enable_starttls_auto: true
+  }
+
   # Enable threaded mode
   # config.threadsafe!
 

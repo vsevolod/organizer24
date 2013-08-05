@@ -27,7 +27,7 @@ after "deploy:update_code", :precompile
 
 task :copy_config_files, roles => :app do
   run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
-  run "cp #{shared_path}/smsru.yml #{release_path}/config/smsru.yml"
+  run "cp #{shared_path}/config.yml #{release_path}/config/config.yml"
 end
 
 task :add_log_files, roles => :app do
