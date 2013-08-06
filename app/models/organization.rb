@@ -19,6 +19,7 @@ class Organization < ActiveRecord::Base
   has_many :category_photos
   has_many :workers
   has_many :working_hours, :through => :workers
+  has_many :dictionaries
 
 
   validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:name).keys + [nil]

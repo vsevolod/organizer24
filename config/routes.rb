@@ -53,6 +53,7 @@ Organizer::Application.routes.draw do
     end
     resources :pages, :except => [:show]
     resources :services
+    resources :dictionaries
     get ':id', :to => 'pages#show'
   end
 

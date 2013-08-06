@@ -1,0 +1,5 @@
+%h2== Словарь #{@dictionary.name}
+%br/
+= link_to 'Добавить в словарь', new_dictionary_path(dictionary: {parent_id: @dictionary.id}), :class => 'btn btn-success'
+
+= render 'list'

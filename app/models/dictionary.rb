@@ -1,7 +1,9 @@
 class Dictionary < ActiveRecord::Base
   has_ancestry
 
-  validates :name, :uniqueness => { :scope => [:names_depth_cache] }, :presence => true
+  belongs_to :organization
+  validates :name, :uniqueness => { :scope => [:names_depth_cache, :organization_id] }, :presence => true
+  validates :tag, :uniqueness => { :scope => [:organization_id] }, :if => Proc.new{|d| d.tag.presence}
   has_many :organizations, :foreign_key => :activity_id
 
   before_save :cache_ancestry
