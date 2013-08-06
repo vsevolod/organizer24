@@ -5,6 +5,7 @@
   = simple_form_for @worker do |f|
     = f.input :is_enabled
     = f.input :name
+    = f.input :profession
     = f.input :phone
     = f.input :photo, :as => :file
     -#= f.simple_fields_for :services_workers do |sw|

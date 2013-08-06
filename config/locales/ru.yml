@@ -159,6 +159,7 @@ ru:
         is_enabled: Доступен для заказа
         phone: Телефон
         photo: Фотография
+        profession: Профессия
       working_day:
         date: Дата
         begin_time: Время начала
