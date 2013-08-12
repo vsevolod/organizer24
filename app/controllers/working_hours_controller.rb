@@ -42,8 +42,8 @@ class WorkingHoursController < CompanyController
   end
 
   def by_week
-    min_wt = @worker.working_hours.pluck(:begin_time).min.to_i
-    max_wt = @worker.working_hours.pluck(:end_time).max.to_i
+    min_wt = @worker.organization.working_hours.pluck(:begin_time).min.to_i
+    max_wt = @worker.organization.working_hours.pluck(:end_time).max.to_i
     @worker = get_worker
     @periods = []
     ((@start.to_date)..(@end.to_date)).each_with_index do |t, index|

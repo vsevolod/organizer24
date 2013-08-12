@@ -6,8 +6,8 @@
   = link_to organization.name, organization
 
   %h3 Заявки
-  = render 'appointments/list', :appointments => organization.appointments, :show_client => true
+  = render 'appointments/list', :appointments => organization.appointments.paginate(per_page: 30, page: params[:page]), :show_client => true
 
 - if @user.appointments.any?
   %h3 Ваши заявки
-  = render 'appointments/list', :appointments => @user.appointments, :show_client => false
+  = render 'appointments/list', :appointments => @appointments, :show_client => false

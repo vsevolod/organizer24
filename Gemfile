@@ -12,8 +12,9 @@ gem 'has_scope'
 gem 'haml'
 gem 'simple_form'
 gem 'russian'
-gem "ckeditor", "3.7.1"
-gem "paperclip"
+gem 'ckeditor', '3.7.1'
+gem 'paperclip'
+gem 'will_paginate'
 
 #gem 'formtastic'#, '~> 2.1.1'
 gem 'devise'
@@ -63,8 +64,8 @@ group :test do
 end
 
 gem 'jquery-rails', '~> 2.3.0'
-gem "colorbox-rails", :git => "git://github.com/stevo/colorbox-rails.git"
-gem "inherited_resources"
+gem 'colorbox-rails', :git => 'git://github.com/stevo/colorbox-rails.git'
+gem 'inherited_resources'
 
 gem 'daemons'
 gem 'delayed_job_active_record', '~> 0.3.3'
