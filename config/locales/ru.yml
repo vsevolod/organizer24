@@ -137,6 +137,7 @@ ru:
         top_cost: Максимальная стоимость
         organization: Организация
         show_by_owner: Показывать только владельцу
+        category_id: Категория
       services_user:
         service_id: Сервис
         user_id: Пользователь

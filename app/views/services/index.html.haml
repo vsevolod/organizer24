@@ -12,18 +12,22 @@
       %th Продолжительность
       %th Стоимость
   %tbody
-    - @services.order(:is_collection).each do |service|
+    - @services.order(:is_collection).group_by{|s| s.category_id}.each do |category_id, services_by_category|
       %tr
-        %td
-          - if service.is_collection?
-            \+
-          - if service.show_by_owner?
-            \-
-        %td= service.name
-        %td= service.showing_time
-        %td= service.cost
-        %td
-          = link_to [:edit, service] do
-            .icon-edit
-          = link_to service, :method => :delete do
-            .icon-trash
+        %td{colspan: 5}
+          %h3= Dictionary.find_by_id(category_id).try(:name)
+      - services_by_category.each do |service|
+        %tr
+          %td
+            - if service.is_collection?
+              \+
+            - if service.show_by_owner?
+              \-
+          %td= service.name
+          %td= service.showing_time
+          %td= service.cost
+          %td
+            = link_to [:edit, service] do
+              .icon-edit
+            = link_to service, :method => :delete do
+              .icon-trash

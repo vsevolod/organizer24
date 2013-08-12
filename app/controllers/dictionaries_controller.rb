@@ -37,7 +37,7 @@ class DictionariesController < CompanyController
     @dictionary = @organization.dictionaries.find( params[:id] )
     @dictionary.attributes = params[:dictionary]
     if @dictionary.save
-      redirect_to Dictionary
+      redirect_to @dictionary.parent || Dictionary
     else
       render 'edit'
     end

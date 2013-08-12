@@ -1,5 +1,6 @@
 #service
   = simple_form_for @service do |f|
+    = f.input :category_id, collection: @organization.children_category_of('categories')
     = f.hidden_field :is_collection
 
     - if @service.is_collection?

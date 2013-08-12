@@ -58,6 +58,14 @@ class Organization < ActiveRecord::Base
     self.workers.pluck(:phone).push(self.owner.phone)
   end
 
+  def children_category_of(tag)
+    if dictionary = self.dictionaries.where(tag: tag).first
+      dictionary.children
+    else
+      []
+    end
+  end
+
   private
 
     def to_Date( seconds )
