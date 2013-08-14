@@ -34,17 +34,21 @@ Organizer.removeOtherElements = () ->
 
 getEventSources = ->
   worker_id = $('#workers input:checked').val()
-  worker = ""
-  [
-    {
-      url: "/workers/#{worker_id}/working_hours/by_week",
-      borderColor: '#ccc'
-    },
-    {
-      url: show_checkboxes(worker_id),
-      borderColor: '#ccc'
-    }
-  ]
+  console.log(worker_id)
+  if worker_id
+    worker = ""
+    [
+      {
+        url: "/workers/#{worker_id}/working_hours/by_week",
+        borderColor: '#ccc'
+      },
+      {
+        url: show_checkboxes(worker_id),
+        borderColor: '#ccc'
+      }
+    ]
+  else
+    []
 
 show_checkboxes = (worker_id) ->
   params = "/appointments/by_week?worker_id=#{worker_id}"
