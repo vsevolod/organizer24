@@ -11,7 +11,7 @@ class UsersController < CompanyController
   def show
     @user = User.find_by_phone(params[:id]) || User.new(:phone => params[:id])
     redirect_to dashboard_path if current_user == @user || !current_user.owner_or_worker?(@organization)
-    @appointments = @user.appointments_by_phone
+    @appointments = @user.appointments_by_phone.paginate(page: params[:page], per_page: 30)
   end
 
   def check_phone

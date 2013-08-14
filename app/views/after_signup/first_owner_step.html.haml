@@ -1,1 +1,17 @@
-first owner
+%section.strip
+  .container
+    .row
+      .span12
+        %h3 Список мастеров
+.container
+  .row
+    .offset1
+      = simple_form_for(@organization, url: wizard_path) do |f|
+        = f.simple_fields_for :workers do |w|
+          = render 'worker_fields', f: w
+        .links
+          = link_to_add_association 'Добавить мастера', f, :workers, :class => 'btn btn-success'
+        = f.submit 'Продолжить', :class => 'btn btn-primary'
+        = link_to 'Пропустить', next_wizard_path
+        или
+        = link_to 'Вернуться назад', previous_wizard_path

@@ -24,7 +24,6 @@ class OrganizationsController < CompanyController
     if @organization.save
       session[:organization_id] = @organization.id
       redirect_to after_signup_index_path
-      #helper.domain_organization_path(@organization)
     else
       render :new
     end

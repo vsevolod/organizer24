@@ -1,0 +1,20 @@
+= content_for :bottom_js do
+  = javascript_include_tag 'fullcalendar', 'month_calendar'
+
+= f.input :is_enabled
+= f.input :name
+= f.input :profession
+= f.input :phone
+= f.input :photo, :as => :file
+%h3 Список сервисов
+#collections.controls
+  - @organization.services.not_collections.each do |service|
+    %label.checkbox
+      = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
+      = service.name
+- unless f.object.new_record?
+  %h1 Рабочие дни
+  #worker_month_calendar{:style => 'width:500px;'}
+
+%h3 Часы работы
+= render 'workers/working_hours_list', :f => f

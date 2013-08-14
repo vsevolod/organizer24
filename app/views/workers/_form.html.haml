@@ -1,26 +1,5 @@
-= content_for :bottom_js do
-  = javascript_include_tag 'fullcalendar', 'month_calendar'
-
 #worker
   = simple_form_for @worker do |f|
-    = f.input :is_enabled
-    = f.input :name
-    = f.input :profession
-    = f.input :phone
-    = f.input :photo, :as => :file
-    -#= f.simple_fields_for :services_workers do |sw|
-    -#  = render 'services_worker_fields', :f => sw
-    %h3 Список сервисов
-    #collections.controls
-      - @organization.services.not_collections.each do |service|
-        %label.checkbox
-          = check_box_tag "worker[service_ids][]", service.id, @worker.services.include?( service )
-          = service.name
-    - unless @worker.new_record?
-      %h1 Рабочие дни
-      #worker_month_calendar{:style => 'width:500px;'}
-
-    %h3 Часы работы
-    = render 'working_hours_list', :f => f
+    = render 'worker_fields', f: f
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

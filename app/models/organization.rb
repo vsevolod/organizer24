@@ -14,14 +14,16 @@ class Organization < ActiveRecord::Base
   has_many :executors
   has_many :appointments
   has_many :services
-  accepts_nested_attributes_for :services
   has_many :users
   has_many :pages
   has_many :category_photos
   has_many :workers
   has_many :working_hours, :through => :workers
   has_many :dictionaries
+
   accepts_nested_attributes_for :dictionaries
+  accepts_nested_attributes_for :workers
+  accepts_nested_attributes_for :services
 
 
   validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:name).keys + [nil]
@@ -29,7 +31,7 @@ class Organization < ActiveRecord::Base
   validates :activity, :presence => true
   validates :domain, :presence => true, :uniqueness => true
 
-  attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :dictionaries_attributes, :services_attributes, *ACCESSORS
+  attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :dictionaries_attributes, :services_attributes, :workers_attributes, *ACCESSORS
   before_validation :check_domain
 
   def get_services( phone, type = :extend )
