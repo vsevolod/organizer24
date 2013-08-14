@@ -15,6 +15,7 @@ gem 'russian'
 gem 'ckeditor', '3.7.1'
 gem 'paperclip'
 gem 'will_paginate'
+gem 'wicked' # Multistep registration form
 
 #gem 'formtastic'#, '~> 2.1.1'
 gem 'devise'

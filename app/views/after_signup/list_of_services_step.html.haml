@@ -1,0 +1,17 @@
+%section.strip
+  .container
+    .row
+      .span12
+        %h3 Список услуг
+.container
+  .row
+    .offset1
+      = simple_form_for(@organization, url: wizard_path) do |f|
+        = f.simple_fields_for :services do |s|
+          = render 'services/service_fields', f: s
+        .links
+          = link_to_add_association 'Добавить сервис', f, :services, :class => 'btn btn-success', partial: 'services/service_fields'
+        = f.submit 'Продолжить', :class => 'btn btn-primary'
+        = link_to 'Пропустить', next_wizard_path
+        или
+        = link_to 'Вернуться назад', previous_wizard_path

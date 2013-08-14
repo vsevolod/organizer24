@@ -1,6 +1,7 @@
 #coding: utf-8
 class UsersController < CompanyController
   before_filter :authenticate_user!, :except => [:check_phone, :confirm_phone, :confirming_phone, :resend_confirmation_sms]
+  before_filter :skip_when_confirmed, :only => [:confirming_phone, :confirm_phone]
 
   def dashboard
     @user = current_user
@@ -36,33 +37,37 @@ class UsersController < CompanyController
   end
 
   def confirm_phone
-    @user = User.find(params[:id])
-    if @user.confirmed?
-      redirect_to '/'
-    end
   end
 
   def confirming_phone
-    @user = User.find(params[:id])
-    if @user.confirmed?
-      redirect_to '/'
-    else
-      if @user.confirmation_number.to_s == params[:confirmation_number]
-        @user.confirm!
-        @user.appointments.free.each do |appointment|
-          appointment.first_owner_view!
-        end
-        if @user.errors.any?
-          flash[:alert] = @user.errors.full_messages.join('; ')
-          render :action => :confirm_phone
+    if @user.confirmation_number.to_s == params[:confirmation_number]
+      @user.confirm!
+      @user.appointments.free.each do |appointment|
+        appointment.first_owner_view!
+      end
+      if @user.errors.any?
+        flash[:alert] = @user.errors.full_messages.join('; ')
+        render :action => :confirm_phone
+      else
+        sign_in @user
+        if !Subdomain.matches?(request) && @user.is_admin?
+          redirect_to '/organizations/new'
         else
-          sign_in @user
           redirect_to '/'
         end
-      else
-        redirect_to [:confirm_phone, @user], alert: 'Введен не верный код подтверждения'
       end
+    else
+      redirect_to [:confirm_phone, @user], alert: 'Введен не верный код подтверждения'
     end
   end
+
+  private
+
+    def skip_when_confirmed
+      @user = User.find(params[:id])
+      if @user.confirmed?
+        redirect_to '/'
+      end
+    end
 
 end

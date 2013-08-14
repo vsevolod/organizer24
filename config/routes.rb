@@ -57,6 +57,8 @@ Organizer::Application.routes.draw do
     get ':id', :to => 'pages#show'
   end
 
+  resources :after_signup
+
   root :to => 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords", :confirmations => "confirmations" }
   resources :users do

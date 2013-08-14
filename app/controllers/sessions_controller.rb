@@ -20,6 +20,14 @@ class SessionsController < Devise::SessionsController
 
   private
 
+    def after_sign_in_path_for(resource)
+      if current_user.is_admin? && !Subdomain.matches?(request)
+        '/organizations/new'
+      else
+        request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+      end
+    end
+
     def prepare_phone
       params[:user][:phone] = '+7'+params[:user][:phone].sub(/^8/, '').sub(/^\+7/, '')
     end

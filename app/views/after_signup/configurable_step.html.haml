@@ -1,0 +1,13 @@
+%section.strip
+  .container
+    .row
+      .span12
+        %h3 Первичные настройки
+.container
+  .row
+    .offset1
+      = simple_form_for(@organization, url: wizard_path) do |f|
+        - @organization.user_notify_text ||= DEFAULT_USER_NOTIFY
+        = render 'organizations/configuration', f: f
+        .form-actions
+          = f.submit "Дальше", :class => 'btn'

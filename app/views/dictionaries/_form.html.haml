@@ -1,8 +1,7 @@
 #dictionary
   = simple_form_for @dictionary do |f|
     = f.hidden_field :parent_id
-    = f.input :name
-    = f.input :tag
+    = render 'dictionary_fields', f: f
 
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

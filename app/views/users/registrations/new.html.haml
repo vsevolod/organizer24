@@ -1,19 +1,22 @@
-%section.strip
-  .container
-    .row
-      .span12
-        %h3 Регистрируем организацию
-/ Page Container
 .container
-  / Features Grid
   .row
-    .offset1
+    &nbsp;
+  .row
+    .span5.well
+      %h3 Создать нового пользователя
+      - resource.role = 'admin'
       = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
         = devise_error_messages!
-        = render "#{f.object.current_step}_step", :f => f
+        = f.input :role, :as => :hidden
+        = f.input :lastname
+        = f.input :firstname
+        = f.input :email
+        = f.input :phone
+        = f.input :password, :as => :password
+        = f.input :password_confirmation, :as => :password
 
         .form-actions
-          = f.submit f.object.last_step? ? "Завершить" : "Дальше", :class => 'btn'
-          - unless f.object.first_step?
-            = f.submit "Назад", :name => 'back_button'
-      = render "users/links"
+          = f.submit 'Зарегистрироваться', class: 'btn btn-primary'
+    .span5.well
+      %h3 Уже зарегистрированы?
+      = render '/users/sessions/new_form'

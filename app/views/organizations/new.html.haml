@@ -1,0 +1,14 @@
+%section.strip
+  .container
+    .row
+      .span12
+        %h3 Регистрируем организацию
+.container
+  .row
+    .offset1
+      = simple_form_for(@organization) do |f|
+        = f.input :name
+        = f.input :domain
+        = f.input :activity_id, :collection => Dictionary.find_by_tag('activity').try(:children), :include_blank => false, :label => false
+        .form-actions
+          = f.submit "Дальше", :class => 'btn'

@@ -1,13 +1,14 @@
 #coding: utf-8
 
 #Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб. Адрес: ул. Алексеева 29-6
+DEFAULT_USER_NOTIFY = <<-TEXT
+  Здравствуйте <ИМЯ>! В <ДЕНЬ НЕДЕЛИ> <ДАТА НАЧАЛА> Вы записаны к мастеру <МАСТЕР> на следующие услуги: <СПИСОК УСЛУГ>. Продолжительность приема: <ПРОДОЛЖИТЕЛЬНОСТЬ>, стоимость: <СТОИМОСТЬ> руб. Адрес: ул.Алексеева 29-6 Телефон: <ТЕЛЕФОН МАСТЕРА> Сайт: depilate.ru
+TEXT
 
 # Функция шаблонизатор. Переделывает шаблоны по теме:
 # 1) Название выбранной темы
 # 2) Текст шаблона
 # 3) Динамические параметры для шаблона
-
-USER_NOTIFY = "Здравствуйте <ИМЯ>! В <ДЕНЬ НЕДЕЛИ> <ДАТА НАЧАЛА> Вы записаны на следующие услуги: <СПИСОК УСЛУГ>. Продолжительность приема: <ПРОДОЛЖИТЕЛЬНОСТЬ>, стоимость: <СТОИМОСТЬ> руб."
 
 def themed_text(theme, text, options)
   case theme
@@ -17,6 +18,7 @@ def themed_text(theme, text, options)
 end
 
 def user_notify(text, appointment)
+  text ||= DEFAULT_USER_NOTIFY
   { '<ИМЯ>' => appointment.firstname,
     '<ФАМИЛИЯ>' => appointment.lastname,
     '<ДЕНЬ НЕДЕЛИ>' => Organization::GENITIVE_WEEK_DAYS[appointment.start.wday],

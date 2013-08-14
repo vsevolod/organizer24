@@ -1,8 +1,9 @@
 # coding: utf-8
 class OrganizationsController < CompanyController
-  skip_before_filter :find_organization, :only => [:index]
+  skip_before_filter :find_organization, :only => [:index, :new, :create]
   add_breadcrumb 'На главную', '/', :except => [:index, :show]
   before_filter :redirect_if_not_owner, :only => [:edit, :update]
+  before_filter :need_to_login, only: [:new, :create]
 
   def index
     @activities = Dictionary.find_by_tag('activity').try(:children)
@@ -10,6 +11,23 @@ class OrganizationsController < CompanyController
 
   def show
     @category_photos = @organization.category_photos.joins(:photos).uniq
+  end
+
+  def new
+    @organization = Organization.new
+    render layout: 'application'
+  end
+
+  def create
+    @organization = Organization.new(params[:organization])
+    @organization.owner = current_user
+    if @organization.save
+      session[:organization_id] = @organization.id
+      redirect_to after_signup_index_path
+      #helper.domain_organization_path(@organization)
+    else
+      render :new
+    end
   end
 
   def calendar

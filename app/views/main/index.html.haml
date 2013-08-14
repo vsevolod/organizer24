@@ -8,6 +8,10 @@
           = link_to new_user_registration_path, :class => 'btn' do
             Зарегистрировать организацию
             %i.icon.icon-caret-right
+          - if current_user
+            = link_to destroy_user_session_path, :method => :delete, class: 'btn' do
+              %i.icon-off
+              Выход
 = flash_messages
 / Page Container
 .container

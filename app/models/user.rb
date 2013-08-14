@@ -10,17 +10,15 @@ class User < ActiveRecord::Base
   has_many :services_users, :foreign_key => :phone, :primary_key => :phone
   accepts_nested_attributes_for :my_organization
 
-  validates_presence_of :phone, :firstname, :lastname, :if => :first_step?
+  validates_presence_of :phone, :firstname, :lastname
   validates_uniqueness_of :phone
-  validates :email, :presence => { :if => :email_changed_and_first_admin_step? }, :format => { :with => /\A[^@]+@[^@]+\z/, :if => :email_changed_and_first_admin_step? }
+  validates :email, :presence => { :if => :is_admin? }, :format => {:with => /\A[^@]+@[^@]+\z/}
 
-  validates_format_of :phone, :with => /^[\d\W]+$/, :allow_blank => true, :if => lambda{|u| u.phone_changed? && u.first_step? }
+  validates_format_of :phone, :with => /^[\d\W]+$/
 
-  validates_presence_of :password, :if => :first_step?
-  validates_confirmation_of :password, :if => :first_step?
-  validates_length_of :password, :within => 3..100, :allow_blank => true, :if => :first_step?
-
-  validates_associated :my_organization, :if => lambda{ |u| u.steps.index(u.current_step) >= 2 }
+  validates_presence_of :password
+  validates_confirmation_of :password
+  validates_length_of :password, :within => 3..100, :allow_blank => true
   before_save :check_phone
 
   # Include default devise modules. Others available are:
@@ -53,23 +51,6 @@ class User < ActiveRecord::Base
     self.current_step = steps[steps.index(current_step)-1]
   end
 
-  def first_step?
-    self.current_step == steps.first
-  end
-
-  # FIXME надо проверять на == admin, а не != client
-  def first_admin_step?
-    self.role != 'client' && self.current_step == steps.first
-  end
-
-  def email_changed_and_first_admin_step?
-    email_changed? && first_admin_step?
-  end
-
-  def last_step?
-    self.current_step == steps.last
-  end
-
   def all_valid?
     steps.all? do |step|
       self.current_step = step
@@ -95,6 +76,10 @@ class User < ActiveRecord::Base
       appointment.cost_time_by_services!
       appointment.save
     end
+  end
+
+  def is_admin?
+    self.role == 'admin'
   end
 
   private
