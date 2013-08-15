@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   ROLES = %w{admin client}
 
   has_one :my_organization, :class_name => "Organization", :foreign_key => :owner_id, :dependent => :destroy, :validate => false
-  has_one :worker, :primary_key => 'phone', :foreign_key => 'phone'
+  has_many :workers, :primary_key => 'phone', :foreign_key => 'phone'
   has_many :organizations
   has_many :appointments
   has_many :appointments_by_phone, :class_name => "Appointment", :foreign_key => :phone, :primary_key => :phone
@@ -62,8 +62,16 @@ class User < ActiveRecord::Base
     self.my_organization == organization
   end
 
+  def worker(organization = nil)
+    if organization
+      self.workers.where(organization_id: organization.id).first
+    else
+      self.workers.first
+    end
+  end
+
   def worker?( organization )
-    self.worker && self.worker.organization == organization
+    self.worker(organization)
   end
 
   def owner_or_worker?(organization)

@@ -114,7 +114,7 @@ class Appointment < ActiveRecord::Base
       end
     end
     if !text.blank? && !self.organization.owner_phones.include?(self.phone) # Не уведомляем если на телефон мастера
-      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => self.worker.try(:phone) || organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
+      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => self.worker(organization).try(:phone) || organization.owner.phone }, 'notify_owner' ), :run_at => Time.zone.now
     end
   end
 

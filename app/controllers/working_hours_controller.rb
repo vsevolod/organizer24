@@ -15,7 +15,7 @@ class WorkingHoursController < CompanyController
     @total_appointments = if current_user.owner? @organization
                             @organization.appointments
                           elsif current_user.worker? @organization
-                            current_user.worker.appointments
+                            current_user.worker(@organization).appointments
                           end
     @appointments = (@total_appointments || current_user.appointments.where(:organization_id => @organization.id).where( :status.in => %w{approve offer taken} )).where(:start.gteq => @start, :start.lteq => @end)
     @appointments.each do |appointment|

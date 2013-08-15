@@ -30,15 +30,16 @@
   = form_tag appointments_path, :remote => !current_user.new_record? do
     = hidden_field_tag :start
     %section#second
-      %h3 Выберите мастера
-      .row-fluid#workers
-        .span8
-          - @presenter.enabled_workers.each do |worker|
-            %label.radio.span3
-              = image_tag worker.photo.url(:thumb), :title => worker.name
-              = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (render 'services_list', :presenter => @presenter, :worker => worker).squish
-              %p= worker.name
-              %b= worker.profession
+      %div{ class: @presenter.enabled_workers.size == 1 ? 'hide' : ''}
+        %h3 Выберите мастера
+        .row-fluid#workers
+          .span8
+            - @presenter.enabled_workers.each do |worker|
+              %label.radio.span3
+                = image_tag worker.photo.url(:thumb), :title => worker.name
+                = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (render 'services_list', :presenter => @presenter, :worker => worker).squish
+                %p= worker.name
+                %b= worker.profession
       %h3 На что хотите записаться:
       .row-fluid
         .check_services
