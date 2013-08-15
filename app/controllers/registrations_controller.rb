@@ -6,10 +6,15 @@ class RegistrationsController < Devise::RegistrationsController
 
   def new
     resource = build_resource
-    resource.role = 'client'
-    resource.current_step = 1
-    resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
-    render :action => :edit, :layout => params[:remote] == 'true' ? false : company
+    if defined?(@organization)
+      resource.role = 'client'
+      resource.current_step = 1
+      resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
+      render :action => :edit, :layout => params[:remote] == 'true' ? false : company
+    else
+      resource.role = 'admin'
+      respond_with resource
+    end
   end
 
   def create

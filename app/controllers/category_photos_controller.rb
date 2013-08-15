@@ -53,7 +53,7 @@ class CategoryPhotosController < CompanyController
   private
 
     def find_ancestry_dictionaries
-      @ancestry_category_photos = ancestry_options(current_user.my_organization.category_photos.order( 'name')) {|i| "#{'-' * i.depth} #{i.name}" }
+      @ancestry_category_photos = ancestry_options((current_user.my_organization || current_user.worker.organization).category_photos.order( 'name')) {|i| "#{'-' * i.depth} #{i.name}" }
     end
 
 end

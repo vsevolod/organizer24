@@ -1,5 +1,5 @@
 - {'Категории деятельности' => 'categories'}.each_pair do |name, tag|
-  - next if @organization.dictionaries.where(name: name, tag: tag)
+  - next unless @organization.dictionaries.where(name: name, tag: tag).count.zero?
   - @organization.dictionaries.build(name: name, tag: tag)
 %section.strip
   .container
