@@ -47,7 +47,10 @@ class SmsJob < Struct.new(:options, :sms_type)
       user = User.find(options[:user_id])
       sms.recipient = user.phone
       sms.text = "Ваш код подтверждения: #{user.confirmation_number}"
-    when 'notify_owner'
+    when 'notify_owner' # TODO deprecated after 01.10.2013!
+      sms.recipient = options[:phone]
+      sms.text = options[:text]
+    when 'simple_notify'
       sms.recipient = options[:phone]
       sms.text = options[:text]
     end

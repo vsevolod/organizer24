@@ -1,6 +1,8 @@
 %h2 Забыли свой пароль?
 = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
   = devise_error_messages!
+  Введите свой Email или Телефон:
   = f.input :email
+  = f.input :phone, :required => false
   %div= f.submit "Выслать инструкцию по восстановлению пароля", class: 'btn'
 = render "users/links"

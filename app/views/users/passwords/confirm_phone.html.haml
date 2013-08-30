@@ -1,0 +1,13 @@
+.container
+  .row
+    &nbsp;
+  .row
+    .span10.well
+      %h2 Подтверждение телефона
+
+      На указанный вами телефон был отправлен секретный код. Введите его для того, чтобы перейти к восстановлению пароля
+      = form_tag edit_password_url(@user), method: :get do
+        = text_field_tag :reset_password_token
+
+        .form-actions
+          = submit_tag "Подтвердить", :class => 'btn btn-primary'

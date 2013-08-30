@@ -1,3 +1,4 @@
+#coding: utf-8
 class User < ActiveRecord::Base
 
   ROLES = %w{admin client}
@@ -88,6 +89,18 @@ class User < ActiveRecord::Base
 
   def is_admin?
     self.role == 'admin'
+  end
+
+  def self.send_reset_password_instructions_by_phone(options)
+    if user = self.find_by_phone(options[:phone])
+      user.reset_password_token = Random.new.rand(100000..999999)
+      user.reset_password_sent_at = Time.now.utc
+      user.save(:validate => false)
+      Delayed::Job.enqueue SmsJob.new({:text => "Номер для восстановления пароля: #{user.reset_password_token}", :phone => user.phone}, 'simple_notify' ), :run_at => Time.zone.now
+      user
+    else
+      User.new(options)
+    end
   end
 
   private

@@ -24,7 +24,6 @@ class UsersController < CompanyController
   end
 
   # TODO move to confirmation controller
-
   def resend_confirmation_sms
     @user = User.find(params[:id])
     if Time.zone.now > @user.updated_at + 1.minute
