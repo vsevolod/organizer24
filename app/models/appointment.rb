@@ -108,6 +108,9 @@ class Appointment < ActiveRecord::Base
       if status_changed?
         translate = Proc.new{ |_state| I18n.t "activerecord.attributes.appointment.status.#{_state}" }
         text += "Статус записи #{self.fullname} (#{self.phone}) изменился. Был \"#{translate.call self.status_was}\", стал \"#{translate.call self.status}\""
+        if self.status == 'cancel_client'
+          text+= ". Время: #{Russian.strftime self.start, '%d %B %R'}"
+        end
       end
       if cost_changed? || showing_time_changed?
         text += "Список услуг записи #{self.fullname} (#{self.phone}) изменился: #{services.order(:name).pluck(:name).join(', ')}"
