@@ -92,7 +92,7 @@ class Appointment < ActiveRecord::Base
   # Может ли пользователь редактировать конкретную запись?
   def editable_by?(edit_user)
     edit_user.owner_or_worker?( self.organization )  ||
-    self.user == edit_user && self.offer?  ||
+    self.user_by_phone == edit_user && self.offer?  ||
     self.user.owner?( self.organization )  && self.phone == edit_user.phone
   end
 

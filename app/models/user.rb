@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :phone, :firstname, :lastname
   validates_uniqueness_of :phone
-  validates :email, :presence => { :if => :is_admin? }, :format => {:with => /\A[^@]+@[^@]+\z/}
+  validates :email, :presence => { :if => :is_admin? }, :format => {:with => /\A[^@]+@[^@]+\z/, :if => :is_admin?}
 
   validates_format_of :phone, :with => /^[\d\W]+$/
 
