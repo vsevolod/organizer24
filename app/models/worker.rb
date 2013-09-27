@@ -7,9 +7,9 @@ class Worker < ActiveRecord::Base
   has_many :working_hours
   has_many :appointments
 
-  accepts_nested_attributes_for :services_workers
-  accepts_nested_attributes_for :working_days
-  accepts_nested_attributes_for :working_hours, :reject_if => :all_blank
+  accepts_nested_attributes_for :services_workers, allow_destroy: true
+  accepts_nested_attributes_for :working_days, allow_destroy: true
+  accepts_nested_attributes_for :working_hours, :reject_if => :all_blank, allow_destroy: true
 
   validates :name,  :presence => true
   validates :phone, :presence => true
