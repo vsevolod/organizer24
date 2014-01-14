@@ -249,17 +249,17 @@ $('#calendar').fullCalendar({
     element = $(jsEvent.currentTarget)
     popup_text = show_appointment_services(event, {})
     if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
-      popup_text += '<a class="btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Изменить запись</a>'
-      popup_text += '<a class="btn btn-warning move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt" />Перенести запись</a><br/>'
+      popup_text += '<a class="btn-block btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Изменить запись</a>'
+      popup_text += '<a class="btn-block btn btn-info move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-time icon-white" />Перенести запись</a>'
     if event['is_owner']
-      popup_text += '<a class="btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt" />Изменить время</a><br/>'
-      popup_text += '<a class="btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt" />Настройка сервисов</a><br/>'
+      popup_text += '<a class="btn-block btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время</a>'
+      popup_text += '<a class="btn-block btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Настройка сервисов</a>'
       <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
-      popup_text += '<a data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a><br/>'
+      popup_text += '<a data-method="post" class="btn-block btn legend-<%=state%>" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
       <% end %>
     else
       if event['data-inner-class'] == 'legend-your-offer'
-        popup_text += '<a rel="nofollow" data-method="post" class="btn btn-warning" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove"/>Отменить запись</a><br/>'
+        popup_text += '<a rel="nofollow" data-method="post" class="btn-block btn btn-danger" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove icon-white"/>Отменить запись</a><br/>'
     if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
       Organizer.destroy_all_popovers()
       element.popover( {
