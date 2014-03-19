@@ -1,0 +1,14 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title= t "site.name"
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = stylesheet_link_tag "application", "themes/edge/font-awesome", "themes/edge/theme.css", "http://fonts.googleapis.com/css?family=Noto+Serif"
+    /[if lt IE 9]
+      <link rel="stylesheet" href="/assets/themes/edge/font-awesome-ie7.css">
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    = csrf_meta_tags
+    = yield :js
+  %body{ :class => "#{params[:controller]}_#{params[:action]}".gsub('/','_')}
+    vk

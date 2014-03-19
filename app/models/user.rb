@@ -1,5 +1,6 @@
 #coding: utf-8
 class User < ActiveRecord::Base
+  include ActiveModel::Validations
 
   ROLES = %w{admin client}
 

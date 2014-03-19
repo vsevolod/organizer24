@@ -25,6 +25,7 @@ class SmsJob < Struct.new(:options, :sms_type)
       working_hours = @organization.working_hours.order(:week_day)
       next_working_hour = working_hours.where(:week_day.gt => Date.today.cwday).first || working_hours.first
       next_day = Date.today + ( (next_working_hour.week_day - Date.today.cwday + 7)%7 ).day # Следующий день. когда надо уведомлять
+      next_day += 1.day if next_day == Date.today
       next_time = (next_day.to_time_in_current_zone + next_working_hour.end_time) + 1.hour  # Дата и время для уведомления
       unless options[:except_ids]
         Delayed::Job.enqueue SmsJob.new( { :organization_id => options[:organization_id] }, 'day_report' ), :run_at => next_time
