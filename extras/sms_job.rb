@@ -7,6 +7,7 @@ class SmsJob < Struct.new(:options, :sms_type)
 
   def perform
     sms = Smsru.new( ) #@appointment.phone, @organization.user.phone
+    notification = Notification.new(notification_type: 'sms')
     case sms_type
     when 'day_report'
       @organization = Organization.find(options[:organization_id])
@@ -17,6 +18,9 @@ class SmsJob < Struct.new(:options, :sms_type)
       today = Time.zone.now.at_beginning_of_day
       @appointments = @worker.appointments.where(:start.gteq => today, :start.lteq => today+1.day).where( :status => ['complete', 'lated'] )
       sms.recipient = @worker.phone
+      notification.user = @worker.user
+      notification.worker = @worker
+      notification.organization = @organization
       sms.text = "За сегодня (#{Russian.strftime(today, "%d.%m.%y")}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
       if today.to_date == today.to_date.at_end_of_month
         @appointments = @worker.appointments.where(:start.gteq => today.at_beginning_of_month, :start.lteq => today.at_end_of_month).where( :status => ['complete', 'lated'] )
@@ -38,6 +42,9 @@ class SmsJob < Struct.new(:options, :sms_type)
       Time.zone = Organization.joins(:appointments).where( :appointments => { :id => options[:appointment_id] } ).first.timezone
       @appointment = Appointment.find( options[:appointment_id] )
       @organization = @appointment.organization
+      notification.worker = @appointment.worker
+      notification.user = @appointment.user_by_phone
+      notification.organization = @organization
       sms.recipient = @appointment.phone
       sms.text = themed_text( :user_notify, @organization.user_notify_text, @appointment )
       case @organization.domain
@@ -47,6 +54,8 @@ class SmsJob < Struct.new(:options, :sms_type)
     when 'confirmation_number'
       user = User.find(options[:user_id])
       sms.recipient = user.phone
+      notification.user = user
+      notification.organization = user.find_organization
       sms.text = "Ваш код подтверждения: #{user.confirmation_number}"
     when 'notify_owner' # TODO deprecated after 01.10.2013!
       sms.recipient = options[:phone]
@@ -55,6 +64,12 @@ class SmsJob < Struct.new(:options, :sms_type)
       sms.recipient = options[:phone]
       sms.text = options[:text]
     end
+    notification.user ||= User.find_by_phone(options[:phone])
+    notification.worker ||= notification.user.worker
+    notification.organization ||= notification.user.find_organization
+    notification.cost, notification.length = sms.get_cost
+    notification.save
+    sms.notification = notification
     sms.send
   end
 end

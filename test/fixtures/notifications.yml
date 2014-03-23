@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  worker: 
+  organization: 
+  cost: 1.5
+  status: MyString
+  type: 
+
+two:
+  user: 
+  worker: 
+  organization: 
+  cost: 1.5
+  status: MyString
+  type: 

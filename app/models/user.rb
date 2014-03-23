@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
     self.my_organization == organization
   end
 
+  def find_organization
+    self.my_organization || (self.worker || self.appointments.first).try(:organization)
+  end
+
   def worker(organization = nil)
     if organization
       self.workers.where(organization_id: organization.id).first
