@@ -31,6 +31,8 @@ Organizer::Application.routes.draw do
     resources :category_photos do
       resources :photos
     end
+    resources :notifications, only: [:index]
+    resources :codes, except: [:show]
     resources :working_hours, :only => [:show] do
       collection do
         get :self_by_month

@@ -1,0 +1,18 @@
+%h1 Уведомления
+
+= form_tag notifications_path, method: :get do
+  %fieldset
+    %label Выберите период
+    = hidden_field_tag :label, 0
+    = text_field_tag :from, params[:from], placeholder: 'от'
+    = text_field_tag :to, params[:to], placeholder: 'до'
+    = submit_tag 'Выбрать', class: 'btn btn-primary'
+
+- @notifications.each do |notification|
+  %h2
+    = notification.worker.try(:name)
+  == Было отправлено сообщений: #{notification.count} шт.
+  %br/
+  == Общей длиной: #{notification.length} смс
+  %br/
+  == На сумму: #{notification.total_cost} руб.

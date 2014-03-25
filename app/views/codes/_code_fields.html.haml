@@ -1,0 +1,4 @@
+= f.collection_select :worker_id, @workers, :id, :name
+= f.input :number
+= f.input :cost
+= f.input :status, as: :select, collection: Code.aasm_states.map{|state| [t( "activerecord.attributes.code/aasm_states.#{state.name}"), state.name.to_s]}, include_blank: false

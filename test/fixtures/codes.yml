@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  number: MyString
+  worker: 
+  cost: 1.5
+  status: MyString
+  user: 
+
+two:
+  number: MyString
+  worker: 
+  cost: 1.5
+  status: MyString
+  user: 

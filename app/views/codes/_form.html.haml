@@ -1,0 +1,5 @@
+#code
+  = simple_form_for @code do |f|
+    = render 'code_fields', f: f
+    .form-actions
+      = f.submit "Завершить", :class => 'btn btn-primary'

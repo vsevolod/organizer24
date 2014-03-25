@@ -24,7 +24,7 @@
               %p.text-right
                 = worker.profession
   :javascript
-    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '#{5+300*@presenter.enabled_workers.size}px', height: '460px'});
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '#{5+300*@presenter.enabled_workers.size}px', height: '480px'});
 #calendar_show{:class => @presenter.show_workers ? 'hidden-left' : ''}
   -# FIXME change it to form_for
   = form_tag appointments_path, :remote => !current_user.new_record? do
