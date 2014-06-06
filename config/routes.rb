@@ -31,7 +31,12 @@ Organizer::Application.routes.draw do
     resources :category_photos do
       resources :photos
     end
-    resources :notifications, only: [:index]
+    resources :notifications, only: [:index] do
+      collection do
+        get :sms
+        post :change_sms
+      end
+    end
     resources :codes, except: [:show]
     resources :working_hours, :only => [:show] do
       collection do

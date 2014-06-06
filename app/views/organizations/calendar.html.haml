@@ -64,6 +64,8 @@
         .row-fluid
           #phone_results
       - else
+        .span4
+          = text_field_tag 'appointment[code]', '', placeholder: 'сертификат'
         = hidden_field_tag "user[phone]", current_user.phone
 
   .row-fluid

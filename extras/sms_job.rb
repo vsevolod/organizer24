@@ -24,7 +24,7 @@ class SmsJob < Struct.new(:options, :sms_type)
       sms.text = "За сегодня (#{Russian.strftime(today, "%d.%m.%y")}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
       if today.to_date == today.to_date.at_end_of_month
         @appointments = @worker.appointments.where(:start.gteq => today.at_beginning_of_month, :start.lteq => today.at_end_of_month).where( :status => ['complete', 'lated'] )
-        sms.text += "\nЗа месяц ваш зароботок составил: #{@appointments.sum(:cost)} р."
+        sms.text += "\nЗа месяц ваш заработок составил: #{@appointments.sum(:cost)} р."
       end
       working_hours = @organization.working_hours.order(:week_day)
       next_working_hour = working_hours.where(:week_day.gt => Date.today.cwday).first || working_hours.first

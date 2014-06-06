@@ -3,7 +3,7 @@ class CodesController < CompanyController
 
   before_filter :redirect_if_not_owner
   add_breadcrumb 'На главную', '/'
-  add_breadcrumb 'Коды', Code, :except => [:index]
+  add_breadcrumb 'Сертификаты', Code, :except => [:index]
 
   def index
     @codes = @organization.codes.order(:status)

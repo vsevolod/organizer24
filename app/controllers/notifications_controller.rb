@@ -15,4 +15,18 @@ class NotificationsController < CompanyController
     end
   end
 
+  def sms
+    @sms = @organization.sms_ru || @organization.build_sms_ru
+  end
+
+  def change_sms
+    @sms = @organization.sms_ru || @organization.build_sms_ru
+    @sms.attributes = params[:sms_ru]
+    if @sms.save
+      redirect_to action: :index, notice: 'Данные успешно изменены'
+    else
+      render :sms
+    end
+  end
+
 end

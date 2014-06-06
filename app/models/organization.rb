@@ -11,6 +11,7 @@ class Organization < ActiveRecord::Base
 
   belongs_to :activity, :class_name => "Dictionary"
   belongs_to :owner, :class_name => "User"
+  has_one  :sms_ru
   has_many :notifications, dependent: :destroy
   has_many :codes, dependent: :destroy
   has_many :appointments

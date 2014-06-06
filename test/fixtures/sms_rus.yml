@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  organization: 
+  sender: MyString
+  api_id: MyString
+
+two:
+  organization: 
+  sender: MyString
+  api_id: MyString

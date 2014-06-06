@@ -7,7 +7,7 @@ class Code < ActiveRecord::Base
   attr_accessible :cost, :number, :status, :worker_id
 
   validates :cost, presence: true
-  validates :number, presence: true, uniqueness: true
+  validates :number, presence: true, :uniqueness => { :scope => [:organization_id] }
 
   aasm :column => :status do
     state :created, initial: true # Создан
