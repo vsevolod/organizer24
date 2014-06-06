@@ -1,5 +1,7 @@
 %ul.nav
   = yield :nav_bar
+  - if current_user && !current_user.new_record? && current_user.owner_or_worker?(@organization)
+    = link_to "СМС: #{@organization.sms_ru.try(:balance)} р.", '/notifications', class: 'brand'
   - if @organization.show_photogallery? || current_user && (current_user.owner_or_worker?(@organization))
     %li
       = link_to "/category_photos" do

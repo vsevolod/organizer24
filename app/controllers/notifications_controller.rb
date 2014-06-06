@@ -16,7 +16,7 @@ class NotificationsController < CompanyController
   end
 
   def sms
-    @sms = @organization.sms_ru || @organization.build_sms_ru
+    @sms = @organization.sms_ru || @organization.build_sms_ru(phone: current_user.phone, sender: current_user.phone)
   end
 
   def change_sms

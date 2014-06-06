@@ -162,6 +162,8 @@ ru:
       sms_ru:
         sender: Отправитель
         api_id: Ваш api_id
+        phone: Телефон по умолчанию
+        translit: Отправлять смс транслитом
       user:
         confirmation_number: Проверочное число
         email: E-mail

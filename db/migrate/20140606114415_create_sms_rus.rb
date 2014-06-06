@@ -4,6 +4,7 @@ class CreateSmsRus < ActiveRecord::Migration
       t.references :organization
       t.string :sender
       t.string :api_id
+      t.string :phone
 
       t.timestamps
     end

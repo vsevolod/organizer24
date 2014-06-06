@@ -13,9 +13,16 @@ class NotificationJob < Struct.new(:notification_id, :options)
   end
 
   def check
-    status = Smsru.check_sms_status(@options[:id])
+    sms = Smsru.new
+    sms.set_notification(@notification)
+    status = sms.check_sms_status(@options[:id])
     case status
     when 103
+      if @notification.organization && @notification.organization.sms_ru
+        if new_balance = sms.get_balance
+          @notification.organization.sms_ru.update_attribute(:balance, new_balance)
+        end
+      end
       @notification.completed!
     when 104..211, 300..302
       @notification.canceled!

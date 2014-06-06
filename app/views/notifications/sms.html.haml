@@ -1,5 +1,7 @@
 = simple_form_for @sms, url: [:change_sms, :notifications], method: :post do |f|
   = f.input :sender, hint: link_to('Подробнее', 'http://oneclickbook.sms.ru/?panel=mass&subpanel=senders', target: :blank)
   = f.input :api_id, hint: link_to('Подробнее', 'http://oneclickbook.sms.ru/?panel=settings&subpanel=api', target: :blank)
+  = f.input :phone
+  = f.input :translit
   .form-actions
     = f.submit class: 'btn btn-primary'
