@@ -1,0 +1,15 @@
+#top-menu.media
+  - if current_user && !current_user.new_record? && current_user.owner_or_worker?(@organization)
+    .pull-left.tm-icon
+      = link_to '/notifications' do
+        %i.sa-top-message
+        %i.n-count.animated
+          = @organization.sms_ru.try(:balance)
+          руб.
+        %span СМС уведомления
+  #time.pull-right
+    %span#hours
+    \:
+    %span#min
+    \:
+    %span#sec

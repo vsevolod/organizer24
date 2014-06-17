@@ -1,0 +1,19 @@
+%hr/
+.block-area
+  .calendar-widget
+    #calendar
+.block-area
+  - if @presenter.owner_or_worker?
+    %h3.block-title Статусы
+    %ul.list-unstyled#third.show_statuses
+      - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
+        %li.m-b-10
+          %label
+            = check_box_tag :state, state, (session["show_#{state}"] == 'false' ? nil : 1)
+            = t "activerecord.attributes.appointment.status.#{state}"
+          -#%small{class: "itemDate text-muted m-l-10 legend legend-#{state}"
+  - else
+    %br/
+    %br/
+    %br/
+    %br/

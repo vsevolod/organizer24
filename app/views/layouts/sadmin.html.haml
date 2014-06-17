@@ -1,0 +1,24 @@
+!!!
+%html{ :lang => I18n.locale }
+  %head
+    %meta{content: "width=device-width, initial-scale=1.0, maximum-scale=1.0", name: "viewport"}/
+    %title= @organization.name
+    = stylesheet_link_tag "themes/sadmin"
+    = csrf_meta_tags
+    = yield :js
+  %body{id: current_user && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'skin-blur-violate'}
+    %header#header.media
+      %a#menu-toggle{href: ""}
+      = link_to @organization.name, root_path, class: 'logo pull-left'
+      .media-body= theme_render 'top_menu'
+    .clearfix
+    %section#main.p-relative{role: "main"}
+      %aside#sidebar
+        = yield :left_widgets
+        = theme_render 'menu'
+      %section#content.container
+        - if @breadcrumbs && @breadcrumbs.any?
+          %ol.breadcrumb.hidden-xs= breadcrumbs
+        = yield
+    = javascript_include_tag 'themes/sadmin'
+    = yield :bottom_js

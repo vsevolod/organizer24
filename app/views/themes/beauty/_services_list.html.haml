@@ -13,7 +13,7 @@
         - elsif !index.zero?
           %h4 Прочее
         
-      %label.checkbox
+      %label.checkbox.service
         = check_box_tag "service[#{service.id}]", service.id, false
         %span.stitle= service.name
         - unless service.description.blank?

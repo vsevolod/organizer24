@@ -1,0 +1,9 @@
+= content_for :left_widgets do
+  .side-widgets.overflow#modal-workers
+    - @presenter.enabled_workers.each do |worker|
+      .s-widget.m-b-25.text-center.worker-profile-menu
+        = link_to '#', :data => { :worker_id => worker.id } do
+          = image_tag worker.photo.url(:sadmin_left), :title => worker.name
+          .caption
+            %h4.m-0= worker.name
+            = worker.profession

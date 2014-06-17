@@ -18,7 +18,11 @@ autocomplete_users = ->
       $('#phone_results').html('<span class="label label-important">'+results.length+'</span>')
     else
       $.each( results, (index, el) ->
-        a = $("<a href='#' class='AutoPhoneClick'><span class='label'>#{el.phone} #{el.firstname} #{el.lastname}</span></a><a href='/users/#{el.phone}' target='_blank' class='label label-success'><i class='icon-eye-open icon-white'></i></a>").data({phone: el.phone, firstname: el.firstname, lastname: el.lastname})
+        text = $('.ForPhone').html()
+        for method in ['phone', 'firstname', 'lastname']
+          text = text.replace(new RegExp(":#{method}:", 'g'), el[method])
+        a = $(text)
+        a.find('a.AutoPhoneClick').data({phone: el.phone, firstname: el.firstname, lastname: el.lastname})
         $('#phone_results').append($('<div class="span3"/>').append(a))
       )
 

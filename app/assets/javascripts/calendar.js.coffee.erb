@@ -49,11 +49,11 @@ getEventSources = ->
   else
     []
 
-show_checkboxes = (worker_id) ->
+window.show_checkboxes = (worker_id) ->
   params = "/appointments/by_week?worker_id=#{worker_id}"
   if $('.show_statuses')
     params += "&"
-    params += $.map( $('.show_statuses .checkbox input:checked'), (el, index) ->
+    params += $.map( $('.show_statuses input:checked'), (el, index) ->
       return "statuses[]="+$(el).val()
     ).join('&')
   Organizer.old_event_source = params
@@ -120,7 +120,7 @@ drop_draggable = ( date, allDay ) ->
 # Создание нового события
 drop_div = ( date, allDay ) ->
   if $('.ui-draggable').css('display') != 'none'
-    originalEventObject = $('.ui-draggable').data('eventObject')
+    originalEventObject = $('.external-event').data('eventObject')
     if $('#user_showing_time').val()
       originalEventObject.duration = $('#user_showing_time').val()
     copiedEventObject = $.extend({
@@ -180,7 +180,7 @@ $('#calendar').fullCalendar({
     '': 'H(:mm)'
   },
   columnFormat: {
-    week: "dd.MM.yyyy dddd",
+    week: "dd.MM.yyyy \n dddd",
     day:  "dddd",
   },
   titleFormat: {
@@ -216,8 +216,8 @@ $('#calendar').fullCalendar({
     element.attr('data-id', event['data-id'])
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
-      $.each( $('.check_services input:checked').next(), (id, el) ->
-        text += $(el).text() + '<br/>'
+      $.each( $('.check_services input:checked'), (id, el) ->
+        text += $(el).parents('.service').first().find('.stitle').text() + '<br/>'
       )
       sas = show_appointment_services(event, {hide_title: true})
       if (sas != '')
@@ -291,7 +291,17 @@ $('body').on('click', '.ChangeAppointment', ->
     container: '#calendar',
     placement: 'right'
   }).popover('show')
-  $.getScript( '/appointments/'+appointment_id+'/edit?worker_id='+$('#workers input:checked').val(), gotoPopover )
+
+  $.getScript( '/appointments/'+appointment_id+'/edit?worker_id='+$('#workers input:checked').val(), ->
+    gotoPopover()
+    if $().iCheck
+      $('.popover-content').addClass('modal-content')
+      $('.popover-content .appointment_services input').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+        increaseArea: '20%'
+      })
+    )
   false
 )
 
@@ -347,7 +357,14 @@ $('.show_statuses .checkbox input').change ->
 $('#second #workers input').change ->
   $('#second #workers input').attr('disabled', true)
   # update services
-  $('#second .check_services').html($(this).attr('check_services'))
+  if $().iCheck
+    $('#second .check_services').html($(this).attr('check_services')).find('input').iCheck({
+      checkboxClass: 'icheckbox_minimal',
+      radioClass: 'iradio_minimal',
+      increaseArea: '20%'
+    })
+  else
+    $('#second .check_services').html($(this).attr('check_services'))
   # update event sources
   $.each(Organizer.event_sources, (id, event_source) ->
     $('#calendar').fullCalendar('removeEventSource', event_source)

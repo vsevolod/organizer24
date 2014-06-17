@@ -30,6 +30,10 @@ module ApplicationHelper
     klass.join(' ')
   end
 
+  def theme_render(path, *options)
+    render "/themes/#{@organization.theme}/#{path}", *options
+  end
+
   private
 
     def short_csoap( org, appointment, state)

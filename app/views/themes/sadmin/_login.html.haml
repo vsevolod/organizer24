@@ -1,0 +1,59 @@
+.block-area.shortcut-area
+  %a.shortcut.long.tile{data: {toggle: 'modal'}, href: "#SignIn"}
+    %span.icon.large &#61792;
+    %small.t-overflow Войти
+  %a.shortcut.long.tile{data: {toggle: 'modal'}, href: "#SignUp"}
+    %span.icon.large &#61840;
+    %small.t-overflow Зарегистрироваться
+#SignUp.modal.fade{role: :dialog, 'aria-hidden' => 'true'}
+  .modal-dialog.modal-sm
+    .modal-content
+      = form_for(User.new, :url => registration_path('user'), html: {class: 'form-validation'}) do |f|
+        .modal-header
+          %button.close{type: 'button', data: { dismiss: 'modal'}, aria: {hidden: 'true'}} &times;
+          %h4 Регистрация
+        .modal-body
+          = f.hidden_field :role, required: true
+          .form-group
+            = f.label :lastname
+            = f.text_field :lastname, class: 'input-sm form-control validate[required]', placeholder: '...'
+          .form-group
+            = f.label :firstname
+            = f.text_field :firstname, class: 'input-sm form-control', placeholder: '...'
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: 'input-sm form-control validate[custom[email]]', placeholder: '...'
+          .form-group
+            = f.label :phone
+            = f.text_field :phone, class: 'input-sm form-control validate[required,custom[phone]]', placeholder: '...'
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: 'input-sm form-control validate[required]', placeholder: '...'
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, class: 'input-sm form-control validate[required,equals[password]]', placeholder: '...'
+        .modal-footer
+          = f.submit 'Зарегистрироваться', class: 'btn btn-sm'
+          = button_tag 'Закрыть', class: 'btn btn-sm validation-clear'
+#SignIn.modal.fade{role: :dialog, 'aria-hidden' => 'true'}
+  .modal-dialog.modal-sm
+    .modal-content
+      = form_for(User.new, :url => session_path('user'), html: {class: 'form-validation'}) do |f|
+        .modal-header
+          %button.close{type: 'button', data: { dismiss: 'modal'}, aria: {hidden: 'true'}} &times;
+          %h4 Вход
+        .modal-body
+          .form-group
+            = f.label :phone
+            = f.text_field :phone, autofocus: true, class: 'input-sm form-control validate[required,custom[phone]]', placeholder: '...'
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: 'input-sm form-control validate[required]', placeholder: '...'
+          .form-group
+            %label.checkbox
+              %span.checkableBox
+                = f.check_box :remember_me
+              Запомнить меня
+        .modal-footer
+          = f.submit 'Вход', class: 'btn btn-sm'
+          = button_tag 'Закрыть', class: 'btn btn-sm validation-clear'

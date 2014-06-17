@@ -1,0 +1,6 @@
+.form-inline
+  .form-group 
+    %label{style: 'width:200px;text-align:right;'}= Appointment.human_attribute_name field
+    = text_field_tag "user[#{field}]", '', class: 'form-control input-sm', autocomplete: 'off'
+  - unless current_user.new_record?
+    %button.btn.btn-sm.AutoClearText{ :type => 'button', tabindex: '-1' }

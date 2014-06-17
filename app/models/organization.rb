@@ -4,6 +4,7 @@ class Organization < ActiveRecord::Base
 
   # Deprecated
   THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
+  ACTUAL_THEMES = %w{embark beauty sadmin}
 
   GENITIVE_WEEK_DAYS = ['воскресенье', 'понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу']
 

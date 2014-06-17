@@ -27,11 +27,11 @@ check_services_inputs = ->
   event = $('.external-event').first()
   eventObject = { title: "Время: "+time+" мин.\nСтоимость: "+cost+" руб.", duration: time }
   event.data('eventObject', eventObject)
-  event.draggable({
-    zIndex: 999,
-    revert: true,
-    revertDuration: 1
-  })
+  #event.draggable({
+  #  zIndex: 999,
+  #  revert: true,
+  #  revertDuration: 1
+  #})
 
 $ ->
 
@@ -40,7 +40,7 @@ $ ->
     $('.check_services input').each ->
       $(this).attr('disabled', false)
 
-    $('#second').on('click', '.check_services input', ->
+    $('#second').on('click ifChanged', '.check_services input', ->
       setTimeout(check_services_inputs, 50)
     )
 
@@ -54,12 +54,13 @@ $ ->
   )
 
   $('.AutoClearText').click( ->
-    prev = $(this).prev()
+    prev = $(this).parent().find('input')
+    console.log(prev)
     if prev.attr('id') == 'user_showing_time'
       prev.val('')
     else
       $.each( $('.AutoClearText'), (index, el) ->
-        $(el).prev().val('')
+        $(el).parent().find('input').val('')
       )
       $('.check_services input').attr('checked', false)
       prev.focus()
@@ -69,4 +70,5 @@ $ ->
   $('#modal-workers a').click ->
     $("#workers input#worker_id_#{$(this).data('worker-id')}").click()
     $('#calendar_show').removeClass('hidden-left')
-    $.colorbox.close()
+    if $.colorbox
+      $.colorbox.close()

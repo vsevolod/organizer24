@@ -17,7 +17,7 @@ class Worker < ActiveRecord::Base
 
   attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo, :service_ids, :working_hours_attributes, :profession
 
-  has_attached_file :photo, :styles => { :normal => "230x320>", :thumb => "100x100>"},
+  has_attached_file :photo, :styles => { :normal => "230x320>", :thumb => "100x100>", sadmin_left: "100x100#"},
                             :convert_options => { :thumb => "-quality 75 -strip" }
 
   scope :enabled, where(:is_enabled => true)

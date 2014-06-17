@@ -1,0 +1,41 @@
+= form_tag appointments_path, :remote => !current_user.new_record? do
+  = hidden_field_tag :start
+  %section#second
+    #workers
+      - @presenter.enabled_workers.each do |worker|
+        = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (theme_render 'services_list', :presenter => @presenter, :worker => worker).squish, class: 'except-iCheck'
+    .block-area
+      %h3 На что хотите записаться:
+      .row
+        .col-md-8.check_services
+          = theme_render 'services_list', :worker => @presenter.worker || @presenter.enabled_workers.first, presenter: @presenter
+        .col-md-4
+          .cost-block{data: {spy:'affix', offset_top: 155, offset_bottom: 0}}
+            .tile
+              .buttons_to_confirm{ :style => 'display:none;' }
+                = link_to '#', :class => 'btn confirm_calendar' do
+                  %i.fa.fa-check
+                = link_to '#', :class => 'btn cancel_calendar', style: 'float:right;' do
+                  %i.fa.fa-trash-o
+                %br/
+              .external-event{ 'data-append-selector' => '.buttons_to_confirm' }
+                %h3#total_time Время: 0 мин.
+                %h3#total_cost Стоимость: 0 руб.
+    
+      .hidden.ForPhone
+        %li.list-group-item
+          %a.AutoPhoneClick{href: '#'}
+            %span.label :phone: :firstname: :lastname:
+          %span
+            %a.btn.btn-info.btn-sm.icon-eye{href: '/users/:phone:', target: :blank}
+      #first.col-md-6
+        - if current_user.new_record?
+          = theme_render 'calendar_field', :field => :phone
+        - elsif @presenter.owner_or_worker?
+          - [:phone, :lastname, :firstname, :showing_time].each do |field|
+            = theme_render 'calendar_field', :field => field
+        - else
+          = hidden_field_tag "user[phone]", current_user.phone
+      .col-md-6
+        %ul#phone_results.list-group.block
+

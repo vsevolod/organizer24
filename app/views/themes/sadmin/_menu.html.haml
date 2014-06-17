@@ -1,0 +1,35 @@
+%ul.list-unstyled.side-menu
+  - if current_user && !current_user.new_record?
+    %li.active
+      %a.sa-side-home{href: "/dashboard"}
+        %span.menu-item Личный кабинет
+  %li
+    %a.sa-side-calendar{href: "/calendar"}
+      %span.menu-item Записаться
+  %li
+    %a.sa-side-widget{href: "/category_photos"}
+      %span.menu-item Фотогалерея
+  - if current_user && !current_user.new_record?
+    - if current_user.owner_or_worker?(@organization)
+      %li
+        %a.sa-side-page{href: "/appointments/phonebook"}
+          %span.menu-item Телефонная книга
+      %li.dropdown
+        %a.sa-side-options{href: ""}
+          %span.menu-item Настройки
+        %ul.list-unstyled.menu-item
+          %li
+            %a{href: "/edit"} Организация
+          %li
+            %a{href: "/services"} Услуги
+          %li
+            %a{href: "/workers"} Мастера
+          %li
+            %a{href: "/dictionaries"} Словари
+          %li
+            %a{href: "/codes"} Сертификаты
+          %li
+            %a{href: "/notifications"} СМС Уведомления
+    %li
+      = link_to destroy_user_session_path, :method => :delete, class: 'sa-side-exit' do
+        %span.menu-item Выйти

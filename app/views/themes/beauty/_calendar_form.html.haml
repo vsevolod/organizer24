@@ -1,0 +1,46 @@
+= form_tag appointments_path, :remote => !current_user.new_record? do
+  = hidden_field_tag :start
+  %section#second
+    %div{ class: @presenter.enabled_workers.size == 1 ? 'hide' : ''}
+      %h3 Выберите мастера
+      .row-fluid#workers
+        .span8
+          - @presenter.enabled_workers.each do |worker|
+            %label.radio.span3
+              = image_tag worker.photo.url(:thumb), :title => worker.name
+              = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (theme_render 'services_list', :presenter => @presenter, :worker => worker).squish
+              %p= worker.name
+              %b= worker.profession
+    %h3 На что хотите записаться:
+    .row-fluid
+      .check_services
+        = theme_render 'services_list', :worker => @presenter.worker || @presenter.enabled_workers.first, presenter: @presenter
+        
+      .span4.buttons_to_confirm{ :style => 'display:none;' }
+        = link_to '#', :class => 'btn btn-success confirm_calendar' do
+          %span.icon-ok
+        = link_to '#', :class => 'btn btn-danger cancel_calendar' do
+          %span.icon-remove
+        %br/
+      .span2.fc-corner-bottom.fc-corner-top.external-event{ 'data-append-selector' => '.buttons_to_confirm' }
+        #total_time Время: 0 мин.
+        #total_cost Стоимость: 0 руб.
+  .hidden.ForPhone
+    %div
+      %a.AutoPhoneClick{href: '#'}
+        %span.label :phone: :firstname: :lastname:
+      %a.label.label-success{href: '/users/:phone:', target: :blank}
+        %i.icon-eye-open.icon-white
+  #first
+    - if current_user.new_record?
+      = theme_render 'calendar_field', :field => :phone
+    - elsif @presenter.owner_or_worker?
+      - [:phone, :firstname, :lastname, :showing_time].each do |field|
+        = theme_render 'calendar_field', :field => field
+      .row-fluid
+        #phone_results
+    - else
+      - if nil
+        .span4
+          = text_field_tag 'appointment[code]', '', placeholder: 'сертификат'
+      = hidden_field_tag "user[phone]", current_user.phone

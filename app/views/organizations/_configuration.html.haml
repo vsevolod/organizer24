@@ -1,6 +1,6 @@
 = f.input :show_photogallery, :as => :boolean, :wrapper => 'checkbox'
 = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
-= f.input :theme, :collection => ['embark']+['beauty']#+Organization::THEMES
+= f.input :theme, :collection => Organization::ACTUAL_THEMES
 = f.time_zone_select :timezone
 
 %h3 Текст смс

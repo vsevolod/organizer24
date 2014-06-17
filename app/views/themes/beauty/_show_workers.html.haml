@@ -1,0 +1,13 @@
+- if @presenter.show_workers
+  .hide
+    %ul.thumbnails#modal-workers
+      - @presenter.enabled_workers.each do |worker|
+        %li.span3
+          = link_to '#', :data => { :worker_id => worker.id }, :class => 'thumbnail' do
+            = image_tag worker.photo.url(:normal), :title => worker.name
+            .caption
+              %h3= worker.name
+              %p.text-right
+                = worker.profession
+  :javascript
+    $.colorbox({html: $('#modal-workers').parent().html(), title: 'Выберите мастера', overlayClose: false, escKey: false, closeButton: false, onLoad: function(){$('#cboxClose').remove();}, scrolling: false, width: '#{5+300*@presenter.enabled_workers.size}px', height: '480px'});

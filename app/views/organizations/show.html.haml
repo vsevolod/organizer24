@@ -1,4 +1,4 @@
 - content_for :bottom_js do
   = javascript_include_tag 'fullcalendar', 'month_calendar'
 
-= render "organizations/templates/#{['beauty', 'embark'].include?(@organization.theme) ? @organization.theme : 'default'}"
+= render "organizations/templates/#{Organization::ACTUAL_THEMES.include?(@organization.theme) ? @organization.theme : 'default'}"

@@ -1,0 +1,19 @@
+.row-fluid
+  %hr/
+  .span1
+    #third
+      - [:taken, :inaccessible, :'your-offer'].each do |state|
+        = I18n.t("legend.status.#{state}")
+        %div{ :class => "legend legend-#{state}" }
+        %br/
+      - if @presenter.owner_or_worker?
+        .show_statuses
+          - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
+            %label.checkbox
+              = check_box_tag :state, state, (session["show_#{state}"] == 'false' ? nil : 1)
+              = t "activerecord.attributes.appointment.status.#{state}"
+  .span10
+    #calendar{ :style => 'width:900px;margin:0 auto;' }
+    %br/
+    %br/
+    %br/
