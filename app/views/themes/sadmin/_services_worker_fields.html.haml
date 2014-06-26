@@ -1,0 +1,10 @@
+.nested-fields
+  .block-area
+    %h3.block-title= f.object.service.name #f.input :service_id, as: :select, collection: @organization.services
+    .row
+      .col-md-4
+        .datetime-pick.date-only.input-icon
+          = f.text_field :date_off, data: {format: 'dd.MM.yyyy'}, class: 'form-control input-sm'
+          %span.add-on
+            %i.sa-plus
+      .col-md-4= link_to_remove_association "Удалить", f, :class => 'btn btn-danger'

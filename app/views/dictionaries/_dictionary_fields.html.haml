@@ -1,4 +1,5 @@
-.nested-fields.well.span3
+.nested-fields.span3
   = f.input :name
   = f.input :tag
-  = link_to_remove_association 'Удалить', f
+  - unless defined?(hide_destroy) && hide_destroy
+    = link_to_remove_association 'Удалить', f

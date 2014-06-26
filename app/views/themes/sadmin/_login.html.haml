@@ -31,7 +31,7 @@
             = f.password_field :password, class: 'input-sm form-control validate[required]', placeholder: '...'
           .form-group
             = f.label :password_confirmation
-            = f.password_field :password_confirmation, class: 'input-sm form-control validate[required,equals[password]]', placeholder: '...'
+            = f.password_field :password_confirmation, class: 'input-sm form-control validate[required,equals[user_password]]', placeholder: '...'
         .modal-footer
           = f.submit 'Зарегистрироваться', class: 'btn btn-sm'
           = button_tag 'Закрыть', class: 'btn btn-sm validation-clear'

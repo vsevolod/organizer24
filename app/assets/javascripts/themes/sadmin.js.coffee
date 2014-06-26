@@ -11,8 +11,11 @@
 #= require themes/sadmin/input-mask
 #= require themes/sadmin/feeds
 #= require themes/sadmin/functions
+#= require themes/sadmin/select
+#= require themes/sadmin/datetimepicker
 
 #= require fullcalendar
+#= require cocoon
 #= require calendar_autocomplete
 #= require organizations
 #= require_self

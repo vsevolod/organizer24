@@ -1,9 +1,34 @@
 # Use this setup block to configure all options available in SimpleForm.
+
+class StringInput < SimpleForm::Inputs::StringInput
+  def input_html_classes
+    super.push('form-control')
+  end
+end
+
+class PasswordInput < SimpleForm::Inputs::PasswordInput
+  def input_html_classes
+    super.push('form-control')
+  end
+end
+
+class TextInput < SimpleForm::Inputs::TextInput
+  def input_html_classes
+    super.push('form-control')
+  end
+end
+
+class NumericInput < SimpleForm::Inputs::NumericInput
+  def input_html_classes
+    super.push('form-control spinedit')
+  end
+end
+
+
 SimpleForm.setup do |config|
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
-  # wrapper, change the order or even add your own to the
-  # stack. The options given below are used to wrap the
+  # wrapper, change the order or even add your own to the # stack. The options given below are used to wrap the
   # whole input.
   config.wrappers :default, :class => :input,
     :hint_class => :field_with_hint, :error_class => :field_with_errors do |b|
@@ -59,6 +84,12 @@ SimpleForm.setup do |config|
   config.wrappers :checkbox, :tag => 'div', :class => 'control-group', :error_class => 'error' do |b|
     b.wrapper :tag => 'div', :class => 'controls' do |ba|
       ba.use :label_input
+    end
+  end
+
+  config.wrappers :sadmin_checkbox, :tag => 'div', :class => 'control-group', :error_class => 'error' do |b|
+    b.wrapper tag: 'label' do |l|
+      l.use :label_input
     end
   end
 

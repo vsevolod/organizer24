@@ -10,8 +10,11 @@
         %td= link_to dictionary.name, dictionary
         %td= dictionary.tag
         %td
-          = link_to 'добавить', new_dictionary_path( :dictionary => { :parent_id => dictionary.id } ), :class => 'btn btn-success'
+          = link_to 'Добавить', new_dictionary_path( :dictionary => { :parent_id => dictionary.id } ), :class => 'btn btn-success'
           = link_to [:edit, dictionary], :class => 'btn btn-warning' do
             .icon-edit
+            Редактировать
+          &nbsp;
           = link_to dictionary, :method => :delete, :class => 'btn btn-danger' do
             .icon-trash
+            Удалить

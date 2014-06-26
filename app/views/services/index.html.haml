@@ -27,7 +27,9 @@
           %td= service.showing_time
           %td= service.cost
           %td
-            = link_to [:edit, service] do
+            = link_to [:edit, service], class: 'btn' do
               .icon-edit
-            = link_to service, :method => :delete do
+              Редактировать
+            = link_to service, :method => :delete, class: 'btn btn-danger' do
               .icon-trash
+              Удалить

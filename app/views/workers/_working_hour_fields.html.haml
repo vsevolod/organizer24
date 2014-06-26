@@ -1,11 +1,1 @@
-.row.nested-fields
-  .span3
-    = f.label :week_day
-    = f.select "week_day", options_for_select( week_days_for_select, f.object.week_day )
-  - { :begin => 9*60*60, :end => 21*60*60 }.each_pair do |step, default_time|
-    .span2
-      %h5= WorkingHour.human_attribute_name( "#{step}_time" )
-      - time = f.object.send("#{step}_time") || default_time
-      = f.select "#{step}_hour",   options_for_select( 0..23, time/60/60 ), {}, :style => 'width:70px'
-      = f.select "#{step}_minute", options_for_select( 0..59, time/60%60 ), {}, :style => 'width:70px'
-  = link_to_remove_association "Удалить", f, :class => 'btn btn-danger'
+= theme_render 'working_hour_fields', f: f

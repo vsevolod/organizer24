@@ -3,6 +3,6 @@
 
 = simple_form_for @worker do |f|
   = f.simple_fields_for :services_workers do |sw|
-    = render 'services_worker_fields', :f => sw
+    = theme_render 'services_worker_fields', :f => sw
   .form-actions
     = f.submit "Завершить", :class => 'btn btn-primary'

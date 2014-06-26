@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
   has_many :organizations
   has_many :appointments
   has_many :appointments_by_phone, :class_name => "Appointment", :foreign_key => :phone, :primary_key => :phone
+  has_many :addresses
   has_many :services_users, :foreign_key => :phone, :primary_key => :phone
+  accepts_nested_attributes_for :addresses
   accepts_nested_attributes_for :my_organization
 
   validates_presence_of :phone, :firstname, :lastname

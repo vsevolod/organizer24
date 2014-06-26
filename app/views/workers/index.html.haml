@@ -19,8 +19,8 @@
         %td= worker.services.map(&:name).join(', ')
         %td
           = link_to [:edit, worker], :class => 'btn', title: 'Редактировать' do
-            .icon-edit
+            .icon-edit Редактировать
           = link_to [:services_workers, worker], :class => 'btn btn-warning', title: 'Настройка сервисов' do
-            .icon-list
+            .icon-list Настроить сервисы
           = link_to worker, :method => :delete, :class => 'btn btn-danger', title: 'Удалить' do
-            .icon-trash
+            .icon-trash Удалить

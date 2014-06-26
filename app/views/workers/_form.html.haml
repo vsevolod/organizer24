@@ -1,5 +1,5 @@
 #worker
   = simple_form_for @worker do |f|
-    = render 'worker_fields', f: f
+    = theme_render 'worker_fields', f: f
     .form-actions
       = f.submit "Завершить", :class => 'btn btn-primary'

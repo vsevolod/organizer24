@@ -5,8 +5,8 @@
   %fieldset
     %label Выберите период
     = hidden_field_tag :label, 0
-    = text_field_tag :from, params[:from], placeholder: 'от'
-    = text_field_tag :to, params[:to], placeholder: 'до'
+    .datetime-pick.input-icon= text_field_tag :from, params[:from], placeholder: 'от', data: {format: 'dd.MM.yyyy'}, class: 'form-control input-sm'
+    .datetime-pick.input-icon= text_field_tag :to, params[:to], placeholder: 'до', data: {format: 'dd.MM.yyyy'}, class: 'form-control input-sm'
     = submit_tag 'Выбрать', class: 'btn btn-primary'
 
 - @notifications.each do |notification|
