@@ -1,0 +1,16 @@
+- objects.each do |category_photo|
+  - if category_photo.photos.size > 0
+    .block-area
+      %h3.block-title= category_photo.name
+      - if current_user && current_user.owner_or_worker?(@organization)
+        = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
+        = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
+      %p
+      - category_photo.photos.each_with_index do |photo, index|
+        = link_to photo.photo.url(:gallery), data: {rel: "gallery"}, class: 'pirobox_gall img-popup', rev: index do
+          = image_tag photo.photo.url(:medium)
+  - elsif current_user && current_user.owner_or_worker?(@organization)
+    .block-area
+      %h3.block-title= category_photo.name
+      = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
+      = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'

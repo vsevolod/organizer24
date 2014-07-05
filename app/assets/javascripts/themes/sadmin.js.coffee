@@ -13,6 +13,7 @@
 #= require themes/sadmin/functions
 #= require themes/sadmin/select
 #= require themes/sadmin/datetimepicker
+#= require themes/sadmin/pirobox
 
 #= require fullcalendar
 #= require cocoon

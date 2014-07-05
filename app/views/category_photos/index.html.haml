@@ -3,4 +3,4 @@
   %h1 Список ваших категорий для фотогалерей
 - else
   %h1 Фотогалерея
-= render 'list', :objects => @category_photos
+= theme_render 'category_photos_list', :objects => @category_photos

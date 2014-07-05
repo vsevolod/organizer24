@@ -16,12 +16,8 @@
             .media-body.service
               = check_box_tag "service[#{service.id}]", service.id, false
               = label_tag "service[#{service.id}]", service.name, class: 'stitle'
-              - unless service.description.blank?
-                %span.badge.badge-info{id: "service_help_#{service.id}"} ?
-                :javascript
-                  $(function(){
-                    $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', trigger: 'focus hover'})
-                  });
+              - if service.description.present?
+                %span.badge.badge-info.tooltips{id: "service_help_#{service.id}", data: {placement: 'right', toggle: 'tooltip', original_title: service.description}} ?
               - if expired_service = expired_services.find{|ws| ws.service_id == service.id}
                 %span.badge.badge-important{id: "service_expired_#{service.id}"} X
                 :javascript
