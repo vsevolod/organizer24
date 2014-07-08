@@ -1,0 +1,14 @@
+.container
+  .row
+    &nbsp;
+  .row
+    .span10.well
+      %h2 Подтверждение телефона
+
+      На указанный вами телефон был отправлен секретный код. Введите его для подтверждения вашей учетной записи
+      = form_tag [:confirming_phone, @user] do
+        = text_field_tag :confirmation_number
+
+        .form-actions
+          = submit_tag "Подтвердить", :class => 'btn btn-primary'
+          = link_to 'Отправить снова', [:resend_confirmation_sms, @user], :class => 'btn btn-warning', :method => :post

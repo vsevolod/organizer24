@@ -8,7 +8,7 @@
 #SignUp.modal.fade{role: :dialog, 'aria-hidden' => 'true'}
   .modal-dialog.modal-sm
     .modal-content
-      = form_for(User.new, :url => registration_path('user'), html: {class: 'form-validation'}) do |f|
+      = form_for(User.new(role: 'client'), :url => registration_path('user'), html: {class: 'form-validation'}) do |f|
         .modal-header
           %button.close{type: 'button', data: { dismiss: 'modal'}, aria: {hidden: 'true'}} &times;
           %h4 Регистрация

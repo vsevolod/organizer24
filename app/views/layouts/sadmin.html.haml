@@ -6,7 +6,7 @@
     = stylesheet_link_tag "themes/sadmin"
     = csrf_meta_tags
     = yield :js
-  %body{id: current_user && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'skin-blur-violate'}
+  %body{id: current_user && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'skin-blur-lpink'}
     %header#header.media
       %a#menu-toggle{href: ""}
       = link_to @organization.name, root_path, class: 'logo pull-left'
