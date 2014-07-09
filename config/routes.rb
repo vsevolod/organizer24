@@ -59,7 +59,11 @@ Organizer::Application.routes.draw do
       end
     end
     resources :pages, :except => [:show]
-    resources :services
+    resources :services do
+      collection do
+        post :sort_services
+      end
+    end
     resources :dictionaries
     get ':id', :to => 'pages#show'
   end

@@ -15,7 +15,7 @@ $(document).ready(function(){
 	}
         
         //Sortable
-        if($('.sortable')[0]) {
+  if($('.sortable')[0]) {
 	    $('.sortable').sortable();
 	}
 	

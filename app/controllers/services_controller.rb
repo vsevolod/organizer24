@@ -1,7 +1,7 @@
 # coding: utf-8
 class ServicesController < CompanyController
 
-  before_filter :redirect_if_not_owner, :except => [:index]
+  before_filter :redirect_if_not_owner
 
   def index
     @services = @organization.services
@@ -32,6 +32,14 @@ class ServicesController < CompanyController
     else
       render 'edit'
     end
+  end
+
+  # Сортируем сервисы
+  def sort_services
+    @organization.services.where(id: params[:service]).each do |service|
+      service.update_column :position, params[:service].index(service.id.to_s)
+    end
+    render text: 'complete'
   end
 
   def destroy

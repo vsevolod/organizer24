@@ -8,7 +8,7 @@
     .tile
       %h2.tile-title= category_name
       .listview.narrow
-        - group_services.sort_by(&:name).each do |service|
+        - group_services.sort_by(&:position).each do |service|
           .p-5
             .pull-right
               - if service.cost.to_i > 0

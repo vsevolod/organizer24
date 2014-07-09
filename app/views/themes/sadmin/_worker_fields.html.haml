@@ -11,10 +11,11 @@
   #collections.controls
     - @organization.services.not_collections.group_by(&:category).each do |category, c_services|
       %h2.block-title= category.try(:name) || 'Прочее'
-      - c_services.each do |service|
-        %label.checkbox
-          = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
-          = service.name
+      .sortable_services
+        - c_services.each do |service|
+          %label.checkbox{id: "service_#{service.id}"}
+            = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
+            = service.name
   - unless f.object.new_record?
     %h1 Рабочие дни
     #worker_month_calendar{:style => 'width:500px;'}

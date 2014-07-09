@@ -30,3 +30,27 @@ $('.show_statuses').on 'ifClicked', 'input', ->
     $('#calendar').fullCalendar('addEventSource', show_checkboxes(worker))
     $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
   )
+
+$ ->
+
+  if $('.sortable_services')[0]
+    $.each($('.sortable_services'), (index, el) ->
+      $(el).sortable({
+        axis: 'y',
+        dropOnEmpty: false,
+        #handle: '.handle',
+        cursor: 'crosshair',
+        items: '> label',
+        opacity: 0.8,
+        scroll: true,
+        update: ->
+          $.ajax({
+            url: '/services/sort_services',
+            type: 'post',
+            data: $(el).sortable('serialize'),
+            dataType: 'script',
+            complete: (request) ->
+              $(el).effect('highlight')
+          })
+        })
+    )
