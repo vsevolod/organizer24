@@ -5,7 +5,7 @@
 -#TODO add breadcrumbs to all pages
 %h2= @category_photo.name
 
-= render 'list', :objects => @category_photo.children
+= theme_render 'category_photos_list', :objects => @category_photo.children
 
 #myCarousel.carousel.slide.span7
   %ol.carousel-indicators
@@ -20,4 +20,4 @@
   %a.carousel-control.left{  :href => '#myCarousel', 'data-slide' => 'prev' } &lsaquo;
   %a.carousel-control.right{ :href => '#myCarousel', 'data-slide' => 'next' } &rsaquo;
 
-= render 'list', :objects => @category_photo.root.siblings.where(:organization_id => @category_photo.organization_id)
+= theme_render 'category_photos_list', :objects => @category_photo.root.siblings.where(:organization_id => @category_photo.organization_id)
