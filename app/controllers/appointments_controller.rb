@@ -67,7 +67,15 @@ class AppointmentsController < CompanyController
       if @appointment.save
         session[:appointment_new] = @appointment.id
         format.html{ redirect_to @appointment }
-        format.js{ render :js => refresh_calendar }
+        format.js{
+          # yaCounter19193956.hit('/appointments#create', 'Добавление записи', null, {appointment_id: #{@appointment.id}});
+          render :js => <<-JS
+            if (typeof(yaCounter19193956) != 'undefined'){
+              yaCounter19193956.reachGoal('CreateAppointment', {order_id: #{@appointment.id}, price: #{@appointment.cost.to_f}, owner: #{!!@appointment.can_not_notify_owner}});
+            };
+            #{refresh_calendar}
+          JS
+        }
       else
         format.html{ redirect_to :back, notice: "При сохранении возникла ошибка: #{@appointment.errors.full_messages.join('; ')}" }
         format.js{ render :js => "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');Organizer.removeOtherElements();" }
@@ -110,7 +118,7 @@ class AppointmentsController < CompanyController
     if @appointment.save
       render :text => refresh_calendar
     else
-      render :text => 'alert("не верное время")'
+      render :text => 'alert("Неверное время")'
     end
   end
 
