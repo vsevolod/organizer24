@@ -20,5 +20,6 @@
         - if @breadcrumbs && @breadcrumbs.any?
           %ol.breadcrumb.hidden-xs= breadcrumbs
         = yield
+        = theme_render 'carousel_gallery'
     = javascript_include_tag 'themes/sadmin'
     = yield :bottom_js

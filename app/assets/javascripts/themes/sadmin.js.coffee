@@ -33,6 +33,9 @@ $('.show_statuses').on 'ifClicked', 'input', ->
 
 $ ->
 
+  if $('.sadmin_carousel')[0]
+    $('.sadmin_carousel').carousel({interval: 3000}).carousel('cycle')
+
   if $('.sortable_services')[0]
     $.each($('.sortable_services'), (index, el) ->
       $(el).sortable({
