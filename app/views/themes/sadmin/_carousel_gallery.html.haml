@@ -3,10 +3,10 @@
     %h3 Фотогалерея
     #carousel-gallery.sadmin_carousel.slide
       %ol.carousel-indicators
-        - CategoryPhoto.joins(:photos).first.photos.each_with_index do |photo, index|
+        - @organization.category_photos.joins(:photos).first.photos.each_with_index do |photo, index|
           %li{data: {target: '#carousel-gallery', slide_to: index}, class: (index.zero? ? 'active' : '')}
       .carousel-inner
-        - CategoryPhoto.joins(:photos).first.photos.each_with_index do |photo, index|
+        - @organization.category_photos.joins(:photos).first.photos.each_with_index do |photo, index|
           %div{class: "item #{index.zero? ? 'active' : ''}"}= image_tag photo.photo.url(:carousel_gallery)
       %a.left.carousel-control{href: '#carousel-gallery', data: {slide: 'prev'}}
         %i.icon &#61903;
