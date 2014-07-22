@@ -1,3 +1,8 @@
+- content_for :left_widgets do
+  .side-widgets.overflow
+    .s-widget.m-b-25
+      %h2.tile-title О нас
+      .s-widget-body= @organization.index_header.gsub("\n","</br></br>").html_safe
 / Messages Drawer
 #messages.tile.drawer.animated
   .listview.narrow
@@ -126,6 +131,9 @@
 %h4.page-title Главная страница
 - if !current_user || current_user.new_record?
   = render 'themes/sadmin/login'
+  .block-area
+    .col-md-6.m-b-20
+      = theme_render 'carousel_gallery'
 - else
   .block-area
     .row.m-container
@@ -133,3 +141,5 @@
         .tile
           %h2.tile-title Календарь
           #month_calendar
+      .col-md-6
+        = theme_render 'carousel_gallery'

@@ -6,8 +6,8 @@ class CategoryPhotosController < CompanyController
 
   def index
     @category_photos = @organization.category_photos.order( :name )
-    if @category_photos.count == 1
-      if !current_user || !current_user.owner_or_worker?(@organization)
+    if !current_user || !current_user.owner_or_worker?(@organization)
+      if @category_photos.count == 1
         redirect_to @category_photos.first
       end
     end

@@ -1,14 +1,13 @@
-.block-area
-  .col-md-6.m-b-20
-    %h3 Фотогалерея
-    #carousel-gallery.sadmin_carousel.slide
-      %ol.carousel-indicators
-        - @organization.category_photos.joins(:photos).first.photos.each_with_index do |photo, index|
-          %li{data: {target: '#carousel-gallery', slide_to: index}, class: (index.zero? ? 'active' : '')}
-      .carousel-inner
-        - @organization.category_photos.joins(:photos).first.photos.each_with_index do |photo, index|
-          %div{class: "item #{index.zero? ? 'active' : ''}"}= image_tag photo.photo.url(:carousel_gallery)
-      %a.left.carousel-control{href: '#carousel-gallery', data: {slide: 'prev'}}
-        %i.icon &#61903;
-      %a.right.carousel-control{href: '#carousel-gallery', data: {slide: 'next'}}
-        %i.icon &#61815;
+- photos = Photo.where(category_photo_id: @organization.category_photo_ids).order('RANDOM()')
+%h3 Фотогалерея
+#carousel-gallery.sadmin_carousel.slide
+  %ol.carousel-indicators
+    - photos.each_with_index do |photo, index|
+      %li{data: {target: '#carousel-gallery', slide_to: index}, class: (index.zero? ? 'active' : '')}
+  .carousel-inner
+    - photos.each_with_index do |photo, index|
+      %div{class: "item #{index.zero? ? 'active' : ''}"}= image_tag photo.photo.url(:carousel_gallery)
+  %a.left.carousel-control{href: '#carousel-gallery', data: {slide: 'prev'}}
+    %i.icon &#61903;
+  %a.right.carousel-control{href: '#carousel-gallery', data: {slide: 'next'}}
+    %i.icon &#61815;

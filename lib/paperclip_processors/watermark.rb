@@ -48,7 +48,7 @@ class Watermark < Processor
          raise PaperclipError, "There was an error resizing and cropping #{@basename}" if @whiny
        end
 
-       if watermark_path
+       if File.exist?(watermark_path.to_s)
          command = "composite"
          params = %W[-gravity #{@position} #{watermark_path} #{tofile(dst)}]
          params << tofile(dst)

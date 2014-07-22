@@ -8,11 +8,7 @@ class Photo < ActiveRecord::Base
                                                        :position => "Center",
                                                        :processors => [:watermark]
                                                      },
-                                         :carousel_gallery => { :geometry => "640x360#",
-                                                       :watermark_path => Proc.new{|p| "#{Rails.root}/app/assets/images/watermark-#{p.instance.organization.domain}.png"},
-                                                       :position => "Center",
-                                                       :processors => [:watermark]
-                                                     }
+                                         :carousel_gallery => "640x360#",
                                        },
                             :convert_options => { :thumb => "-quality 75 -strip" }
 
