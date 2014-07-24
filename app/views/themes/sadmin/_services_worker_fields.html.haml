@@ -1,6 +1,6 @@
 .nested-fields
   .block-area
-    %h3.block-title= f.object.service.name #f.input :service_id, as: :select, collection: @organization.services
+    %h3.block-title= f.object.service.try(:name) #f.input :service_id, as: :select, collection: @organization.services
     .row
       .col-md-4
         .datetime-pick.date-only.input-icon

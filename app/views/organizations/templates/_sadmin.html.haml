@@ -131,9 +131,6 @@
 %h4.page-title Главная страница
 - if !current_user || current_user.new_record?
   = render 'themes/sadmin/login'
-  .block-area
-    .col-md-6.m-b-20
-      = theme_render 'carousel_gallery'
 - else
   .block-area
     .row.m-container
@@ -141,5 +138,3 @@
         .tile
           %h2.tile-title Календарь
           #month_calendar
-      .col-md-6
-        = theme_render 'carousel_gallery'

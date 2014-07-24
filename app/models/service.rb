@@ -8,7 +8,7 @@ class Service < ActiveRecord::Base
 
   has_many :collections_services, :foreign_key => :collection_id
   has_many :services, :through => :collections_services
-  has_many :services_workers
+  has_many :services_workers, dependent: :destroy
   has_many :workers, :through => :services_workers
 
   accepts_nested_attributes_for :collections_services
