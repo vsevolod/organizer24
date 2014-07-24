@@ -130,7 +130,7 @@
         %small VIEW ALL
 %h4.page-title Главная страница
 - if !current_user || current_user.new_record?
-  = render 'themes/sadmin/login'
+  = theme_render 'login'
 - else
   .block-area
     .row.m-container
