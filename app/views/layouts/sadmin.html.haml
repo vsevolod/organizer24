@@ -9,7 +9,7 @@
   %body{id: params[:controller] == 'organizations' && params[:action] == 'show' ? 'my_background' : (current_user && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'skin-blur-violate')}
     %header#header.media
       %a#menu-toggle{href: ""}
-      = link_to @organization.name, root_path, class: 'logo pull-left'
+      = link_to @organization.name.html_safe, root_path, class: 'logo pull-left'
       .media-body= theme_render 'top_menu'
     .clearfix
     %section#main.p-relative{role: "main"}

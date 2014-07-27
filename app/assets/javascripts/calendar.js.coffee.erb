@@ -363,6 +363,7 @@ $('#second #workers input').change ->
       radioClass: 'iradio_minimal',
       increaseArea: '20%'
     })
+    $(".tooltips").tooltip()
   else
     $('#second .check_services').html($(this).attr('check_services'))
   # update event sources
