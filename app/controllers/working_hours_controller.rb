@@ -51,7 +51,7 @@ class WorkingHoursController < CompanyController
       full_day = {:start => (current_day+min_wt).to_i, :end => (current_day+max_wt).to_i, :editable => false}
       whs = @worker.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).order(:begin_time)
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
-        if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day).count > 0)
+        if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]
           whs.each do |wh|
             closes.push(wh.begin_time)
