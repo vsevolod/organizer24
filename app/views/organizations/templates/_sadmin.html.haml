@@ -128,7 +128,7 @@
     .media.text-center.whiter.l-100
       %a{href: ""}
         %small VIEW ALL
-%h4.page-title Главная страница
+%h3 Главная страница
 - if !current_user || current_user.new_record?
   = theme_render 'login'
 - else

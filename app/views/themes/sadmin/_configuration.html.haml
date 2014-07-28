@@ -30,6 +30,7 @@
           '<СТОИМОСТЬ>': appointment.cost,
           '<ПРОДОЛЖИТЕЛЬНОСТЬ>': '#{appointment.showing_time.show_time}',
           '<МАСТЕР>': '#{appointment.worker.name}',
+          '<ДМАСТЕР>': '#{appointment.worker.dative_case}',
           '<ТЕЛЕФОН МАСТЕРА>': '#{appointment.worker.phone}'
         };
         $('#template_help').html('<br/>');

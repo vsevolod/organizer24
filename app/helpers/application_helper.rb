@@ -6,6 +6,10 @@ module ApplicationHelper
     week_days.push(week_days.shift)
   end
 
+  def show_organization_page?
+    params[:controller] == 'organizations' && params[:action] == 'show'
+  end
+
   def appointment_links( appointment, joins = '<br/>' )
     org = appointment.organization
     arr = []

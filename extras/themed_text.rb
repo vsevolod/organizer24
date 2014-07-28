@@ -2,7 +2,7 @@
 
 #Здравствуйте #{@appointment.firstname}. #{GENITIVE_WEEK_DAYS[@appointment.start.wday]} #{Russian.strftime( @appointment.start, "%d %B в %H:%M" )} Вы записаны к Золотаревой Анне на следующие услуги: #{@appointment.services.order(:name).pluck(:name).join(', ')}. Продолжительность приема: #{@appointment.showing_time.show_time}, Стоимость: #{@appointment.cost} руб. Адрес: ул. Алексеева 29-6
 DEFAULT_USER_NOTIFY = <<-TEXT
-  Здравствуйте <ИМЯ>! В <ДЕНЬ НЕДЕЛИ> <ДАТА НАЧАЛА> Вы записаны к мастеру <МАСТЕР> на следующие услуги: <СПИСОК УСЛУГ>. Продолжительность приема: <ПРОДОЛЖИТЕЛЬНОСТЬ>, стоимость: <СТОИМОСТЬ> руб. Адрес: ул.Алексеева 29-6 Телефон: <ТЕЛЕФОН МАСТЕРА> Сайт: depilate.ru
+  Здравствуйте <ИМЯ>! В <ДЕНЬ НЕДЕЛИ> <ДАТА НАЧАЛА> Вы записаны к мастеру <ДМАСТЕР> на следующие услуги: <СПИСОК УСЛУГ>. Продолжительность приема: <ПРОДОЛЖИТЕЛЬНОСТЬ>, стоимость: <СТОИМОСТЬ> руб. Адрес: ул.Алексеева 29-6 Телефон: <ТЕЛЕФОН МАСТЕРА> Сайт: depilate.ru
 TEXT
 
 # Функция шаблонизатор. Переделывает шаблоны по теме:
@@ -26,6 +26,7 @@ def user_notify(text, appointment)
     '<СПИСОК УСЛУГ>' => appointment.services.order(:name).pluck(:name).join(', '),
     '<СТОИМОСТЬ>' => appointment.cost,
     '<МАСТЕР>' => appointment.worker.name,
+    '<ДМАСТЕР>' => appointment.worker.dative_case,
     '<ПРОДОЛЖИТЕЛЬНОСТЬ>' => appointment.showing_time.show_time,
     '<ТЕЛЕФОН МАСТЕРА>' => appointment.worker.phone
   }.each_pair do |substring, value|
