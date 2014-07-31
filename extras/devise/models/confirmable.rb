@@ -113,6 +113,10 @@ module Devise
         self.confirmed_at = Time.now.utc
       end
 
+      def unconfirmed!
+        self.update_column(:confirmed_at, nil)
+      end
+
       # If you don't want reconfirmation to be sent, neither a code
       # to be generated, call skip_reconfirmation!
       def skip_reconfirmation!

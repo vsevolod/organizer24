@@ -20,10 +20,11 @@ class User < ActiveRecord::Base
 
   validates_format_of :phone, :with => /^[\d\W]+$/
 
-  validates_presence_of :password
-  validates_confirmation_of :password
+  validates_presence_of :password, if: Proc.new{|u| u.new_record?}
+  validates_confirmation_of :password, if: Proc.new{|u| !u.blank?}
   validates_length_of :password, :within => 3..100, :allow_blank => true
   before_save :check_phone
+  before_save :update_appointments
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :validatable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -115,6 +116,12 @@ class User < ActiveRecord::Base
     def check_phone
       if self.phone.size == 10
         self.phone = "+7#{self.phone}"
+      end
+    end
+
+    def update_appointments
+      if self.phone_changed?
+        Appointment.where(phone: self.phone_was).update_all(:phone => self.phone)
       end
     end
 

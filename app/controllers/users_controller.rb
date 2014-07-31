@@ -2,10 +2,11 @@
 class UsersController < CompanyController
   before_filter :authenticate_user!, :except => [:check_phone, :confirm_phone, :confirming_phone, :resend_confirmation_sms]
   before_filter :skip_when_confirmed, :only => [:confirming_phone, :confirm_phone]
+  before_filter :redirect_if_not_owner, only: [:destroy]
 
   def dashboard
     @user = current_user
-    @appointments = @user.appointments.paginate(page: params[:page], per_page: 30)
+    @appointments = @user.appointments_by_phone.paginate(page: params[:page], per_page: 30)
   end
 
   def show
@@ -58,6 +59,33 @@ class UsersController < CompanyController
     else
       redirect_to [:confirm_phone, @user], alert: 'Введен не верный код подтверждения'
     end
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if current_user.owner_or_worker?(@organization) || current_user == @user
+      @user.attributes = params[:user]
+      if @user.save
+        if !current_user.owner_or_worker?(@organization)
+          @user.unconfirmed!
+          redirect_to [:confirm_phone, @user], notice: 'Подтвердите свой телефон'
+        else
+          redirect_to :back, notice: 'Пользователь успешно изменен'
+        end
+      else
+        redirect_to :back, error: 'При изменении произошли ошибки'
+      end
+    else
+      redirect_to :back
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.appointments_by_phone.where(:status.not_in => %w{complete lated}).delete_all
+    @user.appointments_by_phone.update_all(user_id: current_user.id)
+    @user.destroy
+    redirect_to '/calendar', notice: 'Пользователь успешно удален'
   end
 
   private

@@ -4,6 +4,14 @@
   %h2= @user.name
 
 %h2= @user.phone
+- if !@user.new_record?
+  - if current_user.owner_or_worker?(@organization)
+    = link_to 'Удалить пользователя', @user, method: :delete, class: 'btn btn-danger'
+    %br/
+  - if current_user.owner_or_worker?(@organization) || current_user == @user
+    = simple_form_for @user do |f|
+      = f.input :phone
+      = submit_tag 'Изменить', class: 'btn btn-danger'
 
 .accordion#accordion
   - [{ title: 'Текущие', option: {:start.gteq => Time.now}}, {title: 'Прошедшие', option: {:start.lteq => Time.now}}].each_with_index do |options, index|

@@ -8,6 +8,11 @@
   %h3 Заявки
   = render 'appointments/list', :appointments => organization.appointments.paginate(per_page: 30, page: params[:page]), :show_client => true
 
-- if @user.appointments.any?
+- if @user == current_user
+  = simple_form_for @user do |f|
+    = f.input :phone
+    = submit_tag 'Изменить', class: 'btn btn-danger'
+
+- if @user.appointments_by_phone.any?
   %h3 Ваши заявки
   = render 'appointments/list', :appointments => @appointments, :show_client => false
