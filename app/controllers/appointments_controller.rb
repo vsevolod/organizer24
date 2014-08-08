@@ -2,7 +2,7 @@
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
   before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time, :edit]
-  before_filter :redirect_if_not_owner, :only => :phonebook
+  before_filter :redirect_if_not_owner, :only => [:phonebook, :update_all]
 
   respond_to :html, :json
 
@@ -134,6 +134,12 @@ class AppointmentsController < CompanyController
         wants.xml  { render :xml => @appointment.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def update_all
+    @appointments = @organization.appointments.where(phone: params[:old_phone])
+    @appointments.update_all({phone: params[:phone], lastname: params[:lastname], firstname: params[:firstname]})
+    redirect_to users_path(id: params[:phone]), notice: 'Записи успешно изменены'
   end
 
   private

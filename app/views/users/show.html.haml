@@ -3,14 +3,33 @@
 - unless @user.name.blank?
   %h2= @user.name
 
-%h2= @user.phone
-- if !@user.new_record?
+%h2
+  = @user.phone
+  - if @user.new_record?
+    %b Пользователь не зарегистрирован
+- if @user.new_record?
+  - if current_user.owner_or_worker?(@organization)
+    = form_tag update_all_appointments_path do
+      = hidden_field_tag :old_phone, @user.phone
+      .control-group
+        = label_tag :phone, 'Телефон'
+        = text_field_tag :phone, @user.phone, class: 'form-control'
+      .control-group
+        = label_tag :lastname, 'Фамилия'
+        = text_field_tag :lastname, @appointments.first.try(:lastname), class: 'form-control'
+      .control-group
+        = label_tag :firstname, 'Имя'
+        = text_field_tag :firstname, @appointments.first.try(:firstname), class: 'form-control'
+      = submit_tag 'Изменить записи', class: 'btn btn-danger'
+- else
   - if current_user.owner_or_worker?(@organization)
     = link_to 'Удалить пользователя', @user, method: :delete, class: 'btn btn-danger'
     %br/
   - if current_user.owner_or_worker?(@organization) || current_user == @user
     = simple_form_for @user do |f|
       = f.input :phone
+      = f.input :lastname
+      = f.input :firstname
       = submit_tag 'Изменить', class: 'btn btn-danger'
 
 .accordion#accordion

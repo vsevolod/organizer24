@@ -3,6 +3,7 @@
     %tr
       %th Фамилия Имя
       %th Телефон
+      %th Действия
   %tbody
     - @phonebook.each do |appointment|
       %tr
@@ -20,3 +21,5 @@
             = appointment.firstname
         %td
           = appointment.phone
+        %td
+          = link_to 'Просмотр', user_path(id: appointment.phone), class: 'btn btn-success'

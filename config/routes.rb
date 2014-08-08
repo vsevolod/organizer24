@@ -21,6 +21,7 @@ Organizer::Application.routes.draw do
       collection do
         get :by_week
         get :phonebook
+        post :update_all
       end
       member do
         post :change_status

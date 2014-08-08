@@ -120,8 +120,12 @@ class User < ActiveRecord::Base
     end
 
     def update_appointments
-      if self.phone_changed?
-        Appointment.where(phone: self.phone_was).update_all(:phone => self.phone)
+      phone_appointments = Appointment.where(phone: self.phone_was)
+
+      %w{phone firstname lastname}.each do |field|
+        if self.send("#{field}_changed?")
+          phone_appointments.update_all(field => self.send(field))
+        end
       end
     end
 

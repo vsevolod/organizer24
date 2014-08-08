@@ -66,7 +66,7 @@ class UsersController < CompanyController
     if current_user.owner_or_worker?(@organization) || current_user == @user
       @user.attributes = params[:user]
       if @user.save
-        if !current_user.owner_or_worker?(@organization)
+        if @user.phone_changed? && !current_user.owner_or_worker?(@organization)
           @user.unconfirmed!
           redirect_to [:confirm_phone, @user], notice: 'Подтвердите свой телефон'
         else
