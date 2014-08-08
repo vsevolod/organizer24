@@ -275,7 +275,7 @@ $('#calendar').fullCalendar({
 
 $('body').on('click', '.ChangeTimeForAppointment', ->
   parent = $(this).parent()
-  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='span2'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
+  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='form-control span2'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
   false
 )
 

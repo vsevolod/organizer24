@@ -2,7 +2,7 @@
 %html{ :lang => I18n.locale }
   %head
     %meta{content: "width=device-width, initial-scale=1.0, maximum-scale=1.0", name: "viewport"}/
-    %title= @organization.name
+    %title= strip_tags(@organization.name)
     = stylesheet_link_tag "themes/sadmin"
     = csrf_meta_tags
     = yield :js

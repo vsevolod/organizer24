@@ -1,5 +1,6 @@
 class PagesController < InheritedResources::Base
-  layout 'company'
+  include SetLayout
+  layout :company
 
   belongs_to :organization
   has_scope :limit, :default => 8
@@ -18,7 +19,7 @@ class PagesController < InheritedResources::Base
   protected
 
     def resource
-      @page ||= Page.find_by_permalink( params[:id] )
+      @page ||= @organization.pages.find_by_permalink( "/#{params[:id]}" )
     end
 
 end
