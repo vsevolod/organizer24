@@ -57,3 +57,6 @@ $ ->
           })
         })
     )
+
+  if $('#calendar')[0]
+    $('#calendar').fullCalendar('option', 'height', 1000)

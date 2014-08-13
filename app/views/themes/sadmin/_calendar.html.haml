@@ -1,6 +1,6 @@
 %hr/
-.block-area
-  .calendar-widget
+.block-area{style: 'overflow-x:auto;'}
+  .calendar-widget{style: 'min-width: 750px;'}
     #calendar
 .block-area
   - if @presenter.owner_or_worker?
@@ -9,7 +9,11 @@
       - [:taken, :inaccessible, :offer, :approve, :complete, :missing, :lated, :cancel_client, :cancel_owner].each do |state|
         %li.m-b-10
           %label
-            = check_box_tag :state, state, (session["show_#{state}"] == 'false' ? nil : 1)
+            - status = if session["show_#{state}"].nil?
+              - ([:taken, :offer, :inaccessible, :approve, :complete, :missing, :lated].include?(state) ? 1 : nil)
+            - else
+              - (session["show_#{state}"] == 'false' ? nil : 1)
+            = check_box_tag :state, state, status
             = t "activerecord.attributes.appointment.status.#{state}"
           -#%small{class: "itemDate text-muted m-l-10 legend legend-#{state}"
   - else
