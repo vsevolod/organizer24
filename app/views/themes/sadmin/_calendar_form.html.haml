@@ -32,7 +32,7 @@
         - if current_user.new_record?
           = theme_render 'calendar_field', :field => :phone
         - elsif @presenter.owner_or_worker?
-          - [:phone, :lastname, :firstname, :showing_time].each do |field|
+          - [:phone, :lastname, :firstname, :showing_time, :comment].each do |field|
             = theme_render 'calendar_field', :field => field
         - else
           = hidden_field_tag "user[phone]", current_user.phone

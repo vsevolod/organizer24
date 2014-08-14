@@ -35,7 +35,7 @@
     - if current_user.new_record?
       = theme_render 'calendar_field', :field => :phone
     - elsif @presenter.owner_or_worker?
-      - [:phone, :firstname, :lastname, :showing_time].each do |field|
+      - [:phone, :firstname, :lastname, :showing_time, :comment].each do |field|
         = theme_render 'calendar_field', :field => field
       .row-fluid
         #phone_results

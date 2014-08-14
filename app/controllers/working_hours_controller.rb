@@ -24,7 +24,7 @@ class WorkingHoursController < CompanyController
                          else
                            'legend-inaccessible'
                          end
-      @periods << { :title => appointment.aasm_human_state, :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+      @periods << { :title => (appointment.comment.present? ? "\n#{appointment.comment}\n\n" : appointment.aasm_human_state), :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
     end
     if @total_appointments
       (@end.to_date-@start_of_month).to_i.times do |day|

@@ -45,6 +45,9 @@ module AppointmentsPresenters
                       'data-showing-time' => appointment.showing_time,
                       'data-id' => appointment.id,
                      }
+          if is_owner?
+            options.merge!({'data-comment' => appointment.comment})
+          end
           if editable
             options.merge({ :splitted => true,
                             'data-inner-class' => 'legend-your-offer',

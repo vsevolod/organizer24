@@ -57,7 +57,7 @@ class Appointment < ActiveRecord::Base
   validates_numericality_of :showing_time, :greater_than => 0
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
-  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id
+  attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id, :comment
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!

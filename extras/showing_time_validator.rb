@@ -15,6 +15,11 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     unless duplicate_record.count.zero?
       record.errors[:base] = "Продолжительность: #{showing_time.show_time}; Данное время уже занято"
     end
+    # Проверка на запись только в рабочее время
+    wh = record.worker.working_hours.where(week_day: start.wday).first
+    if (start - wh.begin_time).to_date != start.to_date || (start + showing_time.minutes - wh.end_time - 1).to_date >= start.to_date
+      record.errors[:base] = "В это время мастер не работает"
+    end
   end
 
 end
