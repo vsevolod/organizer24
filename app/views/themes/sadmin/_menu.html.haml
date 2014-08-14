@@ -9,10 +9,10 @@
   %li
     %a.sa-side-widget{href: "/category_photos"}
       %span.menu-item Фотогалерея
-  - if @organization.pages.where(permalink: '/contacts').count > 0
+  - if (contact = @organization.pages.where(permalink: '/contacts').first)
     %li
       %a.sa-side-contacts{href: "/contacts"}
-        %span.menu-item Контакты
+        %span.menu-item= contact.name
   - if current_user && !current_user.new_record?
     - if current_user.owner_or_worker?(@organization)
       %li
