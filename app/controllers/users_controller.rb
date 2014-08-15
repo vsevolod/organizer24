@@ -88,6 +88,18 @@ class UsersController < CompanyController
     redirect_to '/calendar', notice: 'Пользователь успешно удален'
   end
 
+  def statistic
+    @worker = current_user.worker
+
+    # Количество всех записей по статусам по месяцам
+    gon.appointments_flot_dataset = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year).group_by{|a| a.status}.to_a.each_with_object({}) do |el, hash|
+      hash[el.first] = {
+        label: I18n.t("activerecord.attributes.appointment.status.#{el.first}"),
+        data: el.last.group_by{|a| a.start.month}.inject([]){|result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum])}.sort_by(&:first)
+      }
+    end
+  end
+
   private
 
     def skip_when_confirmed

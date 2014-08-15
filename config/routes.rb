@@ -77,6 +77,7 @@ Organizer::Application.routes.draw do
     collection do
       post :check_phone
       post :dashboard
+      get  :statistic
     end
     # TODO move to confirmation controller
     member do

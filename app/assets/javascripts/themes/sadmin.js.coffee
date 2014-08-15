@@ -14,11 +14,16 @@
 #= require themes/sadmin/select
 #= require themes/sadmin/datetimepicker
 #= require themes/sadmin/pirobox
+#= require themes/sadmin/charts/jquery.flot
+#= require themes/sadmin/charts/jquery.flot.time
+#= require themes/sadmin/charts/jquery.flot.animator.min
+#= require themes/sadmin/charts/jquery.flot.resize.min
 
 #= require fullcalendar
 #= require cocoon
 #= require calendar_autocomplete
 #= require organizations
+#= require users
 #= require_self
 
 $('input.phone, input[id$=phone]').mask('+79999999999')

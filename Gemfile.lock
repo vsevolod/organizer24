@@ -144,6 +144,9 @@ GEM
     fssm (0.2.10)
     gherkin (2.12.0)
       multi_json (~> 1.3)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     guard (1.8.1)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -397,6 +400,7 @@ DEPENDENCIES
   event-calendar
   factory_girl_rails
   faker
+  gon
   guard-rspec
   haml
   has_scope
