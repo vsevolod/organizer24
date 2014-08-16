@@ -103,9 +103,9 @@ class UsersController < CompanyController
       }
     end
 
-    # Количество выполненныех записей по пользователям (новым/старым)
+    # Количество выполненных записей по пользователям (новым/старым)
     worker_phones = @worker.appointments.where(:start.lt => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).pluck(:phone).uniq
-    gon.users_flot_dataset = @appointments.order(:start).group_by do |a|
+    gon.users_flot_dataset = @appointments.where(status: %w{complete lated}).order(:start).group_by do |a|
       if worker_phones.include?(a.phone)
         true
       else

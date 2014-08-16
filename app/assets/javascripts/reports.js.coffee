@@ -13,6 +13,7 @@ plotAccordingToChoices = (flot_type) ->
       }
       series: {lines: {show: true}, points: {show: true}}
       grid: {hoverable: true}
+      legend: {container: "##{flot_type}_legend"}
     })
     $("##{flot_type}").bind('plothover', (event, pos, item) ->
       if item
@@ -37,26 +38,26 @@ $ ->
       opacity: '0.8'
     }).appendTo('body')
 
-    $.each ['appointments_flot', 'users_flot'], (index, flot_type) ->
+    $.each ['appointments_flot', 'users_flot', 'services_flot'], (index, flot_type) ->
+      if $("##{flot_type}")[0]
+        i = 0
+        $.each(gon["#{flot_type}_dataset"], (k, v) ->
+          v.color = i
+          i++
+        )
 
-      i = 0
-      $.each(gon["#{flot_type}_dataset"], (k, v) ->
-        v.color = i
-        i++
-      )
+        choiceContainer = $("##{flot_type}_choices")
+        $.each(gon["#{flot_type}_dataset"], (k,v) ->
+          choiceContainer.append("<br/><input type='checkbox' name='#{k}' checked='checked' id='id#{k}'></input><label for='id#{k}'>#{v.label}</label>")
+        )
+        if $().iCheck
+          choiceContainer.iCheck({
+            checkboxClass: 'icheckbox_minimal',
+            radioClass: 'iradio_minimal',
+            increaseArea: '20%'
+          })
 
-      choiceContainer = $("##{flot_type}_choices")
-      $.each(gon["#{flot_type}_dataset"], (k,v) ->
-        choiceContainer.append("<br/><input type='checkbox' name='#{k}' checked='checked' id='id#{k}'></input><label for='id#{k}'>#{v.label}</label>")
-      )
-      if $().iCheck
-        choiceContainer.iCheck({
-          checkboxClass: 'icheckbox_minimal',
-          radioClass: 'iradio_minimal',
-          increaseArea: '20%'
-        })
-
-      choiceContainer.on('click ifChanged', 'input', ->
+        choiceContainer.on('click ifChanged', 'input', ->
+          plotAccordingToChoices(flot_type)
+        )
         plotAccordingToChoices(flot_type)
-      )
-      plotAccordingToChoices(flot_type)

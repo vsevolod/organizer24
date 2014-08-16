@@ -9,10 +9,19 @@
         Фотогалерея
   - if current_user && !current_user.new_record?
     - if current_user.owner_or_worker?(@organization)
-      %li
-        = link_to "/appointments/phonebook" do
-          %i.icon-list-alt
-          Телефонная книга 
+      %li.dropdown
+        %a.dropdown-toggle{ 'href' => '#', 'data-toggle' => 'dropdown' }
+          Отчеты
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            = link_to "/users/statistic" do
+              %i.icon-user
+              По клиентам
+          %li
+            = link_to "/services/statistic" do
+              %i.icon-list-alt
+              По услугам
       %li.dropdown
         %a.dropdown-toggle{ 'href' => '#', 'data-toggle' => 'dropdown' }
           Настройки
@@ -42,6 +51,10 @@
             = link_to "/notifications" do
               %i.icon-envelope
               Уведомления
+      %li
+        = link_to "/appointments/phonebook" do
+          %i.icon-list-alt
+          Телефонная книга
     %li
       = link_to "/dashboard" do
         %i.icon-home

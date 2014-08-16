@@ -17,4 +17,4 @@
 //= require ckeditor/init
 //= require colorbox-rails
 //= require fix_ie
-//= require users
+//= require reports

@@ -63,6 +63,7 @@ Organizer::Application.routes.draw do
     resources :services do
       collection do
         post :sort_services
+        get  :statistic
       end
     end
     resources :dictionaries

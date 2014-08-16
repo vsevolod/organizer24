@@ -23,7 +23,7 @@
 #= require cocoon
 #= require calendar_autocomplete
 #= require organizations
-#= require users
+#= require reports
 #= require_self
 
 $('input.phone, input[id$=phone]').mask('+79999999999')
