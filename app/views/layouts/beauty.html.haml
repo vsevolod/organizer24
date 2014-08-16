@@ -4,6 +4,7 @@
     %title= @organization.name
     = stylesheet_link_tag "company"
     = stylesheet_link_tag "themes/beauty"
+    = include_gon
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :js
