@@ -37,7 +37,7 @@ $ ->
       opacity: '0.8'
     }).appendTo('body')
 
-    $.each ['appointments_flot'], (index, flot_type) ->
+    $.each ['appointments_flot', 'users_flot'], (index, flot_type) ->
 
       i = 0
       $.each(gon["#{flot_type}_dataset"], (k, v) ->

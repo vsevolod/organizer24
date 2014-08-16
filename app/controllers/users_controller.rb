@@ -90,12 +90,32 @@ class UsersController < CompanyController
 
   def statistic
     @worker = current_user.worker
+    @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone)
+
+    # Группировка appointments по месяцам
+    month_group = Proc.new{|appointments| appointments.group_by{|a| a.start.month}.inject([]){|result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum])}.sort_by(&:first)}
 
     # Количество всех записей по статусам по месяцам
-    gon.appointments_flot_dataset = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year).group_by{|a| a.status}.to_a.each_with_object({}) do |el, hash|
+    gon.appointments_flot_dataset = @appointments.group_by{|a| a.status}.to_a.each_with_object({}) do |el, hash|
       hash[el.first] = {
         label: I18n.t("activerecord.attributes.appointment.status.#{el.first}"),
-        data: el.last.group_by{|a| a.start.month}.inject([]){|result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum])}.sort_by(&:first)
+        data: month_group.call(el.last)
+      }
+    end
+
+    # Количество выполненныех записей по пользователям (новым/старым)
+    worker_phones = @worker.appointments.where(:start.lt => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).pluck(:phone).uniq
+    gon.users_flot_dataset = @appointments.order(:start).group_by do |a|
+      if worker_phones.include?(a.phone)
+        true
+      else
+        worker_phones.push(a.phone)
+        false
+      end
+    end.each_with_object({}) do |el, hash|
+      hash[el.first.to_s] = {
+        label: (el.first ? 'Пришедшие повторно' : 'Новые'),
+        data: month_group.call(el.last)
       }
     end
   end
