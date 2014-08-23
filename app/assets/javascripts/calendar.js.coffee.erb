@@ -71,12 +71,14 @@ show_appointment_services = (event, options) ->
       text += '<b>Услуги:</b><br/>'
     cost = 0
     showing_time = event['data-showing-time']
-    cost = event['data-cost']
     $.each( JSON.parse(event['data-services']) , (id, el) ->
       text += el.name + '<br/>'
-      #cost += el.cost
+      if !(event['data-cost'])
+        cost += el.cost
       #showing_time += el.showing_time
     )
+    if (event['data-cost'])
+      cost = event['data-cost']
     text += '<br/>'
     text += "Время: "+showing_time+" мин.<br/> Стоимость: "+cost+" руб.<br/>"
   text
