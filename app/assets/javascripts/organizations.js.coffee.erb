@@ -67,7 +67,7 @@ $ ->
     false
   )
 
-  $('#modal-workers a').click ->
+  $('#modal-workers a, #sub_worker_list a').click ->
     $("#workers input#worker_id_#{$(this).data('worker-id')}").click()
     $('#calendar_show').removeClass('hidden-left')
     if $.colorbox

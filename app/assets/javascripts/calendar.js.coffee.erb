@@ -235,7 +235,7 @@ $('#calendar').fullCalendar({
         content: text,
         title: '<a name="popover_title" href="#popover_title"></a>Подтвердить',
         trigger: 'manual',
-        container: '#calendar',
+        container: 'body',
         placement: 'top'
       }).popover('show')
       gotoPopover()
@@ -272,7 +272,7 @@ $('#calendar').fullCalendar({
         content: popup_text,
         title: '<a name="popover_title" href="#popover_title"></a>Описание' + ' №' + event['data-id'],
         trigger: 'manual',
-        container: '#calendar',
+        container: 'body',
         placement: 'top'
       }).popover('show')
       gotoPopover()
@@ -296,7 +296,7 @@ $('body').on('click', '.ChangeAppointment', ->
     content: '',
     title: '<a name="popover_title" href="#popover_title"></a>Изменение',
     trigger: 'manual',
-    container: '#calendar',
+    container: 'body',
     placement: 'right'
   }).popover('show')
 
