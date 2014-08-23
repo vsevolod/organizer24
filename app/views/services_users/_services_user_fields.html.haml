@@ -1,8 +1,8 @@
 - f.object.organization = @organization
 %tr.nested-fields
   %td= f.select :service_id, options_from_collection_for_select( @organization.services.order(:name), :id, :full_info, f.object.service_id ), {}, :class => 'span8 form-control'
-  %td= f.text_field :showing_time, :class => 'span2 form-control'
-  %td= f.text_field :cost, :class => 'span2 form-control'
+  %td= f.text_field :showing_time, :class => 'span3 form-control'
+  %td= f.text_field :cost, :class => 'span3 form-control'
   %td
     = link_to_remove_association "Удалить сервис", f, :class => 'btn btn-danger'
     = f.hidden_field :organization_id

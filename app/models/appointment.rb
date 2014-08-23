@@ -62,8 +62,9 @@ class Appointment < ActiveRecord::Base
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!
     # Обновлять только если не изменено время записи
+    # И если не была изменена стоимость (для созданной записи)
     # И статус != ожидаемый
-    if !self.showing_time_changed? && !%w{missing cancel_owner cancel_client}.include?( self.status )
+    if !self.showing_time_changed? && (self.new_record? || !self.cost_changed?) && !%w{missing cancel_owner cancel_client}.include?( self.status )
       cost = 0
       time = 0
       values = self.service_ids.dup

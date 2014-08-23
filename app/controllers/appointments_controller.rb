@@ -1,7 +1,7 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
-  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_showing_time, :edit]
+  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_params, :edit]
   before_filter :redirect_if_not_owner, :only => [:phonebook, :update_all]
 
   respond_to :html, :json
@@ -112,13 +112,15 @@ class AppointmentsController < CompanyController
     end
   end
 
-  # POST appointments/:id/change_showing_time JS
-  def change_showing_time
-    @appointment.showing_time = params[:showing_time]
+  # POST appointments/:id/change_params JS
+  def change_params
+    [:showing_time, :cost].each do |attr|
+      @appointment.send("#{attr}=", params[attr]) if params[attr]
+    end
     if @appointment.save
       render :text => refresh_calendar
     else
-      render :text => 'alert("Неверное время")'
+      render :text => 'alert("Произошла ошибка")'
     end
   end
 

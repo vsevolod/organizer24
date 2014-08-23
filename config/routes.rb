@@ -26,7 +26,7 @@ Organizer::Application.routes.draw do
       member do
         post :change_status
         post :change_start_time
-        post :change_showing_time
+        post :change_params
       end
     end
     resources :category_photos do

@@ -71,9 +71,10 @@ show_appointment_services = (event, options) ->
       text += '<b>Услуги:</b><br/>'
     cost = 0
     showing_time = event['data-showing-time']
+    cost = event['data-cost']
     $.each( JSON.parse(event['data-services']) , (id, el) ->
       text += el.name + '<br/>'
-      cost += el.cost
+      #cost += el.cost
       #showing_time += el.showing_time
     )
     text += '<br/>'
@@ -253,10 +254,10 @@ $('#calendar').fullCalendar({
     if event['data-comment']
       popup_text = "<b>#{event['data-comment']}</b><br/>" + popup_text
     if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
-      popup_text += '<a class="btn-block btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Изменить запись</a>'
+      popup_text += '<a class="btn-block btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Изменить услуги</a>'
       popup_text += '<a class="btn-block btn btn-info move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-time icon-white" />Перенести запись</a>'
     if event['is_owner']
-      popup_text += '<a class="btn-block btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время</a>'
+      popup_text += '<a class="btn-block btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время/стоимость</a>'
       popup_text += '<a class="btn-block btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Настройка сервисов</a>'
       <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
       popup_text += '<a data-method="post" class="btn-block btn legend-<%=state%>" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
@@ -279,7 +280,10 @@ $('#calendar').fullCalendar({
 
 $('body').on('click', '.ChangeTimeForAppointment', ->
   parent = $(this).parent()
-  parent.html(parent.html().replace(/Время: (\d+) мин./, "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_showing_time'> Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='form-control span2'><button class='btn' type='submit' name='commit'>Ред.</button></div></form>"))
+  form_start = "<form method='post' class='bs-docs-example' data-remote='true' action='/appointments/"+$(this).data('id')+"/change_params'>"
+  form_end = "<button class='btn' type='submit' name='commit'>Ред.</button></div></form>"
+  parent.html(parent.html().replace(/Время: (\d+) мин./,  form_start + "Время: <div class='input-append'><input type='text' value='$1' name='showing_time' id='showing_time' class='form-control span3'>" + form_end))
+  parent.html(parent.html().replace(/Стоимость: (\d+) руб./,  form_start + "Стоимость: <div class='input-append'><input type='text' value='$1' name='cost' id='cost' class='form-control span3'>" + form_end))
   false
 )
 

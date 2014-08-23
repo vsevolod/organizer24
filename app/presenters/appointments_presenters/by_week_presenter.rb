@@ -35,12 +35,13 @@ module AppointmentsPresenters
                   else
                     appointment.aasm_human_state
                   end
-          options = { :title => title,
-                      :start => appointment.start.to_i+@utc_offset,
-                      :end =>  appointment._end.to_i+@utc_offset,
-                      :editable => false,
-                      :splitted => false,
-                      :is_owner => is_owner?,
+          options = { title: title,
+                      start: appointment.start.to_i+@utc_offset,
+                      end:   appointment._end.to_i+@utc_offset,
+                      editable: false,
+                      splitted: false,
+                      is_owner: is_owner?,
+                      'data-cost' => appointment.cost,
                       'data-inner-class' => "legend-taken",
                       'data-showing-time' => appointment.showing_time,
                       'data-id' => appointment.id,
