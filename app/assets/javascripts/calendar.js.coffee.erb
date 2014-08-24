@@ -157,18 +157,25 @@ drop_div = ( date, allDay ) ->
     else
       alert('Рабочий день заканчивается')
 
+if $(window).width() < 702
+  defaultView = 'agendaDay'
+  availableRight = ''
+else
+  defaultView = 'agendaWeek'
+  availableRight = 'agendaDay,agendaWeek'
+
 $('#calendar').fullCalendar({
   header: {
     left: 'prev,next today',
     center: 'title',
-    right: 'agendaDay,agendaWeek'
+    right: availableRight
   },
   year:  new Date( start_calendar_options.initial_date ).getFullYear(),
   month: new Date( start_calendar_options.initial_date ).getMonth(),
   date:  new Date( start_calendar_options.initial_date ).getDate(),
   firstDay: 1,
   aspectRatio: 1.5,
-  defaultView: 'agendaWeek',
+  defaultView: defaultView,
   allDaySlot: false,
   allDayDefault: false,
   minTime: start_calendar_options.minTime*1.0/(60*60),
