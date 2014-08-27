@@ -170,40 +170,33 @@ $('#calendar').fullCalendar({
     center: 'title',
     right: availableRight
   },
-  year:  new Date( start_calendar_options.initial_date ).getFullYear(),
-  month: new Date( start_calendar_options.initial_date ).getMonth(),
-  date:  new Date( start_calendar_options.initial_date ).getDate(),
-  firstDay: 1,
   aspectRatio: 1.5,
+  now: gon.calendar.now,
   defaultView: defaultView,
   allDaySlot: false,
-  allDayDefault: false,
-  minTime: start_calendar_options.minTime*1.0/(60*60),
-  maxTime: start_calendar_options.maxTime*1.0/(60*60),
-  slotMinutes: start_calendar_options.slotMinutes,
-  monthNames: <%= I18n.t('date.standalone_month_names').compact %>,
-  dayNames: <%= I18n.t('date.standalone_day_names').compact %>,
+  slotDuration: gon.calendar.duration,
+  snapDuration: gon.calendar.duration,
+  minTime: gon.calendar.minTime,
+  maxTime: gon.calendar.maxTime,
+  defaultDate: gon.calendar.initial_date,
 
+  lang: 'ru',
   axisFormat: 'HH:mm',
-  timeFormat: {
-    agenda: 'H:mm{ - H:mm}',
-    '': 'H(:mm)'
-  },
   columnFormat: {
-    week: "dd.MM.yyyy \n dddd",
+    week: "DD.MM.YYYY \n dddd",
     day:  "dddd",
   },
-  titleFormat: {
-    day: "dd.MM.yyyy -- MMMM --"
-    week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy"
-  },
-  buttonText: {
-    today: 'Сегодня'
-    week: 'Неделя'
-    day: 'День'
-    month: 'Месяц'
-  },
+
+  selectable: false,
+  selectHelper: true,
+
   eventSources: Organizer.event_sources,
+  editable: false,
+  droppable: false,
+  # DROPABLE drop: ((date, allDay) ->
+  # DROPABLE   drop_div( date, allDay)
+  # DROPABLE ),
+
   dayClick: (date, allDay, jsEvent, view) ->
     if $('body .popover').length == 0
       if Organizer.calendar_draggable
@@ -213,13 +206,6 @@ $('#calendar').fullCalendar({
     else
       Organizer.removeOtherElements()
     false
-  selectable: false,
-  selectHelper: true,
-  editable: false,
-  droppable: false,
-  # DROPABLE drop: ((date, allDay) ->
-  # DROPABLE   drop_div( date, allDay)
-  # DROPABLE ),
   eventRender: (event, element) ->
     title = element.find('.fc-event-title').text()
     title = event['data-comment']+' '+title if event['data-comment']
@@ -258,10 +244,6 @@ $('#calendar').fullCalendar({
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
     element
-  eventAfterRender: (event, element, view) ->
-    #console.log( event )
-    #console.log( element )
-    #console.log( view )
   eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc) ->
     appointment_id = event['data-id']
     if (confirm("Вы уверены, что хотите изменить время записи?"))

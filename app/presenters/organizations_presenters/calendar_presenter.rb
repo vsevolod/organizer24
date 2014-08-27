@@ -48,24 +48,21 @@ module OrganizationsPresenters
       else
         minTime  = organization.working_hours.pluck(:begin_time).min
         maxTime  = organization.working_hours.pluck(:end_time).max
-        sminutes = (organization.slot_minutes || 30).to_i
-        @calendar_settings = {:slotMinutes => sminutes, :minTime => minTime, :maxTime => maxTime, :organization_id => organization.id, :initial_date => initial_date}
+        duration = (organization.slot_minutes || 30).to_i.minutes
+        @calendar_settings = {
+          minTime: minTime.to_moment,
+          maxTime: maxTime.to_moment,
+          organization_id: organization.id,
+          initial_date: (@day ? Time.zone.at(@day.to_i) : Time.zone.now).iso8601,
+          now: Time.zone.now.iso8601,
+          duration: duration.to_moment
+        }
       end
     end
 
     def owner_or_worker?
       @owner_or_worker ||= @current_user.owner_or_worker?(organization)
     end
-
-    private
-
-      def initial_date
-        if @day
-          Time.zone.at(@day.to_i)
-        else
-          Time.now
-        end.to_i*1000
-      end
 
   end
 end

@@ -32,7 +32,7 @@ class AppointmentsController < CompanyController
 
   # FIXME вообще-то тут не по неделям. а по периодам. можно и переименовать.
   def by_week
-    @prepare_periods = AppointmentsPresenters::ByWeekPresenter.new(current_user, @organization, params[:statuses], @start, @end, get_worker, @utc_offset)
+    @prepare_periods = AppointmentsPresenters::ByWeekPresenter.new(current_user, @organization, params[:statuses], @start, @end, get_worker)
     respond_with( @prepare_periods.render )
   end
 
@@ -45,7 +45,7 @@ class AppointmentsController < CompanyController
   def create
     user_params = params[:user]
     @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
-    @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ) - @utc_offset, :organization_id => @organization.id )
+    @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ), :organization_id => @organization.id )
     @appointment.worker_id = get_worker.id
     @appointment.attributes = user_params
     if @appointment.firstname.blank? && @appointment.lastname.blank?
@@ -89,9 +89,9 @@ class AppointmentsController < CompanyController
     if current_user.owner_or_worker?( @organization ) || ( current_user == @appointment.user_by_phone && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
       if @appointment.save
-        redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'Статус успешно изменен'
+        redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен'
       else
-        redirect_to "/calendar?day=#{@appointment.start.to_i+@utc_offset}", :notice => 'При сохранении произошла ошибка'
+        redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'При сохранении произошла ошибка'
       end
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'
@@ -100,7 +100,7 @@ class AppointmentsController < CompanyController
 
   # POST appointments/:id/change_start_time JS
   def change_start_time
-    @appointment.start = Time.zone.at( params[:start].to_i/1000 ) - @utc_offset
+    @appointment.start = Time.zone.at( params[:start].to_i/1000 )
     if @appointment.save
       render :text => <<-JS
         Organizer.draggable_item = null;

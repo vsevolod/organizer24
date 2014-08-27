@@ -1,14 +1,13 @@
 module AppointmentsPresenters
   class ByWeekPresenter
 
-    def initialize(current_user, organization, statuses, _start, _end, worker, utc_offset)
+    def initialize(current_user, organization, statuses, _start, _end, worker)
       @current_user = current_user || User.new
       @organization = organization
       @statuses = statuses
       @start = _start.to_date
       @end = _end.to_date
       @worker = worker
-      @utc_offset = utc_offset
 
       @user_services = {}
     end
@@ -36,8 +35,8 @@ module AppointmentsPresenters
                     appointment.aasm_human_state
                   end
           options = { title: title,
-                      start: appointment.start.to_i+@utc_offset,
-                      end:   appointment._end.to_i+@utc_offset,
+                      start: appointment.start.iso8601,
+                      end:   appointment._end.iso8601,
                       editable: false,
                       splitted: false,
                       is_owner: is_owner?,

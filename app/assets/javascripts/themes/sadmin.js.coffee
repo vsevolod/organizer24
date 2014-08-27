@@ -19,7 +19,9 @@
 #= require themes/sadmin/charts/jquery.flot.animator.min
 #= require themes/sadmin/charts/jquery.flot.resize.min
 
+#= require moment
 #= require fullcalendar
+#= require fullcalendar-ru
 #= require cocoon
 #= require calendar_autocomplete
 #= require organizations

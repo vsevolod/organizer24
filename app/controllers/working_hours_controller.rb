@@ -24,7 +24,7 @@ class WorkingHoursController < CompanyController
                          else
                            'legend-inaccessible'
                          end
-      @periods << { :title => (appointment.comment.present? ? "\n#{appointment.comment}\n\n" : appointment.aasm_human_state), :start => appointment.start.to_i, :end => (appointment.start + appointment.showing_time.minutes).to_i, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+      @periods << { :title => (appointment.comment.present? ? "\n#{appointment.comment}\n\n" : appointment.aasm_human_state), :start => appointment.start.iso8601, :end => appointment._end.iso8601, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
     end
     if @total_appointments
       (@end.to_date-@start_of_month).to_i.times do |day|
@@ -48,7 +48,7 @@ class WorkingHoursController < CompanyController
     @periods = []
     ((@start.to_date)..(@end.to_date)).each_with_index do |t, index|
       current_day = @start + index.days
-      full_day = {:start => (current_day+min_wt).to_i, :end => (current_day+max_wt).to_i, :editable => false}
+      full_day = {:start => (current_day+min_wt).iso8601, :end => (current_day+max_wt).iso8601, :editable => false}
       whs = @worker.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).order(:begin_time)
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
@@ -59,8 +59,13 @@ class WorkingHoursController < CompanyController
           end
           closes.push max_wt
           res = []
-          closes.map{|x| (current_day+x).to_i}.each_slice(2).find_all{|x| x.first != x.last}.each do |arr|
-            res << { :title => 'Закрыто', :start => arr.first, :end => arr.last, :editable => false, 'data-inner-class' => 'legend-inaccessible' } 
+          closes.map{|x| current_day+x}.each_slice(2).find_all{|x| x.first != x.last}.each do |arr|
+            res << { title: 'Закрыто',
+                     start: arr.first.iso8601,
+                     end:   arr.last.iso8601,
+                     editable: false,
+                     'data-inner-class' => 'legend-inaccessible'
+                   }
           end
           #begin_time = whs.pluck(:begin_time).min
           #end_time   = whs.pluck(:end_time).max
