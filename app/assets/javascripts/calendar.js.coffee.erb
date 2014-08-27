@@ -224,8 +224,14 @@ $('#calendar').fullCalendar({
     title = element.find('.fc-event-title').text()
     title = event['data-comment']+' '+title if event['data-comment']
     element.find('.fc-event-title').html(title)
-    element.addClass( event['data-inner-class'])
-    element.attr('data-id', event['data-id'])
+    element.addClass( event['data-inner-class'] )
+    element.attr('data-id', event['data-id'] )
+    if event.is_owner
+      event.durationEditable = true
+      event.startEditable = true
+      event.editable = true
+    if event['data-inner-class'] == 'legend-your-offer'
+      event.startEditable = true
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
       $.each( $('.check_services input:checked'), (id, el) ->
@@ -256,6 +262,35 @@ $('#calendar').fullCalendar({
     #console.log( event )
     #console.log( element )
     #console.log( view )
+  eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc) ->
+    appointment_id = event['data-id']
+    if (confirm("Вы уверены, что хотите изменить время записи?"))
+      $.ajax( {
+        url: '/appointments/'+appointment_id+'/change_start_time',
+        type: 'POST',
+        dataType: 'script',
+        data: { start: event.start.valueOf() },
+        success: (data)->
+          if data.match('alert')
+            revertFunc()
+      } )
+    else
+      revertFunc()
+  eventResize: (event, dayDelta, minuteDelta, revertFunc) ->
+    appointment_id = event['data-id']
+    if (confirm("Вы уверены, что хотите изменить продолжительность записи?"))
+      $.ajax( {
+        url: '/appointments/'+appointment_id+'/change_params',
+        type: 'POST',
+        dataType: 'script',
+        data: { showing_time: event.end.valueOf() - event.start.valueOf()},
+        success: (data)->
+          if data.match('alert')
+            revertFunc()
+      } )
+    else
+      revertFunc()
+
   eventClick: (event, jsEvent, view) ->
     Organizer.destroy_all_popovers()
     element = $(jsEvent.currentTarget)
