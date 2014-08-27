@@ -205,7 +205,7 @@ $('#calendar').fullCalendar({
   },
   eventSources: Organizer.event_sources,
   dayClick: (date, allDay, jsEvent, view) ->
-    if $('#calendar .popover').length == 0
+    if $('body .popover').length == 0
       if Organizer.calendar_draggable
         drop_draggable( date, allDay )
       else
