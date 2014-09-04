@@ -30,14 +30,6 @@
 
 $('input.phone, input[id$=phone]').mask('+79999999999')
 
-$('.show_statuses').on 'ifClicked', 'input', ->
-  $.get("/main/set_session?key=show_#{$(this).val()}&value=#{$(this).is(':checked')}", ->
-    worker = $('#workers input:checked').val()
-    $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source)
-    $('#calendar').fullCalendar('addEventSource', show_checkboxes(worker))
-    $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
-  )
-
 $ ->
 
   if $('.sadmin_carousel')[0]

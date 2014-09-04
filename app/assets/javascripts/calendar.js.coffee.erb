@@ -13,7 +13,7 @@ to_i = (date_or_number) ->
       date_or_number.valueOf() / 1000
 
 Organizer.destroy_all_popovers = ( appointment_id ) ->
-  $('div[data-id]').popover('destroy')
+  $('a[data-id]').popover('destroy')
   $('.popover').remove()
 
 send_change_function = (options) ->
@@ -178,6 +178,7 @@ else
   availableRight = 'agendaDay,agendaWeek'
 
 $('#calendar').fullCalendar({
+  contentHeight: 'auto',
   header: {
     left: 'prev,next today',
     center: 'title',
@@ -220,9 +221,9 @@ $('#calendar').fullCalendar({
       Organizer.removeOtherElements()
     false
   eventRender: (event, element) ->
-    title = element.find('.fc-event-title').text()
+    title = element.find('.fc-title').text()
     title = event['data-comment']+' '+title if event['data-comment']
-    element.find('.fc-event-title').html(title)
+    element.find('.fc-title').html(title)
     element.addClass( event['data-inner-class'] )
     element.attr('data-id', event['data-id'] )
     if event.is_owner
@@ -231,6 +232,8 @@ $('#calendar').fullCalendar({
       event.editable = true
     if event['data-inner-class'] == 'legend-your-offer'
       event.startEditable = true
+    element
+  eventAfterRender: (event, element, view) ->
     if event.confirm
       text = '<b>Услуги:</b> <br/>'
       $.each( $('.check_services input:checked'), (id, el) ->
@@ -256,7 +259,6 @@ $('#calendar').fullCalendar({
       popover = $('.popover.right')
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
-    element
   eventDrop: (event, delta, revertFunc) ->
     send_change_function({
       event: event,
@@ -322,7 +324,7 @@ $('body').on('click', '.ChangeAppointment', ->
   event = find_event( $(this).data('id'), '_id' )
   appointment_id = event['data-id']
   Organizer.destroy_all_popovers()
-  $('div[data-id="'+appointment_id+'"]').popover( {
+  $('a[data-id="'+appointment_id+'"]').popover( {
     html: true,
     content: '',
     title: '<a name="popover_title" href="#popover_title"></a>Изменение',
@@ -375,23 +377,16 @@ $('body').on('click', '.confirm_calendar', ->
   false
 )
 
-$('body').on('click', '.cancel_calendar', ->
+$('body').on('click', '.cancel_calendar, .close_popover', ->
   Organizer.removeOtherElements()
   false
 )
 
-$('body').on('click', '.close_popover', ->
-  Organizer.destroy_all_popovers()
-  false
-)
-
-$('.show_statuses .checkbox input').change ->
+$('.show_statuses').on 'click ifClicked', 'input', ->
   $.get("/main/set_session?key=show_#{$(this).val()}&value=#{$(this).is(':checked')}", ->
     worker = $('#workers input:checked').val()
     $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source)
     $('#calendar').fullCalendar('addEventSource', show_checkboxes(worker))
-    $('#calendar').fullCalendar('removeEvents')
-    $('#calendar').fullCalendar('refetchEvents')
   )
 
 $('#second #workers input').change ->
@@ -414,4 +409,4 @@ $('#second #workers input').change ->
   $.each(Organizer.event_sources, (id, event_source) ->
     $('#calendar').fullCalendar('addEventSource', event_source)
   )
-  setTimeout(enable_workers, 2000)
+  setTimeout(enable_workers, 1000)

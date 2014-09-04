@@ -50,11 +50,12 @@ class Appointment < ActiveRecord::Base
   FINISH_STATES = %w{complete missing lated cancel_owner cancel_client}
   STARTING_STATES = %w{taken your-offer offer approve}
 
-  validates :start, :presence => true
-  validates :phone, :presence => true
-  validates :firstname, :presence => true, :unless => :'free?'
-  validates :organization, :showing_time => { :start => :start, :showing_time => :showing_time }
-  validates_numericality_of :showing_time, :greater_than => 0
+  validates :start, presence: true
+  validates :phone, presence: true
+  validates :firstname, presence: true, unless: :'free?'
+  validates :worker, presence: true
+  validates :organization, showing_time: { start: :start, showing_time: :showing_time }
+  validates_numericality_of :showing_time, greater_than: 0
 
   # FIXME appointment_services - это правильная форма? сравнить при написании view
   attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id, :comment
@@ -160,7 +161,7 @@ class Appointment < ActiveRecord::Base
 
     # Проверка сервисов на прекращенные
     def check_services_on_expire
-      if date_off = self.worker.services_workers.can_be_expired.where(:date_off.lteq => self.start, :service_id.in => self.service_ids).pluck(:date_off).min
+      if self.worker && date_off = self.worker.services_workers.can_be_expired.where(:date_off.lteq => self.start, :service_id.in => self.service_ids).pluck(:date_off).min
         self.errors[:start] = "не может быть больше, #{date_off}"
       end
     end
