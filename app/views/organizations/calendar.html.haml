@@ -5,7 +5,7 @@
     var start_calendar_options = #{@presenter.calendar_settings.to_json};
 
 - content_for :bottom_js do
-  = javascript_include_tag 'moment', 'fullcalendar', 'fullcalendar-ru', 'calendar'
+  = javascript_include_tag 'fc', 'calendar'
   - if @presenter.phonebook
     :javascript
       var phonebook = #{@presenter.phonebook_to_json};

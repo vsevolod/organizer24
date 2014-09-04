@@ -1,4 +1,4 @@
 - content_for :bottom_js do
-  = javascript_include_tag 'moment', 'fullcalendar', 'fullcalendar-ru', 'month_calendar'
+  = javascript_include_tag 'fc', 'month_calendar'
 
 = render "organizations/templates/#{Organization::ACTUAL_THEMES.include?(@organization.theme) ? @organization.theme : 'default'}"
