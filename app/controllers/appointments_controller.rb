@@ -1,7 +1,7 @@
 #coding: utf-8
 class AppointmentsController < CompanyController
   before_filter :prepare_calendar_options, :only => :by_week
-  before_filter :can_editable?, :only => [:change_start_time, :update, :change_status, :change_params, :edit]
+  before_filter :can_editable?, :only => [:update, :change_status, :change_params, :edit]
   before_filter :redirect_if_not_owner, :only => [:phonebook, :update_all]
 
   respond_to :html, :json
@@ -45,7 +45,7 @@ class AppointmentsController < CompanyController
   def create
     user_params = params[:user]
     @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
-    @appointment = @user.appointments.build( :start => Time.zone.at( params[:start].to_i/1000 ), :organization_id => @organization.id )
+    @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
     @appointment.worker_id = get_worker.id
     @appointment.attributes = user_params
     if @appointment.firstname.blank? && @appointment.lastname.blank?
@@ -98,9 +98,11 @@ class AppointmentsController < CompanyController
     end
   end
 
-  # POST appointments/:id/change_start_time JS
-  def change_start_time
-    @appointment.start = Time.zone.at( params[:start].to_i/1000 )
+  # POST appointments/:id/change_params JS
+  def change_params
+    @appointment.showing_time = params[:showing_time].to_i if params[:showing_time]
+    @appointment.cost = params[:cost] if params[:cost]
+    @appointment.start = Time.parse(params[:start]) if params[:start]
     if @appointment.save
       render :text => <<-JS
         Organizer.draggable_item = null;
@@ -108,19 +110,7 @@ class AppointmentsController < CompanyController
         #{refresh_calendar}
       JS
     else
-      render :text => 'alert("не верная дата")'
-    end
-  end
-
-  # POST appointments/:id/change_params JS
-  def change_params
-    [:showing_time, :cost].each do |attr|
-      @appointment.send("#{attr}=", params[attr]) if params[attr]
-    end
-    if @appointment.save
-      render :text => refresh_calendar
-    else
-      render :text => 'alert("Произошла ошибка")'
+      render :text => 'alert("Произошла ошибка");Organizer.removeOtherElements();'
     end
   end
 
@@ -147,7 +137,7 @@ class AppointmentsController < CompanyController
   private
 
     def refresh_calendar
-      "Organizer.destroy_all_popovers();$('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' );"
+      "Organizer.destroy_all_popovers();$('#calendar').fullCalendar('removeEvents');$('#calendar').fullCalendar( 'refetchEvents' );"
     end
 
     def can_editable?

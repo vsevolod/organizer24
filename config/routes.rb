@@ -25,7 +25,6 @@ Organizer::Application.routes.draw do
       end
       member do
         post :change_status
-        post :change_start_time
         post :change_params
       end
     end

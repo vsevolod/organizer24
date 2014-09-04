@@ -16,6 +16,23 @@ Organizer.destroy_all_popovers = ( appointment_id ) ->
   $('div[data-id]').popover('destroy')
   $('.popover').remove()
 
+send_change_function = (options) ->
+  appointment_id = options.event['data-id']
+  if (confirm(options.confirm))
+    ajax_data = {}
+    ajax_data[options.key] = options.value(options.event)
+    $.ajax( {
+      url: '/appointments/'+appointment_id+'/change_params',
+      type: 'POST',
+      dataType: 'script',
+      data: ajax_data,
+      success: (data)->
+        if data.match('alert')
+          options.revertFunc()
+    } )
+  else
+    options.revertFunc()
+
 find_event = (event_id, field) ->
   event = $.grep( $('#calendar').fullCalendar( 'clientEvents' ), (item) ->
     return item[field] == event_id
@@ -29,7 +46,7 @@ gotoPopover = ->
 Organizer.removeOtherElements = () ->
   $('#second').css('opacity', 1)
   $('#first').css('opacity', 1)
-  $('#calendar').fullCalendar( 'removeEvents', 100000 )
+  $('#calendar').fullCalendar( 'removeEvents', 500000 )
   Organizer.destroy_all_popovers()
 
 getEventSources = ->
@@ -84,17 +101,15 @@ show_appointment_services = (event, options) ->
   text
 
 # Перенос события
-drop_draggable = ( date, allDay ) ->
+drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
-  period = originalEventObject.end.valueOf() - originalEventObject.start.valueOf()
+  period = originalEventObject.end.time() - originalEventObject.start.time()
   originalEventObject.start = date
-  originalEventObject.end = new Date( date.valueOf() + period )
+  originalEventObject.end = date.clone().add(period)
   copiedEventObject = $.extend({
-    _id: 100000,
-    start: originalEventObject.start,
-    end: originalEventObject.end,
-    _start: originalEventObject.start,
-    _end: originalEventObject.end,
+    _id: 500000,
+    start:  originalEventObject.start,
+    end:  originalEventObject.end,
     confirm: $('.buttons_to_confirm').html(),
     allDay: false,
     editable: false,
@@ -107,39 +122,37 @@ drop_draggable = ( date, allDay ) ->
     'is_owner': originalEventObject['is_owner']
   }, {})
   intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
-    if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
+    if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end)
       return el
   )
-  end_date = new Date( copiedEventObject.end)
   if intersection.length > 0
     alert('Запись на этот период невозможна')
-  else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
+  else if copiedEventObject.end == copiedEventObject.start
     alert('Не получается перенести запись с периодом = 0')
-  else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+  else if copiedEventObject.end.time() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
     $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
   else
     alert('Рабочий день заканчивается')
 
 # Создание нового события
-drop_div = ( date, allDay ) ->
+drop_div = ( date ) ->
   if $('.ui-draggable').css('display') != 'none'
     originalEventObject = $('.external-event').data('eventObject')
     if $('#user_showing_time').val() && $('#user_showing_time').val() != ""
       originalEventObject.duration = $('#user_showing_time').val()
+    date_end = date.clone().add(originalEventObject.duration, 'm')
     copiedEventObject = $.extend({
       editable: false,
-      disableDragging: true,
-      disableResizing: true,
-      _id: 100000,
-      confirm: $('.buttons_to_confirm').html()
+      _id: 500000,
+      confirm: $('.buttons_to_confirm').html(),
+      start: date,
+      end: date_end,
+      allDay: false
     }, originalEventObject)
     if originalEventObject.duration <= 30
       copiedEventObject.title = ''
-    copiedEventObject.start = date
-    copiedEventObject.end = to_i(date) + originalEventObject.duration*60
-    copiedEventObject.allDay = allDay
     intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
-      if Array.max( [to_i( el.start ), to_i( copiedEventObject.start )] ) < Array.min( [to_i( el.end ), to_i( copiedEventObject.end )] )
+      if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end)
         return el
     )
     end_date = new Date( copiedEventObject.end*1000)
@@ -147,9 +160,9 @@ drop_div = ( date, allDay ) ->
       alert('Запись на этот период невозможна')
     else if $('#user_phone').val() == ''
       alert('Заполните номер телефона')
-    else if to_i(copiedEventObject.end) == to_i(copiedEventObject.start)
+    else if copiedEventObject.end == copiedEventObject.start
       alert('Для начала выберите услугу')
-    else if (end_date.getHours()*60+end_date.getMinutes())*60 <= start_calendar_options.maxTime
+    else if copiedEventObject.end.time() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start.valueOf())
       $('#second').css('opacity', 0.1)
@@ -197,12 +210,12 @@ $('#calendar').fullCalendar({
   # DROPABLE   drop_div( date, allDay)
   # DROPABLE ),
 
-  dayClick: (date, allDay, jsEvent, view) ->
+  dayClick: (date, jsEvent, view) ->
     if $('body .popover').length == 0
       if Organizer.calendar_draggable
-        drop_draggable( date, allDay )
+        drop_draggable(date)
       else
-        drop_div( date, allDay)
+        drop_div(date)
     else
       Organizer.removeOtherElements()
     false
@@ -244,34 +257,26 @@ $('#calendar').fullCalendar({
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
     element
-  eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc) ->
-    appointment_id = event['data-id']
-    if (confirm("Вы уверены, что хотите изменить время записи?"))
-      $.ajax( {
-        url: '/appointments/'+appointment_id+'/change_start_time',
-        type: 'POST',
-        dataType: 'script',
-        data: { start: event.start.valueOf() },
-        success: (data)->
-          if data.match('alert')
-            revertFunc()
-      } )
-    else
-      revertFunc()
-  eventResize: (event, dayDelta, minuteDelta, revertFunc) ->
-    appointment_id = event['data-id']
-    if (confirm("Вы уверены, что хотите изменить продолжительность записи?"))
-      $.ajax( {
-        url: '/appointments/'+appointment_id+'/change_params',
-        type: 'POST',
-        dataType: 'script',
-        data: { showing_time: event.end.valueOf() - event.start.valueOf()},
-        success: (data)->
-          if data.match('alert')
-            revertFunc()
-      } )
-    else
-      revertFunc()
+  eventDrop: (event, delta, revertFunc) ->
+    send_change_function({
+      event: event,
+      delta: delta,
+      revertFunc: revertFunc,
+      key: 'start',
+      confirm: "Вы уверены, что хотите изменить время записи?",
+      value: (event) ->
+        event.start.format()
+    })
+  eventResize: (event, delta, revertFunc) ->
+    send_change_function({
+      event: event,
+      delta: delta,
+      revertFunc: revertFunc,
+      key: 'showing_time',
+      confirm: "Вы уверены, что хотите изменить продолжительность записи?",
+      value: (event) ->
+        moment.duration(event.end).subtract(event.start).asMinutes()
+    })
 
   eventClick: (event, jsEvent, view) ->
     Organizer.destroy_all_popovers()
@@ -358,14 +363,14 @@ $('body').on('click', '.confirm_calendar', ->
     event.confirm = false
     Organizer.destroy_all_popovers()
     $.ajax( {
-      url: '/appointments/'+appointment_id+'/change_start_time',
+      url: '/appointments/'+appointment_id+'/change_params',
       type: 'POST',
       dataType: 'script',
-      data: { start: Organizer.draggable_item.start.valueOf() }
+      data: { start: Organizer.draggable_item.start.format() }
     } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
-    $('#start').val( $('#calendar').fullCalendar('clientEvents', 100000)[0]['_start'].valueOf() )
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 500000)[0].start.format() )
     $('#first').parent().submit()
   false
 )
@@ -385,7 +390,8 @@ $('.show_statuses .checkbox input').change ->
     worker = $('#workers input:checked').val()
     $('#calendar').fullCalendar('removeEventSource', Organizer.old_event_source)
     $('#calendar').fullCalendar('addEventSource', show_checkboxes(worker))
-    $('#calendar').fullCalendar('removeEvents').fullCalendar( 'refetchEvents' )
+    $('#calendar').fullCalendar('removeEvents')
+    $('#calendar').fullCalendar('refetchEvents')
   )
 
 $('#second #workers input').change ->
