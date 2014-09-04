@@ -29,7 +29,6 @@ $('#month_calendar').fullCalendar({
   dayClick: (date, allDay, jsEvent, view) ->
     window.location.href = '/calendar?day='+Number(date)/1000
   eventClick: (event, jsEvent, view) ->
-    console.log( event )
     window.location.href = '/calendar?day='+Number(event.start)/1000
   eventRender: (event, element) ->
     element.find('.fc-title').html(element.find('.fc-title').text())
@@ -37,10 +36,6 @@ $('#month_calendar').fullCalendar({
 })
 
 $('#worker_month_calendar').fullCalendar({
-  monthNames: <%= I18n.t('date.standalone_month_names').compact %>,
-  monthNamesShort: <%= I18n.t('date.standalone_abbr_month_names').compact %>,
-  dayNames: <%= I18n.t('date.standalone_day_names').compact %>,
-  dayNamesShort: <%= I18n.t('date.standalone_abbr_day_names').compact.map{|x| x.mb_chars.capitalize.to_s} %>,
   firstDay: 1,
   aspectRatio: 1.5,
   defaultView: 'month',
@@ -67,11 +62,11 @@ $('#worker_month_calendar').fullCalendar({
     }
   ],
   dayClick: (date, allDay, jsEvent, view) ->
-    $.post('working_days/inverse_day', { start: date.getTime()/1000 }, (data)->
+    $.post('working_days/inverse_day', { start: date.format() }, (data)->
       $('#worker_month_calendar').fullCalendar('refetchEvents')
     )
   eventClick: (event, jsEvent, view) ->
-    $.post('working_days/inverse_day', { start: event.start.getTime()/1000 }, (data)->
+    $.post('working_days/inverse_day', { start: event.start.format() }, (data)->
       $('#worker_month_calendar').fullCalendar('refetchEvents')
     )
 })
