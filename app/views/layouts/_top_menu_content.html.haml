@@ -7,6 +7,11 @@
       = link_to "/category_photos" do
         %i.icon-th
         Фотогалерея
+  - if !@organization.registration_before? || current_user
+    %li
+      = link_to "/calendar" do
+        %i.icon-calendar
+        Записаться
   - if current_user && !current_user.new_record?
     - if current_user.owner_or_worker?(@organization)
       %li.dropdown
@@ -67,8 +72,3 @@
     // TODO: subdomain => false для всех действий с куки (вход, выход, регистрация)?
     %li= link_to 'Вход', '/users/sign_in'
     %li= link_to 'Регистрация', '/users/sign_up?remote=true', :data => { :colorbox => true }
-  - if !@organization.registration_before? || current_user
-    %li
-      = link_to "/calendar" do
-        %i.icon-calendar
-        Записаться

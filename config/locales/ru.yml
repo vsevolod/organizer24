@@ -38,10 +38,14 @@ ru:
         one: Сертификат
         few: Сертификаты
         other: Сертификаты
-      dictionary: 
+      dictionary:
         one: Словарь
         few: Словари
         other: Словари
+      double_rate:
+        one: Двойной тариф
+        few: Дни двойного тарифа
+        other: Дни двойного тарифа
       organization:
         one: Организация
         few: Организации
@@ -127,6 +131,14 @@ ru:
         tag: Тэг
         ancestry: Предок
         names_depth_cache: Путь
+      double_rate:
+        week_day: День недели
+        begin_time: Время начала
+        end_time: Время конца
+        organization: Организация
+        worker: Мастер
+        day: День
+        rate: Мультипликатор
       organization:
         activity: Деятельность
         registration_before: Доступ к записи только после регистрации/входа

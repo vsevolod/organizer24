@@ -1,0 +1,4 @@
+#double_rate
+  = f.simple_fields_for :double_rates do |dr|
+    = render 'workers/double_rate_fields', :f => dr
+  .links= link_to_add_association 'Добавить время работы по тарифу', f, :double_rates, :class => 'btn btn-success', partial: 'workers/double_rate_fields'
