@@ -22,4 +22,8 @@ class CompanyController < ApplicationController
       @organization.workers.enabled.where(:id => params[:worker_id]).first || @organization.workers.first
     end
 
+    def find_worker
+      @worker = Worker.find(params[:worker_id])
+    end
+
 end

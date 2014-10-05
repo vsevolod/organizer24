@@ -47,6 +47,11 @@ Organizer::Application.routes.draw do
       member do
         get :services_workers
       end
+      resources :double_rates do
+        collection do
+          get :by_week
+        end
+      end
       resources :working_hours do
         collection do
           get :by_week

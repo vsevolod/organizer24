@@ -61,6 +61,9 @@ getEventSources = ->
       {
         url: show_checkboxes(worker_id),
         borderColor: '#ccc'
+      },
+      {
+        url: "/workers/#{worker_id}/double_rates/by_week"
       }
     ]
   else
@@ -232,6 +235,7 @@ $('#calendar').fullCalendar({
       event.editable = true
     if event['data-inner-class'] == 'legend-your-offer'
       event.startEditable = true
+
     element
   eventAfterRender: (event, element, view) ->
     if event.confirm
@@ -259,6 +263,11 @@ $('#calendar').fullCalendar({
       popover = $('.popover.right')
       top = parseFloat(popover.css('top')) - parseFloat(popover.height())/2 - 20
       popover.css( 'top', top )
+    if event['data-inner-class'] == 'legend-rate' || event['data-inner-class'] == 'legend-old-day' || event['data-inner-class'] == 'legend-inaccessible'
+      $(element).css({left: -2, right: -3, margin: 0, 'z-index': '-1', 'border-radius': 0})
+    if event['data-inner-class'] == 'legend-rate'
+      $(element).css({'background': 'none'})
+      element.find('.fc-bg').css({opacity: '0.25', 'background-color': 'yellow'})
   eventDrop: (event, delta, revertFunc) ->
     send_change_function({
       event: event,

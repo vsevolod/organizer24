@@ -83,10 +83,4 @@ class WorkingHoursController < CompanyController
     respond_with( @periods.flatten.compact )
   end
 
-  private
-
-    def find_worker
-      @worker = Worker.find(params[:worker_id])
-    end
-
 end
