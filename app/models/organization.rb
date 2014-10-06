@@ -23,6 +23,7 @@ class Organization < ActiveRecord::Base
   has_many :workers
   has_many :working_hours, :through => :workers
   has_many :dictionaries
+  has_many :double_rates
 
   accepts_nested_attributes_for :dictionaries
   accepts_nested_attributes_for :workers

@@ -11,6 +11,8 @@ class Appointment < ActiveRecord::Base
   has_and_belongs_to_many :services # Услуги
 
   before_save :update_complete_time
+  # TODO
+  #before_save :update_cost
   before_validation :check_start_time
   before_validation :cost_time_by_services!
   before_validation :check_services_on_expire
@@ -187,6 +189,10 @@ class Appointment < ActiveRecord::Base
 
     def start_or_status_changed
       (!self.free? && self.start_changed?) || (self.status_was == 'free' && self.offer?)
+    end
+
+    def update_cost
+      current_double_rates = self.worker.double_rates.where("week_day = :wday OR day = :day", {wday: self.start.wday, day: self.start.to_date}).where('start')
     end
 
 end
