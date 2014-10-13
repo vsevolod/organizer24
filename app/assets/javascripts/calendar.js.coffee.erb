@@ -115,7 +115,7 @@ show_appointment_services = (event, options) ->
 # Перенос события
 drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
-  period = originalEventObject.end.time() - originalEventObject.start.time()
+  period = originalEventObject.end.milliseconds() - originalEventObject.start.milliseconds()
   originalEventObject.start = date
   originalEventObject.end = date.clone().add(period)
   copiedEventObject = $.extend({
@@ -141,7 +141,7 @@ drop_draggable = ( date ) ->
     alert('Запись на этот период невозможна')
   else if copiedEventObject.end == copiedEventObject.start
     alert('Не получается перенести запись с периодом = 0')
-  else if copiedEventObject.end.time() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
+  else if copiedEventObject.end.milliseconds() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
     $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
   else
     alert('Рабочий день заканчивается')
@@ -164,7 +164,7 @@ drop_div = ( date ) ->
     if originalEventObject.duration <= 30
       copiedEventObject.title = ''
     intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
-      if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end)
+      if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end) && el['data-inner-class'] != 'legend-rate'
         return el
     )
     end_date = new Date( copiedEventObject.end*1000)
@@ -174,7 +174,7 @@ drop_div = ( date ) ->
       alert('Заполните номер телефона')
     else if copiedEventObject.end == copiedEventObject.start
       alert('Для начала выберите услугу')
-    else if copiedEventObject.end.time() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
+    else if copiedEventObject.end.milliseconds() <= moment.duration(start_calendar_options.maxTime, "HH:MM:SS")
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $('#start').val(copiedEventObject.start.valueOf())
       $('#second').css('opacity', 0.1)
@@ -294,7 +294,13 @@ $('#calendar').fullCalendar({
 
   eventClick: (event, jsEvent, view) ->
     if event['data-inner-class'] == 'legend-rate'
-      click_on_day(event.start)
+      wcontent = $.grep($.touching({x: jsEvent.pageX, y: jsEvent.pageY}, '.fc-widget-content'), (el) ->
+        $(el).prev().hasClass('fc-axis')
+      )
+      position = $.inArray(wcontent[0], $(wcontent).parent().parent().find('td').not('.fc-axis'))
+      time_from_working_hour = moment.duration(gon.calendar.duration).as('minutes') * position
+      time_from_start_day = moment.duration(gon.calendar.minTime).add(time_from_working_hour, 'minutes')
+      click_on_day(moment(event.start.startOf('day')).add(time_from_start_day))
       false
     else
       Organizer.destroy_all_popovers()

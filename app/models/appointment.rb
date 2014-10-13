@@ -73,7 +73,7 @@ class Appointment < ActiveRecord::Base
       values = self.service_ids.dup
       self.organization.get_services( self.phone ).each do |cs|
         if (cs[0] & values).size == cs[0].size
-          cost += cs[1]
+          cost += cs[1].to_i
           time += cs[2]
           values = values - cs[0]
         end
@@ -192,7 +192,7 @@ class Appointment < ActiveRecord::Base
     end
 
     def update_cost
-      current_double_rates = self.worker.double_rates.where("week_day = :wday OR day = :day", {wday: self.start.wday, day: self.start.to_date}).where('start')
+      self.worker.double_rates.where("week_day = :wday OR day = :day", {wday: self.start.wday, day: self.start.to_date}).where('start')
     end
 
 end
