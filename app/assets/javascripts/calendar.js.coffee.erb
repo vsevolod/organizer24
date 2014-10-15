@@ -61,9 +61,6 @@ getEventSources = ->
       {
         url: show_checkboxes(worker_id),
         borderColor: '#ccc'
-      },
-      {
-        url: "/workers/#{worker_id}/double_rates/by_week"
       }
     ]
   else
@@ -112,6 +109,19 @@ show_appointment_services = (event, options) ->
     text += "Время: "+showing_time+" мин.<br/> Стоимость: "+cost+" руб.<br/>"
   text
 
+# Находим пересечения с другими событиями
+get_intersection_of = (current_el, func) ->
+  intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
+    if func
+      func_result = func(el)
+    else
+      func_result = true
+    if el._id != current_el._id && moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), current_el.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), current_el.end) && func_result
+      debugger
+      return el
+  )
+  intersection
+
 # Перенос события
 drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
@@ -133,9 +143,8 @@ drop_draggable = ( date ) ->
     'data-client': originalEventObject['data-client']
     'is_owner': originalEventObject['is_owner']
   }, {})
-  intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
-    if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end)
-      return el
+  intersection = get_intersection_of(copiedEventObject, (el) ->
+    el['data-inner-class'] != 'legend-rate'
   )
   if intersection.length > 0
     alert('Запись на этот период невозможна')
@@ -163,9 +172,8 @@ drop_div = ( date ) ->
     }, originalEventObject)
     if originalEventObject.duration <= 30
       copiedEventObject.title = ''
-    intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
-      if moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), copiedEventObject.end) && el['data-inner-class'] != 'legend-rate'
-        return el
+    intersection = get_intersection_of(copiedEventObject, (el) ->
+      el['data-inner-class'] != 'legend-rate'
     )
     end_date = new Date( copiedEventObject.end*1000)
     if intersection.length > 0
@@ -315,11 +323,11 @@ $('#calendar').fullCalendar({
         popup_text += '<a class="btn-block btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время/стоимость</a>'
         popup_text += '<a class="btn-block btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Настройка сервисов</a>'
         <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
-        popup_text += '<a data-method="post" class="btn-block btn legend-<%=state%>" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
+        popup_text += '<a data-method="post" class="btn-block btn legend-<%=state%> change_status" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
         <% end %>
       else
         if event['data-inner-class'] == 'legend-your-offer'
-          popup_text += '<a rel="nofollow" data-method="post" class="btn-block btn btn-danger" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove icon-white"/>Отменить запись</a><br/>'
+          popup_text += '<a rel="nofollow" data-method="post" class="btn-block btn btn-danger change_status" href="/appointments/'+event['data-id']+'/change_status?state=cancel_client"><i class="icon-remove icon-white"/>Отменить запись</a><br/>'
       if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
         Organizer.destroy_all_popovers()
         element.popover( {
@@ -374,6 +382,15 @@ $('body').on('click', '.move_appointment', ->
   Organizer.calendar_draggable = true
   $('#calendar').addClass('draggable_calendar')
   $('#calendar').fullCalendar( 'removeEvents', $(this).data('id') )
+  false
+)
+
+$('body').on('click', '.change_status', ->
+  $.ajax( {
+    url: $(this).prop('href'),
+    type: 'POST',
+    dataType: 'script'
+  } )
   false
 )
 

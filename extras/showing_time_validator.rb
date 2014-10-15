@@ -15,9 +15,14 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     unless duplicate_record.count.zero?
       record.errors[:base] = "Продолжительность: #{showing_time.show_time}; Данное время уже занято"
     end
-    # Проверка на запись только в рабочее время
-    wh = record.worker.working_hours.where(week_day: start.wday).first
-    if (start - wh.begin_time).to_date != start.to_date || (start + showing_time.minutes - wh.end_time - 1).to_date >= start.to_date
+    # Проверка на запись только в рабочее время либо по двойному тарифу
+    whs = record.worker.working_hours.where(week_day: start.wday) # Рабочее время
+    drs = record.worker.double_rates.where('week_day = :week_day OR day = :current_day', {week_day: start.wday, current_day: start.to_date}) # Время двойных тарифов
+    start_s = start - start.at_beginning_of_day # начало записи в секундах
+    end_s = start_s + showing_time*60           # конец  записи в секундах
+    unless (whs + drs).map{|wh| [wh.begin_time, wh.end_time]}.union.inject(false) do |flag, range|
+        flag || (range.first <= start_s && range.last >= end_s)
+      end
       record.errors[:base] = "В это время мастер не работает"
     end
   end

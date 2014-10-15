@@ -13,6 +13,10 @@ class DoubleRate < ActiveRecord::Base
   before_validation :fix_time
   before_save :set_organization
 
+  def self.by_day(day, worker)
+    self.where(worker_id: worker.id, day: day)
+  end
+
   private
 
       def fix_time

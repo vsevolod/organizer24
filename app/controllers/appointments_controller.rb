@@ -88,10 +88,14 @@ class AppointmentsController < CompanyController
     # Администратор может поменять статус заявки на любой. Клиент же только на "отменена"
     if current_user.owner_or_worker?( @organization ) || ( current_user == @appointment.user_by_phone && %w{cancel_client}.include?( params[:state] ) )
       @appointment.status = params[:state]
-      if @appointment.save
-        redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен'
-      else
-        redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'При сохранении произошла ошибка'
+      respond_to do |wants|
+        if @appointment.save
+          wants.html { redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен' }
+          wants.js   { render :js => refresh_calendar }
+        else
+          wants.html { redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'При сохранении произошла ошибка' }
+          wants.js   { render :js => "alert('при сохранении произошла ошибка'" }
+        end
       end
     else
       redirect_to :back, :alert => 'У вас не достаточно прав'
@@ -110,7 +114,7 @@ class AppointmentsController < CompanyController
         #{refresh_calendar}
       JS
     else
-      render :text => 'alert("Произошла ошибка");Organizer.removeOtherElements();'
+      render :text => "alert('Произошла ошибка: #{@appointment.errors.full_messages.join(', ')}');Organizer.removeOtherElements();"
     end
   end
 
