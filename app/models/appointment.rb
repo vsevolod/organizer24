@@ -64,29 +64,46 @@ class Appointment < ActiveRecord::Base
 
   # Возвращаем стоимость и время в зависимости от колекций.
   def cost_time_by_services!
-    # Обновлять только если не изменено время записи
-    # И если не была изменена стоимость (для созданной записи)
+    # Обновлять только если не была изменена стоимость (для созданной записи)
     # И статус != ожидаемый
-    if !self.showing_time_changed? && (self.new_record? || !self.cost_changed?) && !%w{missing cancel_owner cancel_client}.include?( self.status )
-      cost = 0
+    if (self.new_record? || !self.cost_changed?) && !%w{missing cancel_owner cancel_client}.include?( self.status )
+      new_cost = 0
       time = 0
       values = self.service_ids.dup
       self.organization.get_services( self.phone ).each do |cs|
         if (cs[0] & values).size == cs[0].size
-          cost += cs[1].to_i
+          new_cost += cs[1].to_i
           time += cs[2]
           values = values - cs[0]
         end
       end
-      self.cost = cost
-      unless self.complete?
+      self.cost = new_cost
+      unless self.showing_time_changed? || self.complete?
         self.showing_time = time
+      end
+
+      # подсчет цены в зависимости от тарифа
+      # TODO: исправить подсчет. Сейчас идёт так: находится первое пересечение(двойного тарифа) и умножается на среднее от всех двойных тарифов
+      if (drs = get_double_rates).any?
+        excluded = [[self.start_seconds, self.end_seconds]].exclude!(drs.map{|wh| [wh.begin_time, wh.end_time]}).first || [0]
+        proportion = 1 - (excluded.last - excluded.first)/(self.showing_time*60)
+        self.cost = new_cost * (1.0 - proportion + (drs.sum(:rate)/drs.count) * proportion)
       end
     end
   end
 
   def _end
     self.start + self.showing_time.minutes
+  end
+
+  # конец  записи в секундах
+  def end_seconds
+    start_seconds + self.showing_time * 60
+  end
+
+  # начало записи в секундах
+  def start_seconds
+    self.start - self.start.at_beginning_of_day
   end
 
   def fullname
@@ -151,6 +168,14 @@ class Appointment < ActiveRecord::Base
 
   def can_notify_owner?
     !can_not_notify_owner && !self.free?
+  end
+
+  # Двойные тарифы записи
+  def get_double_rates
+    self.worker.double_rates.where(<<-SQL, {week_day: self.start.wday, current_day: self.start.to_date, start: self.start_seconds, end: self.end_seconds})
+      (week_day = :week_day OR day = :current_day)
+      AND GREATEST(:start, begin_time) < LEAST(:end, end_time)
+    SQL
   end
 
   private

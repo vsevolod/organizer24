@@ -3,6 +3,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
 
   # Пересечение прямых: max( 0, max( A1, An ) - min( B1, Bn ) )
   # FIXME исправить для нескольких исполнителей
+  # TODO убрать динамические поля start и showing_time для appointment
   # DESCRIPTION Валидация на продолжительность. Занято место или нет
 
   def validate_each( record, attribute, value )
@@ -17,11 +18,9 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     end
     # Проверка на запись только в рабочее время либо по двойному тарифу
     whs = record.worker.working_hours.where(week_day: start.wday) # Рабочее время
-    drs = record.worker.double_rates.where('week_day = :week_day OR day = :current_day', {week_day: start.wday, current_day: start.to_date}) # Время двойных тарифов
-    start_s = start - start.at_beginning_of_day # начало записи в секундах
-    end_s = start_s + showing_time*60           # конец  записи в секундах
+    drs = record.get_double_rates
     unless (whs + drs).map{|wh| [wh.begin_time, wh.end_time]}.union.inject(false) do |flag, range|
-        flag || (range.first <= start_s && range.last >= end_s)
+        flag || (range.first <= record.start_seconds && range.last >= record.end_seconds)
       end
       record.errors[:base] = "В это время мастер не работает"
     end
