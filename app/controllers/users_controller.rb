@@ -6,7 +6,7 @@ class UsersController < CompanyController
 
   def dashboard
     @user = current_user
-    @appointments = @user.appointments_by_phone.paginate(page: params[:page], per_page: 30)
+    @appointments = @user.appointments_by_phone.where(organization_id: @organization.id).paginate(page: params[:page], per_page: 30)
   end
 
   def show
