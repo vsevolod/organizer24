@@ -2,7 +2,7 @@ class Array
   
   # Вычитает из одного массива рейнджев другой массив рейнджев
   def exclude!(other_array)
-    self.dup.each_with_index do |self_range, index|
+    self.each_with_index do |self_range, index|
       other_array.each do |other_range|
         begin_included = self_range.first <= other_range.first && self_range.last >  other_range.first
         end_included   = self_range.first <  other_range.last  && self_range.last >= other_range.last

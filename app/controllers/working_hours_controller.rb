@@ -51,7 +51,7 @@ class WorkingHoursController < CompanyController
     ((@start.to_date)..(@end.to_date)).each_with_index do |t, index|
       current_day = @start + index.days
       whs = @worker.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).order(:begin_time)
-      double_rates = rates.where('week_day = :week_day OR day = :current_day', {week_day: current_day.wday, current_day: current_day})
+      double_rates = rates.where('week_day = :week_day OR day = :current_day', {week_day: current_day.wday, current_day: current_day.localtime.to_date})
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]

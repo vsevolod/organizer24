@@ -217,7 +217,7 @@ class Appointment < ActiveRecord::Base
     end
 
     def update_cost
-      self.worker.double_rates.where("week_day = :wday OR day = :day", {wday: self.start.wday, day: self.start.to_date}).where('start')
+      self.worker.double_rates.where("week_day = :wday OR day = :day", {wday: self.start.wday, day: self.start.localtime.to_date}).where('start')
     end
 
 end
