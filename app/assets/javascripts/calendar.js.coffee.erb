@@ -111,7 +111,7 @@ show_appointment_services = (event, options) ->
 # Находим пересечения с другими событиями
 # Возвращаем объект пересечения и время
 get_intersection_of = (current_el, func) ->
-  intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
+  intersection = $.map( $('#calendar').fullCalendar('clientEvents'), (el) ->
     if func
       func_result = func(el)
     else
@@ -127,9 +127,9 @@ get_intersection_of = (current_el, func) ->
 drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
   # TODO: remove milliseconds
-  period = originalEventObject.end.milliseconds() - originalEventObject.start.milliseconds()
+  period = moment(originalEventObject.end).subtract(originalEventObject.start)
   originalEventObject.start = date
-  originalEventObject.end = date.clone().add(period)
+  originalEventObject.end = moment(date).add(period)
   copiedEventObject = $.extend({
     _id: 500000,
     start:  originalEventObject.start,
@@ -160,34 +160,35 @@ drop_draggable = ( date ) ->
 # Создание нового события
 drop_div = ( date ) ->
   if $('.ui-draggable').css('display') != 'none'
-    originalEventObject = $('.external-event').data('eventObject')
-    if $('#user_showing_time').val() && $('#user_showing_time').val() != ""
-      originalEventObject.duration = $('#user_showing_time').val()
-    date_end = date.clone().add(originalEventObject.duration, 'm')
-    copiedEventObject = $.extend({
+    cost = $('#total_cost').data('value')
+    copiedEventObject = {
+      cost: cost,
       editable: false,
       _id: 500000,
       confirm: $('.buttons_to_confirm').html(),
-      start: date,
-      end: date_end,
-      allDay: false,
-    }, originalEventObject)
-    if originalEventObject.duration <= gon.calendar.duration
+      allDay: false
+    }
+    copiedEventObject.start = date
+    if $('#user_showing_time')[0] && $('#user_showing_time').val() != ''
+      copiedEventObject.duration = $('#user_showing_time').val()
+    else
+      copiedEventObject.duration = $('#total_time').data('value')
+    copiedEventObject.end = date.clone().add(copiedEventObject.duration, 'm')
+
+    if copiedEventObject.duration <= gon.calendar.duration
       copiedEventObject.title = ''
-    ##### Смотрим на пересечения с мультипликаторами #####
-    cost = $('#total_cost').data('value')
     double_intersection = get_intersection_of(copiedEventObject, (el) ->
       el['data-inner-class'] == 'legend-rate'
-    )[0]
-    if double_intersection
-      proportion = 1 - double_intersection[1]/originalEventObject.duration
-      copiedEventObject.cost = cost*(1 - proportion + (double_intersection.cost)*proportion)
-    ######################################################
-    debugger
+    )
+    if double_intersection[0]
+      proportion = double_intersection[1]/copiedEventObject.duration
+      copiedEventObject.cost = cost*(1 - proportion + (double_intersection[0].rate)*proportion)
+      $('#total_cost').html("Стоимость: "+copiedEventObject.cost+" руб.")
+    copiedEventObject.title = "Время: #{copiedEventObject.duration} мин.\n Стоимость: #{copiedEventObject.cost} руб."
+
     intersection = get_intersection_of(copiedEventObject, (el) ->
       el['data-inner-class'] != 'legend-rate'
     )
-    end_date = new Date( copiedEventObject.end*1000)
     if intersection.length > 0
       alert('Запись на этот период невозможна')
     else if $('#user_phone').val() == ''
