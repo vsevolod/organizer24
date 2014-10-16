@@ -117,7 +117,6 @@ get_intersection_of = (current_el, func) ->
     else
       func_result = true
     if el._id != current_el._id && moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), current_el.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), current_el.end) && func_result
-      debugger
       return el
   )
   intersection
@@ -308,7 +307,7 @@ $('#calendar').fullCalendar({
       position = $.inArray(wcontent[0], $(wcontent).parent().parent().find('td').not('.fc-axis'))
       time_from_working_hour = moment.duration(gon.calendar.duration).as('minutes') * position
       time_from_start_day = moment.duration(gon.calendar.minTime).add(time_from_working_hour, 'minutes')
-      click_on_day(moment(event.start.startOf('day')).add(time_from_start_day))
+      click_on_day(moment(event.start).startOf('day'.add(time_from_start_day))
       false
     else
       Organizer.destroy_all_popovers()

@@ -53,6 +53,9 @@ class WorkingHoursController < CompanyController
       whs = @worker.working_hours.where(:week_day => [1,2,3,4,5,6,0][index % 7] ).order(:begin_time)
       double_rates = rates.where('week_day = :week_day OR day = :current_day', {week_day: current_day.wday, current_day: current_day.localtime.to_date})
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
+        double_rates.map do |double_rate|
+          @periods.push({:start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
+        end
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]
           whs.each do |wh|
@@ -81,9 +84,6 @@ class WorkingHoursController < CompanyController
         end
       else
         { :title => "Запись невозможна", 'data-inner-class' => 'legend-old-day' }.merge({:start => (current_day+min_wt).iso8601, :end => (current_day+max_wt).iso8601, :editable => false})
-      end
-      double_rates.map do |double_rate|
-        @periods.push({:start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
       end
     end
     respond_with( @periods.flatten.compact )
