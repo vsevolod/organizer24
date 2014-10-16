@@ -69,7 +69,7 @@ class WorkingHoursController < CompanyController
           end
           closes.push max_wt
           prepared = closes.each_slice(2).find_all{|x| x.first != x.last}
-          prepared.exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).map do |arr|
+          prepared.exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).find_all{|x| x.first != x.last}.map do |arr|
             { title: 'Закрыто',
               start: (current_day + arr.first).iso8601,
               end:   (current_day + arr.last).iso8601,
@@ -78,7 +78,7 @@ class WorkingHoursController < CompanyController
             }
           end
         else
-          [[min_wt, max_wt]].exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).map do |arr|
+          [[min_wt, max_wt]].exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).find_all{|x| x.first != x.last}.map do |arr|
             { title: 'Закрыто',
               start: (current_day + arr.first).iso8601,
               end:   (current_day + arr.last).iso8601,

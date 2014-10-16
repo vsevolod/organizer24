@@ -81,7 +81,7 @@ click_on_day = (date) ->
     if Organizer.calendar_draggable
       drop_draggable(date)
     else
-      drop_div(date)
+      create_appointment(date)
   else
     Organizer.removeOtherElements()
 
@@ -109,15 +109,17 @@ show_appointment_services = (event, options) ->
   text
 
 # Находим пересечения с другими событиями
-# Возвращаем объект пересечения и время
+# Возвращаем объект пересечения и длину
 get_intersection_of = (current_el, func) ->
   intersection = $.map( $('#calendar').fullCalendar('clientEvents'), (el) ->
     if func
       func_result = func(el)
     else
       func_result = true
-    max = moment.max(moment.utc(el.start), current_el.start)
-    min = moment.min(moment.utc(el.end), current_el.end)
+    cur_start = moment(current_el.start.format('YYYY-MM-DD HH:mm'))
+    cur_end   = moment(current_el.end.format('YYYY-MM-DD HH:mm'))
+    max = moment.max(cur_start, el.start)
+    min = moment.min(cur_end,   el.end)
     if el._id != current_el._id && max < min && func_result
       return [el, (min - max)/(1000*60)]
   )
@@ -126,7 +128,6 @@ get_intersection_of = (current_el, func) ->
 # Перенос события
 drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
-  # TODO: remove milliseconds
   period = moment(originalEventObject.end).subtract(originalEventObject.start)
   originalEventObject.start = date
   originalEventObject.end = moment(date).add(period)
@@ -158,7 +159,7 @@ drop_draggable = ( date ) ->
     alert('Рабочий день заканчивается')
 
 # Создание нового события
-drop_div = ( date ) ->
+create_appointment = ( date ) ->
   if $('.ui-draggable').css('display') != 'none'
     cost = $('#total_cost').data('value')
     copiedEventObject = {
@@ -240,9 +241,6 @@ $('#calendar').fullCalendar({
   eventSources: Organizer.event_sources,
   editable: false,
   droppable: false,
-  # DROPABLE drop: ((date, allDay) ->
-  # DROPABLE   drop_div( date, allDay)
-  # DROPABLE ),
 
   dayClick: (date, jsEvent, view) ->
     click_on_day(date)
@@ -275,7 +273,6 @@ $('#calendar').fullCalendar({
 
       text += event.confirm
       Organizer.destroy_all_popovers()
-      console.log(text)
       element.popover({
         html: true,
         content: text,
