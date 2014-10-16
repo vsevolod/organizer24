@@ -101,7 +101,6 @@ show_appointment_services = (event, options) ->
       text += el.name + '<br/>'
       if !(event['data-cost'])
         cost += el.cost
-      #showing_time += el.showing_time
     )
     if (event['data-cost'])
       cost = event['data-cost']
@@ -110,20 +109,24 @@ show_appointment_services = (event, options) ->
   text
 
 # Находим пересечения с другими событиями
+# Возвращаем объект пересечения и время
 get_intersection_of = (current_el, func) ->
   intersection = $.grep( $('#calendar').fullCalendar('clientEvents'), (el) ->
     if func
       func_result = func(el)
     else
       func_result = true
-    if el._id != current_el._id && moment.max(moment.utc(el.start), current_el.start) < moment.min(moment.utc(el.end), current_el.end) && func_result
-      return el
+    max = moment.max(moment.utc(el.start), current_el.start)
+    min = moment.min(moment.utc(el.end), current_el.end)
+    if el._id != current_el._id && max < min && func_result
+      return [el, (min - max)/(1000*60)]
   )
   intersection
 
 # Перенос события
 drop_draggable = ( date ) ->
   originalEventObject = Organizer.draggable_item
+  # TODO: remove milliseconds
   period = originalEventObject.end.milliseconds() - originalEventObject.start.milliseconds()
   originalEventObject.start = date
   originalEventObject.end = date.clone().add(period)
@@ -167,10 +170,20 @@ drop_div = ( date ) ->
       confirm: $('.buttons_to_confirm').html(),
       start: date,
       end: date_end,
-      allDay: false
+      allDay: false,
     }, originalEventObject)
-    if originalEventObject.duration <= 30
+    if originalEventObject.duration <= gon.calendar.duration
       copiedEventObject.title = ''
+    ##### Смотрим на пересечения с мультипликаторами #####
+    cost = $('#total_cost').data('value')
+    double_intersection = get_intersection_of(copiedEventObject, (el) ->
+      el['data-inner-class'] == 'legend-rate'
+    )[0]
+    if double_intersection
+      proportion = 1 - double_intersection[1]/originalEventObject.duration
+      copiedEventObject.cost = cost*(1 - proportion + (double_intersection.cost)*proportion)
+    ######################################################
+    debugger
     intersection = get_intersection_of(copiedEventObject, (el) ->
       el['data-inner-class'] != 'legend-rate'
     )
@@ -257,10 +270,11 @@ $('#calendar').fullCalendar({
       if (sas != '')
         text += sas
       else
-        text += element.find('.fc-event-title').text()
+        text += element.find('.fc-content .fc-title').text()
 
       text += event.confirm
       Organizer.destroy_all_popovers()
+      console.log(text)
       element.popover({
         html: true,
         content: text,

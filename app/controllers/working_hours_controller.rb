@@ -59,7 +59,7 @@ class WorkingHoursController < CompanyController
       double_rates = rates.where('week_day = :week_day OR day = :current_day', {week_day: current_day.wday, current_day: current_day.localtime.to_date})
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         double_rates.map do |double_rate|
-          @periods.push({:start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
+          @periods.push({rate: double_rate.rate, :start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
         end
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]
