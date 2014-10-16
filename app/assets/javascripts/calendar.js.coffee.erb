@@ -116,7 +116,7 @@ get_intersection_of = (current_el, func) ->
       func_result = func(el)
     else
       func_result = true
-    if el._id != current_el._id && moment.max(moment.utc(el.start.format(), 'YYYY-MM-DD HH:mm'), current_el.start) < moment.min(moment.utc(el.end.format(), 'YYYY-MM-DD HH:mm'), current_el.end) && func_result
+    if el._id != current_el._id && moment.max(moment.utc(el.start), current_el.start) < moment.min(moment.utc(el.end), current_el.end) && func_result
       return el
   )
   intersection
@@ -302,7 +302,7 @@ $('#calendar').fullCalendar({
   eventClick: (event, jsEvent, view) ->
     if event['data-inner-class'] == 'legend-rate'
       wcontent = $.grep($.touching({x: jsEvent.pageX, y: jsEvent.pageY}, '.fc-widget-content'), (el) ->
-        $(el).prev().hasClass('fc-axis')
+        $(el).prev().hasClass('fc-axis') && $(el).prop('class') == 'fc-widget-content'
       )
       position = $.inArray(wcontent[0], $(wcontent).parent().parent().find('td').not('.fc-axis'))
       time_from_working_hour = moment.duration(gon.calendar.duration).as('minutes') * position

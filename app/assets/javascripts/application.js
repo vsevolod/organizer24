@@ -12,7 +12,7 @@
 //= require themes/sadmin/charts/jquery.flot.animator.min
 //= require themes/sadmin/charts/jquery.flot.resize.min
 //= require pages
-//= require services 
+//= require services
 //= require organizations
 //= require ckeditor/init
 //= require colorbox-rails

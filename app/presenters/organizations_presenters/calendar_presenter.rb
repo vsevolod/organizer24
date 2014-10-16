@@ -46,8 +46,10 @@ module OrganizationsPresenters
       if @calendar_settings
         @calendar_settings
       else
-        minTime  = organization.working_hours.pluck(:begin_time).min
-        maxTime  = organization.working_hours.pluck(:end_time).max
+        # TODO: Подумать, что сделать с double_rates, которые далеко впереди
+        double_rates = organization.double_rates.where('day IS NULL OR day >= ?', Time.now - 1.day)
+        minTime  = (organization.working_hours.pluck(:begin_time) + double_rates.pluck(:begin_time)).min.to_i
+        maxTime  = (organization.working_hours.pluck(:end_time)   + double_rates.pluck(:end_time)).max.to_i
         duration = (organization.slot_minutes || 30).to_i.minutes
         @calendar_settings = {
           minTime: minTime.to_moment,

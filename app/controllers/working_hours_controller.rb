@@ -42,8 +42,13 @@ class WorkingHoursController < CompanyController
   end
 
   def by_week
-    min_wt = @worker.organization.working_hours.pluck(:begin_time).min.to_i
-    max_wt = @worker.organization.working_hours.pluck(:end_time).max.to_i
+    # Находим границы календаря
+    # TODO: Подумать, что сделать с double_rates, которые далеко впереди
+    #double_rates = @worker.double_rates.where('week_day IS NOT NULL OR (day >= :start AND day <= :end)', {start: @start.localtime.to_date, end: @end.localtime.to_date})
+    double_rates = @worker.organization.double_rates.where('day IS NULL OR day >= ?', Time.now - 1.day)
+    min_wt = (@worker.organization.working_hours.pluck(:begin_time) + double_rates.pluck(:begin_time)).min.to_i
+    max_wt = (@worker.organization.working_hours.pluck(:end_time)   + double_rates.pluck(:end_time)).max.to_i
+
     @worker = get_worker
     # Подсчет мультипликаторов
     rates = @worker.double_rates.where('date(day) >= :start AND date(day) <= :end OR week_day IS NOT NULL', {start: @start, end: @end})
