@@ -183,7 +183,7 @@ create_appointment = ( date ) ->
     )
     if double_intersection[0]
       proportion = double_intersection[1]/copiedEventObject.duration
-      copiedEventObject.cost = cost*(1 - proportion + (double_intersection[0].rate)*proportion)
+      copiedEventObject.cost = parseInt(cost*(1 - proportion + (double_intersection[0].rate)*proportion))
       $('#total_cost').html("Стоимость: "+copiedEventObject.cost+" руб.")
     copiedEventObject.title = "Время: #{copiedEventObject.duration} мин.\n Стоимость: #{copiedEventObject.cost} руб."
 

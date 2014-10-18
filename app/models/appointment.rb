@@ -182,7 +182,7 @@ class Appointment < ActiveRecord::Base
 
     def check_start_time
       #TODO remove after 26.10.2014 (and change time zone for server)
-      #if self.start_changed?
+      #if Rails.env == 'production' && self.start_changed?
       #  if self.start && self.start.to_date >= '26.10.2014'.to_date
       #    self.start = self.start - 1.hour
       #  end
