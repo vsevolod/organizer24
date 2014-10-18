@@ -19,7 +19,7 @@ class PagesController < InheritedResources::Base
   protected
 
     def resource
-      @page ||= @organization.pages.find_by_permalink( "/#{params[:id]}" )
+      @page ||= @organization.pages.where(permalink: ["/#{params[:id]}", params[:id]] ).first
     end
 
 end

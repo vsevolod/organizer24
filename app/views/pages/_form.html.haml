@@ -1,6 +1,7 @@
 = simple_form_for(@page, :wrapper => :bootstrap) do |f|
   = show_errors( @page )
   = f.input :name
+  = f.input :menu_name, hint: 'Пусто если не показывать в меню'
   = f.input :permalink
   = f.input :content, :as => :ckeditor
   .form-actions

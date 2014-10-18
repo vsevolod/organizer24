@@ -156,6 +156,7 @@ ru:
         content: Содержание
         organization: Организация
         organization_id: Организация
+        menu_name: Название меню
       photo:
         photo: Файл
       service:
