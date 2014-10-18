@@ -46,7 +46,8 @@ Organizer::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w{fullcalendar.print.css fc.js month_calendar.js calendar.js themes/embark.css themes/beauty.css photo.js jquery.fileupload-ui.css company.css themes/default.css themes/edge/font-awesome.css themes/edge/theme.css themes/edge/font-awesome-ie7.css themes/sadmin.css themes/sadmin.js ckeditor/config.js ckeditor/skins/kama/editor.css ckeditor/lang/ru.js}
+  config.assets.precompile += %w{ckeditor/skins/kama/editor.css ckeditor/lang/ru.js ckeditor/plugins/embed/plugin.js ckeditor/plugins/attachment/plugin.js ckeditor/config.js ckeditor/plugins/embed/lang/ru.js ckeditor/plugins/attachment/lang/ru.js ckeditor/contents.css ckeditor/plugins/styles/styles/default.js}
+  config.assets.precompile += %w{fullcalendar.print.css fc.js month_calendar.js calendar.js themes/embark.css themes/beauty.css photo.js jquery.fileupload-ui.css company.css themes/default.css themes/edge/font-awesome.css themes/edge/theme.css themes/edge/font-awesome-ie7.css themes/sadmin.css themes/sadmin.js}
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
