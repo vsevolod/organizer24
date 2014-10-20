@@ -4,8 +4,9 @@
     %title= @organization.name
     = stylesheet_link_tag "company"
     = stylesheet_link_tag "themes/beauty"
-    = include_gon
+    = include_gon(init: true)
     = javascript_include_tag "application"
+    = javascript_include_tag '//localhost:8000/socket.io/socket.io.js'
     = csrf_meta_tags
     = yield :js
   %body{ :class => get_class }

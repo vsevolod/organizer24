@@ -36,6 +36,8 @@ class OrganizationsController < CompanyController
                                                                   organization: @organization,
                                                                   current_user: current_user })
     gon.calendar = @presenter.calendar_settings
+    gon.organization_id = @organization.id
+    gon.user = current_user
     redirect_to organization_root, :alert => 'Для записи вам необходимо войти' if !signed_in? && @organization.registration_before?
   end
 
