@@ -35,13 +35,15 @@ class OrganizationsController < CompanyController
                                                                   worker_id: params[:worker_id],
                                                                   organization: @organization,
                                                                   current_user: current_user })
-    gon.calendar = @presenter.calendar_settings
-    gon.socket_options = {
-      organization_id: @organization.id,
-      user: current_user,
-      worker_id: @presenter.worker.try(:id),
-      isa: current_user.owner_or_worker?(@organization) # is admin?
-    }
+    if current_user
+      gon.calendar = @presenter.calendar_settings
+      gon.socket_options = {
+        organization_id: @organization.id,
+        user: current_user,
+        worker_id: @presenter.worker.try(:id),
+        isa: current_user.owner_or_worker?(@organization) # is admin?
+      }
+    end
     redirect_to organization_root, :alert => 'Для записи вам необходимо войти' if !signed_in? && @organization.registration_before?
   end
 
