@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def owner_or_worker?(organization)
-    self.owner?(organization) || self.worker?(organization)
+    !!(self.owner?(organization) || self.worker?(organization))
   end
 
   def recount_appointments_by_organization_for_services_users!( organization )

@@ -141,7 +141,13 @@ class AppointmentsController < CompanyController
   private
 
     def refresh_calendar
-      "Organizer.destroy_all_popovers();$('#calendar').fullCalendar('removeEvents');$('#calendar').fullCalendar( 'refetchEvents' );"
+       <<-JS
+         Organizer.destroy_all_popovers();
+         $('#calendar').fullCalendar('refetchEvents');
+         if (window.socket !== undefined){
+           window.socket.emit('refresh event', #{@appointment.id});
+         }
+      JS
     end
 
     def can_editable?
