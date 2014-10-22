@@ -65,6 +65,7 @@ class AppointmentsController < CompanyController
     end
     respond_to do |format|
       if @appointment.save
+        @appointment.send_to_redis
         session[:appointment_new] = @appointment.id
         format.html{ redirect_to @appointment }
         format.js{
@@ -90,6 +91,7 @@ class AppointmentsController < CompanyController
       @appointment.status = params[:state]
       respond_to do |wants|
         if @appointment.save
+          @appointment.send_to_redis
           wants.html { redirect_to "/calendar?day=#{@appointment.start.to_i}", :notice => 'Статус успешно изменен' }
           wants.js   { render :js => refresh_calendar }
         else
@@ -108,6 +110,7 @@ class AppointmentsController < CompanyController
     @appointment.cost = params[:cost] if params[:cost]
     @appointment.start = Time.parse(params[:start]) if params[:start]
     if @appointment.save
+      @appointment.send_to_redis
       render :text => <<-JS
         Organizer.draggable_item = null;
         Organizer.calendar_draggable = false;
@@ -121,6 +124,7 @@ class AppointmentsController < CompanyController
   def update
     respond_to do |wants|
       if @appointment.update_attributes(params[:appointment])
+        @appointment.send_to_redis
         wants.html { redirect_to @appointment, notice:'Запись успешно изменена.' }
         wants.js   { render :js => refresh_calendar }
         wants.xml  { head :ok }
@@ -141,12 +145,9 @@ class AppointmentsController < CompanyController
   private
 
     def refresh_calendar
-       <<-JS
-         Organizer.destroy_all_popovers();
-         $('#calendar').fullCalendar('refetchEvents');
-         if (window.socket !== undefined){
-           window.socket.emit('refresh event', #{@appointment.id});
-         }
+      <<-JS
+        Organizer.destroy_all_popovers();
+        $('#calendar').fullCalendar('refetchEvents');
       JS
     end
 

@@ -178,6 +178,11 @@ class Appointment < ActiveRecord::Base
     SQL
   end
 
+  def send_to_redis
+    appointment_hash = {worker_id: worker_id, start: start.iso8601, id: id}
+    $redis.publish 'socket.io#*', [{type: 2, data: ['refresh event', appointment_hash]}, {}].to_msgpack
+  end
+
   private
 
     def check_start_time
