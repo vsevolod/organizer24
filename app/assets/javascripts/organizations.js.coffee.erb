@@ -71,6 +71,4 @@ $ ->
     $('#calendar_show').removeClass('hidden-left')
     if $.colorbox
       $.colorbox.close()
-    if window.socket
-      window.socket.emit('set worker', $(this).data('worker-id'))
     false

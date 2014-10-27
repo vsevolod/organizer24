@@ -8,6 +8,8 @@ $ ->
 
     window.socket.on 'refresh event', (options) ->
       worker_id = $('#workers input:checked').val()
+      console.log('Options:', options)
       console.log('Worker:', worker_id, options.worker_id)
       if Number(worker_id) == options.worker_id
-        $('#calendar').fullCalendar('refetchEvents')
+        if moment(options.start) >= $('#calendar').fullCalendar('getView').intervalStart && moment(options.start) <= $('#calendar').fullCalendar('getView').intervalEnd
+          $('#calendar').fullCalendar('refetchEvents')

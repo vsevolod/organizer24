@@ -451,6 +451,8 @@ $('#second #workers input').change ->
     $(".tooltips").tooltip()
   else
     $('#second .check_services').html($(this).attr('check_services'))
+  if window.socket
+    window.socket.emit('set worker', $(this).data('worker-id'))
   # update event sources
   $.each(Organizer.event_sources, (id, event_source) ->
     $('#calendar').fullCalendar('removeEventSource', event_source)
