@@ -13,3 +13,6 @@ $ ->
       if Number(worker_id) == options.worker_id
         if moment(options.start) >= $('#calendar').fullCalendar('getView').intervalStart && moment(options.start) <= $('#calendar').fullCalendar('getView').intervalEnd
           $('#calendar').fullCalendar('refetchEvents')
+          console.log 'in list'
+        else
+          console.log 'not in list'

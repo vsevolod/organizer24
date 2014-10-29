@@ -7,7 +7,7 @@ class DoubleRate < ActiveRecord::Base
   belongs_to :organization
   belongs_to :worker
 
-  validates :week_day, uniqueness: true, if: 'week_day.present?'
+  validates :week_day, presence: true, if: 'week_day.present?'
   validates :begin_time, presence: true
   validates :end_time, presence: true
   before_validation :fix_time

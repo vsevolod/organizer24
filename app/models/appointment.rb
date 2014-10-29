@@ -138,7 +138,13 @@ class Appointment < ActiveRecord::Base
       end
     end
     if !text.blank? && !self.organization.owner_phones.include?(self.phone) # Не уведомляем если на телефон мастера
-      Delayed::Job.enqueue SmsJob.new( { :text => text, :phone => self.worker(organization).try(:phone) || organization.owner.phone }, 'simple_notify' ), :run_at => Time.zone.now
+      # Проверка на наличие мастера онлайн
+      phone = self.worker(organization).try(:phone) || organization.owner.phone
+      if $redis.hkeys('phones').include?(phone)
+        $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
+      else
+        Delayed::Job.enqueue SmsJob.new( { text: text, phone: phone }, 'simple_notify' ), :run_at => Time.zone.now
+      end
     end
   end
 

@@ -60,7 +60,7 @@ class WorkingHoursController < CompanyController
       @periods << if Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         double_rates.map do |double_rate|
           @periods.push({rate: double_rate.rate, :start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
-        end
+        end if (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]
           whs.each do |wh|
@@ -78,7 +78,9 @@ class WorkingHoursController < CompanyController
             }
           end
         else
-          [[min_wt, max_wt]].exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).find_all{|x| x.first != x.last}.map do |arr|
+          tarr = [[min_wt, max_wt]]
+          tarr = tarr.exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}) if (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
+          tarr.find_all{|x| x.first != x.last}.map do |arr|
             { title: 'Закрыто',
               start: (current_day + arr.first).iso8601,
               end:   (current_day + arr.last).iso8601,
