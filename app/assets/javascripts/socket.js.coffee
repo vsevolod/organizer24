@@ -1,6 +1,6 @@
 $ ->
   if gon && gon.socket_options
-    window.socket = io("http://localhost:8000")
+    window.socket = io("http://organizer24.ru:8000")
     window.socket.emit('join', gon.socket_options)
 
     window.socket.on 'message', (fio, message) ->
