@@ -301,7 +301,7 @@ $('#calendar').fullCalendar({
     if event['data-inner-class'] == 'legend-rate'
       $(element).css({'background': 'none'})
       element.find('.fc-bg').css({opacity: '0.25', 'background-color': 'yellow', 'z-index': '-1'})
-  eventDrop: (event, delta, revertFunc) ->
+  eventDrop: (event, delta, revertFunc, jsEvent) ->
     send_change_function({
       event: event,
       delta: delta,
@@ -309,10 +309,10 @@ $('#calendar').fullCalendar({
       key: 'start',
       confirm: "Вы уверены, что хотите изменить время записи?",
       value: (event) ->
-        time_from_start_day = getTimeFromStartDay(event)
-        $('#minutes').val(time_from_start_day.asMinutes())
-        moment(event.start).startOf('day').add(time_from_start_day).format()
-        #event.start.format()
+        #time_from_start_day = getTimeFromStartDay(jsEvent)
+        #$('#minutes').val(time_from_start_day.asMinutes())
+        #moment(event.start).startOf('day').add(time_from_start_day).format('YYYY-MM-DD HH:mm')
+        event.start.format()
     })
   eventResize: (event, delta, revertFunc) ->
     send_change_function({
@@ -428,7 +428,7 @@ $('body').on('click', '.confirm_calendar', ->
       url: '/appointments/'+appointment_id+'/change_params',
       type: 'POST',
       dataType: 'script',
-      data: { start: Organizer.draggable_item.start.format() }
+      data: { start: Organizer.draggable_item.start.format("DD-MM-YYYY HH:mm:ss") }
     } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
