@@ -16,6 +16,15 @@ Organizer.destroy_all_popovers = ( appointment_id ) ->
   $('a[data-id]').popover('destroy')
   $('.popover').remove()
 
+# Функция возвращающая время в минутах от начала дня по клику
+getTimeFromStartDay = (jsEvent) ->
+  wcontent = $.grep($.touching({x: jsEvent.pageX, y: jsEvent.pageY}, '.fc-widget-content'), (el) ->
+    $(el).prev().hasClass('fc-axis') && $(el).prop('class') == 'fc-widget-content'
+  )
+  position = $.inArray(wcontent[0], $(wcontent).parent().parent().find('td').not('.fc-axis'))
+  time_from_working_hour = moment.duration(gon.calendar.duration).as('minutes') * position
+  moment.duration(gon.calendar.minTime).add(time_from_working_hour, 'minutes')
+
 send_change_function = (options) ->
   appointment_id = options.event['data-id']
   if (confirm(options.confirm))
@@ -243,7 +252,9 @@ $('#calendar').fullCalendar({
   droppable: false,
 
   dayClick: (date, jsEvent, view) ->
-    click_on_day(date)
+    time_from_start_day = getTimeFromStartDay(jsEvent)
+    $('#minutes').val(time_from_start_day.asMinutes())
+    click_on_day(moment(date).startOf('day').add(time_from_start_day))
     false
   eventRender: (event, element) ->
     title = element.find('.fc-title').text()
@@ -298,7 +309,10 @@ $('#calendar').fullCalendar({
       key: 'start',
       confirm: "Вы уверены, что хотите изменить время записи?",
       value: (event) ->
-        event.start.format()
+        time_from_start_day = getTimeFromStartDay(event)
+        $('#minutes').val(time_from_start_day.asMinutes())
+        moment(event.start).startOf('day').add(time_from_start_day).format()
+        #event.start.format()
     })
   eventResize: (event, delta, revertFunc) ->
     send_change_function({
@@ -313,12 +327,8 @@ $('#calendar').fullCalendar({
 
   eventClick: (event, jsEvent, view) ->
     if event['data-inner-class'] == 'legend-rate'
-      wcontent = $.grep($.touching({x: jsEvent.pageX, y: jsEvent.pageY}, '.fc-widget-content'), (el) ->
-        $(el).prev().hasClass('fc-axis') && $(el).prop('class') == 'fc-widget-content'
-      )
-      position = $.inArray(wcontent[0], $(wcontent).parent().parent().find('td').not('.fc-axis'))
-      time_from_working_hour = moment.duration(gon.calendar.duration).as('minutes') * position
-      time_from_start_day = moment.duration(gon.calendar.minTime).add(time_from_working_hour, 'minutes')
+      time_from_start_day = getTimeFromStartDay(jsEvent)
+      $('#minutes').val(time_from_start_day.asMinutes())
       click_on_day(moment(event.start).startOf('day').add(time_from_start_day))
       false
     else
@@ -422,7 +432,7 @@ $('body').on('click', '.confirm_calendar', ->
     } )
   else
     $('#user_phone').parents('.control-group').removeClass('error')
-    $('#start').val( $('#calendar').fullCalendar('clientEvents', 500000)[0].start.format() )
+    $('#start').val( $('#calendar').fullCalendar('clientEvents', 500000)[0].start.format("DD-MM-YYYY HH:mm:ss"))
     $('#first').parent().submit()
   false
 )

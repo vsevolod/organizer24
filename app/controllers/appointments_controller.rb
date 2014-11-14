@@ -52,6 +52,11 @@ class AppointmentsController < CompanyController
       @appointment.firstname = @user.firstname
       @appointment.lastname  = @user.lastname
     end
+    #################### проверка на minutes ## костыль про перевод времени
+    if params[:minutes] && (params[:minutes].to_i - (@appointment.start - @appointment.start.at_beginning_of_day).to_i / 60).abs == 60
+      @appointment.start = @appointment.start - 1.hour
+    end
+    ####################
     @appointment.service_ids = (params[:service] || {}).keys
     check_notifier
     if @appointment.can_notify_owner?
@@ -143,6 +148,7 @@ class AppointmentsController < CompanyController
     def refresh_calendar
       <<-JS
         Organizer.destroy_all_popovers();
+        $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('refetchEvents');
       JS
     end

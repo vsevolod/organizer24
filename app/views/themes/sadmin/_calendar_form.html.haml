@@ -1,4 +1,5 @@
 = form_tag appointments_path, :remote => !current_user.new_record? do
+  = hidden_field_tag :minutes
   = hidden_field_tag :start
   %section#second
     #workers
