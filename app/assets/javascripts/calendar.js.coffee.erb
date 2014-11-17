@@ -126,8 +126,8 @@ get_intersection_of = (current_el, func) ->
       func_result = func(el)
     else
       func_result = true
-    cur_start = moment(current_el.start.format('YYYY-MM-DD HH:mm'))
-    cur_end   = moment(current_el.end.format('YYYY-MM-DD HH:mm'))
+    cur_start = moment(current_el.start.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
+    cur_end   = moment(current_el.end.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
     max = moment.max(cur_start, el.start)
     min = moment.min(cur_end,   el.end)
     if el._id != current_el._id && max < min && func_result
@@ -255,7 +255,7 @@ $('#calendar').fullCalendar({
   dayClick: (date, jsEvent, view) ->
     #time_from_start_day = getTimeFromStartDay(jsEvent)
     #$('#minutes').val(time_from_start_day.asMinutes())
-    click_on_day(moment(date).subtract(hour_delta))
+    click_on_day(moment(date))
     false
   eventRender: (event, element) ->
     title = element.find('.fc-title').text()
@@ -313,7 +313,7 @@ $('#calendar').fullCalendar({
         #time_from_start_day = getTimeFromStartDay(jsEvent)
         #$('#minutes').val(time_from_start_day.asMinutes())
         #moment(event.start).startOf('day').add(time_from_start_day).format('YYYY-MM-DD HH:mm')
-        event.start.subtract(hour_delta).format()
+        event.start.format()
     })
   eventResize: (event, delta, revertFunc) ->
     send_change_function({
@@ -330,7 +330,7 @@ $('#calendar').fullCalendar({
     if event['data-inner-class'] == 'legend-rate'
       time_from_start_day = getTimeFromStartDay(jsEvent)
       $('#minutes').val(time_from_start_day.asMinutes())
-      click_on_day(moment(event.start).startOf('day').add(time_from_start_day).subtract(hour_delta))
+      click_on_day(moment(event.start).startOf('day').add(time_from_start_day))
       false
     else
       Organizer.destroy_all_popovers()
