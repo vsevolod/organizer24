@@ -254,7 +254,7 @@ $('#calendar').fullCalendar({
   dayClick: (date, jsEvent, view) ->
     time_from_start_day = getTimeFromStartDay(jsEvent)
     $('#minutes').val(time_from_start_day.asMinutes())
-    click_on_day(moment(date).startOf('day').add(time_from_start_day))
+    click_on_day(moment(date).zone(-420).startOf('day').add(time_from_start_day))
     false
   eventRender: (event, element) ->
     title = element.find('.fc-title').text()
@@ -329,7 +329,7 @@ $('#calendar').fullCalendar({
     if event['data-inner-class'] == 'legend-rate'
       time_from_start_day = getTimeFromStartDay(jsEvent)
       $('#minutes').val(time_from_start_day.asMinutes())
-      click_on_day(moment(event.start).startOf('day').add(time_from_start_day))
+      click_on_day(moment(event.start).zone(-420).startOf('day').add(time_from_start_day))
       false
     else
       Organizer.destroy_all_popovers()
