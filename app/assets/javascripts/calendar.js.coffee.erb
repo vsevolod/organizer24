@@ -1,4 +1,5 @@
 #= require calendar_autocomplete
+hour_delta = moment.duration(moment(new Date()).zone(-420).hour() - moment(new Date()).hour(), 'hours')
 
 enable_workers = () ->
   $('#second #workers input').attr('disabled', false)
@@ -252,9 +253,9 @@ $('#calendar').fullCalendar({
   droppable: false,
 
   dayClick: (date, jsEvent, view) ->
-    time_from_start_day = getTimeFromStartDay(jsEvent)
-    $('#minutes').val(time_from_start_day.asMinutes())
-    click_on_day(moment(date).zone(-420).startOf('day').add(time_from_start_day))
+    #time_from_start_day = getTimeFromStartDay(jsEvent)
+    #$('#minutes').val(time_from_start_day.asMinutes())
+    click_on_day(moment(date).subtract(hour_delta))
     false
   eventRender: (event, element) ->
     title = element.find('.fc-title').text()
@@ -312,7 +313,7 @@ $('#calendar').fullCalendar({
         #time_from_start_day = getTimeFromStartDay(jsEvent)
         #$('#minutes').val(time_from_start_day.asMinutes())
         #moment(event.start).startOf('day').add(time_from_start_day).format('YYYY-MM-DD HH:mm')
-        event.start.format()
+        event.start.subtract(hour_delta).format()
     })
   eventResize: (event, delta, revertFunc) ->
     send_change_function({
@@ -329,7 +330,7 @@ $('#calendar').fullCalendar({
     if event['data-inner-class'] == 'legend-rate'
       time_from_start_day = getTimeFromStartDay(jsEvent)
       $('#minutes').val(time_from_start_day.asMinutes())
-      click_on_day(moment(event.start).zone(-420).startOf('day').add(time_from_start_day))
+      click_on_day(moment(event.start).startOf('day').add(time_from_start_day).subtract(hour_delta))
       false
     else
       Organizer.destroy_all_popovers()
