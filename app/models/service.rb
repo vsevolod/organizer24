@@ -33,7 +33,7 @@ class Service < ActiveRecord::Base
     else
       self.delay(run_at: self.new_date_cost).update_new_cost!
       first_day = [self.new_date_cost, self.new_date_cost_was].compact.min
-      self.appointments.where(:start.gteq => first_day).each{|a| a.cost_time_by_services!(false);a.save}
+      self.appointments.where(:start.gteq => first_day).each{|a| a.cost_time_by_services!(false);a.update_column(:cost, a.cost)}
     end
   end
 
