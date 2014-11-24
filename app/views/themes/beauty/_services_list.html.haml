@@ -22,6 +22,12 @@
             $(function(){
               $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', trigger: 'focus hover'})
             });
+        - if service.new_date_cost.present?
+          %span.badge.badge-important{id: "service_alert_#{service.id}"} !
+          :javascript
+            $(function(){
+              $('#service_alert_#{service.id}').popover({placement: 'right', content: "С #{Russian.strftime(service.new_date_cost, '%d %B')} стоимость будет #{service.new_cost} руб.", trigger: 'focus hover'})
+            });
         - if expired_service = expired_services.find{|ws| ws.service_id == service.id}
           %span.badge.badge-important{id: "service_expired_#{service.id}"} X
           :javascript
