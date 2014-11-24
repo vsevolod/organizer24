@@ -49,7 +49,7 @@ class Organization < ActiveRecord::Base
       if service_user = services_users.find{|su| su.service_id == s.id}
         [service_ids, service_user.cost || s.cost, service_user.showing_time || s.showing_time]
       else
-        [service_ids, s.cost, s.showing_time]
+        [service_ids, s.cost, s.showing_time, s.new_cost, s.new_date_cost]
       end
     end.sort_by{|cs| 1000-cs.first.size}
   end

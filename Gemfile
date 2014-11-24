@@ -6,7 +6,7 @@ gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-boot
 gem 'cocoon'
 gem 'event-calendar', :require => 'event_calendar'
 #gem 'inherited_resource'
-gem 'rails_admin'
+#gem 'rails_admin'
 gem 'has_scope'
 
 gem 'haml'

@@ -63,7 +63,7 @@ class Appointment < ActiveRecord::Base
   attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id, :comment
 
   # Возвращаем стоимость и время в зависимости от колекций.
-  def cost_time_by_services!
+  def cost_time_by_services!(with_showing_time = true)
     # Обновлять только если не была изменена стоимость (для созданной записи)
     # И статус != ожидаемый
     if (self.new_record? || !self.cost_changed?) && !%w{missing cancel_owner cancel_client}.include?( self.status )
@@ -72,13 +72,17 @@ class Appointment < ActiveRecord::Base
       values = self.service_ids.dup
       self.organization.get_services( self.phone ).each do |cs|
         if (cs[0] & values).size == cs[0].size
-          new_cost += cs[1].to_i
+          new_cost += if cs[3] && cs[4] < self.start.to_date
+            cs[3]
+          else
+            cs[1]
+          end.to_i
           time += cs[2]
           values = values - cs[0]
         end
       end
       self.cost = new_cost
-      unless self.showing_time_changed? || self.complete?
+      if !self.showing_time_changed? && !self.complete? && with_showing_time
         self.showing_time = time
       end
 
