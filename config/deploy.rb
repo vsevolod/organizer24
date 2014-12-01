@@ -1,9 +1,9 @@
 #require "bundler/capistrano"
 require "rvm/capistrano"
-bundle_path = '/home/vsevolod/.rvm/gems/ruby-2.0.0-p247@global/bin/'
+bundle_path = '/home/vsevolod/.rvm/gems/ruby-2.1.5@global/bin/'
 
 set :default_environment, {
-  'PATH' => "/home/vsevolod/.rvm/gems/ruby-2.0.0-p247/bin/:$PATH",
+  'PATH' => "/home/vsevolod/.rvm/gems/ruby-2.1.5/bin/:$PATH",
   "BUNDLE_PATH" => bundle_path
 }
 set :bundle_without,  [:development, :test]
@@ -17,9 +17,9 @@ set :deploy_via, :export
 set :deploy_to, "/home/vsevolod/capistrano/organizer24"
 set :scm, :git
 
-role :web, "organizer24.ru"
-role :app, "organizer24.ru"
-role :db,  "organizer24.ru"
+role :web, "infobox"
+role :app, "infobox"
+role :db,  "infobox"
 
 after "deploy:update_code", :copy_config_files
 after "deploy:update_code", :add_log_files
@@ -55,18 +55,18 @@ task :precompile do
 end
 
 set :rails_env, :production
-set :unicorn_binary, "/home/vsevolod/.rvm/gems/ruby-2.0.0-p247/bin/unicorn_rails"
+set :unicorn_binary, "/home/vsevolod/.rvm/gems/ruby-2.1.5/bin/unicorn_rails"
 set :unicorn_config, "#{current_path}/config/unicorn.rb"
 set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "source /home/vsevolod/.rvm/environments/ruby-2.0.0-p247"
+    run "source /home/vsevolod/.rvm/environments/ruby-2.1.5"
     run "cd #{current_path} && /usr/bin/env PATH=$PATH:/usr/local/bin RAILS_ENV=#{rails_env} #{bundle_path}bundle exec script/delayed_job start"
     run "cd #{current_path} && #{bundle_path}bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "source /home/vsevolod/.rvm/environments/ruby-2.0.0-p247"
+    run "source /home/vsevolod/.rvm/environments/ruby-2.1.5"
     run "cd #{current_path} && /usr/bin/env PATH=$PATH:/usr/local/bin RAILS_ENV=#{rails_env} #{bundle_path}bundle exec script/delayed_job stop"
     run "kill `cat #{unicorn_pid}`"
   end
