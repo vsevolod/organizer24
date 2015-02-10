@@ -24,6 +24,7 @@ class Organization < ActiveRecord::Base
   has_many :working_hours, :through => :workers
   has_many :dictionaries
   has_many :double_rates
+  has_many :services_users
 
   accepts_nested_attributes_for :dictionaries
   accepts_nested_attributes_for :workers
@@ -39,14 +40,14 @@ class Organization < ActiveRecord::Base
   before_validation :check_domain
 
   def get_services( phone, type = :extend )
-    services_users = ServicesUser.where( :phone => phone, :organization_id => self.id )
+    s_users = ServicesUser.where( :phone => phone, :organization_id => self.id )
     self.services.map do |s|
       service_ids = if type == :extend && s.is_collection?
                       s.collections_services.pluck(:service_id)
                     else
                       [s.id]
                     end
-      if service_user = services_users.find{|su| su.service_id == s.id}
+      if service_user = s_users.find{|su| su.service_id == s.id}
         [service_ids, service_user.cost || s.cost, service_user.showing_time || s.showing_time]
       else
         [service_ids, s.cost, s.showing_time, s.new_cost, s.new_date_cost]

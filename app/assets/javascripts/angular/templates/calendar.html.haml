@@ -1,13 +1,12 @@
 .row
   .span6
     %datepicker.well(ng-model="date" show-weeks="false")
--#%mwl-calendar{ 'calendar-events' => "events",
--#               'calendar-view' => "'month'",
--#               'calendar-current-day' => "calendarDay",
--#               'calendar-event-click' => "eventClicked($event)",
--#               'calendar-edit-event-html' => "'edit'",
--#               'calendar-delete-event-html' => "'delete'",
--#               'calendar-edit-event-click' => "eventEdited($event)",
--#               'calendar-delete-event-click' => "eventDeleted($event)",
--#               'calendar-auto-open' => "true" }
--#-# 'calendar-control' => "calendarControl",
+
+    %accordion(close-others="oneAtATime")
+      %accordion-group(ng-repeat="worker in workers" heading="{{worker.name}} - {{worker.phone}}" is-open="false")
+        %img(src="{{worker.photo}}")
+        %ul
+          %li(ng-repeat="service in worker.services")
+            {{service.name}}
+            &mdash;
+            {{service.cost}}

@@ -5,6 +5,13 @@ Organizer::Application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
   constraints(Subdomain) do
+
+    namespace :api, defaults: {format: :json} do
+      resources :workers
+      #resources :services
+      resources :services_users
+    end
+
     root :to => 'organizations#show'
 
     match '/dashboard', :to => 'users#dashboard', as: 'dashboard'

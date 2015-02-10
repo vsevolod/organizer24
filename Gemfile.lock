@@ -41,6 +41,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_model_serializers (0.8.3)
+      activemodel (>= 3.0)
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -62,6 +64,7 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
+    angularjs-rails-resource (1.1.1)
     arel (3.0.2)
     bcrypt-ruby (3.1.0)
     builder (3.0.4)
@@ -371,8 +374,10 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  active_model_serializers
   ancestry
   angular-rails-templates
+  angularjs-rails-resource
   breadcrumbs!
   capistrano
   capybara

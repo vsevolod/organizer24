@@ -33,6 +33,8 @@ gem 'squeel'
 gem 'breadcrumbs', :git => 'https://github.com/dexion/breadcrumbs.git'
 gem 'less-rails'
 
+gem 'active_model_serializers'
+
 #gem 'rails-assets-moment'
 gem 'rails-assets-bootstrap'
 gem 'rails-assets-angular'
@@ -45,6 +47,7 @@ gem 'rails-assets-jeremypeters--ng-bs-animated-button'
 #gem 'rails-assets-angular-ui-calendar'
 #gem 'rails-assets-angular-bootstrap-calendar'
 gem 'angular-rails-templates'
+gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

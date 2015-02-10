@@ -6,8 +6,10 @@
 //= require angular-animate
 //= require angular-ui-router
 //= require angular-ui-bootstrap-bower
+//= require angularjs/rails/resource
 //= require angular-rails-templates
 //= require_tree ./angular/templates
+//= require_tree ./angular/modules
 //= require ng-bs-animated-button
 //= require_self
 //= require_tree ./angular/controllers
@@ -22,5 +24,6 @@ moment.locale('ru', {
 var Organizer = angular.module('Organizer', [
   'ui.bootstrap',
   'templates',
-  'ui.router'
+  'ui.router',
+  'worker.services'
 ]);
