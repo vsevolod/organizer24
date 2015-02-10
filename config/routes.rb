@@ -10,6 +10,7 @@ Organizer::Application.routes.draw do
     match '/dashboard', :to => 'users#dashboard', as: 'dashboard'
     match '/calendar' => 'organizations#calendar', :as => :calendar
     match '/edit'=> 'organizations#edit', :as => :edit
+    match '/modal'=> 'organizations#modal', :as => :modal
     match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
 
     resources :appointments do
@@ -94,6 +95,7 @@ Organizer::Application.routes.draw do
   resources :organizations, :except => [:show] do
     member do
       get :calendar
+      get :modal
     end
   end
 

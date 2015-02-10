@@ -29,6 +29,10 @@ class OrganizationsController < CompanyController
     end
   end
 
+  def modal
+    render layout: false
+  end
+
   def calendar
     add_breadcrumb 'Календарь', '/calendar'
     @presenter = OrganizationsPresenters::CalendarPresenter.new({ day: params[:day],

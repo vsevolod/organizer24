@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails', '3.2.13'
 
@@ -31,6 +32,19 @@ gem 'pg'
 gem 'squeel'
 gem 'breadcrumbs', :git => 'https://github.com/dexion/breadcrumbs.git'
 gem 'less-rails'
+
+#gem 'rails-assets-moment'
+gem 'rails-assets-bootstrap'
+gem 'rails-assets-angular'
+gem 'rails-assets-angular-ui-router'
+gem 'rails-assets-angular-i18n'
+gem 'rails-assets-angular-ui-bootstrap-bower'
+#gem 'rails-assets-angular-moment'
+gem 'rails-assets-angular-animate'
+gem 'rails-assets-jeremypeters--ng-bs-animated-button'
+#gem 'rails-assets-angular-ui-calendar'
+#gem 'rails-assets-angular-bootstrap-calendar'
+gem 'angular-rails-templates'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

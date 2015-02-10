@@ -1,0 +1,10 @@
+!!!
+%html{ lang: I18n.locale, 'ng-app' => "Organizer"}
+  %head
+    %title= @organization.name
+    = stylesheet_link_tag 'application_new'
+    = javascript_include_tag 'application_new'
+    = csrf_meta_tag
+  %body
+    %div( ui-view )
+    -#= render 'layouts/counter'
