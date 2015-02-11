@@ -1,12 +1,21 @@
-.row
-  .span6
-    %datepicker.well(ng-model="date" show-weeks="false")
-
-    %accordion(close-others="oneAtATime")
-      %accordion-group(ng-repeat="worker in workers" heading="{{worker.name}} - {{worker.phone}}" is-open="false")
-        %img(src="{{worker.photo}}")
+%wizard(on-finish="alert('stop')")
+  %wz-step(title="Выбор услуг")
+    .row
+      %accordion.col-md-8(close-others="false")
+        %accordion-group(ng-repeat="worker in workers" heading="{{worker.name}}" is-open="false")
+          .row
+            %label.col-md-4(ng-repeat="service in worker.services")
+              %checkbox.btn-primary(ng-model="service.checked" ng-change="toggleService(service)")
+              {{service.name}}
+              &mdash;
+              {{service.cost}}
+      .col-md-4
         %ul
-          %li(ng-repeat="service in worker.services")
-            {{service.name}}
-            &mdash;
-            {{service.cost}}
+          %li(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
+            {{worker_id}} &mdash; {{services.length}}
+    %input.btn.btn-success(type='submit' wz-next value="Продолжить")
+  %wz-step(title="Выбор услуг")
+    %datepicker.well(ng-model="date" show-weeks="false")
+    %input(type='submit' wz-next value="Continue")
+  %wz-step(title="Выбор даты")
+  %wz-step(title="Подтверждение")
