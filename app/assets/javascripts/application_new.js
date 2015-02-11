@@ -12,6 +12,7 @@
 //= require angularjs/rails/resource
 //= require angular-rails-templates
 //= require_tree ./angular/templates
+//= require_tree ./angular/filters
 //= require_tree ./angular/modules
 //= require ng-bs-animated-button
 //= require_self
@@ -25,6 +26,8 @@ moment.locale('ru', {
 })
 
 var Organizer = angular.module('Organizer', [
+  'date.filter',
+  'sum.filter',
   'mgo-angular-wizard',
   'ui.checkbox',
   'ui.bootstrap',

@@ -3,19 +3,27 @@
     .row
       %accordion.col-md-8(close-others="false")
         %accordion-group(ng-repeat="worker in workers" heading="{{worker.name}}" is-open="false")
+          %accordion-heading(ng-if="currentAppointments[worker.id].length > 0")
+            {{worker.name}}
+            .pull-right
+              %i.glyphicon.glyphicon-ruble
+              {{currentAppointments[worker.id] | sumByKey:'cost'}}
+              &nbsp;
+              %i.glyphicon.glyphicon-time
+              {{currentAppointments[worker.id] | sumByKey:'showingTime' | showDuration}}
           .row
             %label.col-md-4(ng-repeat="service in worker.services")
               %checkbox.btn-primary(ng-model="service.checked" ng-change="toggleService(service)")
               {{service.name}}
-              &mdash;
-              {{service.cost}}
+              %span.label.label-info(ng-if="service.cost > 0")
+                {{service.cost}}
+                %i.glyphicon.glyphicon-ruble
       .col-md-4
         %ul
           %li(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
             {{worker_id}} &mdash; {{services.length}}
     %input.btn.btn-success(type='submit' wz-next value="Продолжить")
-  %wz-step(title="Выбор услуг")
+  %wz-step(title="Выбор даты")
     %datepicker.well(ng-model="date" show-weeks="false")
     %input(type='submit' wz-next value="Continue")
-  %wz-step(title="Выбор даты")
   %wz-step(title="Подтверждение")
