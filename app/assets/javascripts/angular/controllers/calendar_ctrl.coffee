@@ -7,14 +7,12 @@ Organizer
     $scope.workers.then (results) ->
       $scope.workers = results
 
-    $scope.toggleService = (service) ->
+    $scope.recountServices = () ->
       _.each $scope.workers, (worker) ->
         $scope.currentAppointments[worker.id] = $filter('filter')(worker.services, {checked: true})
-      #index = _.indexOf($scope.currentAppointments, service)
-      #if index >= 0
-      #  $scope.currentAppointments.splice(index, 1)
-      #else
-      #  $scope.currentAppointments.push(service)
 
+    $scope.removeService = (worker_id, service) ->
+      $filter('getObjectByKeyValue')($filter('getObjectByKeyValue')($scope.workers, 'id', worker_id).services, 'id', service.id).checked = false
+      $scope.recountServices()
 
   ]

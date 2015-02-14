@@ -1,7 +1,7 @@
 %wizard(on-finish="alert('stop')")
   %wz-step(title="Выбор услуг")
     .row
-      %accordion.col-md-8(close-others="false")
+      %accordion.col-md-8(close-others="true")
         %accordion-group(ng-repeat="worker in workers" heading="{{worker.name}}" is-open="false")
           %accordion-heading(ng-if="currentAppointments[worker.id].length > 0")
             {{worker.name}}
@@ -13,16 +13,29 @@
               {{currentAppointments[worker.id] | sumByKey:'showingTime' | showDuration}}
           .row
             %label.col-md-4(ng-repeat="service in worker.services")
-              %checkbox.btn-primary(ng-model="service.checked" ng-change="toggleService(service)")
+              %checkbox.btn-primary(ng-model="service.checked" ng-change="recountServices()")
               {{service.name}}
               %span.label.label-info(ng-if="service.cost > 0")
                 {{service.cost}}
                 %i.glyphicon.glyphicon-ruble
       .col-md-4
-        %ul
-          %li(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
-            {{worker_id}} &mdash; {{services.length}}
-    %input.btn.btn-success(type='submit' wz-next value="Продолжить")
+        .panel.panel-default(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
+          .panel-heading
+            %h4 {{ (workers | getObjectByKeyValue:'id':worker_id).name }}
+          %table.table
+            %tr(ng-repeat="service in services")
+              %td
+                {{service.name}}
+              %td
+                {{service.cost}}
+                %i.glyphicon.glyphicon-ruble
+              %td
+                %a.btn.btn-sm.btn-danger(ng-click="removeService(worker_id, service)")
+                  %i.glyphicon.glyphicon-remove
+        %h4
+          Итого: {{currentAppointments | flattenValues | sumByKey:'cost'}}
+          %i.glyphicon.glyphicon-ruble
+        %input.btn.btn-lg.btn-success(type='submit' wz-next value="Продолжить" ng-disabled="(currentAppointments | flattenValues).length == 0")
   %wz-step(title="Выбор даты")
     %datepicker.well(ng-model="date" show-weeks="false")
     %input(type='submit' wz-next value="Continue")

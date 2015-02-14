@@ -27,6 +27,7 @@ moment.locale('ru', {
 
 var Organizer = angular.module('Organizer', [
   'date.filter',
+  'hash.filter',
   'sum.filter',
   'mgo-angular-wizard',
   'ui.checkbox',
