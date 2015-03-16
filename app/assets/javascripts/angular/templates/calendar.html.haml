@@ -1,4 +1,20 @@
 %wizard(on-finish="alert('stop')")
+  %wz-step(title="Выбор даты")
+    .row
+      .col-md-2
+        %datepicker.well(ng-model="date" show-weeks="false" min-date="minDate" starting-day=1)
+      .col-md-3
+        %div(ng-include='"angular/templates/services_list.html"')
+      .col-md-2
+        %mwl-calendar{calendar: {events: "events",
+          view: "'day'",
+          day: {view: { start: "10:00", end: "21:00"}},
+          time: {label: "_"},
+          event: {click: "eventClicked($event)", label: 'Записи'},
+          'edit-event-html' => '"<i class=\'glyphicon glyphicon-pencil\'></i>"',
+          'delete-event-html' => '"<i class=\'glyphicon glyphicon-remove\'></i>"',
+          'auto-open' => 'true'}}
+    %input(type='submit' wz-next value="Continue")
   %wz-step(title="Выбор услуг")
     .row
       %accordion.col-md-8(close-others="true")
@@ -19,24 +35,6 @@
                 {{service.cost}}
                 %i.glyphicon.glyphicon-ruble
       .col-md-4
-        .panel.panel-default(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
-          .panel-heading
-            %h4 {{ (workers | getObjectByKeyValue:'id':worker_id).name }}
-          %table.table
-            %tr(ng-repeat="service in services")
-              %td
-                {{service.name}}
-              %td
-                {{service.cost}}
-                %i.glyphicon.glyphicon-ruble
-              %td
-                %a.btn.btn-sm.btn-danger(ng-click="removeService(worker_id, service)")
-                  %i.glyphicon.glyphicon-remove
-        %h4
-          Итого: {{currentAppointments | flattenValues | sumByKey:'cost'}}
-          %i.glyphicon.glyphicon-ruble
+        %div(ng-include='"angular/templates/services_list.html"')
         %input.btn.btn-lg.btn-success(type='submit' wz-next value="Продолжить" ng-disabled="(currentAppointments | flattenValues).length == 0")
-  %wz-step(title="Выбор даты")
-    %datepicker.well(ng-model="date" show-weeks="false")
-    %input(type='submit' wz-next value="Continue")
   %wz-step(title="Подтверждение")

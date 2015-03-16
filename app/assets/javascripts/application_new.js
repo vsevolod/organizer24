@@ -9,6 +9,7 @@
 //= require angular-bootstrap-checkbox
 //= require angular-ui-bootstrap-bower
 //= require angular-wizard
+//= require ./angular/angular-bootstrap-calendar
 //= require angularjs/rails/resource
 //= require angular-rails-templates
 //= require_tree ./angular/templates
@@ -26,6 +27,7 @@ moment.locale('ru', {
 })
 
 var Organizer = angular.module('Organizer', [
+  'mwl.calendar',
   'date.filter',
   'hash.filter',
   'sum.filter',
@@ -34,5 +36,6 @@ var Organizer = angular.module('Organizer', [
   'ui.bootstrap',
   'templates',
   'ui.router',
+  'appointment.services',
   'worker.services'
 ]);

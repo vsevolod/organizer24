@@ -10,6 +10,7 @@ Organizer::Application.routes.draw do
       resources :workers
       #resources :services
       resources :services_users
+      resources :appointments
     end
 
     root :to => 'organizations#show'

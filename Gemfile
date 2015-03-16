@@ -46,6 +46,7 @@ gem 'rails-assets-angular-ui-bootstrap-bower'
 #gem 'rails-assets-angular-moment'
 gem 'rails-assets-angular-animate'
 gem 'rails-assets-jeremypeters--ng-bs-animated-button'
+#gem 'rails-assets-angular-bootstrap-calendar' FIXME косяк с версиями. Пока использую js файлы
 gem 'rails-assets-angular-wizard'
 #gem 'rails-assets-angular-ui-calendar'
 #gem 'rails-assets-angular-bootstrap-calendar'

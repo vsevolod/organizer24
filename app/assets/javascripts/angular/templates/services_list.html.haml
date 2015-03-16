@@ -1,0 +1,20 @@
+.panel.panel-default(ng-repeat="(worker_id, services) in currentAppointments" ng-if="services.length > 0")
+  .panel-heading.clearfix
+    %h4
+      %span.pull-left {{ (workers | getObjectByKeyValue:'id':worker_id).name }}
+      %span.pull-right
+        %i.glyphicon.glyphicon-time
+        {{currentAppointments[worker_id] | sumByKey:'showingTime' | showDuration}}
+  %table.table
+    %tr(ng-repeat="service in services")
+      %td
+        {{service.name}}
+      %td
+        {{service.cost}}
+        %i.glyphicon.glyphicon-ruble
+      %td
+        %a.btn.btn-sm.btn-danger(ng-click="removeService(worker_id, service)")
+          %i.glyphicon.glyphicon-remove
+%h4
+  Итого: {{currentAppointments | flattenValues | sumByKey:'cost'}}
+  %i.glyphicon.glyphicon-ruble
