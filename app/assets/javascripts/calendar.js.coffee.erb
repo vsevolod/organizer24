@@ -339,13 +339,13 @@ $('#calendar').fullCalendar({
       if event['data-comment']
         popup_text = "<b>#{event['data-comment']}</b><br/>" + popup_text
       if event['is_owner'] || event['data-inner-class'] == 'legend-your-offer'
-        popup_text += '<a class="btn-block btn btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Изменить услуги</a>'
-        popup_text += '<a class="btn-block btn btn-info move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-time icon-white" />Перенести запись</a>'
+        popup_text += '<a class="btn-block btn normal-buttons btn-warning ChangeAppointment" href="#" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Изменить услуги</a>'
+        popup_text += '<a class="btn-block btn normal-buttons btn-info move_appointment" href="#" data-id="'+event['_id']+'"><i class="icon-time icon-white" />Перенести запись</a>'
       if event['is_owner']
-        popup_text += '<a class="btn-block btn btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время/стоимость</a>'
-        popup_text += '<a class="btn-block btn btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Настройка сервисов</a>'
+        popup_text += '<a class="btn-block btn normal-buttons btn-warning ChangeTimeForAppointment" data-id="'+event['data-id']+'" href=""><i class="icon-share-alt icon-white" />Изменить время/стоимость</a>'
+        popup_text += '<a class="btn-block btn normal-buttons btn-warning" href="/appointments/'+event['data-id']+'/services_users" data-id="'+event['_id']+'"><i class="icon-share-alt icon-white" />Настройка сервисов</a>'
         <% I18n.t("legend.do_status").each_pair do |state, human_state| %>
-        popup_text += '<a data-method="post" class="btn-block btn legend-<%=state%> change_status" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
+        popup_text += '<a data-method="post" class="btn-block btn normal-buttons legend-<%=state%> change_status" href="/appointments/'+event['data-id']+'/change_status?state=<%=state%>"><%=human_state%></a>'
         <% end %>
       else
         if event['data-inner-class'] == 'legend-your-offer'

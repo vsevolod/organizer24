@@ -3,7 +3,7 @@ class Subdomain
   HOME_IP = '89.105.156.230'
 
   def self.matches?(request)
-    return 'depilate' if Rails.env.development?
+    return 'naildeluxe' if Rails.env.development?
     name = request.subdomain
     if name.blank? || name == 'www'
       name = request.domain || HOME_IP

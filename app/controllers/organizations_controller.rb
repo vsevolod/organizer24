@@ -56,7 +56,7 @@ class OrganizationsController < CompanyController
   end
 
   def update
-    if current_user.owner?(@organization)
+    if current_user.owner?(@organization) || @organization.workers.map(&:user).include?(current_user)
       if @organization.update_attributes( params[:organization] )
         redirect_to organization_root
       else

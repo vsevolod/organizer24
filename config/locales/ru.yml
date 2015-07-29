@@ -15,7 +15,7 @@ ru:
     do_status:
       complete: Заявка выполнена
       missing: Клиент не пришёл
-      cancel_owner: Отменена
+      cancel_owner: Отмена
   activerecord:
     models:
       active_admin_comment: 
