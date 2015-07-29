@@ -4,8 +4,8 @@ class SessionsController < Devise::SessionsController
   layout :company, :except => 'new'
 
   def new
-    build_resource
-    resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
+    @resource = resource_class.new
+    @resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
     if params[:remote] == 'true'
       render :layout => false
     else
