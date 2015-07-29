@@ -32,7 +32,7 @@ module AppointmentsPresenters
           title = if editable && appointment.starting_state?
                     appointment.services.map(&:name).join('<br/>')
                   else
-                    appointment.aasm_human_state
+                    appointment.human_state
                   end
           options = { title: title,
                       start: appointment.start.iso8601,

@@ -192,6 +192,11 @@ class Appointment < ActiveRecord::Base
     $redis.publish 'socket.io#*', [{type: 2, data: ['refresh event', appointment_hash]}, {}].to_msgpack
   end
 
+  #TODO удалить когда появится метод
+  def human_state
+    AASM::Localizer.new.human_state_name(self.class, self.aasm_read_state)
+  end
+
   private
 
     def check_start_time
