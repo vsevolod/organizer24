@@ -101,10 +101,11 @@ class User < ActiveRecord::Base
 
   def self.send_reset_password_instructions_by_phone(options)
     if user = self.find_by_phone(options[:phone])
-      user.reset_password_token = Random.new.rand(100000..999999)
+      number = Random.new.rand(100000..999999)
+      user.reset_password_token = Devise.token_generator.digest(self, :reset_password_token, number)
       user.reset_password_sent_at = Time.now.utc
       user.save(:validate => false)
-      Delayed::Job.enqueue SmsJob.new({:text => "Номер для восстановления пароля: #{user.reset_password_token}", :phone => user.phone}, 'simple_notify' ), :run_at => Time.zone.now
+      Delayed::Job.enqueue SmsJob.new({:text => "Номер для восстановления пароля: #{number}", :phone => user.phone}, 'simple_notify' ), :run_at => Time.zone.now
       user
     else
       User.new(options)
