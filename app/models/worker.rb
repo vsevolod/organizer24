@@ -17,7 +17,7 @@ class Worker < ActiveRecord::Base
   validates :phone, :presence => true
   validates_associated :working_hours, :if => lambda{ |u| u.working_hours.any? }
 
-  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo, :service_ids, :working_hours_attributes, :profession, :dative_case, :double_rates_attributes
+  attr_accessible :name, :is_enabled, :services_workers_attributes, :phone, :user_id, :photo, :service_ids, :working_hours_attributes, :profession, :dative_case, :double_rates_attributes, :push_key
 
   has_attached_file :photo, :styles => { :normal => "230x320>", :thumb => "100x100>", sadmin_left: "100x100#"},
                             :convert_options => { :thumb => "-quality 75 -strip" }

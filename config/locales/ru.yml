@@ -199,6 +199,7 @@ ru:
         phone: Телефон
         photo: Фотография
         profession: Профессия
+        push_key: Ключ для смс приложения
         user: Пользователь
       working_day:
         date: Дата
