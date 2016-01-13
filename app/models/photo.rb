@@ -12,6 +12,7 @@ class Photo < ActiveRecord::Base
                                        },
                             :convert_options => { :thumb => "-quality 75 -strip" }
 
+  validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   delegate :organization, to:  :category_photo, allow_nil: false
 
 end

@@ -147,7 +147,7 @@ class Appointment < ActiveRecord::Base
       if $redis.hkeys('phones').include?(phone)
         $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
       end
-      if self.worker.push_key
+      if self.worker.push_key.present?
         Delayed::Job.enqueue BoxCarJob.new( { message: text, authentication_token: self.worker.push_key } ), :run_at => Time.zone.now
       else
         Delayed::Job.enqueue SmsJob.new( { text: text, phone: phone }, 'simple_notify' ), :run_at => Time.zone.now

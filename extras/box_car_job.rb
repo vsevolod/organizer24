@@ -8,7 +8,7 @@ class BoxCarJob < Struct.new(:options)
     unless options[:message].blank?
       Net::HTTP.post_form(uri, {
         'notification[title]' => 'depilate.ru',
-        'notification[long_message]' => options[:message].replace("\n", "</br>"),
+        'notification[long_message]' => options[:message].gsub("\n", "</br>"),
         'notification[sound]' => 'Done',
         'notification[source_name]' => 'oneclickbook',
         user_credentials: options[:authentication_token]
