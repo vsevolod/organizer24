@@ -150,6 +150,7 @@ drop_draggable = ( date ) ->
     editable: false,
     'data-services': originalEventObject['data-services'],
     title: originalEventObject.title,
+    notification: originalEventObject.notification,
     'data-showing-time': originalEventObject['data-showing-time'],
     'data-id': originalEventObject['data-id'],
     'data-inner-class': originalEventObject['data-inner-class'],
@@ -260,6 +261,12 @@ $('#calendar').fullCalendar({
   eventRender: (event, element) ->
     title = element.find('.fc-title').text()
     title = event['data-comment']+' '+title if event['data-comment']
+    if event.is_owner && event['notification'] != 'start'
+      message = switch event['notification']
+        when 'send' then 'Сообщение отправлено'
+        when 'complete' then 'Сообщение доставлено'
+        when 'cancel' then 'Сообщение невозможно доставить'
+      title = "<i title='#{message}' class='fa fa-envelope icon-notification-#{event['notification']}'></i>" + title
     element.find('.fc-title').html(title)
     element.addClass( event['data-inner-class'] )
     element.attr('data-id', event['data-id'] )

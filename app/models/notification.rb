@@ -4,6 +4,7 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   belongs_to :worker
   belongs_to :organization
+  belongs_to :appointment
   attr_accessible :cost, :status, :notification_type
 
   aasm :column => :status do

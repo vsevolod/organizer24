@@ -42,6 +42,7 @@ class SmsJob < Struct.new(:options, :sms_type)
       Time.zone = Organization.joins(:appointments).where( :appointments => { :id => options[:appointment_id] } ).first.timezone
       @appointment = Appointment.find( options[:appointment_id] )
       @organization = @appointment.organization
+      notification.appointment = @appointment
       notification.worker = @appointment.worker
       notification.user = @appointment.user_by_phone
       notification.organization = @organization

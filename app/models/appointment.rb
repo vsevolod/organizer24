@@ -7,6 +7,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :user_by_phone, :class_name => 'User', :foreign_key => :phone, :primary_key => :phone # Клиент по номеру телефона
   belongs_to :organization          # Организация
   belongs_to :worker
+  has_many :notifications
   has_many :services_users, :foreign_key => :phone, :primary_key => :phone
   has_and_belongs_to_many :services # Услуги
 

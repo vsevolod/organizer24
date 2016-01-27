@@ -40,6 +40,7 @@ module AppointmentsPresenters
                       editable: false,
                       splitted: false,
                       is_owner: is_owner?,
+                      notification: appointment.notifications.order('updated_at DESC').first_or_initialize.status,
                       'data-cost' => appointment.cost,
                       'data-inner-class' => "legend-taken",
                       'data-showing-time' => appointment.showing_time,
