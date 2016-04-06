@@ -19,6 +19,12 @@ class NotificationsController < CompanyController
     @sms = @organization.sms_ru || @organization.build_sms_ru(phone: current_user.phone, sender: current_user.phone)
   end
 
+  def send_sms
+    @jobs = Delayed::Job.where('attempts > ?', 1)
+    @jobs.update_all(:run_at => Time.now)
+    redirect_to :back, notice: "Сообщений на отправку: #{@jobs.count}"
+  end
+
   def change_sms
     @sms = @organization.sms_ru || @organization.build_sms_ru
     @sms.attributes = params[:sms_ru]

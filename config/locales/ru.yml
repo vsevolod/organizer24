@@ -200,6 +200,7 @@ ru:
         photo: Фотография
         profession: Профессия
         push_key: Ключ для смс приложения
+        finished_date: Последняя дата для записи
         user: Пользователь
       working_day:
         date: Дата

@@ -8,6 +8,7 @@
 = f.input :phone
 = f.input :photo, :as => :file
 = f.input :push_key
+= f.input :finished_date, as: :string
 %h3 Список сервисов
 #collections.controls
   - @organization.services.not_collections.group_by(&:category).each do |category, c_services|

@@ -43,6 +43,7 @@ Organizer::Application.routes.draw do
     resources :notifications, only: [:index] do
       collection do
         get :sms
+        get :send_sms
         post :change_sms
       end
     end
