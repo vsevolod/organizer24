@@ -17,6 +17,7 @@
       %label.checkbox
         = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
         = service.name
+        (#{service.showing_time}мин., #{service.cost} руб.)
 - unless f.object.new_record?
   %h1 Рабочие дни
   #worker_month_calendar{:style => 'width:500px;'}
