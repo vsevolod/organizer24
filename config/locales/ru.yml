@@ -200,7 +200,7 @@ ru:
         photo: Фотография
         profession: Профессия
         push_key: Ключ для смс приложения
-	sms_translit: Показывать смс на английском
+        sms_translit: Показывать смс на английском
         finished_date: Последняя дата для записи
         user: Пользователь
       working_day:
