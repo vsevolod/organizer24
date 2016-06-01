@@ -1,4 +1,4 @@
-class AddFinishedDateToWorkers < ActiveRecord::Migration
+class AddTranslitToWorker < ActiveRecord::Migration
   def change
     add_column :workers, :sms_translit, :boolean
   end
