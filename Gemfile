@@ -70,8 +70,6 @@ end
 group :production do
   gem 'puma'
   gem 'therubyracer'
-  gem 'capistrano'
-  gem 'rvm-capistrano'
 end
 
 group :test do
