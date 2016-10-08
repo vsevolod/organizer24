@@ -68,7 +68,7 @@ group :development do
 end
 
 group :production do
-  gem 'unicorn'
+  gem 'puma'
   gem 'therubyracer'
   gem 'capistrano'
   gem 'rvm-capistrano'
