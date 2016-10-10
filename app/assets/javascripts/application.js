@@ -18,5 +18,3 @@
 //= require colorbox-rails
 //= require fix_ie
 //= require reports
-//= require socket.io.js
-//= require socket

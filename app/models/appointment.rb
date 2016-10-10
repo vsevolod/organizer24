@@ -145,9 +145,9 @@ class Appointment < ActiveRecord::Base
     if !text.blank? && !self.organization.owner_phones.include?(self.phone) # Не уведомляем если на телефон мастера
       # Проверка на наличие мастера онлайн
       phone = self.worker(organization).try(:phone) || organization.owner.phone
-      if $redis.hkeys('phones').include?(phone)
-        $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
-      end
+      #if $redis.hkeys('phones').include?(phone)
+      #  $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
+      #end
       if self.worker.push_key.present?
         Delayed::Job.enqueue BoxCarJob.new( { message: text, authentication_token: self.worker.push_key } ), :run_at => Time.zone.now
       else
@@ -192,10 +192,10 @@ class Appointment < ActiveRecord::Base
     SQL
   end
 
-  def send_to_redis
-    appointment_hash = {worker_id: worker_id, start: start.iso8601, id: id}
-    $redis.publish 'socket.io#*', [{type: 2, data: ['refresh event', appointment_hash]}, {}].to_msgpack
-  end
+  #def send_to_redis
+  #  appointment_hash = {worker_id: worker_id, start: start.iso8601, id: id}
+  #  $redis.publish 'socket.io#*', [{type: 2, data: ['refresh event', appointment_hash]}, {}].to_msgpack
+  #end
 
   #TODO удалить когда появится метод
   def human_state

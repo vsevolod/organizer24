@@ -20,8 +20,8 @@ gem 'wicked' # Multistep registration form
 gem 'gon'
 
 #gem 'formtastic'#, '~> 2.1.1'
-gem 'redis'
-gem 'msgpack'
+##gem 'redis'
+##gem 'msgpack'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
