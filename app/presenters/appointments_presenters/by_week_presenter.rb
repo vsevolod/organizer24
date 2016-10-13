@@ -35,8 +35,8 @@ module AppointmentsPresenters
                     appointment.human_state
                   end
           options = { title: title,
-                      start: appointment.start.iso8601,
-                      end:   appointment._end.iso8601,
+                      start: appointment.start.iso8601utc,
+                      end:   appointment._end.iso8601utc,
                       editable: false,
                       splitted: false,
                       is_owner: is_owner?,

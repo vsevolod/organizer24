@@ -221,7 +221,6 @@ GEM
     mime-types (1.25.1)
     mimemagic (0.3.0)
     mini_portile (0.6.2)
-    msgpack (0.6.2)
     multi_json (1.11.2)
     multi_test (0.1.2)
     multi_xml (0.5.5)
@@ -261,6 +260,7 @@ GEM
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
+    power_assert (0.2.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -315,7 +315,6 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    redis (3.2.1)
     ref (2.0.0)
     request_store (1.2.0)
     responders (1.1.2)
@@ -370,6 +369,8 @@ GEM
       activerecord (>= 3.0)
       activesupport (>= 3.0)
       polyamorous (~> 1.1.0)
+    test-unit (3.0.8)
+      power_assert
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -425,7 +426,6 @@ DEPENDENCIES
   jquery-rails (~> 2.3.0)
   launchy
   less-rails
-  msgpack
   omniauth
   omniauth-facebook
   omniauth-vkontakte
@@ -444,13 +444,13 @@ DEPENDENCIES
   rails-assets-bootstrap
   rails-assets-jeremypeters--ng-bs-animated-button
   rails-assets-underscore
-  redis
   rspec-rails
   russian
   sass-rails (~> 3.2.3)
   simple_form
   simplecov
   squeel
+  test-unit
   therubyracer
   twitter-bootstrap-rails!
   uglifier (>= 1.0.3)

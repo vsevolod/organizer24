@@ -24,7 +24,7 @@ class WorkingHoursController < CompanyController
                          else
                            'legend-inaccessible'
                          end
-      @periods << { :title => (appointment.comment.present? ? "<b>#{appointment.comment}</b>" : appointment.human_state), :start => appointment.start.iso8601, :end => appointment._end.iso8601, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+      @periods << { :title => (appointment.comment.present? ? "<b>#{appointment.comment}</b>" : appointment.human_state), :start => appointment.start.iso8601utc, :end => appointment._end.iso8601utc, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
     end
     if @total_appointments
       (@end.to_date-@start_of_month).to_i.times do |day|
@@ -59,7 +59,7 @@ class WorkingHoursController < CompanyController
       double_rates = rates.where('week_day = :week_day OR day = :current_day', {week_day: current_day.wday, current_day: current_day.localtime.to_date})
       @periods << if (!@worker.finished_date || current_day <= @worker.finished_date) && Time.zone.now.to_date + @organization.last_day.to_i.days <= (current_day).to_date
         double_rates.map do |double_rate|
-          @periods.push({rate: double_rate.rate, :start => (current_day+double_rate.begin_time.to_i).iso8601, :end => (current_day+double_rate.end_time.to_i).iso8601, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
+          @periods.push({rate: double_rate.rate, :start => (current_day+double_rate.begin_time.to_i).iso8601utc, :end => (current_day+double_rate.end_time.to_i).iso8601utc, :editable => false, title: "Тариф: x#{double_rate.rate}", 'data-inner-class' => 'legend-rate'})
         end if (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
         if whs.any? && (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           closes = [min_wt]
@@ -71,8 +71,8 @@ class WorkingHoursController < CompanyController
           prepared = closes.each_slice(2).find_all{|x| x.first != x.last}
           prepared.exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}).find_all{|x| x.first != x.last}.map do |arr|
             { title: 'Закрыто',
-              start: (current_day + arr.first).iso8601,
-              end:   (current_day + arr.last).iso8601,
+              start: (current_day + arr.first).iso8601utc,
+              end:   (current_day + arr.last).iso8601utc,
               editable: false,
               'data-inner-class' => 'legend-inaccessible'
             }
@@ -82,15 +82,15 @@ class WorkingHoursController < CompanyController
           tarr = tarr.exclude!(double_rates.map{|dr| [dr.begin_time, dr.end_time]}) if (@worker.working_days.count.zero? || @worker.working_days.where(:date => current_day.to_date).count > 0)
           tarr.find_all{|x| x.first != x.last}.map do |arr|
             { title: 'Закрыто',
-              start: (current_day + arr.first).iso8601,
-              end:   (current_day + arr.last).iso8601,
+              start: (current_day + arr.first).iso8601utc,
+              end:   (current_day + arr.last).iso8601utc,
               editable: false,
               'data-inner-class' => 'legend-inaccessible'
             }
           end
         end
       else
-        { :title => "Запись невозможна", 'data-inner-class' => 'legend-old-day' }.merge({:start => (current_day+min_wt).iso8601, :end => (current_day+max_wt).iso8601, :editable => false})
+        { :title => "Запись невозможна", 'data-inner-class' => 'legend-old-day' }.merge({:start => (current_day+min_wt).iso8601utc, :end => (current_day+max_wt).iso8601utc, :editable => false})
       end
     end
     respond_with( @periods.flatten.compact )

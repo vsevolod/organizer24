@@ -6,8 +6,8 @@ class CompanyController < ApplicationController
   layout :company
 
   def prepare_calendar_options
-    @start = Time.zone.parse(params[:start]) if params[:start]
-    @end = Time.zone.parse(params[:end]) if params[:end]
+    @start = Time.parse(params[:start]) if params[:start]
+    @end = Time.parse(params[:end]) if params[:end]
   end
 
   private

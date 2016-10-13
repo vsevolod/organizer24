@@ -1,6 +1,7 @@
 #= require calendar_autocomplete
 #hour_delta = moment.duration(moment(new Date()).zone(0).hour() - moment(new Date()).hour(), 'hours')
-hour_delta = moment.duration((new Date().getTimezoneOffset())/-60 + 1, 'hours')
+Date.prototype.getTimezoneOffset = () ->
+  return 0
 
 enable_workers = () ->
   $('#second #workers input').attr('disabled', false)
@@ -127,8 +128,8 @@ get_intersection_of = (current_el, func) ->
       func_result = func(el)
     else
       func_result = true
-    cur_start = moment(current_el.start.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
-    cur_end   = moment(current_el.end.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
+    cur_start = moment(current_el.start)#.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
+    cur_end   = moment(current_el.end)#.format('YYYY-MM-DD HH:mm')).subtract(hour_delta)
     max = moment.max(cur_start, el.start)
     min = moment.min(cur_end,   el.end)
     if el._id != current_el._id && max < min && func_result
@@ -239,6 +240,7 @@ $('#calendar').fullCalendar({
   minTime: gon.calendar.minTime,
   maxTime: gon.calendar.maxTime,
   defaultDate: gon.calendar.initial_date,
+  timezone: 'UTC',
 
   lang: 'ru',
   axisFormat: 'HH:mm',

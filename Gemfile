@@ -64,6 +64,7 @@ end
 group :development do
   gem 'erb2haml'
   gem 'pry'
+  gem 'test-unit'
   #TODO add gem 'debugger' when correct use cap
 end
 
