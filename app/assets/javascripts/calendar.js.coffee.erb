@@ -1,5 +1,6 @@
 #= require calendar_autocomplete
-hour_delta = moment.duration(moment(new Date()).zone(-420).hour() - moment(new Date()).hour(), 'hours')
+#hour_delta = moment.duration(moment(new Date()).zone(0).hour() - moment(new Date()).hour(), 'hours')
+hour_delta = moment.duration((new Date().getTimezoneOffset())/-60 + 1, 'hours')
 
 enable_workers = () ->
   $('#second #workers input').attr('disabled', false)
