@@ -45,7 +45,7 @@ class AppointmentsController < CompanyController
   def create
     user_params = params[:user]
     @user = current_user || User.where( :phone => user_params[:phone] ).first_or_initialize( user_params )
-    @appointment = @user.appointments.build( :start => Time.parse( params[:start] ), :organization_id => @organization.id )
+    @appointment = @user.appointments.build( :start => Time.parse( params[:start] ) - Time.zone.utc_offset , :organization_id => @organization.id )
     @appointment.worker_id = get_worker.id
     @appointment.attributes = user_params
     if @appointment.firstname.blank? && @appointment.lastname.blank?
@@ -111,7 +111,7 @@ class AppointmentsController < CompanyController
   def change_params
     @appointment.showing_time = params[:showing_time].to_i if params[:showing_time]
     @appointment.cost = params[:cost] if params[:cost]
-    @appointment.start = Time.parse(params[:start]) if params[:start]
+    @appointment.start = Time.parse(params[:start]) - Time.zone.utc_offset if params[:start]
     if @appointment.save
       render :text => <<-JS
         Organizer.draggable_item = null;
