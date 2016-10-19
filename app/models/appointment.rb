@@ -1,4 +1,3 @@
-# coding: utf-8
 class Appointment < ActiveRecord::Base
   include AASM
 

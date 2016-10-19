@@ -29,6 +29,13 @@
           %tr
             %td Время окончания
             %td= Russian.strftime( @appointment.start + (@appointment.showing_time.minutes ), "%H:%M" )
+          - if user = @appointment.user
+            %tr
+              %td Пользователь
+              %td== #{user.phone} &mdash; #{user.name}
+          %tr
+            %td Пользователь (заявка)
+            %td== #{@appointment.phone} &mdash; #{@appointment.firstname} #{@appointment.lastname}
 
     .row
       %h2 Услуги
