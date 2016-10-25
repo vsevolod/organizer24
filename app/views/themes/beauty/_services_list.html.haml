@@ -20,7 +20,7 @@
           %span.badge.badge-info{id: "service_help_#{service.id}"} ?
           :javascript
             $(function(){
-              $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', trigger: 'focus hover'})
+              $('#service_help_#{service.id}').popover({placement: 'right', content: '#{j service.description}', html: true, trigger: 'focus hover'})
             });
         - if service.new_date_cost.present?
           %span.badge.badge-important{id: "service_alert_#{service.id}"} !
