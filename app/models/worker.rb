@@ -3,7 +3,7 @@ class Worker < ActiveRecord::Base
   belongs_to :organization
   has_many :services_workers
   has_many :services, :through => :services_workers, conditions: ["date_off IS NULL OR date_off > date(?)", Time.now]
-  has_many :working_days
+  has_many :working_days, dependent: :destroy
   has_many :working_hours
   has_many :double_rates
   has_many :appointments

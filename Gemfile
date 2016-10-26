@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.22.2'
 
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git', ref: 'cdda8d78b41275e1fa4a6d7aa71b370573ca2553'
 gem 'cocoon'

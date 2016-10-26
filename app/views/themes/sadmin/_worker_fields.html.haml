@@ -21,7 +21,9 @@
             = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
             = service.name
   - unless f.object.new_record?
-    %h1 Рабочие дни
+    %h1
+      Рабочие дни
+      = link_to 'Очистить рабочие дни', clear_all_worker_working_days_path(worker_id: @worker.id), method: :post, class: 'btn btn-warning', remote: true
     #worker_month_calendar{:style => 'width:500px;'}
 
   %h3 Часы работы

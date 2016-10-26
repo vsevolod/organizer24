@@ -1,5 +1,5 @@
 #working_hours
-  - if f.object.working_hours.empty?
+  - if f.object.working_hours.count.zero?
     - week_days_for_select.each do |text, num|
       - f.object.working_hours.build( :week_day => num.to_i )
   = f.simple_fields_for :working_hours do |ws|

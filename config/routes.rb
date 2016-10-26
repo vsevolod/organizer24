@@ -69,6 +69,7 @@ Organizer::Application.routes.draw do
       end
       resources :working_days do
         collection do
+          post :clear_all
           post :inverse_day
         end
       end
