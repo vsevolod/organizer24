@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     @appointment_id = params[:appointment_id]
-    @resource = resource_class.new( params[:user] )
+    @resource = resource_class.new( user_params )
     if @resource.role == 'client'
       if @resource.save
         if (appointment = Appointment.find_by_id( @appointment_id )) && (!appointment.user || appointment.user == @resource)
@@ -44,5 +44,11 @@ class RegistrationsController < Devise::RegistrationsController
       end
     end
   end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role)
+    end
 
 end

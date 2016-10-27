@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '3.2.22.2'
+gem 'rails', '4.2.5'
 
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git', ref: 'cdda8d78b41275e1fa4a6d7aa71b370573ca2553'
 gem 'cocoon'
@@ -31,7 +31,7 @@ gem 'aasm'
 gem 'pg'
 gem 'squeel'
 gem 'breadcrumbs', :git => 'https://github.com/dexion/breadcrumbs.git'
-gem 'less-rails'
+gem 'less-rails', '~> 2.7.0'
 
 gem 'active_model_serializers'
 
@@ -54,9 +54,9 @@ gem 'angular-rails-templates'
 gem 'angularjs-rails-resource'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
   gem 'jquery-fileupload-rails'
   gem 'compass-rails'
 end
@@ -85,10 +85,10 @@ group :test do
   gem 'cucumber-rails', :require => false
 end
 
-gem 'jquery-rails', '~> 2.3.0'
+gem 'jquery-rails'
 gem 'colorbox-rails', :git => 'git://github.com/stevo/colorbox-rails.git'
 gem 'inherited_resources'
 
 gem 'daemons'
-gem 'delayed_job_active_record', '~> 0.3.3'
+gem 'delayed_job_active_record'
 #gem 'thin'

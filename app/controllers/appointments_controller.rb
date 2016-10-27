@@ -125,7 +125,7 @@ class AppointmentsController < CompanyController
 
   def update
     respond_to do |wants|
-      if @appointment.update_attributes(params[:appointment])
+      if @appointment.update_attributes(appointment_params)
         wants.html { redirect_to @appointment, notice:'Запись успешно изменена.' }
         wants.js   { render :js => refresh_calendar }
         wants.xml  { head :ok }
@@ -170,6 +170,22 @@ class AppointmentsController < CompanyController
       if (@user || current_user).owner_or_worker?(@organization)
         @appointment.can_not_notify_owner = true
       end
+    end
+
+    def appointment_params
+      params.require(:appointment).permit([
+        :start,
+        :organization_id,
+        :appointment_services,
+        :showing_time,
+        :service_ids,
+        :phone,
+        :firstname,
+        :lastname,
+        :worker_id,
+        :comment,
+        services_users_attributes: [:title, :body]
+      ])
     end
 
 end
