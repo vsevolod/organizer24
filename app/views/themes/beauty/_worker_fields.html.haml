@@ -1,32 +1,36 @@
-= content_for :bottom_js do
-  = javascript_include_tag 'fc', 'month_calendar'
+.row-fluid
+  .span6
+    = content_for :bottom_js do
+      = javascript_include_tag 'fc', 'month_calendar'
 
-= f.input :is_enabled
-= f.input :name
-= f.input :dative_case
-= f.input :profession
-= f.input :phone
-= f.input :photo, :as => :file
-= f.input :push_key
-= f.input :sms_translit
-= f.input :finished_date, as: :string
-%h3 Список сервисов
-#collections.controls
-  - @organization.services.not_collections.group_by(&:category).each do |category, c_services|
-    %h4= category.try(:name) || 'Прочее'
-    - c_services.each do |service|
-      %label.checkbox
-        = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
-        = service.name
-        (#{service.showing_time}мин., #{service.cost} руб.)
-- unless f.object.new_record?
-  %h1
-    Рабочие дни
-    = link_to 'Очистить рабочие дни', clear_all_worker_working_days_path(worker_id: @worker.id), method: :post, class: 'btn btn-warning', remote: true
-  #worker_month_calendar{:style => 'width:500px;'}
+    = f.input :is_enabled
+    = f.input :name
+    = f.input :dative_case
+    = f.input :profession
+    = f.input :phone
+    = f.input :photo, :as => :file
+    = f.input :push_key
+    = f.input :sms_translit
+    = f.input :finished_date, as: :string
+    - unless f.object.new_record?
+      %h1
+        Рабочие дни
+        = link_to 'Очистить рабочие дни', clear_all_worker_working_days_path(worker_id: @worker.id), method: :post, class: 'btn btn-warning', remote: true
+      #worker_month_calendar{:style => 'width:500px;'}
 
-%h3 Часы работы
-= render 'workers/working_hours_list', :f => f
+    %h3 Часы работы
+    = render 'workers/working_hours_list', :f => f
 
-%h3 Время по двойному тарифу
-= render 'workers/double_rate', f: f
+    %h3 Время по двойному тарифу
+    = render 'workers/double_rate', f: f
+
+  .span6.well
+    %h3 Список сервисов
+    #collections.controls
+      - @organization.services.not_collections.group_by(&:category).each do |category, c_services|
+        %h4= category.try(:name) || 'Прочее'
+        - c_services.each do |service|
+          %label.checkbox
+            = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
+            = service.name
+            (#{service.showing_time}мин., #{service.cost} руб.)
