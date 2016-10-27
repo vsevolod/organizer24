@@ -2,27 +2,23 @@
 require 'spec_helper'
 
 describe OrganizationsController do
-
-  let(:organization) { FactoryGirl.create(:organization)}
-  let(:user) {FactoryGirl.create(:user)}
+  let(:organization) { FactoryGirl.create(:organization) }
+  let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
     @request.host = "#{organization.domain}.com"
   end
 
-  describe "GET show" do
-
+  describe 'GET show' do
     context 'not signed in' do
       it 'should see entry page' do
         get :show
         response.status.should eq(200)
       end
     end
-
   end
 
-  describe "GET calendar" do
-
+  describe 'GET calendar' do
     context 'not signed in' do
       it 'for not signed organization' do
         organization.registration_before = 0
@@ -34,7 +30,7 @@ describe OrganizationsController do
         organization.registration_before = 1
         organization.save!
         get :calendar
-        response.should redirect_to(root_path(:host => @request.host))
+        response.should redirect_to(root_path(host: @request.host))
       end
     end
 
@@ -52,8 +48,6 @@ describe OrganizationsController do
       end
     end
 
-    #TODO signed in like worker.
-
+    # TODO: signed in like worker.
   end
-
 end

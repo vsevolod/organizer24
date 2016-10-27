@@ -5,43 +5,43 @@ class PagesControllerTest < ActionController::TestCase
     @page = pages(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:pages)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create page" do
+  test 'should create page' do
     assert_difference('Page.count') do
-      post :create, page: { content: @page.content, name: @page.name, permalink: @page.permalink }
+      post :create, params: { page: { content: @page.content, name: @page.name, permalink: @page.permalink } }
     end
 
     assert_redirected_to page_path(assigns(:page))
   end
 
-  test "should show page" do
-    get :show, id: @page
+  test 'should show page' do
+    get :show, params: { id: @page }
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @page
+  test 'should get edit' do
+    get :edit, params: { id: @page }
     assert_response :success
   end
 
-  test "should update page" do
-    put :update, id: @page, page: { content: @page.content, name: @page.name, permalink: @page.permalink }
+  test 'should update page' do
+    put :update, params: { id: @page, page: { content: @page.content, name: @page.name, permalink: @page.permalink } }
     assert_redirected_to page_path(assigns(:page))
   end
 
-  test "should destroy page" do
+  test 'should destroy page' do
     assert_difference('Page.count', -1) do
-      delete :destroy, id: @page
+      delete :destroy, params: { id: @page }
     end
 
     assert_redirected_to pages_path

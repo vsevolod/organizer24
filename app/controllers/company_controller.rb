@@ -1,8 +1,8 @@
 class CompanyController < ApplicationController
   include SetLayout
-  before_filter :find_organization
-  before_filter :check_iframe
-  around_filter :company_time_zone
+  before_action :find_organization
+  before_action :check_iframe
+  around_action :company_time_zone
   layout :company
 
   def prepare_calendar_options
@@ -12,18 +12,17 @@ class CompanyController < ApplicationController
 
   private
 
-    def company_time_zone( &block )
-      Time.use_zone( @organization.try(:timezone) || Time.zone ) do
-        block.call
-      end
+  def company_time_zone
+    Time.use_zone(@organization.try(:timezone) || Time.zone) do
+      yield
     end
+  end
 
-    def get_worker
-      @organization.workers.enabled.where(:id => params[:worker_id]).first || @organization.workers.first
-    end
+  def get_worker
+    @organization.workers.enabled.where(id: params[:worker_id]).first || @organization.workers.first
+  end
 
-    def find_worker
-      @worker = Worker.find(params[:worker_id])
-    end
-
+  def find_worker
+    @worker = Worker.find(params[:worker_id])
+  end
 end

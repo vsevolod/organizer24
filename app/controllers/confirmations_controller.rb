@@ -1,7 +1,7 @@
 # coding: utf-8
 class ConfirmationsController < Devise::ConfirmationsController
   include SetLayout
-  before_filter :find_organization
+  before_action :find_organization
   layout :company
 
   def new
@@ -9,15 +9,13 @@ class ConfirmationsController < Devise::ConfirmationsController
   end
 
   def create
-    raise "A2"
+    raise 'A2'
     super
   end
 
   def confirm_phone
     @user = User.find(params[:id])
-    if @user.confirmed?
-      redirect_to '/'
-    end
+    redirect_to '/' if @user.confirmed?
   end
 
   def confirming_phone
@@ -32,5 +30,4 @@ class ConfirmationsController < Devise::ConfirmationsController
       end
     end
   end
-
 end

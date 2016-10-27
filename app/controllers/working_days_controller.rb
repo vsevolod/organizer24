@@ -1,7 +1,7 @@
 # coding: utf-8
 class WorkingDaysController < CompanyController
-  before_filter :find_worker
-  before_filter :prepare_calendar_options, :only => [:index, :inverse_day]
+  before_action :find_worker
+  before_action :prepare_calendar_options, only: [:index, :inverse_day]
 
   respond_to :html, :json
 
@@ -11,23 +11,23 @@ class WorkingDaysController < CompanyController
     @periods = []
     @working_days.each do |working_day|
       @periods << {
-        :title => "Работает",
-        :allDay => true,
-        :start => working_day.date,
-        :editable => true
+        title: 'Работает',
+        allDay: true,
+        start: working_day.date,
+        editable: true
       }
     end
-    respond_with( @periods )
+    respond_with(@periods)
   end
 
   def inverse_day
-    @working_day = @worker.working_days.where(:date => @start.to_date).first_or_initialize
+    @working_day = @worker.working_days.where(date: @start.to_date).first_or_initialize
     if @working_day.new_record?
       @working_day.save
     else
       @working_day.destroy
     end
-    render :text => 'Complete'
+    render text: 'Complete'
   end
 
   def clear_all
@@ -37,8 +37,7 @@ class WorkingDaysController < CompanyController
 
   private
 
-    def find_worker
-      @worker = Worker.find_by_id(params[:worker_id])
-    end
-
+  def find_worker
+    @worker = Worker.find_by(id: params[:worker_id])
+  end
 end

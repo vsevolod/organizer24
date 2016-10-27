@@ -1,5 +1,4 @@
 class Api::AppointmentsController < ApiController
-
   def index
     @appointments = @organization.appointments
     if params[:worker_id]
@@ -10,5 +9,4 @@ class Api::AppointmentsController < ApiController
     end
     render json: @appointments, each_serializer: EventSerializer
   end
-
 end

@@ -1,16 +1,16 @@
 class CategoryPhoto < ActiveRecord::Base
-  has_ancestry 
+  has_ancestry
 
   belongs_to :organization
   has_many :photos, dependent: :destroy
-  #attr_accessible :ancestry, :name, :parent_id, :ancestry, :photos_attributes
+  # attr_accessible :ancestry, :name, :parent_id, :ancestry, :photos_attributes
 
-  validates :name, :presence => true
+  validates :name, presence: true
 
   accepts_nested_attributes_for :photos, allow_destroy: true
 
-  # FIXME need to translate name?
+  # FIXME: need to translate name?
   def to_param
-    "#{self.id}-#{self.name}"
+    "#{id}-#{name}"
   end
 end

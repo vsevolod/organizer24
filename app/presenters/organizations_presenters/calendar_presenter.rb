@@ -1,7 +1,6 @@
 module OrganizationsPresenters
   class CalendarPresenter
-
-    def initialize( options )
+    def initialize(options)
       @day = options[:day]
       @worker_id = options[:worker_id]
       @organization = options[:organization]
@@ -10,12 +9,12 @@ module OrganizationsPresenters
 
     def phonebook
       if owner_or_worker?
-        @phonebook ||= @organization.appointments.select("DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname").group("phone")
+        @phonebook ||= @organization.appointments.select('DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname').group('phone')
       end
     end
 
     def phonebook_to_json
-      @phonebook_to_json ||= phonebook.to_json(:only => [:phone, :firstname, :lastname])
+      @phonebook_to_json ||= phonebook.to_json(only: [:phone, :firstname, :lastname])
     end
 
     def enabled_workers
@@ -23,7 +22,7 @@ module OrganizationsPresenters
     end
 
     def worker
-      @worker ||= enabled_workers.where(:id => @worker_id).first || (@current_user ? @current_user.worker(organization) : nil)
+      @worker ||= enabled_workers.where(id: @worker_id).first || (@current_user ? @current_user.worker(organization) : nil)
     end
 
     def show_workers
@@ -35,12 +34,10 @@ module OrganizationsPresenters
     end
 
     def organization_services
-      @organization_services ||= @organization.get_services( @current_user.phone ).to_json
+      @organization_services ||= @organization.get_services(@current_user.phone).to_json
     end
 
-    def organization
-      @organization
-    end
+    attr_reader :organization
 
     def calendar_settings
       if @calendar_settings
@@ -65,6 +62,5 @@ module OrganizationsPresenters
     def owner_or_worker?
       @owner_or_worker ||= @current_user.owner_or_worker?(organization)
     end
-
   end
 end

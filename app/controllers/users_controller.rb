@@ -1,8 +1,8 @@
-#coding: utf-8
+# coding: utf-8
 class UsersController < CompanyController
-  before_filter :authenticate_user!, :except => [:check_phone, :confirm_phone, :confirming_phone, :resend_confirmation_sms]
-  before_filter :skip_when_confirmed, :only => [:confirming_phone, :confirm_phone]
-  before_filter :redirect_if_not_owner, only: [:destroy]
+  before_action :authenticate_user!, except: [:check_phone, :confirm_phone, :confirming_phone, :resend_confirmation_sms]
+  before_action :skip_when_confirmed, only: [:confirming_phone, :confirm_phone]
+  before_action :redirect_if_not_owner, only: [:destroy]
 
   def dashboard
     @user = current_user
@@ -10,29 +10,29 @@ class UsersController < CompanyController
   end
 
   def show
-    @user = User.find_by_phone(params[:id]) || User.new(:phone => params[:id])
+    @user = User.find_by(phone: params[:id]) || User.new(phone: params[:id])
     redirect_to dashboard_path if current_user == @user || !current_user.owner_or_worker?(@organization)
     @appointments = @user.appointments_by_phone.paginate(page: params[:page], per_page: 30)
   end
 
   def check_phone
-    @user = User.find_by_phone(params[:phone])
+    @user = User.find_by(phone: params[:phone])
     if @user
-      render :text => "Exist"
+      render text: 'Exist'
     else
-      render :text => "New Member"
+      render text: 'New Member'
     end
   end
 
-  # TODO move to confirmation controller
+  # TODO: move to confirmation controller
   def resend_confirmation_sms
     @user = User.find(params[:id])
     if Time.zone.now > @user.updated_at + 1.minute
       @user.update_attribute(:updated_at, Time.zone.now)
-      Delayed::Job.enqueue SmsJob.new( { :user_id => @user.id }, 'confirmation_number' ), :run_at => Time.zone.now
-      redirect_to :back, :notice => 'На ваш телефон отправлено повторное смс с кодом подтверждения'
+      Delayed::Job.enqueue SmsJob.new({ user_id: @user.id }, 'confirmation_number'), run_at: Time.zone.now
+      redirect_to :back, notice: 'На ваш телефон отправлено повторное смс с кодом подтверждения'
     else
-      redirect_to :back, :alert => 'После последней отправки смс прошло меньше минуты'
+      redirect_to :back, alert: 'После последней отправки смс прошло меньше минуты'
     end
   end
 
@@ -42,12 +42,10 @@ class UsersController < CompanyController
   def confirming_phone
     if @user.confirmation_number.to_s == params[:confirmation_number]
       @user.confirm!
-      @user.appointments.free.each do |appointment|
-        appointment.first_owner_view!
-      end
+      @user.appointments.free.each(&:first_owner_view!)
       if @user.errors.any?
         flash[:alert] = @user.errors.full_messages.join('; ')
-        render :action => :confirm_phone
+        render action: :confirm_phone
       else
         sign_in @user
         if !Subdomain.matches?(request) && @user.is_admin?
@@ -82,7 +80,7 @@ class UsersController < CompanyController
 
   def destroy
     @user = User.find(params[:id])
-    @user.appointments_by_phone.where(:status.not_in => %w{complete lated}).delete_all
+    @user.appointments_by_phone.where(:status.not_in => %w(complete lated)).delete_all
     @user.appointments_by_phone.update_all(user_id: current_user.id)
     @user.destroy
     redirect_to '/calendar', notice: 'Пользователь успешно удален'
@@ -93,10 +91,10 @@ class UsersController < CompanyController
     @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone)
 
     # Группировка appointments по месяцам
-    month_group = Proc.new{|appointments| appointments.group_by{|a| a.start.month}.inject([]){|result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum])}.sort_by(&:first)}
+    month_group = proc { |appointments| appointments.group_by { |a| a.start.month }.inject([]) { |result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum]) }.sort_by(&:first) }
 
     # Количество всех записей по статусам по месяцам
-    gon.appointments_flot_dataset = @appointments.group_by{|a| a.status}.to_a.each_with_object({}) do |el, hash|
+    gon.appointments_flot_dataset = @appointments.group_by(&:status).to_a.each_with_object({}) do |el, hash|
       hash[el.first] = {
         label: I18n.t("activerecord.attributes.appointment.status.#{el.first}"),
         data: month_group.call(el.last)
@@ -105,7 +103,7 @@ class UsersController < CompanyController
 
     # Количество выполненных записей по пользователям (новым/старым)
     worker_phones = @worker.appointments.where(:start.lt => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).pluck(:phone).uniq
-    gon.users_flot_dataset = @appointments.where(status: %w{complete lated}).order(:start).group_by do |a|
+    gon.users_flot_dataset = @appointments.where(status: %w(complete lated)).order(:start).group_by do |a|
       if worker_phones.include?(a.phone)
         true
       else
@@ -122,11 +120,8 @@ class UsersController < CompanyController
 
   private
 
-    def skip_when_confirmed
-      @user = User.find(params[:id])
-      if @user.confirmed?
-        redirect_to '/'
-      end
-    end
-
+  def skip_when_confirmed
+    @user = User.find(params[:id])
+    redirect_to '/' if @user.confirmed?
+  end
 end

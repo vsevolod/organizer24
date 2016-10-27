@@ -2,68 +2,66 @@
 require 'spec_helper'
 
 describe WorkingHoursController do
-  let(:organization) {FactoryGirl.create(:organization_with_services)}
+  let(:organization) { FactoryGirl.create(:organization_with_services) }
 
   before(:each) do
-    @time_now = Time.parse("Sep 9 1999")
+    @time_now = Time.parse('Sep 9 1999')
     Time.stub(:now).and_return(@time_now)
     Date.stub(:today).and_return(@time_now.to_date)
     @request.host = "#{organization.domain}.com"
   end
 
-  describe "GET self_by_month" do
+  describe 'GET self_by_month' do
     before(:each) do
       sign_in user if defined?(user)
       3.times do |t|
-        options = {:status => (t.zero? ? 'offer' : 'complete'),
-                   :organization_id => organization.id,
-                   :start => @time_now + 1.day + rand(42).hour,
-                   :showing_time => '1'}
+        options = { status: (t.zero? ? 'offer' : 'complete'),
+                    organization_id: organization.id,
+                    start: @time_now + 1.day + rand(42).hour,
+                    showing_time: '1' }
         options[:user_id] = user.id if defined?(user)
-        FactoryGirl.create( :valid_appointment, options )
+        FactoryGirl.create(:valid_appointment, options)
       end
-      get :self_by_month, :format => 'json', :start => @time_now.at_beginning_of_month.to_i, :end => @time_now.at_end_of_month.to_i, :worker_id => organization.workers.first.id
+      get :self_by_month, params: { format: 'json', start: @time_now.at_beginning_of_month.to_i, end: @time_now.at_end_of_month.to_i, worker_id: organization.workers.first.id }
     end
 
-    context "when not signed in" do
+    context 'when not signed in' do
       it { response.should redirect_to(root_path) }
     end
 
-    context "when signed in like user" do
-      let(:user){ FactoryGirl.create(:user) }
+    context 'when signed in like user' do
+      let(:user) { FactoryGirl.create(:user) }
       it { JSON.parse(response.body).size.should eq(1) }
     end
 
-    context "when signed in like worker" do
-      let(:user){ organization.workers.first.user }
+    context 'when signed in like worker' do
+      let(:user) { organization.workers.first.user }
       it 'should send array' do
         array = JSON.parse(response.body)
-        array.find_all{|x| x['data-id']}.size.should eq(3)
-        array.find{|x| x['allDay'] = true}.size.should > 0
+        array.find_all { |x| x['data-id'] }.size.should eq(3)
+        array.find { |x| x['allDay'] = true }.size.should > 0
       end
     end
 
-    context "when signed in like owner" do
-      let(:user){ organization.owner }
+    context 'when signed in like owner' do
+      let(:user) { organization.owner }
       it 'should send array' do
         array = JSON.parse(response.body)
-        #binding.pry if array.find_all{|x| x['data-id']}.size != 3
-        array.find_all{|x| x['data-id']}.size.should eq(3)
-        array.find{|x| x['allDay'] = true}.size.should > 0
+        # binding.pry if array.find_all{|x| x['data-id']}.size != 3
+        array.find_all { |x| x['data-id'] }.size.should eq(3)
+        array.find { |x| x['allDay'] = true }.size.should > 0
       end
     end
-
   end
 
-  describe "GET by_week" do
-    it "should return only working hours by week" do
+  describe 'GET by_week' do
+    it 'should return only working hours by week' do
       worker_id = organization.workers.first
       working_hours_count = 5
-      FactoryGirl.create_list(:working_hour, working_hours_count, :worker_id => worker_id)
-      get :by_week, :format => 'json', :start => @time_now.at_beginning_of_week.to_i, :end => @time_now.at_end_of_week.to_i, :worker_id => worker_id
+      FactoryGirl.create_list(:working_hour, working_hours_count, worker_id: worker_id)
+      get :by_week, params: { format: 'json', start: @time_now.at_beginning_of_week.to_i, end: @time_now.at_end_of_week.to_i, worker_id: worker_id }
       response.status.should eq(200)
       JSON.parse(response.body).size.should >= working_hours_count
     end
   end
-
-end 
+end

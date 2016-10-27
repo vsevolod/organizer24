@@ -1,14 +1,13 @@
 # coding: utf-8
 class ServicesController < CompanyController
-
-  before_filter :redirect_if_not_owner
+  before_action :redirect_if_not_owner
 
   def index
     @services = @organization.services
   end
 
   def new
-    @service = @organization.services.build( service_params )
+    @service = @organization.services.build(service_params)
   end
 
   def edit
@@ -16,7 +15,7 @@ class ServicesController < CompanyController
   end
 
   def create
-    @service = @organization.services.build( service_params )
+    @service = @organization.services.build(service_params)
     if @service.save
       redirect_to Service
     else
@@ -25,7 +24,7 @@ class ServicesController < CompanyController
   end
 
   def update
-    @service = @organization.services.find( params[:id] )
+    @service = @organization.services.find(params[:id])
     if @service.update_attributes(service_params)
       redirect_to Service
     else
@@ -42,7 +41,7 @@ class ServicesController < CompanyController
   end
 
   def destroy
-    @service = @organization.services.find( params[:id] )
+    @service = @organization.services.find(params[:id])
     @service.destroy
     redirect_to Service
   end
@@ -51,36 +50,34 @@ class ServicesController < CompanyController
     @worker = current_user.worker
 
     # Список услуг за последний год
-    @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).where(status: %w{complete lated})
+    @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).where(status: %w(complete lated))
     gon.services_flot_dataset = {}
     12.times do |month|
-      appointments = @appointments.where(:start.gteq => Time.now.at_beginning_of_year + month.month, :start.lt => Time.now.at_beginning_of_year + (month+1).month)
-      services = Service.joins('INNER JOIN "appointments_services" ON "appointments_services".service_id = "services".id').where( appointments_services: {appointment_id: appointments.pluck(:id)}, show_by_owner: false).group('"services".id').select('"services".id, "services".name, count(*) as count, sum("services".cost) as cost')
+      appointments = @appointments.where(:start.gteq => Time.now.at_beginning_of_year + month.month, :start.lt => Time.now.at_beginning_of_year + (month + 1).month)
+      services = Service.joins('INNER JOIN "appointments_services" ON "appointments_services".service_id = "services".id').where(appointments_services: { appointment_id: appointments.pluck(:id) }, show_by_owner: false).group('"services".id').select('"services".id, "services".name, count(*) as count, sum("services".cost) as cost')
       services.each do |service|
-        gon.services_flot_dataset["service_#{service.id}"] ||= {label: service.name, data: []}
+        gon.services_flot_dataset["service_#{service.id}"] ||= { label: service.name, data: [] }
         gon.services_flot_dataset["service_#{service.id}"][:data].push([month, service.count, service.cost])
       end
     end
-
   end
 
   private
 
-    def service_params
-      params.require(:service).permit([
-        :name,
-        :showing_time,
-        :cost,
-        :is_collection,
-        :show_by_owner,
-        :bottom_cost,
-        :top_cost,
-        :description,
-        :category_id,
-        :position,
-        :new_cost,
-        :new_date_cost
-      ])
-    end
-
+  def service_params
+    params.require(:service).permit([
+                                      :name,
+                                      :showing_time,
+                                      :cost,
+                                      :is_collection,
+                                      :show_by_owner,
+                                      :bottom_cost,
+                                      :top_cost,
+                                      :description,
+                                      :category_id,
+                                      :position,
+                                      :new_cost,
+                                      :new_date_cost
+                                    ])
+  end
 end

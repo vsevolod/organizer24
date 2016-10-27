@@ -1,9 +1,8 @@
 module SetLayout
   def company
     if defined? @organization
-      # TODO move it to cache
-      if File.exist?( "#{Rails.root}/app/views/layouts/#{@organization.get_theme}.html.haml" )
-        @organization.get_theme
+      if File.exist?("#{Rails.root}/app/views/layouts/#{@organization.theme}.html.haml")
+        @organization.theme
       else
         'company'
       end

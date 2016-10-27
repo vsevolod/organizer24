@@ -15,7 +15,7 @@ Organizer::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => "oneclickbook.ru" }
+  config.action_mailer.default_url_options = { host: 'oneclickbook.ru' }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -29,5 +29,4 @@ Organizer::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   config.eager_load = false
-
 end
