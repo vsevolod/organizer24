@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :phone
   validates :email, :presence => { :if => :is_admin? }, :format => {:with => /\A[^@]+@[^@]+\z/, :if => :is_admin?}
 
-  validates_format_of :phone, :with => /^[\d\W]+$/
+  validates_format_of :phone, :with => /\A[\d\W]+\z/
 
   validates_presence_of :password, if: Proc.new{|u| u.new_record?}
   validates_confirmation_of :password, if: Proc.new{|u| !u.blank?}
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :confirmable, :authentication_keys => [:phone]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role
+  #attr_accessible :email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role
 
   attr_writer :current_step
 

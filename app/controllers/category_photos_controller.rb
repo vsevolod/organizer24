@@ -32,7 +32,7 @@ class CategoryPhotosController < CompanyController
 
   def update
     @category_photo = CategoryPhoto.find(params[:id])
-    if @category_photo.update_attributes( params[:category_photo] )
+    if @category_photo.update_attributes( category_photo_params )
       redirect_to @category_photo, :notice => 'Категория успешно изменена'
     else
       render :action => 'edit'
@@ -54,6 +54,16 @@ class CategoryPhotosController < CompanyController
 
     def find_ancestry_dictionaries
       @ancestry_category_photos = ancestry_options((current_user.my_organization || current_user.worker.organization).category_photos.order( 'name')) {|i| "#{'-' * i.depth} #{i.name}" }
+    end
+
+    def category_photo_params
+      params.require(:category_photo).permit([
+        :ancestry,
+        :name,
+        :parent_id,
+        :ancestry,
+        photos_attributes: [:name, :photo]
+      ])
     end
 
 end

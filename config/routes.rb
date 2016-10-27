@@ -13,13 +13,13 @@ Organizer::Application.routes.draw do
       resources :appointments
     end
 
-    root :to => 'organizations#show'
+    get '/', to: 'organizations#show'
 
-    match '/dashboard', :to => 'users#dashboard', as: 'dashboard'
-    match '/calendar' => 'organizations#calendar', :as => :calendar
-    match '/edit'=> 'organizations#edit', :as => :edit
-    match '/modal'=> 'organizations#modal', :as => :modal
-    match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+    get '/dashboard', :to => 'users#dashboard', as: 'dashboard'
+    get '/calendar' => 'organizations#calendar', :as => :calendar
+    get '/edit'=> 'organizations#edit', :as => :edit
+    get '/modal'=> 'organizations#modal', :as => :modal
+    get '/calendar(/:year(/:month))' => 'calendar#index', :as => :date_calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
 
     resources :appointments do
       resources :services_users do
@@ -87,7 +87,7 @@ Organizer::Application.routes.draw do
 
   resources :after_signup
 
-  root :to => 'main#index'
+  root to: 'main#index'
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords", :confirmations => "confirmations" }
   resources :users do
     collection do
@@ -109,6 +109,6 @@ Organizer::Application.routes.draw do
     end
   end
 
-  match '/main/set_session' => 'main#set_session', :via => [:get]
+  get '/main/set_session' => 'main#set_session'
 
 end

@@ -1,4 +1,3 @@
-# coding: utf-8
 class OrganizationsController < CompanyController
   skip_before_filter :find_organization, :only => [:index, :new, :create]
   add_breadcrumb 'На главную', '/', :except => [:index, :show]
@@ -19,7 +18,7 @@ class OrganizationsController < CompanyController
   end
 
   def create
-    @organization = Organization.new(params[:organization])
+    @organization = Organization.new(organization_params)
     @organization.owner = current_user
     if @organization.save
       session[:organization_id] = @organization.id
@@ -57,7 +56,7 @@ class OrganizationsController < CompanyController
 
   def update
     if current_user.owner?(@organization) || @organization.workers.map(&:user).include?(current_user)
-      if @organization.update_attributes( params[:organization] )
+      if @organization.update_attributes( organization_params )
         redirect_to organization_root
       else
         render :edit
@@ -66,5 +65,56 @@ class OrganizationsController < CompanyController
       raise @organization.owner.inspect
     end
   end
+
+  private
+
+    def organization_params
+      params.require(:organization).permit([
+        :name,
+        :activity_id,
+        :domain,
+        :owner_id,
+        :activity,
+        { dictionaries_attributes: [
+           :name,
+           :tag,
+           :ancestry,
+           :parent_id,
+           :children_dictionaries_attributes
+          ],
+          services_attributes: [
+            :name,
+            :showing_time,
+            :cost,
+            :is_collection,
+            :show_by_owner,
+            :bottom_cost,
+            :top_cost,
+            :description,
+            :category_id,
+            :position,
+            :new_cost,
+            :new_date_cost
+          ],
+          workers_attributes: [
+            :name,
+            :is_enabled,
+            :services_workers_attributes,
+            :phone,
+            :user_id,
+            :photo,
+            :service_ids,
+            :working_hours_attributes,
+            :profession,
+            :dative_case,
+            :double_rates_attributes,
+            :push_key,
+            :finished_date,
+            :sms_translit
+          ]
+        },
+        *Organization::ACCESSORS
+      ])
+    end
 
 end

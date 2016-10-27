@@ -1,6 +1,6 @@
 class Page < ActiveRecord::Base
   belongs_to :organization
-  attr_accessible :content, :name, :permalink, :menu_name
+  #attr_accessible :content, :name, :permalink, :menu_name
 
   validates_presence_of :content, :name, :permalink
   validates :permalink, :uniqueness => { :scope => [:organization_id] }

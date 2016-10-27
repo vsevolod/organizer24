@@ -8,7 +8,7 @@ class ServicesController < CompanyController
   end
 
   def new
-    @service = @organization.services.build( params[:service] )
+    @service = @organization.services.build( service_params )
   end
 
   def edit
@@ -16,7 +16,7 @@ class ServicesController < CompanyController
   end
 
   def create
-    @service = @organization.services.build( params[:service] )
+    @service = @organization.services.build( service_params )
     if @service.save
       redirect_to Service
     else
@@ -26,8 +26,7 @@ class ServicesController < CompanyController
 
   def update
     @service = @organization.services.find( params[:id] )
-    @service.attributes   = params[:service]
-    if @service.save
+    if @service.update_attributes(service_params)
       redirect_to Service
     else
       render 'edit'
@@ -64,5 +63,24 @@ class ServicesController < CompanyController
     end
 
   end
+
+  private
+
+    def service_params
+      params.require(:service).permit([
+        :name,
+        :showing_time,
+        :cost,
+        :is_collection,
+        :show_by_owner,
+        :bottom_cost,
+        :top_cost,
+        :description,
+        :category_id,
+        :position,
+        :new_cost,
+        :new_date_cost
+      ])
+    end
 
 end

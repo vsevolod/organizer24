@@ -11,7 +11,7 @@ class Dictionary < ActiveRecord::Base
   before_save :cache_ancestry
   before_save :set_dictionary_id
 
-  attr_accessible :name, :tag, :ancestry, :parent_id, :children_dictionaries_attributes
+  #attr_accessible :name, :tag, :ancestry, :parent_id, :children_dictionaries_attributes
 
   def cache_ancestry
     self.names_depth_cache = path.map(&:name).join('/')

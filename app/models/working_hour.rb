@@ -12,7 +12,7 @@ class WorkingHour < ActiveRecord::Base
   validates :end_time, :presence => true
   before_validation :fix_time
 
-  attr_accessible :week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute, :worker_id
+  #attr_accessible :week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute, :worker_id
 
 
   private

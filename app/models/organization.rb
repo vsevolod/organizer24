@@ -51,7 +51,7 @@ class Organization < ActiveRecord::Base
   validates :activity, :presence => true
   validates :domain, :presence => true, :uniqueness => true
 
-  attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :dictionaries_attributes, :services_attributes, :workers_attributes, *ACCESSORS
+  #attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :dictionaries_attributes, :services_attributes, :workers_attributes, *ACCESSORS
   before_validation :check_domain
 
   def get_theme
