@@ -24,11 +24,12 @@ gem 'omniauth-vkontakte'
 gem 'ancestry'
 gem 'aasm'
 gem 'pg'
-gem 'squeel'
 gem 'breadcrumbs', git: 'https://github.com/dexion/breadcrumbs.git'
-#gem 'less-rails', '~> 2.7.0'
+# gem 'less-rails', '~> 2.7.0'
 
 gem 'active_model_serializers'
+
+# Assets
 
 gem 'rails-assets-underscore'
 gem 'rails-assets-bootstrap'
@@ -43,13 +44,11 @@ gem 'rails-assets-angular-wizard'
 gem 'angular-rails-templates'
 gem 'angularjs-rails-resource'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-  gem 'jquery-fileupload-rails'
-  gem 'compass-rails'
-end
+gem 'coffee-rails'
+gem 'uglifier'
+gem 'jquery-fileupload-rails'
+gem 'compass-rails'
+gem 'sass-rails'
 
 group :development do
   gem 'pry'
@@ -75,6 +74,7 @@ group :test do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'colorbox-rails', git: 'git://github.com/stevo/colorbox-rails.git'
 gem 'inherited_resources'
 

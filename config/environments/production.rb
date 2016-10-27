@@ -35,9 +35,6 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  config.assets.precompile += %w(ckeditor/skins/kama/editor.css ckeditor/lang/ru.js ckeditor/plugins/embed/plugin.js ckeditor/plugins/attachment/plugin.js ckeditor/config.js  ckeditor/plugins/embed/lang/ru.js ckeditor/plugins/attachment/lang/ru.js ckeditor/contents.css ckeditor/plugins/styles/styles/default.js)
-  config.assets.precompile += %w(fullcalendar.print.css fc.js month_calendar.js calendar.js themes/embark.css themes/beauty.css photo.js jquery.fileupload-ui.css company.css  themes/default.css themes/edge/font-awesome.css themes/edge/theme.css themes/edge/font-awesome-ie7.css themes/sadmin.css themes/sadmin.js)
-
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
   
 
