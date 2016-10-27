@@ -1,16 +1,15 @@
 # coding: utf-8
 class CodesController < CompanyController
-
-  before_filter :redirect_if_not_owner
+  before_action :redirect_if_not_owner
   add_breadcrumb 'На главную', '/'
-  add_breadcrumb 'Сертификаты', Code, :except => [:index]
+  add_breadcrumb 'Сертификаты', Code, except: [:index]
 
   def index
     @codes = @organization.codes.order(:status)
   end
 
   def new
-    @code = @organization.codes.build( params[:code] )
+    @code = @organization.codes.build(params[:code])
     @workers = @organization.workers
   end
 
@@ -20,7 +19,7 @@ class CodesController < CompanyController
   end
 
   def create
-    @code = @organization.codes.build( params[:code] )
+    @code = @organization.codes.build(params[:code])
     @code.organization = current_user.my_organization || current_user.worker.try(:organization)
     if @code.save
       redirect_to Code
@@ -30,7 +29,7 @@ class CodesController < CompanyController
   end
 
   def update
-    @code = @organization.codes.find( params[:id] )
+    @code = @organization.codes.find(params[:id])
     @code.attributes = params[:code]
     if @code.save
       redirect_to Code
@@ -40,9 +39,8 @@ class CodesController < CompanyController
   end
 
   def destroy
-    @code = @organization.codes.find( params[:id] )
+    @code = @organization.codes.find(params[:id])
     @code.destroy
     redirect_to Code
   end
-
 end

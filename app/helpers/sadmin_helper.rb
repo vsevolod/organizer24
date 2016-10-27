@@ -1,3 +1,2 @@
 module SadminHelper
-
 end

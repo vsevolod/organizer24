@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :appointment do
     start Time.zone.now + Random.new.rand(1..10).hours
     status 'free'
@@ -7,47 +6,43 @@ FactoryGirl.define do
     user
 
     after(:build) do |appointment|
-      if appointment.user
-        appointment.phone = appointment.user.phone
-      end
+      appointment.phone = appointment.user.phone if appointment.user
     end
 
     factory :with_organization do
       after(:build) do |appointment|
         unless appointment.organization
-          appointment.organization = FactoryGirl.create( :organization_with_services )
+          appointment.organization = FactoryGirl.create(:organization_with_services)
         end
         appointment.worker = appointment.organization.workers.first
       end
 
       factory :valid_appointment do
-        sequence :phone do |n|
-          (Random.new.rand*100000000).ceil.to_s
+        sequence :phone do |_n|
+          (Random.new.rand * 100_000_000).ceil.to_s
         end
-        sequence :firstname do |n|
+        sequence :firstname do |_n|
           Faker::Name.first_name
         end
-        after(:build) do |appointment, evaluator|
+        after(:build) do |appointment, _evaluator|
           appointment.services = appointment.organization.services
         end
       end
-
     end
 
     factory :multi_services_appointment do
-      sequence :phone do |n|
-        (Random.new.rand*100000000).ceil.to_s
+      sequence :phone do |_n|
+        (Random.new.rand * 100_000_000).ceil.to_s
       end
-      sequence :firstname do |n|
+      sequence :firstname do |_n|
         Faker::Name.first_name
       end
 
-      after(:build) do |appointment, evaluator|
-        appointment.organization = FactoryGirl.create( :organization_with_multi_services )
-        appointment.services = appointment.organization.services.where( :is_collection => false )
+      after(:build) do |appointment, _evaluator|
+        appointment.organization = FactoryGirl.create(:organization_with_multi_services)
+        appointment.services = appointment.organization.services.where(is_collection: false)
       end
     end
-
   end
 
   factory :page do
@@ -56,18 +51,18 @@ FactoryGirl.define do
     content Faker::Lorem.paragraphs
   end
 
-  factory :dictionary, :aliases => [:activity] do
+  factory :dictionary, aliases: [:activity] do
     name Faker::Lorem.words(2)
   end
 
-  factory :user, :aliases => [:owner] do
+  factory :user, aliases: [:owner] do
     User.skip_callback(:create, :after, :send_confirmation_instructions)
 
-    sequence :email do |n|
+    sequence :email do |_n|
       Faker::Internet.email
     end
-    sequence :phone do |n|
-      (Random.new.rand*100000000).ceil.to_s
+    sequence :phone do |_n|
+      (Random.new.rand * 100_000_000).ceil.to_s
     end
     password '1111111'
     password_confirmation '1111111'
@@ -75,21 +70,19 @@ FactoryGirl.define do
     firstname Faker::Name.first_name
     lastname Faker::Name.last_name
 
-    after(:create) do |user|
-      user.confirm!
-    end
+    after(:create, &:confirm!)
   end
 
-  #factory :organizations_owner do
+  # factory :organizations_owner do
   #  association(:user, :factory => :owner)
   #  association(:my_organization, :factory => :organization)
-  #end
+  # end
 
   factory :worker do
     organization
     user
-    sequence :phone do |n|
-      (Random.new.rand*100000000).ceil.to_s
+    sequence :phone do |_n|
+      (Random.new.rand * 100_000_000).ceil.to_s
     end
     sequence :name do
       Faker::Name.first_name
@@ -99,8 +92,8 @@ FactoryGirl.define do
     end
 
     factory :worker_with_services do
-      after(:build) do |worker, evaluator|
-        worker.services = appointment.organization.services.where( :is_collection => false )
+      after(:build) do |worker, _evaluator|
+        worker.services = appointment.organization.services.where(is_collection: false)
       end
     end
   end
@@ -111,17 +104,17 @@ FactoryGirl.define do
     end
     organization
     factory :category_photo_with_photos do
-      after(:build) do |category_photo, evaluator|
-        FactoryGirl.create_list( :photo, 3, category_photo: category_photo )
+      after(:build) do |category_photo, _evaluator|
+        FactoryGirl.create_list(:photo, 3, category_photo: category_photo)
       end
     end
   end
 
   factory :photo do
     name 'photo'
-    #photo { fixture_file_upload('/files/photo.jpg', 'image/jpg') }
-    photo_file_name {'photo.jpg'}
-    photo_content_type {'image/jpg'}
+    # photo { fixture_file_upload('/files/photo.jpg', 'image/jpg') }
+    photo_file_name { 'photo.jpg' }
+    photo_content_type { 'image/jpg' }
     photo_file_size 1024
     category_photo
   end
@@ -151,26 +144,26 @@ FactoryGirl.define do
     end
 
     factory :organization_with_services do
-      after(:create) do |organization, evaluator|
-        FactoryGirl.create_list( :service, 3, :organization => organization )
+      after(:create) do |organization, _evaluator|
+        FactoryGirl.create_list(:service, 3, organization: organization)
       end
     end
 
     factory :organization_with_multi_services do
-      after(:create) do |organization, evaluator|
-        FactoryGirl.create_list( :multi_service, 3, :organization => organization )
+      after(:create) do |organization, _evaluator|
+        FactoryGirl.create_list(:multi_service, 3, organization: organization)
       end
     end
   end
 
   factory :service do
-    sequence :name do |n|
+    sequence :name do |_n|
       Faker::Company.name
     end
-    sequence :showing_time do |n|
+    sequence :showing_time do |_n|
       Random.new.rand(1..5) * 30
     end
-    sequence :cost do |n|
+    sequence :cost do |_n|
       Random.new.rand(100..1000)
     end
     is_collection false
@@ -183,13 +176,12 @@ FactoryGirl.define do
       end
 
       after(:build) do |service, evaluator|
-        service_ids = Array.new(Random.new.rand(2..evaluator.services_count)) do |el|
-          fg = FactoryGirl.create( :service, :organization => evaluator.organization )
+        service_ids = Array.new(Random.new.rand(2..evaluator.services_count)) do |_el|
+          fg = FactoryGirl.create(:service, organization: evaluator.organization)
           fg.id
         end
         service.service_ids = service_ids
       end
-
     end
   end
 
@@ -210,5 +202,4 @@ FactoryGirl.define do
       Random.new.rand(60).to_i
     end
   end
-
 end

@@ -1,7 +1,7 @@
 # coding: utf-8
 class RegistrationsController < Devise::RegistrationsController
   include SetLayout
-  before_filter :find_organization
+  before_action :find_organization
   layout :company
 
   def new
@@ -10,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
       @resource.role = 'client'
       @resource.current_step = 1
       @resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
-      render :action => :edit, :layout => params[:remote] == 'true' ? false : company
+      render action: :edit, layout: params[:remote] == 'true' ? false : company
     else
       @resource.role = 'admin'
       respond_with @resource
@@ -19,10 +19,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     @appointment_id = params[:appointment_id]
-    @resource = resource_class.new( user_params )
+    @resource = resource_class.new(user_params)
     if @resource.role == 'client'
       if @resource.save
-        if (appointment = Appointment.find_by_id( @appointment_id )) && (!appointment.user || appointment.user == @resource)
+        if (appointment = Appointment.find_by(id: @appointment_id)) && (!appointment.user || appointment.user == @resource)
           appointment.user = @resource
           appointment.firstname = @resource.firstname
           appointment.save
@@ -34,21 +34,20 @@ class RegistrationsController < Devise::RegistrationsController
           redirect_to [:confirm_phone, @resource]
         end
       else
-        render :action => :edit, alert: 'При регистрации возникли ошибки'
+        render action: :edit, alert: 'При регистрации возникли ошибки'
       end
     else
       if @resource.save
         redirect_to [:confirm_phone, @resource]
       else
-        render "new"
+        render 'new'
       end
     end
   end
 
   private
 
-    def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role)
-    end
-
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :my_organization_attributes, :firstname, :lastname, :phone, :role)
+  end
 end

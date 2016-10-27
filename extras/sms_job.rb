@@ -4,9 +4,8 @@ require 'net/http'
 require 'themed_text'
 
 class SmsJob < Struct.new(:options, :sms_type)
-
   def perform
-    sms = Smsru.new( ) #@appointment.phone, @organization.user.phone
+    sms = Smsru.new # @appointment.phone, @organization.user.phone
     notification = Notification.new(notification_type: 'sms')
     case sms_type
     when 'day_report'
@@ -16,38 +15,38 @@ class SmsJob < Struct.new(:options, :sms_type)
       @worker = @organization.workers.order('phone, name').where('id NOT IN (?)', except_ids).first
       except_ids << @worker.id
       today = Time.zone.now.at_beginning_of_day
-      @appointments = @worker.appointments.where(:start.gteq => today, :start.lteq => today+1.day).where( :status => ['complete', 'lated'] )
+      @appointments = @worker.appointments.where(:start.gteq => today, :start.lteq => today + 1.day).where(status: %w(complete lated))
       sms.recipient = @worker.phone
       notification.user = @worker.user
       notification.worker = @worker
       notification.organization = @organization
-      sms.text = "За сегодня (#{Russian.strftime(today, "%d.%m.%y")}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
+      sms.text = "За сегодня (#{Russian.strftime(today, '%d.%m.%y')}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
       if today.to_date == today.to_date.at_end_of_month
-        @appointments = @worker.appointments.where(:start.gteq => today.at_beginning_of_month, :start.lteq => today.at_end_of_month).where( :status => ['complete', 'lated'] )
+        @appointments = @worker.appointments.where(:start.gteq => today.at_beginning_of_month, :start.lteq => today.at_end_of_month).where(status: %w(complete lated))
         sms.text += "\nЗа месяц ваш заработок составил: #{@appointments.sum(:cost)} р."
       end
       working_hours = @organization.working_hours.order(:week_day)
       next_working_hour = working_hours.where(:week_day.gt => Date.today.cwday).first || working_hours.first
-      next_day = Date.today + ( (next_working_hour.week_day - Date.today.cwday + 7)%7 ).day # Следующий день. когда надо уведомлять
+      next_day = Date.today + ((next_working_hour.week_day - Date.today.cwday + 7) % 7).day # Следующий день. когда надо уведомлять
       next_day += 1.day if next_day == Date.today
       next_time = (next_day.to_time_in_current_zone + next_working_hour.end_time) + 1.hour  # Дата и время для уведомления
       unless options[:except_ids]
-        Delayed::Job.enqueue SmsJob.new( { :organization_id => options[:organization_id] }, 'day_report' ), :run_at => next_time
+        Delayed::Job.enqueue SmsJob.new({ organization_id: options[:organization_id] }, 'day_report'), run_at: next_time
       end
       if @organization.workers.where('id NOT IN (?)', except_ids).count > 0
-        Delayed::Job.enqueue SmsJob.new( { :organization_id => options[:organization_id], :except_ids => except_ids }, 'day_report' ), :run_at => Time.now
+        Delayed::Job.enqueue SmsJob.new({ organization_id: options[:organization_id], except_ids: except_ids }, 'day_report'), run_at: Time.now
       end
     when 'notification'
       # Надо Time.zone объявить до того, как найдем appointment
-      Time.zone = Organization.joins(:appointments).where( :appointments => { :id => options[:appointment_id] } ).first.timezone
-      @appointment = Appointment.find( options[:appointment_id] )
+      Time.zone = Organization.joins(:appointments).where(appointments: { id: options[:appointment_id] }).first.timezone
+      @appointment = Appointment.find(options[:appointment_id])
       @organization = @appointment.organization
       notification.appointment = @appointment
       notification.worker = @appointment.worker
       notification.user = @appointment.user_by_phone
       notification.organization = @organization
       sms.recipient = @appointment.phone
-      sms.text = themed_text( :user_notify, @organization.user_notify_text, @appointment )
+      sms.text = themed_text(:user_notify, @organization.user_notify_text, @appointment)
       case @organization.domain
       when 'depilate'
         sms.sender = 'depilate.ru'
@@ -62,7 +61,7 @@ class SmsJob < Struct.new(:options, :sms_type)
       sms.recipient = options[:phone]
       sms.text = options[:text]
     end
-    notification.user ||= User.find_by_phone(options[:phone])
+    notification.user ||= User.find_by(phone: options[:phone])
     notification.worker ||= notification.user.worker
     notification.organization ||= notification.user.find_organization
     notification.cost, notification.length = sms.get_cost

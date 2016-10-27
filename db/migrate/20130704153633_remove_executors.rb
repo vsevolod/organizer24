@@ -5,7 +5,7 @@ class RemoveExecutors < ActiveRecord::Migration
 
   def down
     create_table :executors do |t|
-      #...
+      # ...
     end
   end
 end

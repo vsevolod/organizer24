@@ -1,6 +1,6 @@
-#require 'spec_helper'
+# require 'spec_helper'
 #
-#describe SmsJob do
+# describe SmsJob do
 #
 #  let(:organization){ FactoryGirl.create(:organization) }
 #  let(:appointments){ FactoryGirl.create_list(:appointment, 50, organization: organization)}
@@ -18,4 +18,4 @@
 #
 #  end
 #
-#end
+# end

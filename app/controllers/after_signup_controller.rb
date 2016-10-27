@@ -22,12 +22,10 @@ class AfterSignupController < ApplicationController
     render_wizard @organization
   end
 
-
-private
+  private
 
   def finish_wizard_path
     @organization = Organization.find(session[:organization_id])
     view_context.domain_organization_path(@organization)
   end
-
 end

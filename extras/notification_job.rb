@@ -2,10 +2,9 @@ require 'net/http'
 require 'themed_text'
 
 class NotificationJob < Struct.new(:notification_id, :options)
-
   def perform
     @notification = Notification.find(notification_id)
-    @options = self.options || {}
+    @options = options || {}
     @try = @options[:try] || 1
     case @options[:method]
     when :check then check # Проверить статус сообщения
@@ -28,8 +27,7 @@ class NotificationJob < Struct.new(:notification_id, :options)
       @notification.canceled!
     else
       @try += 1
-      Delayed::Job.enqueue NotificationJob.new(notification_id, {method: 'check', try: @try, id: @options[:id]}), run_at: Time.now + (@try*30).minutes
+      Delayed::Job.enqueue NotificationJob.new(notification_id, method: 'check', try: @try, id: @options[:id]), run_at: Time.now + (@try * 30).minutes
     end
   end
-
 end

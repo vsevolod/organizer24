@@ -3,10 +3,10 @@ class PagesController < InheritedResources::Base
   layout :company
 
   belongs_to :organization
-  has_scope :limit, :default => 8
+  has_scope :limit, default: 8
 
-  before_filter :find_organization
-  before_filter :redirect_if_not_owner, :only => [:new, :edit, :create, :update, :destroy]
+  before_action :find_organization
+  before_action :redirect_if_not_owner, only: [:new, :edit, :create, :update, :destroy]
 
   def create
     create! { "/#{@page.permalink}" }
@@ -18,8 +18,7 @@ class PagesController < InheritedResources::Base
 
   protected
 
-    def resource
-      @page ||= @organization.pages.where(permalink: ["/#{params[:id]}", params[:id]] ).first
-    end
-
+  def resource
+    @page ||= @organization.pages.where(permalink: ["/#{params[:id]}", params[:id]]).first
+  end
 end

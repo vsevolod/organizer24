@@ -1,6 +1,6 @@
-#coding: utf-8
+# coding: utf-8
 class NotificationsController < CompanyController
-  before_filter :redirect_if_not_owner
+  before_action :redirect_if_not_owner
 
   def index
     @level = params[:level].to_i
@@ -9,9 +9,9 @@ class NotificationsController < CompanyController
     case @level
     when 0
       @notifications = @organization.notifications
-        .where{created_at >= my{@from}}
-        .where{created_at <= my{@to}}
-        .group(:worker_id).select('worker_id, sum(cost) as total_cost, count(*) as count, count(length) as length')
+                                    .where { created_at >= my { @from } }
+                                    .where { created_at <= my { @to } }
+                                    .group(:worker_id).select('worker_id, sum(cost) as total_cost, count(*) as count, count(length) as length')
     end
   end
 
@@ -21,7 +21,7 @@ class NotificationsController < CompanyController
 
   def send_sms
     @jobs = Delayed::Job.where('attempts > ?', 1)
-    @jobs.update_all(:run_at => Time.now)
+    @jobs.update_all(run_at: Time.now)
     redirect_to :back, notice: "Сообщений на отправку: #{@jobs.count}"
   end
 
@@ -34,5 +34,4 @@ class NotificationsController < CompanyController
       render :sms
     end
   end
-
 end

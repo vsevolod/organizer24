@@ -1,5 +1,4 @@
 class EventSerializer < ActiveModel::Serializer
-
   attributes :title, :type, :starts_at, :ends_at, :editable, :deletable
 
   def title
@@ -25,5 +24,4 @@ class EventSerializer < ActiveModel::Serializer
   def deletable
     false
   end
-
 end
