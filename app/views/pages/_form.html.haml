@@ -3,6 +3,6 @@
   = f.input :name
   = f.input :menu_name, hint: 'Пусто если не показывать в меню'
   = f.input :permalink
-  = f.input :content, :as => :ckeditor
+  = f.input :content, as: :ckeditor
   .form-actions
     = f.submit nil, :class => 'btn btn-success'

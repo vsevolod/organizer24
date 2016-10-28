@@ -33,7 +33,7 @@
       = submit_tag 'Изменить', class: 'btn btn-danger'
 
 .accordion#accordion
-  - [{ title: 'Текущие', option: {start: Time.now..Time.at(Float::INFINITY)}}, {title: 'Прошедшие', option: {start: Time.at(0)...Time.now}}].each_with_index do |options, index|
+  - [{ title: 'Текущие', option: {start: Time.now..(Time.now + 1.year)}}, {title: 'Прошедшие', option: {start: Time.at(0)...Time.now}}].each_with_index do |options, index|
     .accordion-group
       .accordion-heading
         %a.accordion-toggle{ data: { toggle: "collapse", parent: "#accordion" }, href: "#collapse#{index}"}== #{options[:title]} записи

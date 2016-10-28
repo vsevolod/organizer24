@@ -1,6 +1,6 @@
 = simple_form_for appointment, :remote => true, :format => :js do |f|
-  - options = {:show_by_owner.not_eq => nil}
-  - options[:show_by_owner] = false unless current_user.owner_or_worker?(@organization)
-  = f.association :services, :as => :check_boxes, :collection => worker.services.where(options).not_collections.order(:name)
+  - options = {show_by_owner: nil}
+  - options[:show_by_owner] = 'True' unless current_user.owner_or_worker?(@organization)
+  = f.association :services, :as => :check_boxes, :collection => worker.services.where.not(options).not_collections.order(:name)
   = f.submit 'Изменить', :class => 'btn'
   = link_to 'Отменить', '#', :class => 'btn close_popover', 'data-id' => appointment.id

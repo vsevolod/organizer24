@@ -43,7 +43,6 @@ class AppointmentsController < CompanyController
   end
 
   def create
-    user_params = params[:user]
     @user = current_user || User.where(phone: user_params[:phone]).first_or_initialize(user_params)
     @appointment = @user.appointments.build(start: Time.parse(params[:start]) - Time.zone.utc_offset, organization_id: @organization.id)
     @appointment.worker_id = get_worker.id
@@ -184,5 +183,9 @@ class AppointmentsController < CompanyController
                                           :comment,
                                           services_users_attributes: [:title, :body]
                                         ])
+  end
+
+  def user_params
+    params.require(:user).permit(:phone, :firstname, :lastname, :showing_time, :comment)
   end
 end

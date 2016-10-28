@@ -9,7 +9,7 @@ class DictionariesController < CompanyController
   end
 
   def new
-    @dictionary = @organization.dictionaries.build(params[:dictionary])
+    @dictionary = @organization.dictionaries.build(dictionary_params)
   end
 
   def edit
@@ -23,7 +23,7 @@ class DictionariesController < CompanyController
   end
 
   def create
-    @dictionary = @organization.dictionaries.build(params[:dictionary])
+    @dictionary = @organization.dictionaries.build(dictionary_params)
     @dictionary.organization = current_user.my_organization || current_user.worker.try(:organization)
     if @dictionary.save
       redirect_to @dictionary.parent || Dictionary
@@ -34,8 +34,7 @@ class DictionariesController < CompanyController
 
   def update
     @dictionary = @organization.dictionaries.find(params[:id])
-    @dictionary.attributes = params[:dictionary]
-    if @dictionary.save
+    if @dictionary.update_attributes(dictionary_params)
       redirect_to @dictionary.parent || Dictionary
     else
       render 'edit'
@@ -47,4 +46,18 @@ class DictionariesController < CompanyController
     @dictionary.destroy
     redirect_to Dictionary
   end
+
+  private
+
+    def dictionary_params
+      params.require(:dictionary).permit([
+        :name,
+        :tag,
+        :ancestry,
+        :parent_id,
+        :children_dictionaries_attributes
+      ])
+    rescue ActionController::ParameterMissing
+      {}
+    end
 end

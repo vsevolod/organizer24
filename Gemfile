@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.7'
 
 gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git', ref: 'cdda8d78b41275e1fa4a6d7aa71b370573ca2553'
 gem 'cocoon'
@@ -11,7 +11,7 @@ gem 'has_scope'
 gem 'haml'
 gem 'simple_form'
 gem 'russian'
-gem 'ckeditor', '3.7.1'
+gem 'ckeditor'
 gem 'paperclip'
 gem 'will_paginate'
 gem 'wicked' # Multistep registration form

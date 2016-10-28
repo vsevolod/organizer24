@@ -63,5 +63,7 @@ class WorkersController < CompanyController
                                        services_workers_attributes: [:cost, :showing_time, :service_id, :date_off]
                                      }
                                    ])
+  rescue ActionController::ParameterMissing
+    {}
   end
 end

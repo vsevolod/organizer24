@@ -92,7 +92,7 @@ describe AppointmentsController do
       app5.save
       _start = organization.appointments.order(:start).first.start - 1.day
       _end   = organization.appointments.order(:start).last.start + 1.day
-      get :by_week, params: { format: 'json', id: appointment.id, worker_id: organization.workers.first.id, start: _start, end: _end, statuses: Appointment.aasm_states.map(&:to_s) }
+      get :by_week, params: { format: 'json', id: appointment.id, worker_id: organization.workers.first.id, start: _start, end: _end, statuses: Appointment.aasm.states.map(&:to_s) }
       @parsed_body = JSON.parse(response.body)
     end
 
