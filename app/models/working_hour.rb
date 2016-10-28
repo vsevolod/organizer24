@@ -1,7 +1,7 @@
 class WorkingHour < ActiveRecord::Base
   attr_accessor :begin_hour, :begin_minute, :end_hour, :end_minute
 
-  default_scope order(:week_day)
+  default_scope -> { order(:week_day) }
 
   belongs_to :organization
   belongs_to :worker

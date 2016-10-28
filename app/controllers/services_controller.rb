@@ -50,10 +50,10 @@ class ServicesController < CompanyController
     @worker = current_user.worker
 
     # Список услуг за последний год
-    @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).where(status: %w(complete lated))
+    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.at(Float::INFINITY), status: %w(complete lated)).where.not(phone: @worker.phone)
     gon.services_flot_dataset = {}
     12.times do |month|
-      appointments = @appointments.where(:start.gteq => Time.now.at_beginning_of_year + month.month, :start.lt => Time.now.at_beginning_of_year + (month + 1).month)
+      appointments = @appointments.where(start: (Time.now.at_beginning_of_year + month.month)...(Time.now.at_beginning_of_year + (month + 1).month))
       services = Service.joins('INNER JOIN "appointments_services" ON "appointments_services".service_id = "services".id').where(appointments_services: { appointment_id: appointments.pluck(:id) }, show_by_owner: false).group('"services".id').select('"services".id, "services".name, count(*) as count, sum("services".cost) as cost')
       services.each do |service|
         gon.services_flot_dataset["service_#{service.id}"] ||= { label: service.name, data: [] }

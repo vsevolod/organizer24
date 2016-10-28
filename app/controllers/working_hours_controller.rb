@@ -17,23 +17,23 @@ class WorkingHoursController < CompanyController
                           elsif current_user.worker? @organization
                             current_user.worker(@organization).appointments
                           end
-    @appointments = (@total_appointments || current_user.appointments.where(organization_id: @organization.id).where(:status.in => %w(approve offer taken))).where(:start.gteq => @start, :start.lteq => @end)
+    @appointments = @total_appointments || current_user.appointments.where(organization_id: @organization.id).where(status: %w(approve offer taken), start: @start..@end)
     @appointments.each do |appointment|
       data_inner_class = if appointment.offer?
                            'legend-your-offer'
                          else
                            'legend-inaccessible'
                          end
-      @periods << { :title => (appointment.comment.present? ? "<b>#{appointment.comment}</b>" : appointment.human_state), :start => appointment.start.iso8601utc, :end => appointment._end.iso8601utc, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
+      @periods << { :title => (appointment.comment.present? ? "<b>#{appointment.comment}</b>" : appointment.aasm.human_state), :start => appointment.start.iso8601utc, :end => appointment._end.iso8601utc, :editable => false, 'data-inner-class' => data_inner_class, 'data-id' => appointment.id }
     end
     if @total_appointments
       (@end.to_date - @start_of_month).to_i.times do |day|
         if @start_of_month + day == (@start_of_month + day).at_end_of_month && @start_of_month + day < Date.today
-          cost = @total_appointments.where(:start.gteq => (@start_of_month + day).at_beginning_of_month, :start.lteq => @start_of_month + (1 + day).day).where(status: %w(complete lated)).sum(:cost)
+          cost = @total_appointments.where(start: ((@start_of_month + day).at_beginning_of_month)..(@start_of_month + (1 + day).day), status: %w(complete lated)).sum(:cost)
           @periods << { title: "Итог за месяц:#{cost}", allDay: true, start: @start_of_month + day.day }
         end
         next if @start_of_month + day > Date.today
-        cost = @total_appointments.where(:start.gteq => @start_of_month + day.day, :start.lteq => @start_of_month + (1 + day).day).where(status: %w(complete lated)).sum(:cost)
+        cost = @total_appointments.where(start: (@start_of_month + day.day)..(@start_of_month + (1 + day).day), status: %w(complete lated)).sum(:cost)
         next if cost.zero?
         @periods << { title: "Итог:#{cost}", allDay: true, start: @start_of_month + day.day }
       end

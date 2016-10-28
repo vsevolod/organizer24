@@ -25,7 +25,6 @@ gem 'ancestry'
 gem 'aasm'
 gem 'pg'
 gem 'breadcrumbs', git: 'https://github.com/dexion/breadcrumbs.git'
-# gem 'less-rails', '~> 2.7.0'
 
 gem 'active_model_serializers'
 
@@ -49,6 +48,7 @@ gem 'uglifier'
 gem 'jquery-fileupload-rails'
 gem 'compass-rails'
 gem 'sass-rails'
+gem 'less-rails', '~> 2.7.0'
 
 group :development do
   gem 'pry'

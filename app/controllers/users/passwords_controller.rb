@@ -1,5 +1,4 @@
-# coding: utf-8
-class PasswordsController < Devise::PasswordsController
+class Users::PasswordsController < Devise::PasswordsController
   include SetLayout
   before_action :find_organization
   layout :company

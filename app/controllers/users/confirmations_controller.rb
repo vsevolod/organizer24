@@ -1,5 +1,4 @@
-# coding: utf-8
-class ConfirmationsController < Devise::ConfirmationsController
+class Users::ConfirmationsController < Devise::ConfirmationsController
   include SetLayout
   before_action :find_organization
   layout :company

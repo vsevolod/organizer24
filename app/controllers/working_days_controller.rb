@@ -6,7 +6,7 @@ class WorkingDaysController < CompanyController
   respond_to :html, :json
 
   def index
-    @working_days = @worker.working_days.where(:date.gteq => @start, :date.lteq => @end)
+    @working_days = @worker.working_days.where(date: @start..@end)
 
     @periods = []
     @working_days.each do |working_day|

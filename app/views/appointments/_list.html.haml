@@ -11,7 +11,7 @@
   - appointments.group_by(&:status).sort_by{|a| Appointment::STARTING_STATES.include?(a.first) ? 0 : 1}.each do |status, status_appointments|
     %tr
       %td{ :colspan => (show_client ? 5 : 4), :style => 'background: #ccc; text-align:center;' }
-        %h3= status_appointments.first.human_state
+        %h3= status_appointments.first.aasm.human_state
     - status_appointments.sort_by{|x| Time.now - x.start}.each do |appointment|
       = render appointment, :show_client => show_client
 

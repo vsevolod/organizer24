@@ -2,7 +2,7 @@ class DoubleRate < ActiveRecord::Base
   # attr_accessible :begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate
   attr_accessor :begin_hour, :begin_minute, :end_hour, :end_minute
 
-  default_scope order(:week_day, :day)
+  default_scope ->{ order(:week_day, :day) }
 
   belongs_to :organization
   belongs_to :worker
