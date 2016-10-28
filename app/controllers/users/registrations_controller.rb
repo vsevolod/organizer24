@@ -1,5 +1,4 @@
-# coding: utf-8
-class RegistrationsController < Devise::RegistrationsController
+class Users::RegistrationsController < Devise::RegistrationsController
   include SetLayout
   before_action :find_organization
   layout :company

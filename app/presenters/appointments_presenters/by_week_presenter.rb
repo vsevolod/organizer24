@@ -19,9 +19,9 @@ module AppointmentsPresenters
 
     def appointments
       @appointments ||= if is_owner?
-                          @worker.appointments.where(:status.in => @statuses)
+                          @worker.appointments.where(status: @statuses)
                         else # Обычный пользователь просматривает только все что >= сегодняшнего дня
-                          @worker.appointments.where(:status.not_in => %W(free cancel_owner cancel_client missing)).where('date(start) >= ?', Time.zone.now.to_date)
+                          @worker.appointments.where.not(status: %W(free cancel_owner cancel_client missing)).where('date(start) >= ?', Time.zone.now.to_date)
                         end.where('date(start) >= ? AND date(start) < ?', @start, @end)
     end
 
@@ -31,7 +31,7 @@ module AppointmentsPresenters
         title = if editable && appointment.starting_state?
                   appointment.services.map(&:name).join('<br/>')
                 else
-                  appointment.human_state
+                  appointment.aasm.human_state
                 end
         options = { title: title,
                     start: appointment.start.iso8601utc,
@@ -52,7 +52,7 @@ module AppointmentsPresenters
                           'data-inner-class' => 'legend-your-offer',
                           'data-client' => "#{appointment.fullname} #{appointment.phone}",
                           'data-id' => appointment.id,
-                          'data-services' => organization_user_services(appointment).to_json(only: [:name, :cost, :showing_time])})
+                          'data-services' => organization_user_services(appointment).to_json(only: [:name, :cost, :showing_time]))
         else
           options
         end

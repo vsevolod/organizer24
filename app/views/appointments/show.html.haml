@@ -2,7 +2,7 @@
 
 %div{ :class => @appointment.complete_time ? 'alert alert-danger' : 'alert alert-notice' }
   %h2
-    = @appointment.human_state
+    = @appointment.aasm.human_state
     - if @appointment.complete_time
       %code
         = Appointment.human_attribute_name(:complete_time)
@@ -19,7 +19,7 @@
         %tbody
           %tr
             %td Статус
-            %td= @appointment.human_state
+            %td= @appointment.aasm.human_state
           %tr
             %td Дата
             %td= Russian.strftime( @appointment.start, "%d %B %Y (%A)" )

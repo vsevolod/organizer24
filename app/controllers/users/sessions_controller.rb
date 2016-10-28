@@ -1,11 +1,13 @@
-class SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::SessionsController
+  include UserService
   include SetLayout
+
   before_action :find_organization
   layout :company, except: 'new'
 
   def new
     @resource = resource_class.new
-    @resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
+    @resource.phone = prepare_phone(params[:user][:phone]) if (params[:user] || {})[:phone]
     if params[:remote] == 'true'
       render layout: false
     else
@@ -14,7 +16,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    prepare_phone
+    params[:user][:phone] = prepare_phone(params[:user][:phone])
     super
   end
 
@@ -28,7 +30,4 @@ class SessionsController < Devise::SessionsController
     end
   end
 
-  def prepare_phone
-    params[:user][:phone] = '+7' + params[:user][:phone].sub(/^8/, '').sub(/^\+7/, '')
-  end
 end

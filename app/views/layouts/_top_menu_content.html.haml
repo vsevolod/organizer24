@@ -1,8 +1,8 @@
 %ul.nav
   = yield :nav_bar
-  - if current_user && !current_user.new_record? && current_user.owner_or_worker?(@organization)
+  - if user_signed_in? && !current_user.new_record? && current_user.owner_or_worker?(@organization)
     = link_to "СМС: #{@organization.sms_ru.try(:balance)} р.", '/notifications', class: 'brand'
-  - @organization.pages.where(:menu_name.not_eq => nil).each do |page|
+  - @organization.pages.where.not(menu_name: nil).each do |page|
     %li
       = link_to "/#{page.permalink}" do
         = page.menu_name

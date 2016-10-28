@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base
-  scope :not_collections, where("is_collection != 't' OR is_collection IS NULL")
+  scope :not_collections, -> { where("is_collection != 't' OR is_collection IS NULL") }
 
   belongs_to :category, class_name: 'Dictionary'
   belongs_to :organization
@@ -38,7 +38,7 @@ class Service < ActiveRecord::Base
         organization.appointments.where('? = (SELECT count(*) FROM appointments_services WHERE appointments_services.appointment_id = appointments.id AND appointments_services.service_id IN (?))', service_ids.count, service_ids)
       else
         appointments
-      end.where(:start.gteq => first_day).find_each { |a| a.cost_time_by_services!(false); a.update_column(:cost, a.cost) }
+      end.where(start: first_day..Time.at(Float::INFINITY)).find_each { |a| a.cost_time_by_services!(false); a.update_column(:cost, a.cost) }
     end
   end
 

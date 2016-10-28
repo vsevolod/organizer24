@@ -80,7 +80,7 @@ class UsersController < CompanyController
 
   def destroy
     @user = User.find(params[:id])
-    @user.appointments_by_phone.where(:status.not_in => %w(complete lated)).delete_all
+    @user.appointments_by_phone.where.not(status: %w(complete lated)).delete_all
     @user.appointments_by_phone.update_all(user_id: current_user.id)
     @user.destroy
     redirect_to '/calendar', notice: 'Пользователь успешно удален'
@@ -88,7 +88,7 @@ class UsersController < CompanyController
 
   def statistic
     @worker = current_user.worker
-    @appointments = @worker.appointments.where(:start.gteq => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone)
+    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.at(Float::INFINITY), :phone.not_eq => @worker.phone)
 
     # Группировка appointments по месяцам
     month_group = proc { |appointments| appointments.group_by { |a| a.start.month }.inject([]) { |result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum]) }.sort_by(&:first) }

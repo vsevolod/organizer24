@@ -195,11 +195,6 @@ class Appointment < ActiveRecord::Base
   #  $redis.publish 'socket.io#*', [{type: 2, data: ['refresh event', appointment_hash]}, {}].to_msgpack
   # end
 
-  # TODO: удалить когда появится метод
-  def human_state
-    AASM::Localizer.new.human_state_name(self.class, aasm_read_state)
-  end
-
   private
 
   def check_start_time
@@ -216,7 +211,7 @@ class Appointment < ActiveRecord::Base
 
   # Проверка сервисов на прекращенные
   def check_services_on_expire
-    if worker && date_off = worker.services_workers.can_be_expired.where(:date_off.lteq => start, :service_id.in => service_ids).pluck(:date_off).min
+    if worker && date_off = worker.services_workers.can_be_expired.where(date_off: Time.at(0)..start, service_id: service_ids).pluck(:date_off).min
       errors[:start] = "не может быть больше, #{date_off}"
     end
   end

@@ -15,14 +15,14 @@ class SmsJob < Struct.new(:options, :sms_type)
       @worker = @organization.workers.order('phone, name').where('id NOT IN (?)', except_ids).first
       except_ids << @worker.id
       today = Time.zone.now.at_beginning_of_day
-      @appointments = @worker.appointments.where(:start.gteq => today, :start.lteq => today + 1.day).where(status: %w(complete lated))
+      @appointments = @worker.appointments.where(start: today..(today + 1.day), status: %w(complete lated))
       sms.recipient = @worker.phone
       notification.user = @worker.user
       notification.worker = @worker
       notification.organization = @organization
       sms.text = "За сегодня (#{Russian.strftime(today, '%d.%m.%y')}) Вы заработали: #{@appointments.sum(:cost)} р." if @appointments.any?
       if today.to_date == today.to_date.at_end_of_month
-        @appointments = @worker.appointments.where(:start.gteq => today.at_beginning_of_month, :start.lteq => today.at_end_of_month).where(status: %w(complete lated))
+        @appointments = @worker.appointments.where(start: (today.at_beginning_of_month)..(today.at_end_of_month), status: %w(complete lated))
         sms.text += "\nЗа месяц ваш заработок составил: #{@appointments.sum(:cost)} р."
       end
       working_hours = @organization.working_hours.order(:week_day)
