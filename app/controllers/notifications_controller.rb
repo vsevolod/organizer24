@@ -4,13 +4,12 @@ class NotificationsController < CompanyController
 
   def index
     @level = params[:level].to_i
-    @from = params[:from] || Date.today.at_beginning_of_month
-    @to = params[:to] || Date.today.at_end_of_month
+    @from = params[:from].present? ? params[:from] : Date.today.at_beginning_of_month
+    @to = params[:to].present? ? params[:to] : Date.today.at_end_of_month
     case @level
     when 0
       @notifications = @organization.notifications
-                                    .where { created_at >= my { @from } }
-                                    .where { created_at <= my { @to } }
+                                    .where(created_at: @from..@to)
                                     .group(:worker_id).select('worker_id, sum(cost) as total_cost, count(*) as count, count(length) as length')
     end
   end
@@ -27,11 +26,16 @@ class NotificationsController < CompanyController
 
   def change_sms
     @sms = @organization.sms_ru || @organization.build_sms_ru
-    @sms.attributes = params[:sms_ru]
-    if @sms.save
+    if @sms.update_attributes(sms_ru_params)
       redirect_to action: :index, notice: 'Данные успешно изменены'
     else
       render :sms
     end
   end
+
+  private
+
+    def sms_ru_params
+      params.require(:sms_ru).permit(:api_id, :sender, :phone, :translit)
+    end
 end

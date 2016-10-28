@@ -50,7 +50,7 @@ class ServicesController < CompanyController
     @worker = current_user.worker
 
     # Список услуг за последний год
-    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.at(Float::INFINITY), status: %w(complete lated)).where.not(phone: @worker.phone)
+    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.now.at_end_of_year, status: %w(complete lated)).where.not(phone: @worker.phone)
     gon.services_flot_dataset = {}
     12.times do |month|
       appointments = @appointments.where(start: (Time.now.at_beginning_of_year + month.month)...(Time.now.at_beginning_of_year + (month + 1).month))
@@ -79,5 +79,7 @@ class ServicesController < CompanyController
                                       :new_cost,
                                       :new_date_cost
                                     ])
+  rescue ActionController::ParameterMissing
+    {}
   end
 end

@@ -88,7 +88,7 @@ class UsersController < CompanyController
 
   def statistic
     @worker = current_user.worker
-    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.at(Float::INFINITY), :phone.not_eq => @worker.phone)
+    @appointments = @worker.appointments.where(start: Time.now.at_beginning_of_year..Time.now.at_end_of_year).where.not(phone: @worker.phone)
 
     # Группировка appointments по месяцам
     month_group = proc { |appointments| appointments.group_by { |a| a.start.month }.inject([]) { |result_arr, arr| result_arr.push([arr[0], arr[1].size, arr[1].map(&:cost).compact.sum]) }.sort_by(&:first) }
@@ -102,7 +102,7 @@ class UsersController < CompanyController
     end
 
     # Количество выполненных записей по пользователям (новым/старым)
-    worker_phones = @worker.appointments.where(:start.lt => Time.now.at_beginning_of_year, :phone.not_eq => @worker.phone).pluck(:phone).uniq
+    worker_phones = @worker.appointments.where(start: Time.at(0)...Time.now.at_beginning_of_year).where.not(phone: @worker.phone).pluck(:phone).uniq
     gon.users_flot_dataset = @appointments.where(status: %w(complete lated)).order(:start).group_by do |a|
       if worker_phones.include?(a.phone)
         true

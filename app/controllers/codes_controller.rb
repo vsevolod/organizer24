@@ -9,7 +9,7 @@ class CodesController < CompanyController
   end
 
   def new
-    @code = @organization.codes.build(params[:code])
+    @code = @organization.codes.build(code_params)
     @workers = @organization.workers
   end
 
@@ -19,7 +19,7 @@ class CodesController < CompanyController
   end
 
   def create
-    @code = @organization.codes.build(params[:code])
+    @code = @organization.codes.build(code_params)
     @code.organization = current_user.my_organization || current_user.worker.try(:organization)
     if @code.save
       redirect_to Code
@@ -30,8 +30,7 @@ class CodesController < CompanyController
 
   def update
     @code = @organization.codes.find(params[:id])
-    @code.attributes = params[:code]
-    if @code.save
+    if @code.update_attributes(code_params)
       redirect_to Code
     else
       render 'edit'
@@ -43,4 +42,12 @@ class CodesController < CompanyController
     @code.destroy
     redirect_to Code
   end
+
+  private
+
+    def code_params
+      params.require(:code).permit(:cost, :number, :status, :worker_id)
+    rescue ActionController::ParameterMissing
+      {}
+    end
 end
