@@ -20,8 +20,10 @@ class Smsru
   # with api_id
   def send
     uri = URI('http://sms.ru/sms/send')
-    unless @text.blank?
-      res = Net::HTTP.post_form(uri, api_id: @api_id, to: @recipient, text: @text, from: @sender, partner_id: get_options[:partner_id], translit: @translit)
+    if @text.present?
+      options = {api_id: @api_id, to: @recipient, text: @text, from: @sender, partner_id: get_options[:partner_id], translit: @translit}
+      options[:test] = 1 if Rails.env.development?
+      res = Net::HTTP.post_form(uri, options)
       result = res.body.split("\n")
       case status = result.shift
       when '100'
