@@ -10,7 +10,7 @@
     = yield :js
   %body{ :class => get_class }
     .organization_big_name.visible-desktop
-      = link_to @organization.domain.capitalize, domain_organization_path( @organization ), :class => 'brand'
+      = link_to @organization.domain.capitalize, root_path, :class => 'brand'
       .subtext Индустрия красоты
     .navbar.navbar-fixed-top
       = render 'layouts/top_menu', :show_big_organization_name => true

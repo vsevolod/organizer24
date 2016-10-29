@@ -12,7 +12,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     duplicate_record = record.class.where(<<-SQL, start: start.utc.to_s, stop: (start + showing_time * 60).utc.to_s).where(:status => %w(offer approve taken), :organization_id => record.organization_id, :worker_id => record.worker_id).where.not(id: record.id)
       GREATEST( :start, "#{options[:start]}" ) < LEAST( :stop, "#{options[:start]}"+("#{options[:showing_time]}" || ' minute')::interval )
     SQL
-    unless duplicate_record.count.zero?
+    if duplicate_record.count > 0 && !%w(cancel_client cancel_owner).include?(record.status)
       record.errors[:base] = "Продолжительность: #{showing_time.show_time}; Данное время уже занято"
     end
     # Проверка на запись только в рабочее время либо по двойному тарифу

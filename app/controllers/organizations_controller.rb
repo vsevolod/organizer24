@@ -76,6 +76,8 @@ class OrganizationsController < CompanyController
                                            :owner_id,
                                            :activity,
                                            { dictionaries_attributes: [
+                                             :id,
+                                             :_destroy,
                                              :name,
                                              :tag,
                                              :ancestry,
@@ -83,6 +85,8 @@ class OrganizationsController < CompanyController
                                              :children_dictionaries_attributes
                                            ],
                                              services_attributes: [
+                                               :id,
+                                               :_destroy,
                                                :name,
                                                :showing_time,
                                                :cost,
@@ -97,6 +101,8 @@ class OrganizationsController < CompanyController
                                                :new_date_cost
                                              ],
                                              workers_attributes: [
+                                               :id,
+                                               :_destroy,
                                                :name,
                                                :is_enabled,
                                                :services_workers_attributes,

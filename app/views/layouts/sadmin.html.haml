@@ -8,7 +8,7 @@
     = include_gon
     = yield :js
   %body{id: sadmin_get_id(@organization)}
-    %header#header.media{style: !current_user && show_organization_page? ? "border: none;" : ""}
+    %header#header.media{style: !user_signed_in? && show_organization_page? ? 'border: none;' : ''}
       %a#menu-toggle{href: ""}
       = link_to @organization.name.html_safe, root_path, class: 'logo pull-left'
       .media-body= theme_render 'top_menu'

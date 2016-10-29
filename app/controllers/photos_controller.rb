@@ -2,8 +2,8 @@ class PhotosController < CompanyController
   before_action :redirect_if_not_owner
 
   def create
-    @photo = category_photo.photos.new(photo_params)
-    @photo.attributes = options
+    @photo = category_photo.photos.build
+    @photo.attributes = photo_params
     @photo.save
   end
 
