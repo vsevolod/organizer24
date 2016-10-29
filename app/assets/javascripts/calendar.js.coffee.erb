@@ -32,7 +32,10 @@ send_change_function = (options) ->
   appointment_id = options.event['data-id']
   if (confirm(options.confirm))
     ajax_data = {}
-    ajax_data[options.key] = options.value(options.event)
+    if (options.key == 'start')
+      ajax_data['start'] = options.event.start.format("DD-MM-YYYY HH:mm:ss")
+    else
+      ajax_data[options.key] = options.value(options.event)
     $.ajax( {
       url: '/appointments/'+appointment_id+'/change_params',
       type: 'POST',
