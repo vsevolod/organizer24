@@ -1,4 +1,3 @@
-# coding: utf-8
 class NotificationsController < CompanyController
   before_action :redirect_if_not_owner
 
@@ -20,8 +19,8 @@ class NotificationsController < CompanyController
   end
 
   def send_sms
-    @jobs = Delayed::Job.where('attempts > ?', 1)
-    @jobs.update_all(run_at: Time.now)
+    #@jobs = Delayed::Job.where('attempts > ?', 1)
+    #@jobs.update_all(run_at: Time.now)
     redirect_to :back, notice: "Сообщений на отправку: #{@jobs.count}"
   end
 

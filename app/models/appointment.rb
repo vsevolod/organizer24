@@ -147,9 +147,9 @@ class Appointment < ActiveRecord::Base
       #  $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
       # end
       if worker.push_key.present?
-        Delayed::Job.enqueue BoxCarJob.new(message: text, authentication_token: worker.push_key), run_at: Time.zone.now
+        BoxCarJob.perform_later({ message: text, authentication_token: worker.push_key} )
       else
-        Delayed::Job.enqueue SmsJob.new({ text: text, phone: phone }, 'simple_notify'), run_at: Time.zone.now
+        SmsJob.perform_later({ text: text, phone: phone }, 'simple_notify')
       end
     end
   end
@@ -157,7 +157,7 @@ class Appointment < ActiveRecord::Base
   def change_start_notification
     destroy_user_notifications
     if starting_state? && !organization.owner_phones.include?(phone) # Уведомляем только если запись активна и не на наш телефон
-      Delayed::Job.enqueue SmsJob.new({ appointment_id: id }, 'notification'), run_at: (start - 1.day)
+      SmsJob.set(wait_until: start - 1.day).perform_later({ appointment_id: id }, 'notification')
     end
   end
 
@@ -224,8 +224,10 @@ class Appointment < ActiveRecord::Base
   end
 
   def destroy_user_notifications
-    if (notifications_delayed = Delayed::Job.where('handler ILIKE ?', "%appointment_id: #{id}%notification%")).count > 0
-      notifications_delayed.destroy_all
+    Sidekiq::ScheduledSet.new.each do |job|
+      if job.display_class == 'SmsJob' && job.display_args.to_s.match(/appointment_id[^\d]+#{id}.+notification/)
+        job.delete
+      end
     end
   end
 

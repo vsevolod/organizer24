@@ -24,7 +24,11 @@ class Service < ActiveRecord::Base
   end
 
   def update_new_cost!
-    Delayed::Job.where('handler ILIKE ? AND handler ILIKE ?', '%ruby/ActiveRecord:Service%', "%id: '#{id}'%").destroy_all
+    Sidekiq::ScheduledSet.new.each do |job|
+      if job.display_class.match('update_new_cost!') && job.value.match(/id: '181'/)
+        job.delete
+      end
+    end
     return self unless new_date_cost
     if new_date_cost <= Date.today
       self.cost = new_cost
@@ -32,7 +36,7 @@ class Service < ActiveRecord::Base
       self.new_date_cost = nil
       save
     else
-      delay(run_at: new_date_cost).update_new_cost!
+      delay_until(new_date_cost).update_new_cost!
       first_day = [new_date_cost, new_date_cost_was].compact.min
       if is_collection?
         organization.appointments.where('? = (SELECT count(*) FROM appointments_services WHERE appointments_services.appointment_id = appointments.id AND appointments_services.service_id IN (?))', service_ids.count, service_ids)

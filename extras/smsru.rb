@@ -1,4 +1,3 @@
-# coding: utf-8
 class Smsru
   attr_accessor :sender, :recipient, :text, :notification, :api_id, :translit
 
@@ -22,13 +21,16 @@ class Smsru
     uri = URI('http://sms.ru/sms/send')
     if @text.present?
       options = {api_id: @api_id, to: @recipient, text: @text, from: @sender, partner_id: get_options[:partner_id], translit: @translit}
-      options[:test] = 1 if Rails.env.development?
+      if Rails.env.development?
+        options[:test] = 1
+        Rails.logger.info "===== Send sms =====: #{options}"
+      end
       res = Net::HTTP.post_form(uri, options)
       result = res.body.split("\n")
       case status = result.shift
       when '100'
         notification.sended!
-        Delayed::Job.enqueue NotificationJob.new(notification.id, method: :check, id: result.first), run_at: Time.now + 5.minutes
+        NotificationJob.set(wait: 5.minutes).perform_later(notification.id, {method: 'check', id: result.first})
       else
         raise "SMS SEND ERROR: #{status}"
       end

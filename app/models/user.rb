@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
       user.reset_password_token = Devise.token_generator.digest(self, :reset_password_token, number)
       user.reset_password_sent_at = Time.now.utc
       user.save(validate: false)
-      Delayed::Job.enqueue SmsJob.new({ text: "Номер для восстановления пароля: #{number}", phone: user.phone }, 'simple_notify'), run_at: Time.zone.now
+      SmsJob.perform_later({ text: "Номер для восстановления пароля: #{number}", phone: user.phone }, 'simple_notify')
       user
     else
       User.new(options)
