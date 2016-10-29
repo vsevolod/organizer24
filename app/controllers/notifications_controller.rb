@@ -4,8 +4,9 @@ class NotificationsController < CompanyController
 
   def index
     @level = params[:level].to_i
-    @from = params[:from].present? ? params[:from] : Date.today.at_beginning_of_month
-    @to = params[:to].present? ? params[:to] : Date.today.at_end_of_month
+    @from = params[:from].present? ? Date.parse(params[:from]) : Date.today.at_beginning_of_month
+    @to = params[:to].present? ? Date.parse(params[:to]) : Date.today.at_end_of_month
+    @from, @to = @to, @from if @to < @from
     case @level
     when 0
       @notifications = @organization.notifications

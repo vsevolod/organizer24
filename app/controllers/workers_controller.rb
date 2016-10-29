@@ -58,9 +58,10 @@ class WorkersController < CompanyController
                                      :finished_date,
                                      :sms_translit,
                                      {
-                                       double_rates_attributes: [:begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate],
-                                       working_hours_attributes: [:week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute, :worker_id],
-                                       services_workers_attributes: [:cost, :showing_time, :service_id, :date_off]
+                                       service_ids: [],
+                                       double_rates_attributes: [:id, :_destroy, :begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate],
+                                       working_hours_attributes: [:id, :_destroy, :week_day, :organization_id, :begin_hour, :begin_minute, :end_hour, :end_minute, :worker_id],
+                                       services_workers_attributes: [:id, :_destroy, :cost, :showing_time, :service_id, :date_off]
                                      }
                                    ])
   rescue ActionController::ParameterMissing

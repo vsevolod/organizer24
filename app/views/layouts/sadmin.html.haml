@@ -7,8 +7,8 @@
     = csrf_meta_tags
     = include_gon
     = yield :js
-  %body{id: show_organization_page? ? 'my_background' : (current_user && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'my_bg-violate')}
-    %header#header.media{style: !current_user && show_organization_page? ? "border: none;" : ""}
+  %body{id: show_organization_page? ? 'my_background' : (user_signed_in? && current_user.owner_or_worker?(@organization) ? 'skin-blur-ocean' : 'my_bg-violate')}
+    %header#header.media{style: !user_signed_in? && show_organization_page? ? "border: none;" : ""}
       %a#menu-toggle{href: ""}
       = link_to @organization.name.html_safe, root_path, class: 'logo pull-left'
       .media-body= theme_render 'top_menu'

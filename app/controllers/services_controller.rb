@@ -77,7 +77,8 @@ class ServicesController < CompanyController
                                       :category_id,
                                       :position,
                                       :new_cost,
-                                      :new_date_cost
+                                      :new_date_cost,
+                                      {service_ids: []}
                                     ])
   rescue ActionController::ParameterMissing
     {}

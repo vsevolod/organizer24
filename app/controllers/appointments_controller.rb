@@ -92,10 +92,10 @@ class AppointmentsController < CompanyController
       @appointment.status = params[:state]
       respond_to do |wants|
         if @appointment.save
-          wants.html { redirect_to "/calendar?day=#{@appointment.start.to_i}", notice: 'Статус успешно изменен' }
+          wants.html { redirect_to calendar_path(day: @appointment.start.to_i, worker_id: @appointment.worker_id), notice: 'Статус успешно изменен' }
           wants.js   { render js: refresh_calendar }
         else
-          wants.html { redirect_to "/calendar?day=#{@appointment.start.to_i}", notice: 'При сохранении произошла ошибка' }
+          wants.html { redirect_to calendar_path(day: @appointment.start.to_i, worker_id: @appointment.worker_id), notice: 'При сохранении произошла ошибка' }
           wants.js   { render js: "alert('при сохранении произошла ошибка'" }
         end
       end
@@ -175,13 +175,15 @@ class AppointmentsController < CompanyController
                                           :organization_id,
                                           :appointment_services,
                                           :showing_time,
-                                          :service_ids,
                                           :phone,
                                           :firstname,
                                           :lastname,
                                           :worker_id,
                                           :comment,
-                                          services_users_attributes: [:title, :body]
+                                          {
+                                            services_users_attributes: [:id, :_destroy, :title, :body],
+                                            service_ids: []
+                                          }
                                         ])
   end
 

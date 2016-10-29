@@ -35,7 +35,7 @@ class ServicesUsersController < CompanyController
                                           :lastname,
                                           :worker_id,
                                           :comment,
-                                          services_users_attributes: [:title, :body]
+                                          services_users_attributes: [:id, :_destroy, :title, :body]
                                         ])
   end
 end

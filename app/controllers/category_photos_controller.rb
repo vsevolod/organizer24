@@ -59,7 +59,7 @@ class CategoryPhotosController < CompanyController
                                              :name,
                                              :parent_id,
                                              :ancestry,
-                                             photos_attributes: [:name, :photo]
+                                             photos_attributes: [:id, :_destroy, :name, :photo]
                                            ])
   end
 end

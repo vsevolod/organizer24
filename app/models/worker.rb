@@ -22,6 +22,7 @@ class Worker < ActiveRecord::Base
 
   has_attached_file :photo, styles: { normal: '230x320>', thumb: '100x100>', sadmin_left: '100x100#' },
                             convert_options: { thumb: '-quality 75 -strip' }
+  validates_attachment_content_type :photo, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
   scope :enabled, ->{ where(is_enabled: true) }
 end
