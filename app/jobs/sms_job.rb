@@ -1,10 +1,8 @@
-# coding: utf-8
-# TODO Добавить в организацию адрес для уведомлений
-require 'net/http'
 require 'themed_text'
+class SmsJob < ActiveJob::Base
+  queue_as :default
 
-class SmsJob < Struct.new(:options, :sms_type)
-  def perform
+  def perform(options, sms_type)
     sms = Smsru.new # @appointment.phone, @organization.user.phone
     notification = Notification.new(notification_type: 'sms')
     case sms_type
@@ -26,15 +24,15 @@ class SmsJob < Struct.new(:options, :sms_type)
         sms.text += "\nЗа месяц ваш заработок составил: #{@appointments.sum(:cost)} р."
       end
       working_hours = @organization.working_hours.order(:week_day)
-      next_working_hour = working_hours.where(:week_day.gt => Date.today.cwday).first || working_hours.first
+      next_working_hour = working_hours.where(week_day: Date.today.next.cwday...8).first || working_hours.first
       next_day = Date.today + ((next_working_hour.week_day - Date.today.cwday + 7) % 7).day # Следующий день. когда надо уведомлять
       next_day += 1.day if next_day == Date.today
-      next_time = (next_day.to_time_in_current_zone + next_working_hour.end_time) + 1.hour  # Дата и время для уведомления
+      next_time = (next_day.in_time_zone + next_working_hour.end_time) + 1.hour  # Дата и время для уведомления
       unless options[:except_ids]
-        Delayed::Job.enqueue SmsJob.new({ organization_id: options[:organization_id] }, 'day_report'), run_at: next_time
+        SmsJob.set(wait_until: next_time).perform_later({ organization_id: options[:organization_id] }, 'day_report')
       end
-      if @organization.workers.where('id NOT IN (?)', except_ids).count > 0
-        Delayed::Job.enqueue SmsJob.new({ organization_id: options[:organization_id], except_ids: except_ids }, 'day_report'), run_at: Time.now
+      if @organization.workers.where.not(id: except_ids).count > 0
+        SmsJob.perform_later({ organization_id: options[:organization_id], except_ids: except_ids }, 'day_report')
       end
     when 'notification'
       # Надо Time.zone объявить до того, как найдем appointment
@@ -69,4 +67,5 @@ class SmsJob < Struct.new(:options, :sms_type)
     sms.set_notification notification
     sms.send
   end
+
 end

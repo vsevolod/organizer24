@@ -82,7 +82,7 @@ module Devise
 
         generate_confirmation_token! if confirmation_number.blank?
         # send_devise_notification(:confirmation_instructions)
-        Delayed::Job.enqueue SmsJob.new({ user_id: id }, 'confirmation_number'), run_at: Time.zone.now
+        SmsJob.perform_later({ user_id: id }, 'confirmation_number')
       end
 
       # Resend confirmation token. This method does not need to generate a new token.
@@ -137,7 +137,7 @@ module Devise
       # in models to map to a nice sign up e-mail.
       def send_on_create_confirmation_instructions
         # send_devise_notification(:confirmation_instructions)
-        Delayed::Job.enqueue SmsJob.new({ user_id: id }, 'confirmation_number'), run_at: Time.zone.now
+        SmsJob.perform_later({ user_id: id }, 'confirmation_number')
       end
 
       # Callback to overwrite if confirmation is required or not.

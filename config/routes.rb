@@ -1,7 +1,16 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :user_admins
   # mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount Ckeditor::Engine => '/ckeditor'
+
+  # Sidekiq
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ActiveSupport::SecurityUtils.secure_compare(username, ENV["organizer"]) &
+      ActiveSupport::SecurityUtils.secure_compare(password, ENV["123321"])
+  end if Rails.env.production?
+  mount Sidekiq::Web => '/sidekiq'
 
   constraints(Subdomain) do
     namespace :api, defaults: { format: :json } do

@@ -29,7 +29,7 @@ class UsersController < CompanyController
     @user = User.find(params[:id])
     if Time.zone.now > @user.updated_at + 1.minute
       @user.update_attribute(:updated_at, Time.zone.now)
-      Delayed::Job.enqueue SmsJob.new({ user_id: @user.id }, 'confirmation_number'), run_at: Time.zone.now
+      SmsJob.perform_later({ user_id: @user.id }, 'confirmation_number')
       redirect_to :back, notice: 'На ваш телефон отправлено повторное смс с кодом подтверждения'
     else
       redirect_to :back, alert: 'После последней отправки смс прошло меньше минуты'

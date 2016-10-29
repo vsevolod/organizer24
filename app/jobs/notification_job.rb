@@ -1,13 +1,12 @@
-require 'net/http'
-require 'themed_text'
+class NotificationJob < ActiveJob::Base
+  queue_as :default
 
-class NotificationJob < Struct.new(:notification_id, :options)
-  def perform
+  def perform(notification_id, options)
     @notification = Notification.find(notification_id)
     @options = options || {}
     @try = @options[:try] || 1
     case @options[:method]
-    when :check then check # Проверить статус сообщения
+    when 'check' then check # Проверить статус сообщения
     end
   end
 
@@ -27,7 +26,8 @@ class NotificationJob < Struct.new(:notification_id, :options)
       @notification.canceled!
     else
       @try += 1
-      Delayed::Job.enqueue NotificationJob.new(notification_id, method: 'check', try: @try, id: @options[:id]), run_at: Time.now + (@try * 30).minutes
+      NotificationJob.set(wait: @try*30.minutes).perform_later(@notification.id, {method: 'check', try: @try, id: @options[:id]})
     end
   end
+
 end
