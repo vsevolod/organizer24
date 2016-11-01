@@ -4,6 +4,7 @@
 */
 
 @import "themes/default/variables.scss";
+@import "themes/default/bootstrap.scss";
 //--- Variables
 $legendTaken: $blue;
 $legendInaccesible: $grayLight;
@@ -15,6 +16,5 @@ $ordinaryPercent: .4;
 $todayPercent: .7;
 
 @import "themes/default/mixins.scss";
-@import "themes/default/bootstrap.scss";
 @import "themes/default/calendar.scss";
 @import "themes/default/colorbox_bootstrap.scss";

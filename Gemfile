@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.2.7'
-#gem 'rails', '5.0.0.1'
+#gem 'rails', '4.2.7'
+gem 'rails', '5.0.0.1'
 
 gem 'cocoon'
 gem 'event-calendar', require: 'event_calendar'
-gem 'has_scope'
 
 gem 'haml'
 gem 'simple_form'
@@ -75,7 +74,6 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'colorbox-rails', git: 'https://github.com/stevo/colorbox-rails.git'
-gem 'inherited_resources'
 
 gem 'daemons'
 gem 'sidekiq'

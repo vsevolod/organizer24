@@ -1,4 +1,3 @@
-# coding: utf-8
 class WorkersController < CompanyController
   before_action :redirect_if_not_owner
 

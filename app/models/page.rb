@@ -1,6 +1,5 @@
 class Page < ActiveRecord::Base
   belongs_to :organization
-  # attr_accessible :content, :name, :permalink, :menu_name
 
   validates :content, :name, :permalink, presence: true
   validates :permalink, uniqueness: { scope: [:organization_id] }
@@ -10,6 +9,6 @@ class Page < ActiveRecord::Base
   end
 
   def show_page_link
-    "/organizations/#{organization.id}/#{permalink}"
+    "/#{permalink}"
   end
 end
