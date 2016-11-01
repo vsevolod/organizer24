@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
 gem 'rails', '4.2.7'
+#gem 'rails', '5.0.0.1'
 
-gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git', ref: 'cdda8d78b41275e1fa4a6d7aa71b370573ca2553'
 gem 'cocoon'
 gem 'event-calendar', require: 'event_calendar'
 gem 'has_scope'
@@ -48,7 +48,6 @@ gem 'uglifier'
 gem 'jquery-fileupload-rails'
 gem 'compass-rails'
 gem 'sass-rails'
-gem 'less-rails', '~> 2.7.0'
 
 group :development do
   gem 'pry'
@@ -75,7 +74,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'colorbox-rails', git: 'git://github.com/stevo/colorbox-rails.git'
+gem 'colorbox-rails', git: 'https://github.com/stevo/colorbox-rails.git'
 gem 'inherited_resources'
 
 gem 'daemons'

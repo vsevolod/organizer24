@@ -1,0 +1,27 @@
+@import "themes/beauty/variables";
+@import "themes/default/variables";
+@import "themes/default/bootstrap";
+//--- Variables
+$legendTaken: $blue;
+$legendInaccesible: $grayLight;
+$legendMissing: #4c4c4c;
+$legendYour: $green;
+$legendBorder: $black;
+$legendCancel: $red;
+$ordinaryPercent: .4;
+$todayPercent: .7;
+.legend {
+  width: 10px;
+  padding: 0 15px;
+  margin-right: 10px;
+  height: 10px;
+  @include box-shadow(0 5px 10px rgba(0,0,0, $todayPercent));
+}
+
+
+@import "themes/default/mixins";
+@import "themes/beauty/beauty";
+@import "themes/sadmin/font-awesome";
+
+@import "themes/default/calendar";
+@import "themes/default/colorbox_bootstrap";
