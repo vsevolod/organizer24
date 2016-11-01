@@ -1,0 +1,20 @@
+/*
+ *= require_self
+ *= require jquery.jgrowl
+*/
+
+@import "themes/default/variables.scss";
+//--- Variables
+$legendTaken: $blue;
+$legendInaccesible: $grayLight;
+$legendMissing: #4c4c4c;
+$legendYour: $green;
+$legendBorder: $black;
+$legendCancel: $red;
+$ordinaryPercent: .4;
+$todayPercent: .7;
+
+@import "themes/default/mixins.scss";
+@import "themes/default/bootstrap.scss";
+@import "themes/default/calendar.scss";
+@import "themes/default/colorbox_bootstrap.scss";

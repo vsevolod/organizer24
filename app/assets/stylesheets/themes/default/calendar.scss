@@ -1,0 +1,45 @@
+.legend-taken,
+.legend-taken .fc-event-skin {
+  background: $legendTaken !important;
+}
+.legend-offer,
+.legend-offer .fc-event-skin {
+  background: $legendTaken  !important;
+  color: $white;
+}
+.legend-inaccessible,
+.legend-old-day,
+.legend-inaccessible .fc-event-skin,
+.legend-old-day .fc-event-skin {
+  background: $legendInaccesible !important;
+  color: $white;
+}
+.legend-missing,
+.legend-missing .fc-event-skin {
+  background: $legendMissing !important;
+  color: $white;
+}
+.legend-your-offer,
+.legend-complete,
+.legend-your-offer .fc-event-skin,
+.legend-complete .fc-event-skin {
+  background: $legendYour !important;
+  color: $white;
+}
+.legend-cancel,
+.legend-cancel_owner {
+  background: $legendCancel !important;
+  color: $white;
+}
+
+.icon-notification-start, .icon-notification-send {
+  color: $yellow;
+}
+
+.icon-notification-complete {
+  color: $green;
+}
+
+.icon-notification-cancel {
+  color: $red;
+}

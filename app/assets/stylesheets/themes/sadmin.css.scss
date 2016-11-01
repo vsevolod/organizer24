@@ -1,0 +1,51 @@
+@import "themes/sadmin/mixins.scss";
+@import "themes/sadmin/bootstrap.scss";
+@import "themes/sadmin/animate.scss";
+@import "themes/sadmin/font-awesome.scss";
+@import "themes/sadmin/form.scss";
+@import "themes/sadmin/calendar.scss";
+@import "themes/sadmin/style.scss";
+@import "themes/sadmin/icons.scss";
+@import "themes/sadmin/generics.scss";
+@import "themes/sadmin/lightbox.scss";
+
+.as-link{
+  cursor: pointer;
+}
+
+.AutoClearText {
+  @include m-icon('\f1e4')
+}
+
+.icon-eye {
+  @include m-icon('\f1d9')
+}
+
+.cost-block.affix {
+  top: 0;
+}
+
+.popover {
+  z-index: 10000;
+  input {
+    color: black;
+  }
+}
+
+@import "company.scss";
+
+//--- Variables
+$legendTaken: rgba(255,255,255, 0.5);
+$legendInaccesible: #aaa;
+$legendMissing: #777;
+$legendYour: rgba(0, 172, 0, 0.75);
+$legendBorder: #000;
+$legendCancel: #F00;
+$ordinaryPercent: .4;
+$todayPercent: .7;
+$yellow: #ffc40d;
+$green: #46a546;
+$red: #9c004b;
+
+$white: #fff;
+@import "themes/default/calendar.scss";

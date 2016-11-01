@@ -1,0 +1,23 @@
+/*
+ *= require_self
+ *= require jquery.jgrowl
+*/
+@import "fullcalendar.scss";
+
+.hidden {
+  display: none;
+}
+
+.hidden-left {
+  z-index: 1;
+  top: -10000px;
+  position: fixed;
+}
+
+.fc-event-bg {
+  height: 100%;
+}
+
+.fc-event {
+  overflow: hidden;
+}
