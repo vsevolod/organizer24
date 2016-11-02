@@ -24,7 +24,7 @@ gem 'omniauth-vkontakte'
 gem 'ancestry'
 gem 'aasm'
 gem 'pg'
-gem 'breadcrumbs', git: 'https://github.com/dexion/breadcrumbs.git'
+gem 'breadcrumbs_on_rails'
 
 gem 'active_model_serializers'
 

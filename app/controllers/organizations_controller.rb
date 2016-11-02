@@ -9,7 +9,7 @@ class OrganizationsController < CompanyController
   end
 
   def show
-    @category_photos = @organization.category_photos.joins(:photos).uniq
+    @category_photos = @organization.category_photos.joins(:photos).distinct
   end
 
   def new
