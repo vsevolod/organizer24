@@ -18,8 +18,8 @@
         = yield :left_widgets
         = theme_render 'menu'
       %section#content.container
-        - if @breadcrumbs && @breadcrumbs.any?
-          %ol.breadcrumb.hidden-xs= breadcrumbs
+        - if @breadcrumbs
+          %ol.breadcrumb.hidden-xs= render_breadcrumbs :separator => ' > '
         = yield
     = javascript_include_tag 'themes/sadmin'
     = yield :bottom_js

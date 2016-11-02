@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/dexion/breadcrumbs.git
-  revision: ea38cd8b21bdeddb128d436c45e10d805f649981
-  specs:
-    breadcrumbs (1.0.1)
-      rails (>= 3.0.0)
-
-GIT
   remote: https://github.com/stevo/colorbox-rails.git
   revision: c46e44d050361f8e9ad279fa31e6a58ba6ad6de0
   specs:
@@ -70,6 +63,7 @@ GEM
     angularjs-rails-resource (2.2.2)
     arel (7.1.4)
     bcrypt (3.1.11)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.2)
     byebug (9.0.6)
     capybara (2.10.1)
@@ -402,7 +396,7 @@ DEPENDENCIES
   ancestry
   angular-rails-templates
   angularjs-rails-resource
-  breadcrumbs!
+  breadcrumbs_on_rails
   capybara
   ckeditor
   cocoon

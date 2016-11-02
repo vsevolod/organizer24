@@ -15,8 +15,8 @@
     .navbar.navbar-fixed-top
       = render 'layouts/top_menu', :show_big_organization_name => true
     .container-fluid
-      - if @breadcrumbs && @breadcrumbs.any?
-        %ul.breadcrumb= breadcrumbs
+      - if @breadcrumbs
+        %ul.breadcrumb= render_breadcrumbs :separator => ' > '
       .row-fluid= yield
     = yield :bottom_js
     = flash_messages

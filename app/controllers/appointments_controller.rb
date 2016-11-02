@@ -39,7 +39,7 @@ class AppointmentsController < CompanyController
   # GET список телефонных номеров и их владельцев
   # FIXME переместить наверно в контроллер workers?!
   def phonebook
-    @phonebook = @organization.appointments.select('DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname').group('phone')
+    @phonebook = @organization.appointments.select('DISTINCT(phone), MAX(user_id) as user_id, MAX(firstname) as firstname, MAX(lastname) as lastname').group('phone')
   end
 
   def create
@@ -137,7 +137,7 @@ class AppointmentsController < CompanyController
   def update_all
     @appointments = @organization.appointments.where(phone: params[:old_phone])
     @appointments.update_all(phone: params[:phone], lastname: params[:lastname], firstname: params[:firstname])
-    redirect_to users_path(id: params[:phone]), notice: 'Записи успешно изменены'
+    redirect_to user_path(id: params[:phone]), notice: 'Записи успешно изменены'
   end
 
   private
