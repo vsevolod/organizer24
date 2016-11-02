@@ -1,4 +1,4 @@
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   belongs_to :organization
 
   validates :content, :name, :permalink, presence: true

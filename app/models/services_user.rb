@@ -1,4 +1,4 @@
-class ServicesUser < ActiveRecord::Base
+class ServicesUser < ApplicationRecord
   belongs_to :service
   belongs_to :user, primary_key: :phone, foreign_key: :phone
   belongs_to :organization

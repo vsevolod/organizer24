@@ -1,5 +1,5 @@
 # coding: utf-8
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery, :timezone, :user_notify_text, :index_header].freeze
 
   # Deprecated
@@ -30,7 +30,7 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :workers
   accepts_nested_attributes_for :services
 
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.zones_map(&:name).keys + [nil] }
+  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) + [nil] }
   validates :name, presence: true
   validates :activity, presence: true
   validates :domain, presence: true, uniqueness: true

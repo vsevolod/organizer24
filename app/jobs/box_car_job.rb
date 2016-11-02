@@ -1,4 +1,4 @@
-class BoxCarJob < ActiveJob::Base
+class BoxCarJob < ApplicationJob
   queue_as :default
 
   def perform(options)

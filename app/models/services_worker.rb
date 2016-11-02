@@ -1,4 +1,4 @@
-class ServicesWorker < ActiveRecord::Base
+class ServicesWorker < ApplicationRecord
   belongs_to :service
   belongs_to :worker
   # attr_accessible :cost, :showing_time, :service_id, :date_off

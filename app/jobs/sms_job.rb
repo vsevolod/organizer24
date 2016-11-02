@@ -1,5 +1,5 @@
 require 'themed_text'
-class SmsJob < ActiveJob::Base
+class SmsJob < ApplicationJob
   queue_as :default
 
   def perform(options, sms_type)

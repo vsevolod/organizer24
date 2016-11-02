@@ -1,4 +1,4 @@
-class CategoryPhoto < ActiveRecord::Base
+class CategoryPhoto < ApplicationRecord
   has_ancestry
 
   belongs_to :organization

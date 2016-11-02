@@ -1,4 +1,4 @@
-class Code < ActiveRecord::Base
+class Code < ApplicationRecord
   include AASM
 
   belongs_to :worker

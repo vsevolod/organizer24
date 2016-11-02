@@ -1,4 +1,4 @@
-class DoubleRate < ActiveRecord::Base
+class DoubleRate < ApplicationRecord
   # attr_accessible :begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate
   attr_accessor :begin_hour, :begin_minute, :end_hour, :end_minute
 
