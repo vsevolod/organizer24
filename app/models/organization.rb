@@ -1,4 +1,4 @@
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   ACCESSORS = [
     :slot_minutes,          # Кол-во минут
     :last_day,              # Последний день для записи
@@ -12,6 +12,7 @@ class Organization < ActiveRecord::Base
 
   # Deprecated
   THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}.freeze
+
   # Пара (Название схемы - категория схемы)
   # TODO move themes to table
   ACTUAL_THEMES = {
@@ -45,7 +46,7 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :workers
   accepts_nested_attributes_for :services
 
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.zones_map(&:name).keys + [nil] }
+  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) + [nil] }
   validates :name, presence: true
   validates :activity, presence: true
   validates :domain, presence: true, uniqueness: true

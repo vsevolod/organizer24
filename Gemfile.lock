@@ -428,7 +428,6 @@ DEPENDENCIES
   omniauth-vkontakte
   paperclip
   pg
-  pry
   pry-byebug
   puma
   rails (= 5.0.0.1)
@@ -442,6 +441,7 @@ DEPENDENCIES
   rails-assets-bootstrap
   rails-assets-jeremypeters--ng-bs-animated-button
   rails-assets-underscore
+  responders
   rspec-rails
   russian
   sass-rails

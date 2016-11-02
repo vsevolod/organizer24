@@ -1,4 +1,4 @@
-class Appointment < ActiveRecord::Base
+class Appointment < ApplicationRecord
   include AASM
 
   # TODO: сделать user по умолчанию через телефон. Убрать связь через user_id

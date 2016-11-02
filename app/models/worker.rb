@@ -1,4 +1,4 @@
-class Worker < ActiveRecord::Base
+class Worker < ApplicationRecord
   belongs_to :user, primary_key: 'phone', foreign_key: 'phone'
   belongs_to :organization
   has_many :services_workers

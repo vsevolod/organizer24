@@ -17,6 +17,7 @@ gem 'wicked' # Multistep registration form
 gem 'gon'
 
 gem 'devise'
+gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-vkontakte'
@@ -48,14 +49,14 @@ gem 'jquery-fileupload-rails'
 gem 'compass-rails'
 gem 'sass-rails'
 
+gem 'puma'
+
 group :development do
-  gem 'pry'
   gem 'pry-byebug'
   gem 'test-unit'
 end
 
 group :production do
-  gem 'puma'
   gem 'therubyracer'
 end
 

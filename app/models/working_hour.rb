@@ -1,4 +1,4 @@
-class WorkingHour < ActiveRecord::Base
+class WorkingHour < ApplicationRecord
   attr_accessor :begin_hour, :begin_minute, :end_hour, :end_minute
 
   default_scope -> { order(:week_day) }

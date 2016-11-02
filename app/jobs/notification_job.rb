@@ -1,4 +1,4 @@
-class NotificationJob < ActiveJob::Base
+class NotificationJob < ApplicationJob
   queue_as :default
 
   def perform(notification_id, options)

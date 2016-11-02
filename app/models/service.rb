@@ -1,4 +1,4 @@
-class Service < ActiveRecord::Base
+class Service < ApplicationRecord
   scope :not_collections, -> { where("is_collection != 't' OR is_collection IS NULL") }
 
   belongs_to :category, class_name: 'Dictionary'

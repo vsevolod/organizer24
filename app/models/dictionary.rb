@@ -1,4 +1,4 @@
-class Dictionary < ActiveRecord::Base
+class Dictionary < ApplicationRecord
   has_ancestry
 
   belongs_to :organization
