@@ -33,3 +33,5 @@ public/assets
 
 #script/delayed_job
 app/assets/images/photo_depilate
+
+react/node_modules

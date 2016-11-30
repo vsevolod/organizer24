@@ -11,9 +11,11 @@ module Organizer
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
-    config.autoload_paths += %W(#{config.root}/app/presenters)
+    config.autoload_paths << Rails.root.join('extras')
+    config.autoload_paths << Rails.root.join('app', 'models', 'ckeditor')
+    config.autoload_paths << Rails.root.join('app', 'graph')
+    config.autoload_paths << Rails.root.join('app', 'graph', 'types')
+    config.autoload_paths << Rails.root.join('app', 'presenters')
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -26,5 +28,17 @@ module Organizer
     config.filter_parameters +=[:password]
 
     config.active_job.queue_adapter = :sidekiq
+
+    # Allow Cross-Origin Resource Sharing for Rack
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        if Rails.env.development?
+          origins 'localhost:3000', '127.0.0.1:3000'
+        else
+          origins Regexp.new("^(" + Organization.pluck(:domain).join('|') + ")\\.")
+        end
+        resource '/api/*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
   end
 end

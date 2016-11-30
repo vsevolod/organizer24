@@ -1,8 +1,8 @@
 # coding: utf-8
 class ShowingTimeValidator < ActiveModel::EachValidator
   # Пересечение прямых: max( 0, max( A1, An ) - min( B1, Bn ) )
+  # TODO change to OVERLAPS function in pgsql
   # FIXME исправить для нескольких исполнителей
-  # TODO убрать динамические поля start и showing_time для appointment
   # DESCRIPTION Валидация на продолжительность. Занято место или нет
 
   def validate_each(record, _attribute, _value)

@@ -1,0 +1,23 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    %meta{:content => "Vsevolod Avramov", :name => "author"}/
+    %title= strip_tags(@organization.name)
+    = stylesheet_link_tag "themes/theme2016"
+    = csrf_meta_tags
+    = yield :js
+  %body
+    %nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
+      %a.navbar-brand{:href => "#"}= @organization.name
+      .media-body= theme_render 'top_menu'
+    .container
+      .theme2016-template#app
+    / /.container
+    /
+      Bootstrap core JavaScript
+      \==================================================
+    / Placed at the end of the document so the pages load faster
+    = javascript_include_tag 'themes/theme2016'

@@ -28,10 +28,17 @@ gem 'breadcrumbs_on_rails'
 
 gem 'active_model_serializers'
 
-# Assets
+# API
+gem 'graphql'
+gem 'graphiql-rails'
+gem 'hashie'
+gem 'rack-cors'
 
+gem 'pundit'
+
+# Assets
 gem 'rails-assets-underscore'
-gem 'rails-assets-bootstrap'
+gem 'rails-assets-bootstrap', '4.0.0.alpha.5'
 gem 'rails-assets-angular'
 gem 'rails-assets-angular-bootstrap-checkbox'
 gem 'rails-assets-angular-ui-router'

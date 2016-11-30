@@ -4,7 +4,7 @@ class Organization < ApplicationRecord
 
   # Deprecated
   THEMES = %w(amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united).freeze
-  ACTUAL_THEMES = %w(embark beauty sadmin).freeze
+  ACTUAL_THEMES = %w(embark beauty sadmin masonry).freeze
 
   GENITIVE_WEEK_DAYS = %w(воскресенье понедельник вторник среду четверг пятницу субботу).freeze
 
