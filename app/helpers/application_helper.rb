@@ -35,7 +35,7 @@ module ApplicationHelper
   end
 
   def theme_render(path, *options)
-    render "/themes/#{@organization.theme}/#{path}", *options
+    render "/themes/#{@organization.get_theme}/#{path}", *options
   end
 
   private

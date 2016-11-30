@@ -1,10 +1,25 @@
-#coding: utf-8
 class Organization < ActiveRecord::Base
-  ACCESSORS = [:slot_minutes, :last_day, :theme, :registration_before, :show_photogallery, :timezone, :user_notify_text, :index_header]
+  ACCESSORS = [
+    :slot_minutes,          # Кол-во минут
+    :last_day,              # Последний день для записи
+    :theme,                 # Тема
+    :registration_before,   # Обязательная регистрация до записи
+    :show_photogallery,     # Показывать фотогалерею
+    :timezone,              # Зона (TODO need to deprecate)
+    :user_notify_text,      # Текст смс уведомления
+    :index_header           # Заголовок на главной
+  ]
 
   # Deprecated
   THEMES = %w{amelia cerulean cyborg journal readable simplex slate spacelab superhero spruce united}
-  ACTUAL_THEMES = %w{embark beauty sadmin}
+  # Пара (Название схемы - категория схемы)
+  # TODO move themes to table
+  ACTUAL_THEMES = {
+    'embark'  => 'embark',
+    'beauty'  => 'beauty',
+    'sadmin'  => 'sadmin',
+    'sadmin2' => 'sadmin'
+  }
 
   GENITIVE_WEEK_DAYS = ['воскресенье', 'понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу']
 
@@ -38,6 +53,10 @@ class Organization < ActiveRecord::Base
 
   attr_accessible :name, :activity_id, :domain, :owner_id, :activity, :dictionaries_attributes, :services_attributes, :workers_attributes, *ACCESSORS
   before_validation :check_domain
+
+  def get_theme
+    ACTUAL_THEMES[theme] || 'default'
+  end
 
   def get_services( phone, type = :extend )
     s_users = ServicesUser.where( :phone => phone, :organization_id => self.id )

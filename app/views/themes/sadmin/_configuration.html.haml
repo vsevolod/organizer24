@@ -8,7 +8,7 @@
       %span.checkableBox= f.check_box :show_photogallery
       = Organization.human_attribute_name(:show_photogallery)
   = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
-  = f.input :theme, :collection => Organization::ACTUAL_THEMES
+  = f.input :theme, :collection => Organization::ACTUAL_THEMES.keys
   = f.time_zone_select :timezone, nil, {}, {class: 'form-control'}
 
   %h3 Текст смс

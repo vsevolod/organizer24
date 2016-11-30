@@ -4,7 +4,7 @@
 = f.input :domain
 = f.input :show_photogallery, :as => :boolean, :wrapper => 'checkbox'
 = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
-= f.input :theme, :collection => Organization::ACTUAL_THEMES
+= f.input :theme, :collection => Organization::ACTUAL_THEMES.keys
 = f.time_zone_select :timezone, nil, {}, {class: 'form-control'}
 
 %h3 Текст смс
