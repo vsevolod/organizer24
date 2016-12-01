@@ -1,7 +1,7 @@
 - content_for :header_title do
   %h2 Редактирование организации
 
-- @organization.user_notify_text = USER_NOTIFY if @organization.user_notify_text.blank?
+- @organization.user_notify_text = DEFAULT_USER_NOTIFY if @organization.user_notify_text.blank?
 = simple_form_for @organization do |f|
   = theme_render 'configuration', f: f
 

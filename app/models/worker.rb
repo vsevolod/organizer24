@@ -7,6 +7,7 @@ class Worker < ActiveRecord::Base
   has_many :working_hours
   has_many :double_rates
   has_many :appointments
+  has_many :notifications
 
   accepts_nested_attributes_for :services_workers, allow_destroy: true
   accepts_nested_attributes_for :working_days, allow_destroy: true
