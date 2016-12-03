@@ -35,3 +35,4 @@ public/assets
 app/assets/images/photo_depilate
 
 react/node_modules
+react/build/schema.json

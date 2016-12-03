@@ -13,8 +13,8 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['./build/babelRelayPlugin', 'react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+          presets: [{'plugins': './build/babelRelayPlugin'}, 'react', 'es2015', 'stage-0'],
+          plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
         }
       }
     ]
