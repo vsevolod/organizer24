@@ -78,11 +78,15 @@ module AppointmentsPresenters
       end
 
       def is_owner?
-        @is_owner ||= @current_user.owner_or_worker?(@organization)
+        if defined?(@is_owner)
+          @is_owner
+        else
+          @is_owner = @current_user.owner_or_worker?(@organization)
+        end
       end
 
       def add_to_user_services( phone )
-        @user_services[phone] ||=  @organization.get_services( phone, :normal )
+        @user_services[phone] ||= @organization.get_services( phone, :normal )
       end
 
       def organization_user_services( appointment )
