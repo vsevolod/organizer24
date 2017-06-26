@@ -1,6 +1,7 @@
 class OrganizationsController < CompanyController
-  skip_before_action :find_organization, only: [:index, :new, :create]
   add_breadcrumb 'На главную', '/', except: [:index, :show]
+
+  skip_before_action :find_organization, only: [:index, :new, :create]
   before_action :redirect_if_not_owner, only: [:edit, :update]
   before_action :need_to_login, only: [:new, :create]
 
@@ -70,55 +71,55 @@ class OrganizationsController < CompanyController
 
   def organization_params
     params.require(:organization).permit([
-                                           :name,
-                                           :activity_id,
-                                           :domain,
-                                           :owner_id,
-                                           :activity,
-                                           { dictionaries_attributes: [
-                                             :id,
-                                             :_destroy,
-                                             :name,
-                                             :tag,
-                                             :ancestry,
-                                             :parent_id,
-                                             :children_dictionaries_attributes
-                                           ],
-                                             services_attributes: [
-                                               :id,
-                                               :_destroy,
-                                               :name,
-                                               :showing_time,
-                                               :cost,
-                                               :is_collection,
-                                               :show_by_owner,
-                                               :bottom_cost,
-                                               :top_cost,
-                                               :description,
-                                               :category_id,
-                                               :position,
-                                               :new_cost,
-                                               :new_date_cost
-                                             ],
-                                             workers_attributes: [
-                                               :id,
-                                               :_destroy,
-                                               :name,
-                                               :is_enabled,
-                                               :services_workers_attributes,
-                                               :phone,
-                                               :user_id,
-                                               :photo,
-                                               :service_ids,
-                                               :working_hours_attributes,
-                                               :profession,
-                                               :dative_case,
-                                               :double_rates_attributes,
-                                               :push_key,
-                                               :finished_date,
-                                               :sms_translit
-                                             ] },
-                                           *Organization::ACCESSORS
-                                         ])
+      :name,
+      :activity_id,
+      :domain,
+      :owner_id,
+      :activity,
+      { dictionaries_attributes: [
+        :id,
+        :_destroy,
+        :name,
+        :tag,
+        :ancestry,
+        :parent_id,
+        :children_dictionaries_attributes
+      ],
+      services_attributes: [
+        :id,
+        :_destroy,
+        :name,
+        :showing_time,
+        :cost,
+        :is_collection,
+        :show_by_owner,
+        :bottom_cost,
+        :top_cost,
+        :description,
+        :category_id,
+        :position,
+        :new_cost,
+        :new_date_cost
+      ],
+      workers_attributes: [
+        :id,
+        :_destroy,
+        :name,
+        :is_enabled,
+        :services_workers_attributes,
+        :phone,
+        :user_id,
+        :photo,
+        :service_ids,
+        :working_hours_attributes,
+        :profession,
+        :dative_case,
+        :double_rates_attributes,
+        :push_key,
+        :finished_date,
+        :sms_translit
+      ] },
+      *Organization::ACCESSORS
+    ])
   end
 end
