@@ -66,6 +66,6 @@ class Smsru
   end
 
   def self.get_options
-    @options ||= APP_CONFIG['smsru']
+    @options ||= Settings.smsru
   end
 end

@@ -15,6 +15,7 @@ gem 'paperclip'
 gem 'will_paginate'
 gem 'wicked' # Multistep registration form
 gem 'gon'
+gem 'settingslogic'
 
 gem 'devise'
 gem 'responders'
