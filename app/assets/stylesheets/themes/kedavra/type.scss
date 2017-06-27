@@ -1,0 +1,272 @@
+//
+// Typography
+// --------------------------------------------------
+
+// Headings
+// -------------------------
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $headings-font-family;
+  line-height: $headings-line-height;
+  color: $text-color;
+	font-weight: normal;
+	margin-top: 0;
+}
+h4, h5, h6,
+.h4, .h5, .h6 {
+  line-height: $headings-line-height-smaller;
+}
+h2, .h2 {
+	&.heading { font-weight: 300; }
+}
+h1, .h1 {
+	font-size: $font-size-h1;
+	margin-bottom: floor(($vert-gap*0.8));
+	@media #{$tablet_port} {
+		font-size: ($font-size-h1*0.85);
+		margin-bottom: ($vert-gap*0.75);
+	}
+}
+h2, .h2 { 
+	font-size: $font-size-h2;
+	margin-bottom: floor(($vert-gap*0.85));
+	@media #{$tablet_port} {
+		font-size: ($font-size-h2*0.85);
+		margin-bottom: floor(($vert-gap*0.75));
+	}
+}
+h3, .h3 {
+	font-size: $font-size-h3;
+	margin-bottom: floor(($vert-gap*0.65));
+	&.heading {
+		font-weight: 400;
+		text-transform: uppercase;
+		font-size: ($font-size-base*1.25);
+		margin-bottom: floor(($vert-gap*0.6));
+		&>span {
+			display: block;
+			margin-top: 8px;
+			width: 50px;
+			height: 2px;
+			background: $text-color;
+		}
+		&.center {
+			text-align: center;
+			span { margin: 8px auto 0 auto; }
+		}
+	}
+}
+h4, .h4 {
+	font-size: $font-size-h4; margin-bottom: floor(($vert-gap*0.5));
+	&.heading {
+		font-weight: bold;
+		font-size: $font-size-base;
+		margin-bottom: floor(($vert-gap*0.5));
+	}
+}
+h5, .h5 { font-size: $font-size-h5; margin-bottom: floor(($vert-gap*0.3)); }
+h6, .h6 { font-size: $font-size-h6; margin-bottom: floor(($vert-gap*0.3)); }
+h1, h2, h3, h4, h5, h6 { word-spacing: 0.09em; }
+
+// Page Headings
+// -------------------------
+.page-heading {
+	width: 100%;
+	margin-bottom: ($vert-gap*2);
+	@media #{$tablet_port} { margin-bottom: ($vert-gap*1.2); }
+	h1, h2 {
+		text-transform: uppercase;
+	}
+	h1, h2, h3, h4, h5, h6 { word-spacing: 0.15em; }
+	h2 { font-weight: 300; }
+	h3 {
+		font-weight: 400;
+		text-transform: uppercase;
+		font-size: ($font-size-base*1.25);
+		margin-bottom: floor(($vert-gap*0.5));
+		&>span {
+			display: block;
+			margin-top: 8px;
+			width: 50px;
+			height: 2px;
+			background: $text-color;
+		}
+		&>i { font-style: normal; }
+	}
+	h4, p {
+		text-transform: none;
+		font-size: $font-size-base;
+	}
+	&.center {
+		text-align: center;
+		span { margin: 8px auto 0 auto; }
+	}
+	&.light-color {
+		h1, h2, h3, h4, h5, h6, p { color: #fff !important; }
+		h3 span { background: #fff !important; }
+	}
+}
+
+// Paragraphs
+// -------------------------
+p {
+	@include paragraph();
+	&.small {
+		@include paragraph-sm();
+	}
+}
+.p-sm {
+	@include paragraph-sm();
+}
+.p-lg {
+	@include paragraph-lg();
+}
+
+// Blockquotes
+// -------------------------
+blockquote {
+	font-style: italic;
+	border-color: lighten($gray-text, 20%);
+	margin-bottom: $vert-gap;
+	&.alt {
+		position: relative;
+		width: 100%;
+		max-width: 1140px;
+		margin: auto;
+		font-size: ($font-size-base*2.5);
+		font-weight: 300;
+		font-style: normal;
+		text-align: center;
+		border: none;
+		padding: 0 80px;
+		text-transform: none;
+		&:before, &:after {
+			display: block;
+			width: 46px;
+			height: 72px;
+			position: absolute;
+			top: 50%;
+			margin-top: -30px;
+			content: '';
+			background-image: url(../img/quotes.png);
+			background-repeat: no-repeat;
+		}
+		&:before { background-position: 0px 0px; left: 0; }
+		&:after { background-position: -46px 0px; right: 0; }
+		@media #{$tablet_port} { font-size: ($font-size-base*1.5); padding: 0 60px; }
+	}
+	&.light {
+		color: #fff;
+		&:before { background-position: 0px -72px; left: 0; }
+		&:after { background-position: -46px -72px; right: 0; }
+	}
+	p { margin-bottom: ($vert-gap/2); }
+	footer { font-style: normal; color: $gray-text; }
+}
+
+// Text Colors Variations
+// -------------------------
+.light-color {
+	color: #fff !important;
+	&:hover { color: #fff !important; }
+}
+.primary-color, .text-primary {
+	color: $brand-primary !important;
+	&:hover { color: $brand-primary !important; }
+}
+.gray-color {
+	color: $gray !important;
+	&:hover { color: $gray !important; }
+}
+.text-success {
+	color: $brand-success !important;
+	&:hover { color: $brand-success !important; }
+}
+.text-info {
+	color: $brand-info !important;
+	&:hover { color: $brand-info !important; }
+}
+.text-danger {
+	color: $brand-danger !important;
+	&:hover { color: $brand-danger !important; }
+}
+.text-warning {
+	color: $brand-warning !important;
+	&:hover { color: $brand-warning !important; }
+}
+.text-muted {
+	color: $gray-dark !important;
+	&:hover { color: $gray-dark !important; }
+}
+
+// Text Variations
+// -------------------------
+.light-weight { font-weight: 300 !important; }
+.bold-weight { font-weight: bold !important; }
+.normal-weight { font-weight: normal !important; }
+.uppercase { text-transform: uppercase !important; }
+.normalcase { text-transform: none !important; }
+.italics { font-style: italic !important; }
+.no-underline { text-decoration: none !important; }
+.underline { text-decoration: underline !important; }
+
+// Links
+// -------------------------
+a {
+	text-decoration: none;
+	color: $link-color;
+	@include transition(all, 0.3s);
+	&.large {
+		font-size: $font-size-large;
+	}
+	&.alt {
+		text-decoration: none !important;
+		&:hover { text-decoration: underline !important; }
+	}
+	&.muted {
+		font-size: $font-size-small;
+		padding-bottom: 1px;
+		margin: 0 0 4px 0;
+		color: #afafaf;
+		text-decoration: none;
+		border-bottom: 1px solid #afafaf;
+		&:hover {
+			color: #afafaf;
+			border-bottom: 1px solid transparent;
+		}
+	}
+}
+a:hover, a:focus {
+	outline: 0;
+	text-decoration: none;
+	color: $link-color;
+}
+
+// Lists
+// -------------------------
+ul, ol {
+	@include list-style();
+	&.large {
+		font-size: $font-size-large;
+	}
+	&.list-unstyled {
+		ul {
+			padding: 8px 0 0 15px;
+			list-style: none;
+				li { font-size: $font-size-base; line-height: 1; }
+		}
+	}
+}
+ul.featured-list {
+	list-style: none;
+	padding: 0;
+	li {
+		// font-size: ($font-size-base * 0.875);
+		&:before {
+			font-family: FontAwesome;
+			content: "\f00c";
+			margin-right: 8px;
+			color: $brand-primary;
+		}
+	}
+}

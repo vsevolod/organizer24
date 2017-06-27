@@ -1,0 +1,271 @@
+//
+// Buttons Normal
+// --------------------------------------------------
+
+.btn {
+	font-size: $btn-font-size !important;
+	color: $btn-default-color !important;
+	padding: 4px 26px !important;
+  font-weight: $btn-font-weight;
+  text-align: center;
+	text-decoration: none !important;
+	background: $btn-default-bg;
+  vertical-align: middle;
+  cursor: pointer;
+  border: none;
+	@include border-radius();
+  white-space: nowrap;
+	@include transition(all, 0.3s);
+	outline: none !important;
+	margin: 0 5px 0 0 !important;
+	&:hover {
+		background: darken($btn-default-bg, 10%);
+		text-decoration: none;
+	}
+	&:active,
+	&.active {
+		background-image: none;
+		box-shadow: none;
+	}
+	&.disabled,
+	&[disabled],
+	fieldset[disabled] & {
+		cursor: not-allowed;
+		pointer-events: none;
+		@include opacity(.5, 50);
+	}
+	span { 
+		font-weight: 900;
+		margin-right: 15px;
+	}
+	i {
+		font-size: 1.2em;
+		line-height: 1;
+		vertical-align: top;
+		padding-top: 2px;
+		&.left { margin-right: 10px; }
+		&.right { margin-left: 10px; }
+	}
+}
+.btn-center {
+	display: table !important;
+	margin: auto !important;
+}
+
+// Button color variations
+// --------------------------------------------------
+.btn-default {
+  background: $btn-default-bg;
+	color: $btn-default-color;
+	&:hover {
+		background: darken($btn-default-bg, 10%);
+	}
+}
+.btn-default2 {
+  background: #3a3a3a;
+	color: $btn-default-color;
+	&:hover {
+		background: darken(#e9eaea, 55%);
+	}
+}
+
+.btn-primary {
+  background: $btn-primary-bg;
+	color: $btn-primary-color;
+	&:hover {
+		background: darken($btn-primary-bg, 10%);
+	}
+}
+.btn-success {
+  background: $btn-success-bg;
+	color: $btn-success-color;
+	&:hover {
+		background: darken($btn-success-bg, 10%);
+	}
+}
+.btn-info {
+  background: $btn-info-bg;
+	color: $btn-info-color;
+	&:hover {
+		background: darken($btn-info-bg, 10%);
+	}
+}
+.btn-warning {
+  background: $btn-warning-bg;
+	color: $btn-warning-color;
+	&:hover {
+		background: darken($btn-warning-bg, 10%);
+	}
+}
+.btn-danger {
+  background: $btn-danger-bg;
+	color: $btn-danger-color;
+	&:hover {
+		background: darken($btn-danger-bg, 10%);
+	}
+}
+//
+// Buttons Transparent
+// --------------------------------------------------
+.btn-transparent {
+	background: rgba(255,255,255,0.20);
+	&:hover {
+		color: $brand-default !important;
+		background: #fff;
+		&.btn-primary { color: $brand-primary !important; }
+		&.btn-success { color: $brand-success !important; }
+		&.btn-info { color: $brand-info !important; }
+		&.btn-warning { color: $brand-warning !important; }
+		&.btn-danger { color: $brand-danger !important; }
+	}
+}
+.no-rgba .btn-transparent {
+	background: #fff;
+	filter: alpha(opacity=40);
+	&.btn-primary { color: $brand-primary !important; }
+	&.btn-success { color: $brand-success !important; }
+	&.btn-info { color: $brand-info !important; }
+	&.btn-warning { color: $brand-warning !important; }
+	&.btn-danger { color: $brand-danger !important; }
+	&:hover { filter: alpha(opacity=100); }
+}
+
+//
+// Buttons Outlined
+// --------------------------------------------------
+.btn-outlined {
+	font-size: $btn-font-size;
+	color: $btn-outlined-default-color;
+	padding: 10px 40px;
+  font-weight: $btn-font-weight;
+  text-align: center;
+	background: none;
+	border: $btn-outlined-default-border;
+  vertical-align: middle;
+  cursor: pointer;
+	@include border-radius();
+  white-space: nowrap;
+	@include transition(all, 0.4s);
+	margin: 0 5px 0 0 !important;
+	outline: 0;
+	&:hover {
+		border-color: transparent;
+		background: $btn-default-bg;
+		color: #fff;
+		text-decoration: none;
+	}
+	&:active,
+	&.active {
+		background-image: none;
+		box-shadow: none;
+	}
+	&.btn-default {
+		border: $btn-outlined-default-border;
+		color: $btn-outlined-default-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-default-bg;
+			color: #fff !important;
+		}
+	}
+	&.btn-primary {
+		border: $btn-outlined-primary-border;
+		color: $btn-outlined-primary-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-primary-bg;
+			color: #fff !important;
+		}
+	}
+	&.btn-success {
+		border: $btn-outlined-success-border;
+		color: $btn-outlined-success-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-success-bg;
+			color: #fff !important;
+		}
+	}
+	&.btn-info {
+		border: $btn-outlined-info-border;
+		color: $btn-outlined-info-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-info-bg;
+			color: #fff !important;
+		}
+	}
+	&.btn-warning {
+		border: $btn-outlined-warning-border;
+		color: $btn-outlined-warning-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-warning-bg;
+			color: #fff !important;
+		}
+	}
+	&.btn-danger {
+		border: $btn-outlined-danger-border;
+		color: $btn-outlined-danger-color !important;
+		&:hover {
+			border-color: transparent;
+			background: $btn-danger-bg;
+			color: #fff !important;
+		}
+	}
+	&.disabled,
+	&[disabled],
+	fieldset[disabled] & {
+		cursor: not-allowed;
+		pointer-events: none;
+		background: none;
+		@include opacity(.5, 50);
+	}
+}
+
+//
+// Buttons Outlined Inverted
+// --------------------------------------------------
+.btn-outlined-invert {
+	font-size: $btn-font-size;
+	color: #fff;
+	padding: 10px 40px;
+  font-weight: $btn-font-weight;
+  text-align: center;
+	background: transparent;
+	border: 1px solid #fff;
+  vertical-align: middle;
+  cursor: pointer;
+	@include border-radius();
+  white-space: nowrap;
+	@include transition(all, 0.4s);
+	outline: 0;
+	&:hover {
+		background: #fff;
+		color: $text-color !important;
+		text-decoration: none;
+	}
+}
+
+// Button sizes
+// --------------------------------------------------
+.btn-lg {
+	padding: 10px 36px !important;
+	font-size: ($font-size-base*1.13) !important;
+}
+.btn-md {
+	padding: 8px 26px !important;
+	font-size: $font-size-base !important;
+}
+.btn-sm {
+	padding: 4px 20px !important;
+	font-size: ($btn-font-size/1.25) !important; 
+}
+.btn-xs {
+	padding: 2px 15px !important;
+	font-size: ($btn-font-size/1.25) !important; 
+}
+.btn-block {
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}

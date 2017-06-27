@@ -18,6 +18,7 @@ class Organization < ApplicationRecord
   ACTUAL_THEMES = {
     'embark'  => 'embark',
     'beauty'  => 'beauty',
+    'lashes'  => 'kedavra',
     'sadmin'  => 'sadmin',
     'sadmin2' => 'sadmin'
   }.freeze

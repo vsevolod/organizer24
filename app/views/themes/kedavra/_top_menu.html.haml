@@ -1,0 +1,43 @@
+%header.header.sticky
+  / Adding class 'sticky' to header enables its pinning to top on scroll. Please note in a 'boxed' mode header doesn't stick to the top.
+  .inner
+    .container.group
+      / Logo
+      %a.logo{href: 'index.html'}
+        %img{alt: "{{t 'layout.header.title'}}", src: 'img/logo.png'}/
+      / Navigation Toggle
+      #nav-toggle.left-off-canvas-toggle
+        %span
+      / Site Navigation
+      .navigation
+        / Menu
+        %nav.menu
+          %ul
+            %li.active {{link-to 'Home' 'index'}}
+            {{#if mainMaster}}
+            %li.active.has-mega-menu
+              {{#link-to 'appointments'}}
+              Appointments
+              {{/link-to}}
+            %li
+              %a{href: 'components-and-styles.html'} Features
+              %ul.submenu
+                %li
+                  %a{href: 'components-and-styles.html'} Components & Styles
+                %li
+                  %a{href: 'sliders-and-carousels.html'} Sliders & Carousels
+                %li
+                  %a{href: 'grid-and-list.html'} Grid & List Layouts
+            {{else}}
+            %li.active.has-mega-menu {{link-to 'Masters' 'masters'}}
+            {{/if}}
+        / Search
+        / div class='search'><i class='flaticon-search100'></i></div
+      / Tools
+      .tools.group
+        {{header-dashboard}}
+  / Quick Search
+  %form.quick-search{autocomplete: 'off', method: 'get'}
+    .overlay
+    %input.search-field{placeholder: 'Search', type: 'text'}/
+    %span Press enter to search

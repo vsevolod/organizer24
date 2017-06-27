@@ -1,0 +1,533 @@
+/ Header
+%header.header.sticky
+  / Adding class "sticky" to header enables its pinning to top on scroll. Please note in a "boxed" mode header doesn't stick to the top.
+  .inner
+    .container.group
+      / Logo
+      %a.logo{:href => "index.html"}
+        %img{:alt => "Kedavra", :src => "img/logo.png"}/
+      / Navigation Toggle
+      #nav-toggle.left-off-canvas-toggle
+        %span
+      / Site Navigation
+      .navigation
+        / Menu
+        %nav.menu
+          %ul
+            %li.active.has-mega-menu
+              %a{:href => "index.html"} Home
+              .mega-menu
+                .container
+                  .row
+                    .col-sm-3
+                      %h4 Homepages
+                      %ul
+                        %li.has-submenu.active
+                          %a{"data-target" => "#business", :href => "home-business-law.html"} Home Business
+                        %li.has-submenu
+                          %a{"data-target" => "#portfolio", :href => "home-portfolio-photographer.html"} Home Portfolio
+                        %li.has-submenu
+                          %a{"data-target" => "#blog", :href => "home-blog-corporate.html"} Home Blog
+                        %li.has-submenu
+                          %a{"data-target" => "#ecommerce", :href => "home-shop-catalog.html"} Home E-Commerce
+                        %li.has-submenu
+                          %a{"data-target" => "#events", :href => "home-events.html"} Home Events
+                        %li.has-submenu
+                          %a{"data-target" => "#startup", :href => "home-startup.html"} Home Startup
+                        %li.has-submenu
+                          %a{"data-target" => "#landing", :href => "home-landing.html"} Home Landing
+                        %li.has-submenu
+                          %a{"data-target" => "#services", :href => "home-services.html"} Home Services
+                    .col-sm-9
+                      .row
+                        / Home Business Submenu
+                        #business.col-sm-8.mega-submenu.active
+                          %h4.text-center Choose Version
+                          .row
+                            .col-sm-6
+                              %a.img-link{:href => "home-business-law.html"}
+                                %img{:alt => "Lawyer Services", :src => "img/megamenu/business-law.png"}/
+                                Lawyer Services
+                            .col-sm-6
+                              %a.img-link{:href => "home-business-real-estate.html"}
+                                %img{:alt => "Real Estate", :src => "img/megamenu/business-real-estate.png"}/
+                                Real Estate
+                        / Home Portfolio Submenu
+                        #portfolio.col-sm-8.mega-submenu
+                          %h4.text-center Choose Version
+                          .row
+                            .col-sm-6
+                              %a.img-link{:href => "home-portfolio-photographer.html"}
+                                %img{:alt => "Photographer", :src => "img/megamenu/portfolio-photo.png"}/
+                                Photographer
+                            .col-sm-6
+                              %a.img-link{:href => "home-portfolio-musician.html"}
+                                %img{:alt => "Musician", :src => "img/megamenu/portfolio-music.png"}/
+                                Musician
+                        / Home Blog Submenu
+                        #blog.mega-submenu.col-sm-8
+                          %h4.text-center Choose Version
+                          .row
+                            .col-md-6.col-sm-6
+                              %a.img-link{:href => "home-blog-personal.html"}
+                                %img{:alt => "Personal Blog", :src => "img/megamenu/blog-personal.png"}/
+                                Personal Blog
+                            .col-md-6.col-sm-6
+                              %a.img-link{:href => "home-blog-corporate.html"}
+                                %img{:alt => "Corporate Blog", :src => "img/megamenu/blog-corporate.png"}/
+                                Corporate Blog
+                        / Home Ecommerce Submenu
+                        #ecommerce.mega-submenu.col-sm-8
+                          %h4.text-center Choose Version
+                          .row
+                            .col-sm-6
+                              %a.img-link{:href => "home-shop-catalog.html"}
+                                %img{:alt => "Home Catalog", :src => "img/megamenu/shop-catalog.png"}/
+                                Home Catalog
+                            .col-sm-6
+                              %a.img-link{:href => "home-shop-featured-product.html"}
+                                %img{:alt => "Featured Product", :src => "img/megamenu/shop-featured.png"}/
+                                Featured Product
+                        / Home Events Submenu
+                        #events.mega-submenu.col-sm-8
+                          %a.img-link{:href => "home-events.html"}
+                            %img{:alt => "Events", :src => "img/megamenu/event.png"}/
+                        / Home Startup Submenu
+                        #startup.mega-submenu.col-sm-8
+                          %a.img-link{:href => "home-startup.html"}
+                            %img{:alt => "Startup", :src => "img/megamenu/startup.png"}/
+                        / Home Landing Submenu
+                        #landing.mega-submenu.col-sm-8
+                          %a.img-link{:href => "home-landing.html"}
+                            %img{:alt => "Landing", :src => "img/megamenu/landing.png"}/
+                        / Home Services Submenu
+                        #services.mega-submenu.col-sm-8
+                          %a.img-link{:href => "home-services.html"}
+                            %img{:alt => "Services", :src => "img/megamenu/services.png"}/
+                        / Help Info
+                        .col-sm-4
+                          %h4 Need Help?
+                          %p
+                            %a{:href => "http://8guild.ticksy.com/", :target => "_blank"} Visit the Help Center
+                          %table
+                            %tr
+                              %td Chat
+                              %td.text-danger Currently offline
+                            %tr
+                              %td Email
+                              %td.text-danger
+                                %a{:href => "mailto:support@8guild.com"} support@8guild.com
+                            %tr
+                              %td Phone
+                              %td +1 888 458 5376
+                          %p.small.text-muted
+                            Our customers call us with gratitude, and we are very pleased by this!
+                            %br>/
+                            Your difficulties is our concern.
+            %li
+              %a{:href => "blog-grid-sr.html"} Blog
+              %ul.submenu
+                %li
+                  %a{:href => "blog-grid-sr.html"}
+                    Grid Layout
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "blog-grid-fw.html"} Grid Full Width
+                    %li
+                      %a{:href => "blog-grid-sr.html"} Grid Sidebar Right
+                    %li
+                      %a{:href => "blog-grid-sl.html"} Grid Sidebar Left
+                %li
+                  %a{:href => "blog-list-sr.html"}
+                    List Layout
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "blog-list-fw.html"} List Full Width
+                    %li
+                      %a{:href => "blog-list-2cols.html"} List 2 Columns
+                    %li
+                      %a{:href => "blog-list-sr.html"} List Sidebar Right
+                    %li
+                      %a{:href => "blog-list-sl.html"} List Sidebar Left
+                %li
+                  %a{:href => "blog-single-slider.html"}
+                    Single Post
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "blog-single-image.html"} Image Post
+                    %li
+                      %a{:href => "blog-single-banner.html"} Fullwidth Banner
+                    %li
+                      %a{:href => "blog-single-gallery.html"} Gallery Post
+                    %li
+                      %a{:href => "blog-single-slider.html"} Slider Post
+                    %li
+                      %a{:href => "blog-single-video.html"} Video Post
+                    %li
+                      %a{:href => "blog-single-audio.html"} Audio Post
+            %li
+              %a{:href => "shop-grid-1-big-banner.html"} Shop
+              %ul.submenu
+                %li
+                  %a{:href => "shop-grid-1-big-banner.html"}
+                    Grid Layout Type 1
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "shop-grid-1-fw.html"} Grid Full Width
+                    %li
+                      %a{:href => "shop-grid-1-big-banner.html"} Grid Big Banner
+                    %li
+                      %a{:href => "shop-grid-1-sl.html"} Grid Sidebar Left
+                    %li
+                      %a{:href => "shop-grid-1-sr.html"} Grid Sidebar Right
+                %li
+                  %a{:href => "shop-grid-2-big-banner.html"}
+                    Grid Layout Type 2
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "shop-grid-2-fw.html"} Grid Full Width
+                    %li
+                      %a{:href => "shop-grid-2-big-banner.html"} Grid Big Banner
+                    %li
+                      %a{:href => "shop-grid-2-sl.html"} Grid Sidebar Left
+                    %li
+                      %a{:href => "shop-grid-2-sr.html"} Grid Sidebar Right
+                %li
+                  %a{:href => "shop-list-big-banner.html"}
+                    List Layout
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "shop-list-fw.html"} List Full Width
+                    %li
+                      %a{:href => "shop-list-big-banner.html"} List Big Banner
+                    %li
+                      %a{:href => "shop-list-sl.html"} List Sidebar Left
+                    %li
+                      %a{:href => "shop-list-sr.html"} List Sidebar Right
+                %li
+                  %a{:href => "shop-single-dr.html"}
+                    Single Product
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "shop-single-dr.html"} Description Right
+                    %li
+                      %a{:href => "shop-single-dl.html"} Description Left
+                %li
+                  %a{:href => "shopping-cart.html"} Shopping Cart
+                %li
+                  %a{:href => "wishlist.html"} Wishlist
+                %li
+                  %a{:href => "checkout.html"}
+                    Checkout
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "checkout.html"} Checkout Page
+                    %li
+                      %a{:href => "checkout-unregistered.html"} Unregistered User
+                %li
+                  %a{:href => "shop-delivery.html"} Delivery Info Page
+                %li
+                  %a{:href => "shop-tracking.html"} Delivery Tracking
+                %li
+                  %a{:href => "shop-history.html"} Purchase History
+            %li.has-mega-menu
+              %a{:href => "#"} Shop Mega-Menu
+              .mega-menu
+                .container
+                  .row
+                    .col-md-2.col-sm-3
+                      %h4 Categories
+                      %ul
+                        %li.has-submenu.active
+                          %a{"data-target" => "#big-banner", :href => "#"} Big Banner
+                        %li.has-submenu
+                          %a{"data-target" => "#three-cats", :href => "#"} Three Categories
+                        %li.has-submenu
+                          %a{"data-target" => "#bestsellers", :href => "#"} Best Sellers
+                        %li.has-submenu
+                          %a{"data-target" => "#cat-banner", :href => "#"} Category Banner
+                        %li.has-submenu
+                          %a{"data-target" => "#bonus", :href => "#"} Bonus Version
+                    / Big Banner
+                    #big-banner.mega-submenu.col-md-10.col-sm-9.active
+                      %a.img-link{:href => "#"}
+                        %img{:alt => "Banner", :src => "img/megamenu/big-banner.jpg"}/
+                    / Three Categories
+                    #three-cats.mega-submenu.col-md-10.col-sm-9
+                      %h4.text-center GET THE LATEST FROM KEDAVRA
+                      .row
+                        .col-md-4.col-sm-4
+                          %a.img-link{:href => "#"}
+                            %img{:alt => "Cat01", :src => "img/megamenu/cat01.png"}/
+                          %h5 Lorem ipsum dolor sit
+                          %p Lorem aute irure dolor elit, sed nulla amet dolor do eiusmod tempor ut labore et.
+                        .col-md-4.col-sm-4
+                          %a.img-link{:href => "#"}
+                            %img{:alt => "Cat02", :src => "img/megamenu/cat02.png"}/
+                          %h5 Lorem ipsum dolor sit
+                          %p Lorem aute irure dolor elit, sed nulla amet dolor do eiusmod tempor ut labore et.
+                        .col-md-4.col-sm-4
+                          %a.img-link{:href => "#"}
+                            %img{:alt => "Cat03", :src => "img/megamenu/cat03.png"}/
+                          %h5 Lorem ipsum dolor sit
+                          %p Lorem aute irure dolor elit, sed nulla amet dolor do eiusmod tempor ut labore et.
+                    / Best Sellers
+                    #bestsellers.mega-submenu.col-md-10.col-sm-9
+                      .row
+                        .col-md-3.col-sm-3
+                          %h4 Bags & Accessories
+                          %ul
+                            %li
+                              %a{:href => "#"} Handbags
+                            %li
+                              %a{:href => "#"} Backpacks
+                            %li
+                              %a{:href => "#"} Wallets
+                            %li
+                              %a{:href => "#"} Purses
+                            %li
+                              %a{:href => "#"} Sport Bags
+                            %li
+                              %a{:href => "#"} Belts
+                            %li
+                              %a{:href => "#"} Gloves
+                            %li
+                              %a{:href => "#"} Leather Shoes
+                        .col-md-9.col-sm-9
+                          %h4.text-center CHOOSE YOUR WALLET
+                          .row
+                            .col-md-4.col-sm-4
+                              %a.img-link.uppercase{:href => "#"}
+                                %img{:alt => "Bestsell01", :src => "img/megamenu/bestsell01.png"}/
+                                Wallet Gray
+                            .col-md-4.col-sm-4
+                              %a.img-link.uppercase{:href => "#"}
+                                %img{:alt => "Bestsell02", :src => "img/megamenu/bestsell02.png"}/
+                                Wallet Black
+                            .col-md-4.col-sm-4
+                              %a.img-link.uppercase{:href => "#"}
+                                %img{:alt => "Bestsell03", :src => "img/megamenu/bestsell03.png"}/
+                                Wallet Brown
+                    / Category Banner
+                    #cat-banner.mega-submenu.col-md-10.col-sm-9
+                      .row
+                        .col-md-3.col-sm-3
+                          %h4 Bags & Accessories
+                          %ul
+                            %li
+                              %a{:href => "#"} Handbags
+                            %li
+                              %a{:href => "#"} Backpacks
+                            %li
+                              %a{:href => "#"} Wallets
+                            %li
+                              %a{:href => "#"} Purses
+                            %li
+                              %a{:href => "#"} Sport Bags
+                            %li
+                              %a{:href => "#"} Belts
+                            %li
+                              %a{:href => "#"} Gloves
+                            %li
+                              %a{:href => "#"} Leather Shoes
+                            %li
+                              %a{:href => "#"} Clothing
+                        .col-md-9.col-sm-9
+                          %h4.text-center FREE SHIPING
+                          %a.img-link{:href => "#"}
+                            %img{:alt => "Banner", :src => "img/megamenu/cat-banner.jpg"}/
+                    / Bonus Version
+                    #bonus.mega-submenu.col-md-10.col-sm-9
+                      .row
+                        .col-md-2.col-sm-2.col-md-offset-1.col-sm-offset-1
+                          %a.img-link.uppercase{:href => "#"}
+                            %img{:alt => "Soccer", :src => "img/megamenu/bonus/soccer.png"}/
+                            Soccer
+                        .col-md-2.col-sm-2
+                          %a.img-link.uppercase{:href => "#"}
+                            %img{:alt => "Running", :src => "img/megamenu/bonus/running.png"}/
+                            Running
+                        .col-md-2.col-sm-2
+                          %a.img-link.uppercase{:href => "#"}
+                            %img{:alt => "Training", :src => "img/megamenu/bonus/training.png"}/
+                            Training
+                        .col-md-2.col-sm-2
+                          %a.img-link.uppercase{:href => "#"}
+                            %img{:alt => "Football", :src => "img/megamenu/bonus/football.png"}/
+                            Football
+                        .col-md-2.col-sm-2
+                          %a.img-link.uppercase{:href => "#"}
+                            %img{:alt => "Basketball", :src => "img/megamenu/bonus/basketball.png"}/
+                            Basketball
+            %li
+              %a{:href => "pages.html"} Pages
+              %ul.submenu
+                %li
+                  %a{:href => "login.html"} Login Page
+                %li
+                  %a{:href => "signup.html"} Sign Up Page
+                %li
+                  %a{:href => "user-account.html"} User Account Page
+                %li
+                  %a{:href => "resume.html"} Resume / Portfolio
+                %li
+                  %a{:href => "portfolio-single.html"} Single Project Page
+                %li
+                  %a{:href => "events-schedule.html"} Events Schedule
+                %li
+                  %a{:href => "about-corporate.html"}
+                    About Us
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "about-corporate.html"} About Corporate
+                    %li
+                      %a{:href => "about-personal.html"} About Personal
+                %li
+                  %a{:href => "contacts.html"} Contacts
+                %li
+                  %a{:href => "team.html"} Our Team
+                %li
+                  %a{:href => "team-profile.html"} Team Member Profile
+                %li
+                  %a{:href => "faq-tabs.html"}
+                    FAQ/Support Pages
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "faq-tabs.html"} Tabs Version
+                    %li
+                      %a{:href => "faq-standard.html"} Standard Version
+                %li
+                  %a{:href => "under-construction.html"} Under Construction
+                %li
+                  %a{:href => "search.html"} Search Page
+                %li
+                  %a{:href => "search-results.html"} Search Results
+                %li
+                  %a{:href => "404.html"}
+                    Error Pages
+                    %i.fa.fa-angle-right
+                  %ul.sub-submenu
+                    %li
+                      %a{:href => "404.html"} 404 Page
+                    %li
+                      %a{:href => "500.html"} 500 Page
+                %li
+                  %a{:href => "sitemap.html"} Sitemap
+            %li
+              %a{:href => "components-and-styles.html"} Features
+              %ul.submenu
+                %li
+                  %a{:href => "components-and-styles.html"} Components & Styles
+                %li
+                  %a{:href => "sliders-and-carousels.html"} Sliders & Carousels
+                %li
+                  %a{:href => "grid-and-list.html"} Grid & List Layouts
+        / Search
+        .search
+          %i.flaticon-search100
+      / Tools
+      .tools.group
+        .cart-btn
+          %a.link{:href => "shopping-cart.html"}
+            %span 4
+          .cart-dropdown
+            .empty-cart
+              %p There are no items in your cart.
+              %a.btn.btn-center.btn-primary{:href => "shop-grid-1-big-banner.html"} Go to catalog
+            .wrap
+              .container
+                .row
+                  .col-md-8.col-sm-9
+                    .owl-carousel
+                      .item
+                        .delete
+                          %i.fa.fa-angle-right
+                          %i.fa.fa-angle-left
+                        %a{:href => "shop-single-dr.html"}
+                          %span.name Tourist backpack
+                          %span.price 175 $
+                          %span.overlay
+                          %img{:alt => "Item01", :src => "img/cart-dropdown/item01.jpg"}/
+                        .qnt-count
+                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
+                          %input.quantity{:type => "text", :value => "1"}/
+                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
+                      .item
+                        .delete
+                          %i.fa.fa-angle-right
+                          %i.fa.fa-angle-left
+                        %a{:href => "shop-single-dl.html"}
+                          %span.name Horsefeathers 752
+                          %span.price 129 $
+                          %span.overlay
+                          %img{:alt => "Item02", :src => "img/cart-dropdown/item02.jpg"}/
+                        .qnt-count
+                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
+                          %input.quantity{:type => "text", :value => "1"}/
+                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
+                      .item
+                        .delete
+                          %i.fa.fa-angle-right
+                          %i.fa.fa-angle-left
+                        %a{:href => "shop-single-dr.html"}
+                          %span.name Leather handbag
+                          %span.price 345 $
+                          %span.overlay
+                          %img{:alt => "Item03", :src => "img/cart-dropdown/item03.jpg"}/
+                        .qnt-count
+                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
+                          %input.quantity{:type => "text", :value => "1"}/
+                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
+                      .item
+                        .delete
+                          %i.fa.fa-angle-right
+                          %i.fa.fa-angle-left
+                        %a{:href => "shop-single-dl.html"}
+                          %span.name Ultra durable backpack
+                          %span.price 220 $
+                          %span.overlay
+                          %img{:alt => "Item04", :src => "img/cart-dropdown/item04.jpg"}/
+                        .qnt-count
+                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
+                          %input.quantity{:type => "text", :value => "1"}/
+                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
+                  .col-md-3.col-md-offset-1.col-sm-3
+                    %table
+                      %tr
+                        %td Subtotal
+                        %td.text-right 999 $
+                      %tr
+                        %td Delivery
+                        %td.text-right 111 $
+                    %table.total
+                      %tr
+                        %td Total
+                        %td.text-right 1110 $
+                    .links
+                      %a{:href => "#"} Need a Special Preparation?
+                      %br/
+                      %a#promo-code-link{:href => "#"} Gift or Promo Code?
+                      %form.promo-code.group
+                        %label{:for => "promo-code"}
+                        %input#promo-code.form-control{:name => "promo-code", :placeholder => "Code", :type => "text"}/
+                        %input.btn.disabled{:type => "submit", :value => "Apply"}/
+                    %a.btn.btn-center.btn-primary{:href => "checkout.html"} Checkout
+        %a.pull-right{:href => "login.html"} Login
+        %a.signup.pull-right{:href => "signup.html"} Sign Up
+      / Tools Close
+  / Quick Search
+  %form.quick-search{:autocomplete => "off", :method => "get"}
+    .overlay
+    %input.search-field{:placeholder => "Search", :type => "text"}/
+    %span Press enter to search
+/ Header Close
