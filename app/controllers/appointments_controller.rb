@@ -43,8 +43,7 @@ class AppointmentsController < CompanyController
   end
 
   def create
-    seconds = Time.find_zone!(@organization.timezone).utc_offset.seconds
-    start = Time.parse(params[:start]) - seconds
+    start = Time.parse(params[:start]) - @organization.zone_offset.seconds
 
     @user = current_user || User.where(phone: user_params[:phone]).first_or_initialize(user_params)
     @appointment = @user.appointments.build(start: start, organization_id: @organization.id)
@@ -112,8 +111,7 @@ class AppointmentsController < CompanyController
     @appointment.showing_time = params[:showing_time].to_i if params[:showing_time]
     @appointment.cost = params[:cost] if params[:cost]
     if params[:start]
-      seconds = Time.find_zone!(@organization.timezone).utc_offset.seconds
-      @appointment.start = Time.parse(params[:start]) - seconds
+      @appointment.start = Time.parse(params[:start]) - @organization.zone_offset.seconds
     end
     if @appointment.save
       render text: <<-JS

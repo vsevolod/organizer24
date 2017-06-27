@@ -27,19 +27,19 @@
     height: 44px;
 }
 
-.sa-side-home { background-image: url(/assets/sadmin/icon/home.png); }
-.sa-side-typography { background-image: url(/assets/sadmin/icon/typography.png); }
-.sa-side-widget { background-image: url(/assets/sadmin/icon/widgets.png); }
-.sa-side-table { background-image: url(/assets/sadmin/icon/table.png); }
-.sa-side-form { background-image: url(/assets/sadmin/icon/form.png); }
-.sa-side-ui { background-image: url(/assets/sadmin/icon/ui.png); }
-.sa-side-folder { background-image: url(/assets/sadmin/icon/folder.png); }
-.sa-side-calendar { background-image: url(/assets/sadmin/icon/calendar.png); }
-.sa-side-page { background-image: url(/assets/sadmin/icon/pages.png); }
-.sa-side-chart { background-image: url(/assets/sadmin/icon/chart.png); }
-.sa-side-photos { background-image: url(/assets/sadmin/icon/photos.png); }
-.sa-side-view { background-image: url(/assets/sadmin/icon/icon-view.png); }
-.sa-side-view { background-image: url(/assets/sadmin/icon/icon-view.png); }
+.sa-side-home { background-image: image_url('sadmin/icon/home.png'); }
+.sa-side-typography { background-image: image_url('sadmin/icon/typography.png'); }
+.sa-side-widget { background-image: image_url('sadmin/icon/widgets.png'); }
+.sa-side-table { background-image: image_url('sadmin/icon/table.png'); }
+.sa-side-form { background-image: image_url('sadmin/icon/form.png'); }
+.sa-side-ui { background-image: image_url('sadmin/icon/ui.png'); }
+.sa-side-folder { background-image: image_url('sadmin/icon/folder.png'); }
+.sa-side-calendar { background-image: image_url('sadmin/icon/calendar.png'); }
+.sa-side-page { background-image: image_url('sadmin/icon/pages.png'); }
+.sa-side-chart { background-image: image_url('sadmin/icon/chart.png'); }
+.sa-side-photos { background-image: image_url('sadmin/icon/photos.png'); }
+.sa-side-view { background-image: image_url('sadmin/icon/icon-view.png'); }
+.sa-side-view { background-image: image_url('sadmin/icon/icon-view.png'); }
 .sa-side-exit {
   @include left_menu('\f118')
 }
@@ -59,8 +59,8 @@
     height: 48px;
     float: left;
 }
-.sa-top-message { background-image: url(/assets/sadmin/icon/message.png); }
-.sa-top-updates { background-image: url(/assets/sadmin/icon/updates.png); }
+.sa-top-message { background-image: image_url('sadmin/icon/message.png'); }
+.sa-top-updates { background-image: image_url('sadmin/icon/updates.png'); }
 
 /* Editor */
 [class*="editor-"] {
@@ -70,24 +70,24 @@
    background-repeat: no-repeat;
    float: left;
 }
-.editor-text { background-image: url(/assets/sadmin/editor/text.png); }
-.editor-bold { background-image: url(/assets/sadmin/editor/bold.png); }
-.editor-italic { background-image: url(/assets/sadmin/editor/italic.png); }
-.editor-underline { background-image: url(/assets/sadmin/editor/underline.png); }
-.editor-unstyle { background-image: url(/assets/sadmin/editor/unstyle.png); }
-.editor-unlist { background-image: url(/assets/sadmin/editor/unlist.png); }
-.editor-orderlist { background-image: url(/assets/sadmin/editor/orderlist.png); }
-.editor-align { background-image: url(/assets/sadmin/editor/align.png); }
-.editor-line-height { background-image: url(/assets/sadmin/editor/line-height.png); }
-.editor-table { background-image: url(/assets/sadmin/editor/table.png); }
-.editor-link { background-image: url(/assets/sadmin/editor/link.png); }
-.editor-picture { background-image: url(/assets/sadmin/editor/picture.png); }
-.editor-video { background-image: url(/assets/sadmin/editor/video.png); }
-.editor-full-screen { background-image: url(/assets/sadmin/editor/full-screen.png); }
-.editor-code { background-image: url(/assets/sadmin/editor/code.png); }
-.editor-help { background-image: url(/assets/sadmin/editor/help.png); }
-.editor-font { background-image: url(/assets/sadmin/editor/font.png); }
-.editor-heading { background-image: url(/assets/sadmin/editor/heading.png); }
+.editor-text { background-image: image_url('sadmin/editor/text.png'); }
+.editor-bold { background-image: image_url('sadmin/editor/bold.png'); }
+.editor-italic { background-image: image_url('sadmin/editor/italic.png'); }
+.editor-underline { background-image: image_url('sadmin/editor/underline.png'); }
+.editor-unstyle { background-image: image_url('sadmin/editor/unstyle.png'); }
+.editor-unlist { background-image: image_url('sadmin/editor/unlist.png'); }
+.editor-orderlist { background-image: image_url('sadmin/editor/orderlist.png'); }
+.editor-align { background-image: image_url('sadmin/editor/align.png'); }
+.editor-line-height { background-image: image_url('sadmin/editor/line-height.png'); }
+.editor-table { background-image: image_url('sadmin/editor/table.png'); }
+.editor-link { background-image: image_url('sadmin/editor/link.png'); }
+.editor-picture { background-image: image_url('sadmin/editor/picture.png'); }
+.editor-video { background-image: image_url('sadmin/editor/video.png'); }
+.editor-full-screen { background-image: image_url('sadmin/editor/full-screen.png'); }
+.editor-code { background-image: image_url('sadmin/editor/code.png'); }
+.editor-help { background-image: image_url('sadmin/editor/help.png'); }
+.editor-font { background-image: image_url('sadmin/editor/font.png'); }
+.editor-heading { background-image: image_url('sadmin/editor/heading.png'); }
 
 /* List Icons */
 [class*="sa-list-"] {
@@ -98,27 +98,27 @@
     background-repeat: no-repeat;
 }
 
-.sa-list-add { background-image: url(/assets/sadmin/icon/add.png); }
-.sa-list-refresh { background-image: url(/assets/sadmin/icon/refresh.png); }
-.sa-list-move { background-image: url(/assets/sadmin/icon/move.png); }
-.sa-list-delete { background-image: url(/assets/sadmin/icon/delete.png); }
-.sa-list-back { background-image: url(/assets/sadmin/icon/back.png); }
-.sa-list-forwad { background-image: url(/assets/sadmin/icon/forwad.png); }
-.sa-list-day { background-image: url(/assets/sadmin/icon/day.png); }
-.sa-list-week { background-image: url(/assets/sadmin/icon/week.png); }
-.sa-list-month { background-image: url(/assets/sadmin/icon/month.png); }
-.sa-list-spam { background-image: url(/assets/sadmin/icon/spam.png); }
-.sa-list-archive { background-image: url(/assets/sadmin/icon/archive.png); }
+.sa-list-add { background-image: image_url('sadmin/icon/add.png'); }
+.sa-list-refresh { background-image: image_url('sadmin/icon/refresh.png'); }
+.sa-list-move { background-image: image_url('sadmin/icon/move.png'); }
+.sa-list-delete { background-image: image_url('sadmin/icon/delete.png'); }
+.sa-list-back { background-image: image_url('sadmin/icon/back.png'); }
+.sa-list-forwad { background-image: image_url('sadmin/icon/forwad.png'); }
+.sa-list-day { background-image: image_url('sadmin/icon/day.png'); }
+.sa-list-week { background-image: image_url('sadmin/icon/week.png'); }
+.sa-list-month { background-image: image_url('sadmin/icon/month.png'); }
+.sa-list-spam { background-image: image_url('sadmin/icon/spam.png'); }
+.sa-list-archive { background-image: image_url('sadmin/icon/archive.png'); }
 
 
 /* Others */
-#menu-toggle { background-image: url(/assets/sadmin/icon/menu.png); }
+#menu-toggle { background-image: image_url('sadmin/icon/menu.png'); }
 
 /* Form */
 .sa-plus {
     width: 13px;
     height: 13px;
-    background-image: url(/assets/sadmin/icon/plus-sm.png);
+    background-image: image_url('sadmin/icon/plus-sm.png');
     display: inline-block;
 }
 
@@ -134,61 +134,61 @@ only screen and (                min-resolution: 1.25dppx) {
     /* Left Menu */
     .sa-side-typography, .sa-side-widget, .sa-side-table, .sa-side-ui, .sa-side-folder { background-size: 23px 21px; }
 
-    .sa-side-home { background-image: url(/assets/sadmin/icon/home@2x.png); background-size: 25px 25px; }
-    .sa-side-typography { background-image: url(/assets/sadmin/icon/typography@2x.png); }
-    .sa-side-widget { background-image: url(/assets/sadmin/icon/widgets@2x.png); }
-    .sa-side-table { background-image: url(/assets/sadmin/icon/table@2x.png); }
-    .sa-side-form { background-image: url(/assets/sadmin/icon/form@2x.png); background-size: 19px 25px; }
-    .sa-side-ui { background-image: url(/assets/sadmin/icon/ui@2x.png);  }
-    .sa-side-folder { background-image: url(/assets/sadmin/icon/folder@2x.png); }
-    .sa-side-calendar { background-image: url(/assets/sadmin/icon/calendar@2x.png); background-size: 23px 23px; }
-    .sa-side-page { background-image: url(/assets/sadmin/icon/pages@2x.png); background-size: 25px 21px; }
-    .sa-side-chart { background-image: url(/assets/sadmin/icon/chart@2x.png); background-size: 24px 19px; }
-    .sa-side-photos { background-image: url(/assets/sadmin/icon/photos@2x.png); background-size: 23px 19px; }
+    .sa-side-home { background-image: image_url('sadmin/icon/home@2x.png'); background-size: 25px 25px; }
+    .sa-side-typography { background-image: image_url('sadmin/icon/typography@2x.png'); }
+    .sa-side-widget { background-image: image_url('sadmin/icon/widgets@2x.png'); }
+    .sa-side-table { background-image: image_url('sadmin/icon/table@2x.png'); }
+    .sa-side-form { background-image: image_url('sadmin/icon/form@2x.png'); background-size: 19px 25px; }
+    .sa-side-ui { background-image: image_url('sadmin/icon/ui@2x.png');  }
+    .sa-side-folder { background-image: image_url('sadmin/icon/folder@2x.png'); }
+    .sa-side-calendar { background-image: image_url('sadmin/icon/calendar@2x.png'); background-size: 23px 23px; }
+    .sa-side-page { background-image: image_url('sadmin/icon/pages@2x.png'); background-size: 25px 21px; }
+    .sa-side-chart { background-image: image_url('sadmin/icon/chart@2x.png'); background-size: 24px 19px; }
+    .sa-side-photos { background-image: image_url('sadmin/icon/photos@2x.png'); background-size: 23px 19px; }
     
     /* Top Menu */
-    .sa-top-message { background-image: url(/assets/sadmin/icon/message@2x.png); background-size: 25px 17px; }
-    .sa-top-updates { background-image: url(/assets/sadmin/icon/updates@2x.png); background-size: 25px 25px; }
+    .sa-top-message { background-image: image_url('sadmin/icon/message@2x.png'); background-size: 25px 17px; }
+    .sa-top-updates { background-image: image_url('sadmin/icon/updates@2x.png'); background-size: 25px 25px; }
 
     /* Editor */
-    .editor-text { background-image: url(/assets/sadmin/editor/text@2x.png); background-size: 11px 13px; }
-    .editor-bold { background-image: url(/assets/sadmin/editor/bold@2x.png); background-size:  10px 13px;}
-    .editor-italic { background-image: url(/assets/sadmin/editor/italic@2x.png); background-size: 5px 13px; }
-    .editor-underline { background-image: url(/assets/sadmin/editor/underline@2x.png); background-size: 10px 13px; }
-    .editor-unstyle { background-image: url(/assets/sadmin/editor/unstyle@2x.png); background-size: 11px 13px; }
-    .editor-unlist { background-image: url(/assets/sadmin/editor/unlist@2x.png); background-size: 13px 13px; }
-    .editor-orderlist { background-image: url(/assets/sadmin/editor/orderlist@2x.png); background-size: 13px 13px; }
-    .editor-align { background-image: url(/assets/sadmin/editor/align@2x.png); background-size: 13px 13px; }
-    .editor-line-height { background-image: url(/assets/sadmin/editor/line-height@2x.png); background-size: 11px 13px; }
-    .editor-table { background-image: url(/assets/sadmin/editor/table@2x.png); background-size: 13px 13px; }
-    .editor-link { background-image: url(/assets/sadmin/editor/link@2x.png); background-size: 9px 13px; }
-    .editor-picture { background-image: url(/assets/sadmin/editor/picture@2x.png); background-size: 13px 13px; }
-    .editor-video { background-image: url(/assets/sadmin/editor/video@2x.png); background-size: 13px 13px; }
-    .editor-full-screen { background-image: url(/assets/sadmin/editor/full-screen@2x.png); background-size: 13px 13px; }
-    .editor-code { background-image: url(/assets/sadmin/editor/code@2x.png); background-size: 10px 13px;}
-    .editor-help { background-image: url(/assets/sadmin/editor/help@2x.png); background-size: 10px 13px; }
-    .editor-font { background-image: url(/assets/sadmin/editor/font@2x.png); background-size: 10px 13px; }
-    .editor-heading { background-image: url(/assets/sadmin/editor/heading@2x.png); background-size: 10px 13px; }
+    .editor-text { background-image: image_url('sadmin/editor/text@2x.png'); background-size: 11px 13px; }
+    .editor-bold { background-image: image_url('sadmin/editor/bold@2x.png'); background-size:  10px 13px;}
+    .editor-italic { background-image: image_url('sadmin/editor/italic@2x.png'); background-size: 5px 13px; }
+    .editor-underline { background-image: image_url('sadmin/editor/underline@2x.png'); background-size: 10px 13px; }
+    .editor-unstyle { background-image: image_url('sadmin/editor/unstyle@2x.png'); background-size: 11px 13px; }
+    .editor-unlist { background-image: image_url('sadmin/editor/unlist@2x.png'); background-size: 13px 13px; }
+    .editor-orderlist { background-image: image_url('sadmin/editor/orderlist@2x.png'); background-size: 13px 13px; }
+    .editor-align { background-image: image_url('sadmin/editor/align@2x.png'); background-size: 13px 13px; }
+    .editor-line-height { background-image: image_url('sadmin/editor/line-height@2x.png'); background-size: 11px 13px; }
+    .editor-table { background-image: image_url('sadmin/editor/table@2x.png'); background-size: 13px 13px; }
+    .editor-link { background-image: image_url('sadmin/editor/link@2x.png'); background-size: 9px 13px; }
+    .editor-picture { background-image: image_url('sadmin/editor/picture@2x.png'); background-size: 13px 13px; }
+    .editor-video { background-image: image_url('sadmin/editor/video@2x.png'); background-size: 13px 13px; }
+    .editor-full-screen { background-image: image_url('sadmin/editor/full-screen@2x.png'); background-size: 13px 13px; }
+    .editor-code { background-image: image_url('sadmin/editor/code@2x.png'); background-size: 10px 13px;}
+    .editor-help { background-image: image_url('sadmin/editor/help@2x.png'); background-size: 10px 13px; }
+    .editor-font { background-image: image_url('sadmin/editor/font@2x.png'); background-size: 10px 13px; }
+    .editor-heading { background-image: image_url('sadmin/editor/heading@2x.png'); background-size: 10px 13px; }
 
     /* List Icons */    
-    .sa-list-add { background-image: url(/assets/sadmin/icon/add@2x.png); background-size: 19px 19px;  }
-    .sa-list-refresh { background-image: url(/assets/sadmin/icon/refresh@2x.png); background-size: 18px 19px; }
-    .sa-list-move { background-image: url(/assets/sadmin/icon/move@2x.png); background-size: 19px 19px; }
-    .sa-list-delete { background-image: url(/assets/sadmin/icon/delete@2x.png); background-size: 15px 19px; }
-    .sa-list-back { background-image: url(/assets/sadmin/icon/back@2x.png); background-size: 12px 21px; }
-    .sa-list-forwad { background-image: url(/assets/sadmin/icon/forwad@2x.png); background-size: 12px 21px; }
-    .sa-list-day { background-image: url(/assets/sadmin/icon/day@2x.png); background-size: 21px 21px; }
-    .sa-list-week { background-image: url(/assets/sadmin/icon/week@2x.png); background-size: 21px 21px; }
-    .sa-list-month { background-image: url(/assets/sadmin/icon/month@2x.png); background-size: 21px 21px; }
-    .sa-list-spam { background-image: url(/assets/sadmin/icon/spam@2x.png); background-size: 17px 17px; }
-    .sa-list-archive { background-image: url(/assets/sadmin/icon/archive@2x.png); background-size: 17px 17px; }
+    .sa-list-add { background-image: image_url('sadmin/icon/add@2x.png'); background-size: 19px 19px;  }
+    .sa-list-refresh { background-image: image_url('sadmin/icon/refresh@2x.png'); background-size: 18px 19px; }
+    .sa-list-move { background-image: image_url('sadmin/icon/move@2x.png'); background-size: 19px 19px; }
+    .sa-list-delete { background-image: image_url('sadmin/icon/delete@2x.png'); background-size: 15px 19px; }
+    .sa-list-back { background-image: image_url('sadmin/icon/back@2x.png'); background-size: 12px 21px; }
+    .sa-list-forwad { background-image: image_url('sadmin/icon/forwad@2x.png'); background-size: 12px 21px; }
+    .sa-list-day { background-image: image_url('sadmin/icon/day@2x.png'); background-size: 21px 21px; }
+    .sa-list-week { background-image: image_url('sadmin/icon/week@2x.png'); background-size: 21px 21px; }
+    .sa-list-month { background-image: image_url('sadmin/icon/month@2x.png'); background-size: 21px 21px; }
+    .sa-list-spam { background-image: image_url('sadmin/icon/spam@2x.png'); background-size: 17px 17px; }
+    .sa-list-archive { background-image: image_url('sadmin/icon/archive@2x.png'); background-size: 17px 17px; }
 
     /* Form */
-    .sa-plus { background-image: url(/assets/sadmin/icon/plus-sm@2x.png); background-size: 13px 13px; }
+    .sa-plus { background-image: image_url('sadmin/icon/plus-sm@2x.png'); background-size: 13px 13px; }
     
     /* Others */
-    #menu-toggle { background-image: url(/assets/sadmin/icon/menu@2x.png); background-size: 18px 13px; }
-    .main-search { background-image: url(/assets/sadmin/icon/search@2x.png); background-size: 25px 25px; }
-    .tile-config > .tile-menu { background-image: url(/assets/sadmin/icon/tile-actions@2x.png); background-size: 13px 3px; }
-    .message-search:not(:focus) { background-image: url(/assets/sadmin/icon/search@2x.png); background-size: 25px 25px; }
+    #menu-toggle { background-image: image_url('sadmin/icon/menu@2x.png'); background-size: 18px 13px; }
+    .main-search { background-image: image_url('sadmin/icon/search@2x.png'); background-size: 25px 25px; }
+    .tile-config > .tile-menu { background-image: image_url('sadmin/icon/tile-actions@2x.png'); background-size: 13px 3px; }
+    .message-search:not(:focus) { background-image: image_url('sadmin/icon/search@2x.png'); background-size: 25px 25px; }
 }

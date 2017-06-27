@@ -94,6 +94,10 @@ class Organization < ApplicationRecord
     end
   end
 
+  def zone_offset
+    Time.find_zone!(timezone).utc_offset
+  end
+
   private
 
   def to_Date(seconds)

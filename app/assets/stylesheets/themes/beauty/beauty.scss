@@ -25,7 +25,7 @@ body {
   &.registrations_create,
   &.sessions_new,
   &.sessions_create {
-    background-image: url("/assets/firstreal2.jpg");
+    background-image: image_url("firstreal2.jpg");
     background-attachment: fixed;
     background-position: -150px top;
     background-repeat: no-repeat;

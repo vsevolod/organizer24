@@ -136,7 +136,7 @@
 	left: 50%;
 	margin-left: -100px;
 	text-align: center;
-	background: url(/assets/sadmin/filemanager/progress.gif) center bottom repeat-x;
+	background: image_url('sadmin/filemanager/progress.gif') center bottom repeat-x;
 }
 
 .elfinder-resize-row {
@@ -522,11 +522,11 @@
 
 
 .elfinder-cwd-icon-directory {
-	background: url(/assets/sadmin/filemanager/icon/folder.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/folder.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-application {
-	background: url(/assets/sadmin/filemanager/icon/exe.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/exe.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-x-empty,.elfinder-cwd-icon-text,
@@ -534,25 +534,25 @@
 .elfinder-cwd-icon-vnd-oasis-opendocument-text-master,
 .elfinder-cwd-icon-vnd-oasis-opendocument-text-template,
 .elfinder-cwd-icon-vnd-oasis-opendocument-text-web {
-	background: url(/assets/sadmin/filemanager/icon/txt.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/txt.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-vnd-adobe-photoshop,.elfinder-cwd-icon-postscript, .elfinder-cwd-icon-image {
-	background: url(/assets/sadmin/filemanager/icon/psd.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/psd.png') center no-repeat;
 	margin-top: 4px;
 }
 
 .elfinder-cwd-icon-audio {
-	background: url(/assets/sadmin/filemanager/icon/mp3.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/mp3.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-video {
-	background: url(/assets/sadmin/filemanager/icon/video.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/video.png') center no-repeat;
 }
 
 
 .elfinder-cwd-icon-flash-video, .elfinder-cwd-icon-x-shockwave-flash {
-	background: url(/assets/sadmin/filemanager/icon/flash.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/flash.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-rtf,.elfinder-cwd-icon-rtfd {
@@ -560,7 +560,7 @@
 }
 
 .elfinder-cwd-icon-pdf {
-	background: url(/assets/sadmin/filemanager/icon/pdf.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/pdf.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-ms-excel,
@@ -573,7 +573,7 @@
 .elfinder-cwd-icon-vnd-oasis-opendocument-spreadsheet-template,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-spreadsheetml-sheet,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-spreadsheetml-template {
-	background: url(/assets/sadmin/filemanager/icon/xls.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/xls.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-msword, 
@@ -583,7 +583,7 @@
 .elfinder-cwd-icon-vnd-ms-word-template-macroEnabled-12,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-wordprocessingml-document,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-wordprocessingml-template {
-	background: url(/assets/sadmin/filemanager/icon/doc.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/doc.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-vnd-ms-powerpoint,
@@ -598,48 +598,48 @@
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-presentationml-slide,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-presentationml-slideshow,
 .elfinder-cwd-icon-vnd-openxmlformats-officedocument-presentationml-template {
-	background: url(/assets/sadmin/filemanager/icon/ppt.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/ppt.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-html {
-	background: url(/assets/sadmin/filemanager/icon/html.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/html.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-css {
-	background: url(/assets/sadmin/filemanager/icon/css.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/css.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-javascript,.elfinder-cwd-icon-x-javascript {
-	background: url(/assets/sadmin/filemanager/icon/js.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/js.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-x-perl {
-	background: url(/assets/sadmin/filemanager/icon/perl.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/perl.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-x-python {
-	background: url(/assets/sadmin/filemanager/icon/py.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/py.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-x-php {
-	background: url(/assets/sadmin/filemanager/icon/php.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/php.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-xml {
-	background: url(/assets/sadmin/filemanager/icon/xml.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/xml.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-zip,.elfinder-cwd-icon-x-zip,.elfinder-cwd-icon-x-7z-compressed {
-	background: url(/assets/sadmin/filemanager/icon/zip.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/zip.png') center no-repeat;
 }
 
 
 .elfinder-cwd-icon-x-rar, .elfinder-cwd-icon-x-bzip,.elfinder-cwd-icon-x-bzip2, .elfinder-cwd-icon-x-rar-compressed, .elfinder-cwd-icon-x-gzip,.elfinder-cwd-icon-x-tar,  {
-	background: url(/assets/sadmin/filemanager/icon/rar.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/rar.png') center no-repeat;
 }
 
 .elfinder-cwd-icon-unknown {
-	background: url(/assets/sadmin/filemanager/icon/file.png) center no-repeat;
+	background: image_url('sadmin/filemanager/icon/file.png') center no-repeat;
 }
 
 .elfinder-cwd input {
@@ -791,7 +791,7 @@
 .elfinder-notify-progress {
 	width: 100%;
 	height: 8px;
-	background: url(/assets/sadmin/filemanager/progress.gif) center center repeat-x;
+	background: image_url('sadmin/filemanager/progress.gif') center center repeat-x;
 }
 
 .elfinder-info-title .elfinder-cwd-icon {
@@ -838,7 +838,7 @@
 	width: 14px;
 	height: 14px;
 	float: left;
-	background: url("/assets/sadmin/filemanager/spinner-mini.gif") center center no-repeat;
+	background: image_url("sadmin/filemanager/spinner-mini.gif") center center no-repeat;
 	margin: 0 5px;
 	background-size: 14px;
 }
@@ -977,7 +977,7 @@
 	display: none;
 	top: 6px;
 	left: 14px;
-	background-image: url("/assets/sadmin/filemanager/arrows.png");
+	background-image: image_url("sadmin/filemanager/arrows.png");
 	background-repeat: no-repeat;
 }
 
@@ -1001,7 +1001,7 @@
 	position: absolute;
 	top: 50%;
 	margin-top: -9px;
-	background-image: url(/assets/sadmin/icon/folder-sm.png);
+	background-image: image_url('sadmin/icon/folder-sm.png');
 	background-repeat: no-repeat;
 	opacity: 0.8;
 }
@@ -1025,7 +1025,7 @@
 	display: block;
 	top: 50%;
 	margin-top: -7px;
-	background: url("/assets/sadmin/filemanager/spinner-mini.gif") center center no-repeat;
+	background: image_url("sadmin/filemanager/spinner-mini.gif") center center no-repeat;
 }
 
 .elfinder-ltr .elfinder-navbar-spinner {
@@ -1081,7 +1081,7 @@
 	height: 14px;
 	right: 5px;
 	bottom: 3px;
-	background: url(/assets/sadmin/filemanager/resize-preview.png) no-repeat center;
+	background: image_url('sadmin/filemanager/resize-preview.png') no-repeat center;
 	position: absolute;
 }
 
@@ -1210,7 +1210,7 @@
 	height: 32px;
 	margin: 0 7px;
 	float: left;
-	background: url("/assets/sadmin/filemanager/quicklook-icons.png") 0 0 no-repeat;
+	background: image_url("sadmin/filemanager/quicklook-icons.png") 0 0 no-repeat;
 }
 
 .elfinder-quicklook-navbar-icon-next {
@@ -1390,15 +1390,15 @@ embed.elfinder-quicklook-preview-audio {
 }
 
 .elfinder-button-icon-home {
-	background-image: url(/assets/sadmin/icon/home.png);
+	background-image: image_url('sadmin/icon/home.png');
 }
 
 .elfinder-button-icon-back {
-	background-image: url(/assets/sadmin/icon/back.png);
+	background-image: image_url('sadmin/icon/back.png');
 }
 
 .elfinder-button-icon-forward {
-	background-image: url(/assets/sadmin/icon/forwad.png);
+	background-image: image_url('sadmin/icon/forwad.png');
 }
 
 .elfinder-button-icon-back, .elfinder-button-icon-forward {
@@ -1406,29 +1406,29 @@ embed.elfinder-quicklook-preview-audio {
 }
 
 .elfinder-button-icon-reload {
-	background-image: url(/assets/sadmin/icon/refresh.png);
+	background-image: image_url('sadmin/icon/refresh.png');
 }
 
 .elfinder-button-icon-open {}
 
 .elfinder-button-icon-mkdir {
-	background-image: url(/assets/sadmin/icon/folder.png);
+	background-image: image_url('sadmin/icon/folder.png');
 }
 
 .elfinder-button-icon-mkfile {
-	background-image: url(/assets/sadmin/icon/file.png);
+	background-image: image_url('sadmin/icon/file.png');
 }
 
 .elfinder-button-icon-upload {
-	background-image: url(/assets/sadmin/icon/upload.png);
+	background-image: image_url('sadmin/icon/upload.png');
 }
 
 .elfinder-button-icon-view {
-	background-image: url(/assets/sadmin/icon/icon-view.png);
+	background-image: image_url('sadmin/icon/icon-view.png');
 }
 
 .elfinder-button-icon-view-list {
-	background-image: url(/assets/sadmin/icon/list-view.png);
+	background-image: image_url('sadmin/icon/list-view.png');
 }
 
 .elfinder-button-icon-resize.elfinder-contextmenu-icon, .elfinder-button-icon-resize.elfinder-contextmenu-icon + span {
@@ -1436,7 +1436,7 @@ embed.elfinder-quicklook-preview-audio {
 }
 
 .elfinder-button-icon-sort {
-	background-image: url(/assets/sadmin/icon/sorting.png);
+	background-image: image_url('sadmin/icon/sorting.png');
 }
 
 .elfinder .elfinder-menubutton {
@@ -1550,7 +1550,7 @@ embed.elfinder-quicklook-preview-audio {
 	text-align: center;
 	padding-top: 1px;
 	top: 13px;
-	background: url(/assets/sadmin/icon/search-sm.png) no-repeat center;
+	background: image_url('sadmin/icon/search-sm.png') no-repeat center;
 }
 
 .elfinder-ltr .elfinder-navbar-dir:hover {
@@ -1593,62 +1593,62 @@ only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
 	.elfinder-button-icon-home {
-		background-image: url(/assets/sadmin/icon/home.png);
+		background-image: image_url('sadmin/icon/home.png');
 		background-size: 25px 25px;
 	}
 	
 	.elfinder-button-icon-back {
-		background-image: url(/assets/sadmin/icon/back$2x.png);
+		background-image: image_url('sadmin/icon/back$2x.png');
 		background-size: 12px 20px;
 	}
 	
 	.elfinder-button-icon-forward {
-		background-image: url(/assets/sadmin/icon/forwad$2x.png);
+		background-image: image_url('sadmin/icon/forwad$2x.png');
 		background-size: 12px 20px;
 	}
 	
 	.elfinder-button-icon-reload {
-		background-image: url(/assets/sadmin/icon/refresh$2x.png);
+		background-image: image_url('sadmin/icon/refresh$2x.png');
 		background-size: 18px 19px;
 	}
 		
 	.elfinder-button-icon-mkdir {
-		background-image: url(/assets/sadmin/icon/folder$2x.png);
+		background-image: image_url('sadmin/icon/folder$2x.png');
 		background-size: 23px 21px;
 	}
 	
 	.elfinder-button-icon-mkfile {
-		background-image: url(/assets/sadmin/icon/file$2x.png);
+		background-image: image_url('sadmin/icon/file$2x.png');
 		background-size: 19px 21px;
 	}
 	
 	.elfinder-button-icon-upload {
-		background-image: url(/assets/sadmin/icon/upload$2x.png);
+		background-image: image_url('sadmin/icon/upload$2x.png');
 		background-size: 19px 21px;
 	}
 	
 	.elfinder-button-icon-view {
-		background-image: url(/assets/sadmin/icon/icon-view$2x.png);
+		background-image: image_url('sadmin/icon/icon-view$2x.png');
 		background-size: 20px 20px;
 	}
 	
 	.elfinder-button-icon-view-list {
-		background-image: url(/assets/sadmin/icon/list-view$2x.png);
+		background-image: image_url('sadmin/icon/list-view$2x.png');
 		background-size: 20px 20px;
 	}
 
 	.elfinder-button-icon-sort {
-		background-image: url(/assets/sadmin/icon/sorting$2x.png);
+		background-image: image_url('sadmin/icon/sorting$2x.png');
 		background-size:  19px 19px;
 	}
 	
 	.elfinder-navbar-icon {
-		background-image: url(/assets/sadmin/icon/folder-sm$2x.png);
+		background-image: image_url('sadmin/icon/folder-sm$2x.png');
 		background-size: 16px 14px;
 	}
 	
 	.elfinder-ltr .elfinder-button-search .ui-icon-search {
-		background: url(/assets/sadmin/icon/search.png) no-repeat center;
+		background: image_url('sadmin/icon/search.png') no-repeat center;
 		background-size: 14px 14px;
 	}
 }

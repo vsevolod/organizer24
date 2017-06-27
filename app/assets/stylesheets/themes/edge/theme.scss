@@ -52,7 +52,7 @@ hr {
 .showcase {
 	position: relative;
 	z-index: -1;
-	background: transparent url('/assets/edge/main.png') center top fixed;
+	background: transparent image_url('edge/main.png') center top fixed;
 		-webkit-background-size: 100%; 
 		-moz-background-size: 100%; 
 		-o-background-size: 100%; 
@@ -80,7 +80,7 @@ header {
 	width: auto;
 	padding: 20px;
 	text-align: center;
-	background: #232323 url("/assets/edge/texture-1.png");
+	background: #232323 image_url("edge/texture-1.png");
 	margin-bottom: 50px;
 }
 .strip h3 {
@@ -113,7 +113,7 @@ footer {
 	width: auto;
 	padding: 30px 20px 20px;
 	margin-bottom: 0;
-	background: #2F353E url("/assets/edge/texture-1.png");
+	background: #2F353E image_url("edge/texture-1.png");
 }
 footer a {
 	color: #FFF;
@@ -162,7 +162,7 @@ footer a:hover {
 .pricing {
 	padding: 15px;
 	margin-bottom: 15px;
-	background: #ECEFF2 url("/assets/edge/texture-2.png") top right no-repeat;
+	background: #ECEFF2 image_url("edge/texture-2.png") top right no-repeat;
 	-webkit-border-radius: 4px;
 	   -moz-border-radius: 4px;
 			border-radius: 4px;
@@ -170,7 +170,7 @@ footer a:hover {
 .info-panel {
 	padding: 15px;
 	color: #9099A3;
-	background: #2F353E url("/assets/edge/texture-3.png");
+	background: #2F353E image_url("edge/texture-3.png");
 	-webkit-border-radius: 4px;
 	   -moz-border-radius: 4px;
 			border-radius: 4px;
@@ -298,7 +298,7 @@ footer a:hover {
 /* Extra queries are for Apple devices */
 @media (max-width: 768px), only screen and (min-device-width: 768px) and (max-device-width: 1024px), (min-device-width: 320px) and (max-device-width: 480px) { 
 	.showcase {
-		background: transparent url("/assets/edge/main-mobile.png") center top scroll; /* Smaller image to load faster */
+		background: transparent image_url("edge/main-mobile.png") center top scroll; /* Smaller image to load faster */
 		-webkit-background-size: 100%;
 		   -moz-background-size: 100%;
 			 -o-background-size: 100%;
