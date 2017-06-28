@@ -17,7 +17,7 @@ class WorkingHoursController < CompanyController
                           elsif current_user.worker? @organization
                             current_user.worker(@organization).appointments
                           end
-    @appointments = @total_appointments || current_user.appointments.where(organization_id: @organization.id).where(status: %w(approve offer taken), start: @start..@end)
+    @appointments = (@total_appointments || current_user.appointments.where(organization_id: @organization.id).where(status: %w(approve offer taken))).where(start: @start..@end)
     @appointments.each do |appointment|
       data_inner_class = if appointment.offer?
                            'legend-your-offer'
