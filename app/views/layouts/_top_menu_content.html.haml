@@ -16,7 +16,7 @@
       = link_to "/calendar" do
         %i.icon-calendar
         Записаться
-  - if current_user && !current_user.new_record?
+  - if current_user && current_user.persisted?
     - if current_user.owner_or_worker?(@organization)
       %li.dropdown
         %a.dropdown-toggle{ 'href' => '#', 'data-toggle' => 'dropdown' }

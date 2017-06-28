@@ -34,7 +34,11 @@ module ApplicationHelper
   end
 
   def theme_render(path, *options)
-    render "/themes/#{@organization.get_theme}/#{path}", *options
+    file_path = "/themes/#{@organization.get_theme}/#{path}"
+    unless lookup_context.template_exists?(file_path, nil, true)
+      file_path.gsub!(@organization.get_theme, 'default')
+    end
+    render file_path, *options
   end
 
   private

@@ -4,8 +4,8 @@
   .inner
     .container.group
       / Logo
-      %a.logo{:href => "index.html"}
-        %img{:alt => "Kedavra", :src => "img/logo.png"}/
+      = link_to domain_organization_path(@organization), class: 'logo', alt: @organization.name do
+        %h3= @organization.name
       / Navigation Toggle
       #nav-toggle.left-off-canvas-toggle
         %span
@@ -13,6 +13,8 @@
       .navigation
         / Menu
         %nav.menu
+          = render 'layouts/top_menu_content'
+        - if nil
           %ul
             %li.active.has-mega-menu
               %a{:href => "index.html"} Home
@@ -437,93 +439,8 @@
           %i.flaticon-search100
       / Tools
       .tools.group
-        .cart-btn
-          %a.link{:href => "shopping-cart.html"}
-            %span 4
-          .cart-dropdown
-            .empty-cart
-              %p There are no items in your cart.
-              %a.btn.btn-center.btn-primary{:href => "shop-grid-1-big-banner.html"} Go to catalog
-            .wrap
-              .container
-                .row
-                  .col-md-8.col-sm-9
-                    .owl-carousel
-                      .item
-                        .delete
-                          %i.fa.fa-angle-right
-                          %i.fa.fa-angle-left
-                        %a{:href => "shop-single-dr.html"}
-                          %span.name Tourist backpack
-                          %span.price 175 $
-                          %span.overlay
-                          %img{:alt => "Item01", :src => "img/cart-dropdown/item01.jpg"}/
-                        .qnt-count
-                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
-                          %input.quantity{:type => "text", :value => "1"}/
-                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
-                      .item
-                        .delete
-                          %i.fa.fa-angle-right
-                          %i.fa.fa-angle-left
-                        %a{:href => "shop-single-dl.html"}
-                          %span.name Horsefeathers 752
-                          %span.price 129 $
-                          %span.overlay
-                          %img{:alt => "Item02", :src => "img/cart-dropdown/item02.jpg"}/
-                        .qnt-count
-                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
-                          %input.quantity{:type => "text", :value => "1"}/
-                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
-                      .item
-                        .delete
-                          %i.fa.fa-angle-right
-                          %i.fa.fa-angle-left
-                        %a{:href => "shop-single-dr.html"}
-                          %span.name Leather handbag
-                          %span.price 345 $
-                          %span.overlay
-                          %img{:alt => "Item03", :src => "img/cart-dropdown/item03.jpg"}/
-                        .qnt-count
-                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
-                          %input.quantity{:type => "text", :value => "1"}/
-                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
-                      .item
-                        .delete
-                          %i.fa.fa-angle-right
-                          %i.fa.fa-angle-left
-                        %a{:href => "shop-single-dl.html"}
-                          %span.name Ultra durable backpack
-                          %span.price 220 $
-                          %span.overlay
-                          %img{:alt => "Item04", :src => "img/cart-dropdown/item04.jpg"}/
-                        .qnt-count
-                          %a.incr-btn.fa.fa-angle-left.inactive{"data-action" => "decrease", :href => "#"}
-                          %input.quantity{:type => "text", :value => "1"}/
-                          %a.incr-btn.fa.fa-angle-right{"data-action" => "increase", :href => "#"}
-                  .col-md-3.col-md-offset-1.col-sm-3
-                    %table
-                      %tr
-                        %td Subtotal
-                        %td.text-right 999 $
-                      %tr
-                        %td Delivery
-                        %td.text-right 111 $
-                    %table.total
-                      %tr
-                        %td Total
-                        %td.text-right 1110 $
-                    .links
-                      %a{:href => "#"} Need a Special Preparation?
-                      %br/
-                      %a#promo-code-link{:href => "#"} Gift or Promo Code?
-                      %form.promo-code.group
-                        %label{:for => "promo-code"}
-                        %input#promo-code.form-control{:name => "promo-code", :placeholder => "Code", :type => "text"}/
-                        %input.btn.disabled{:type => "submit", :value => "Apply"}/
-                    %a.btn.btn-center.btn-primary{:href => "checkout.html"} Checkout
-        %a.pull-right{:href => "login.html"} Login
-        %a.signup.pull-right{:href => "signup.html"} Sign Up
+        = link_to 'Вход', new_user_session_path, class: 'pull-right'
+        = link_to 'Регистрация', new_user_registration_path, class: 'signup pull-right'
       / Tools Close
   / Quick Search
   %form.quick-search{:autocomplete => "off", :method => "get"}

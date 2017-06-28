@@ -1,0 +1,52 @@
+/ Login Page
+.specialty-page-bg{:style => "background-image:url(#{image_path('speciality-page/banner.jpg')};"}
+%section.specialty-page
+  .container
+    .row
+      .col-md-8.col-md-offset-2.col-sm-12
+        .page-heading
+          %h2
+            - if @resource.new_record?
+              Регистрация
+            - else
+              Редактирование
+        .row
+          = form_for(@resource, :as => resource_name, :url => registration_path(resource_name), :html => { class: 'signup-form space-bottom' }) do |f|
+            = f.hidden_field :role
+            .form-group
+              = f.label :lastname, class: 'sr-only'
+              = f.text_field :lastname, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Фамилия', required: true
+            .form-group
+              = f.label :firstname, class: 'sr-only'
+              = f.text_field :firstname, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Имя', required: true
+            .form-group
+              = f.label :email, class: 'sr-only'
+              = f.email_field :email, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Email', required: true
+            .form-group
+              = f.label :phone, class: 'sr-only'
+              = f.text_field :phone, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Телефон', required: true
+            .form-group
+              = f.label :password, class: 'sr-only'
+              = f.password_field :password, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Пароль', required: true
+            .form-group
+              = f.label :password_confirmation, class: 'sr-only'
+              = f.password_field :password_confirmation, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Подтверждение пароля', required: true
+            - if @appointment_id
+              = hidden_field_tag :appointment_id, @appointment_id
+            - if @resource.new_record?
+              = f.submit 'Зарегистрироваться', :class => 'btn btn-md btn-primary btn-center'
+            - else
+              = f.input :current_password, :as => :password
+              = f.submit 'Редактировать', :class => 'btn btn-md btn-primary btn-center'
+        %p
+          Уже есть аккаунт?
+          = link_to 'Войти', new_user_session_path
+/ Info Box Widget
+%section.info-box.gray
+  .container.space-top.space-bottom
+    %div
+      %h4.light-color Check out our new theme!
+      %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.
+      %a.btn.btn-outlined.btn-primary{:href => "#", :style => "margin:30px !important;"} Buy Kedavra
+      %a.btn.btn-primary{:href => "#"} See More
+/ Info Box Widget Close
