@@ -1,10 +1,11 @@
-= form_tag appointments_path, :remote => !current_user.new_record? do
+= form_tag appointments_path, remote: current_user.persisted? do
   = hidden_field_tag :minutes
   = hidden_field_tag :start
   %section#second
-    #workers
+    .row#workers
       - @presenter.enabled_workers.each do |worker|
-        = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (theme_render 'services_list', :presenter => @presenter, :worker => worker).squish, class: 'except-iCheck'
+        .col-lg-4.col-md-6.col-sm-6
+          = radio_button_tag "worker_id", worker.id, worker.user == current_user || @presenter.enabled_workers.size == 1, :check_services => (theme_render 'services_list', :presenter => @presenter, :worker => worker).squish, class: 'except-iCheck'
     .block-area
       %h3 На что хотите записаться:
       .row

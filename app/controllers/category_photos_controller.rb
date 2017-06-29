@@ -4,7 +4,7 @@ class CategoryPhotosController < CompanyController
   before_action :find_ancestry_dictionaries, only: [:new, :edit, :create, :update]
 
   def index
-    @category_photos = @organization.category_photos.order(:name)
+    @category_photos = @organization.category_photos.includes(:photos).order(:name)
     if !current_user || !current_user.owner_or_worker?(@organization)
       redirect_to @category_photos.first if @category_photos.count == 1
     end
@@ -38,7 +38,7 @@ class CategoryPhotosController < CompanyController
 
   def show
     @category_photo = CategoryPhoto.find(params[:id])
-    @photos = Photo.where(category_photo_id: @category_photo.children.push(@category_photo))
+    @photos = Photo.where(category_photo_id: @category_photo.children + [@category_photo])
   end
 
   def destroy

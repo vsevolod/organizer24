@@ -1,6 +1,3 @@
-- if current_user && current_user.owner_or_worker?(@organization)
+- if owner_or_worker?
   = link_to 'Добавить новую', [:new, :category_photo], :class => 'btn btn-success'
-  %h1 Список ваших категорий для фотогалерей
-- else
-  %h1 Фотогалерея
-= theme_render 'category_photos_list', :objects => @category_photos
+= theme_render 'category_photos_list', objects: @category_photos

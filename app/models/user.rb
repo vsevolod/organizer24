@@ -73,7 +73,7 @@ class User < ApplicationRecord
 
   def worker(organization = nil)
     if organization
-      workers.where(organization_id: organization.id).first
+      workers.find_by(organization_id: organization.id)
     else
       workers.first
     end

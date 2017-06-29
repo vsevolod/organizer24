@@ -15,7 +15,7 @@
 %article
   .container
     %ul.row-fluid
-      - if true || @organization.show_photogallery? || current_user && current_user.owner_or_worker?( @organization )
+      - if true || @organization.show_photogallery? || owner_or_worker?
         %li.span3
           %i.foundicon-right-arrow.gen-enclosed
           .box

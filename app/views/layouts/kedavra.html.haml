@@ -8,6 +8,7 @@
     %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }/
     %meta{ content: '', name: 'description' }/
     %meta{ content: 'width=device-width, initial-scale=1', name: 'viewport' }/
+    = stylesheet_link_tag "company"
     = stylesheet_link_tag 'themes/kedavra'
     = include_gon(init: true)
     = csrf_meta_tags
@@ -16,10 +17,11 @@
     .off-canvas-wrap{ data: { offcanvas: '' } }
       .inner-wrap
         = theme_render 'off_canvas_menu'
-        .site-layout= theme_render 'header_toolbar'
-        .page= yield
-        %footer.footer
-          = theme_render 'footer'
+        .site-layout
+          = theme_render 'header_toolbar'
+          .page= yield
+          %footer.footer
+            = theme_render 'footer'
       %a.exit-off-canvas
     = javascript_include_tag 'themes/kedavra'
     = yield :bottom_js

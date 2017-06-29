@@ -1,0 +1,20 @@
+- if owner_or_worker?
+  = link_to 'Редактировать', [:edit, @category_photo], class: 'btn btn-primary'
+  = link_to 'Добавить новую', new_category_photo_path( category_photo: { parent_id: @category_photo.id } ), class: 'btn btn-success'
+
+%h2= @category_photo.name
+
+= theme_render 'category_photos_list', objects: @category_photo.children
+#myCarousel.carousel.slide.span7
+  %ol.carousel-indicators
+    - @photos.each_with_index do |photo, index|
+      %li{ :data => { :target => '#myCarousel', :slide_to => index}, :class => (index.zero? ? 'active' : '') }
+  .carousel-inner
+    - @photos.each_with_index do |photo, index|
+      %div{ :class => "item #{'active' if index.zero?}" }
+        = image_tag photo.photo.url(:gallery)
+        - if photo.name
+          .carousel-caption= photo.name
+  %a.carousel-control.left{  :href => '#myCarousel', 'data-slide' => 'prev' } &lsaquo;
+  %a.carousel-control.right{ :href => '#myCarousel', 'data-slide' => 'next' } &rsaquo;
+= theme_render 'category_photos_list', objects: @category_photo.root.siblings.where(:organization_id => @category_photo.organization_id)

@@ -1,0 +1,37 @@
+- if objects.size > 0
+  %section.gray-bg
+    .container
+      %h3.heading.center
+        Фотогалерея
+      .catalog-grid.type-2.double-space-bottom
+        .row
+          - objects.each do |category_photo|
+            - photo = category_photo.photos.first
+            - next if !photo && !owner_or_worker?
+            / Item
+            .col-md-4.col-sm-4
+              .item
+                %span.badge.sale= category_photo.name
+                = link_to category_photo, class: 'thumb' do
+                  %span.overlay
+                  - if photo
+                    = image_tag photo.photo.url(:medium_cut)
+                  - else
+                    %br
+                    %br
+                    %br
+                    %br
+                    %br
+                    %br
+                    %br
+                    %br
+                  - if owner_or_worker?
+                    .description
+                      = link_to 'Редактировать', [:edit, category_photo], :class => 'btn btn-success'
+                      = link_to 'Удалить', category_photo, method: :delete, data: { confirm: 'Вы уверены?' }, :class => 'btn btn-danger'
+                - if category_photo.photos.size
+                  %footer
+                    .info
+                      %span.price
+                        = category_photo.photos.size
+                        фотографий

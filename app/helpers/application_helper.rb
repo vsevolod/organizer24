@@ -41,6 +41,13 @@ module ApplicationHelper
     render file_path, *options
   end
 
+  def active_link_to(url, active_class: 'active', &block)
+    klass = "#{active_class if current_page?(url)}"
+    content_tag :li, class: klass do
+      link_to url, &block
+    end
+  end
+
   private
 
   def short_csoap(_org, appointment, state)

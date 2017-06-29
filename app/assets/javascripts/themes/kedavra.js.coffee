@@ -25,6 +25,7 @@
 #= require themes/kedavra/plugins/smoothscroll
 #= require themes/kedavra/plugins/utilities
 #= require themes/kedavra/plugins/waypoints.min
+#= require themes/kedavra/scripts
 
 #= require cocoon
 #= require calendar_autocomplete

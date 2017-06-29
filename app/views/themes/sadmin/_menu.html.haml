@@ -14,7 +14,7 @@
       %a.sa-side-contacts{href: "/contacts"}
         %span.menu-item= contact.name
   - if current_user && !current_user.new_record?
-    - if current_user.owner_or_worker?(@organization)
+    - if owner_or_worker?
       %li
         %a.sa-side-page{href: "/appointments/phonebook"}
           %span.menu-item Телефонная книга

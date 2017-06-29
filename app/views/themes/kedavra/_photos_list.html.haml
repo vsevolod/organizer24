@@ -1,0 +1,15 @@
+%section.container.double-padding-top
+  .page-heading.center
+    %h2= @category_photo.name
+
+  = theme_render 'category_photos_list', objects: @category_photo.children
+  - if @photos.any?
+    .ms-partialview-template.space-top.double-space-bottom#partial-view
+      .master-slider.ms-skin-default#slider01
+        - @photos.each do |photo|
+          .ms-slide
+            = image_tag 'kedavra/masterslider/blank.gif', data: { src: photo.photo.url('photo_slider') }, alt: photo.name
+            .ms-info
+            .ms-layer.ms-caption
+              = photo.name || 'Photo'
+  = theme_render 'category_photos_list', objects: @category_photo.root.siblings.where(organization: @organization)
