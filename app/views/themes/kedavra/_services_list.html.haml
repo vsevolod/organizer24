@@ -4,6 +4,22 @@
 - services.group_by(&:category_id).each do |category_id, group_services|
   - category_name = Dictionary.where(id: category_id).first_or_initialize(name: 'Прочее').name
   - translit_name = Russian.translit(category_name).gsub(/ /, '_')
+  .sidebar
+    .widget.shop-filters
+      %h3= category_name
+      %span.clear.clearChecks Очистить
+      - group_services.sort_by{|gs| gs.position.to_i}.each do |service|
+        .checkbox
+          %label
+            %input{ id: "appointment_#{service.id}", name: 'service', type: 'checkbox', value: service.id}
+            = service.name
+            - if service.cost.to_i > 0
+              #{service.cost} руб.
+            - if service.description.present?
+              %span.badge.tooltips{id: "service_help_#{service.id}", data: {placement: 'right', toggle: 'tooltip', original_title: service.description}} ?
+        %br/
+
+- if false
   .col-md-6
     .tile
       %h2.tile-title= category_name

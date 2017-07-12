@@ -4,6 +4,7 @@
  */
  
 //Import Google Fonts (Open Sans) 
+@import "variables.scss";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
 
 //Import Bootstrap 3.2.0
@@ -19,7 +20,6 @@
 @import "animations/animate.scss"; 
 
 //Core Variables and Mixins
-@import "variables.scss";
 @import "mixins.scss";
 
 //iHover

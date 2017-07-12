@@ -37,6 +37,7 @@ $iconColor: 						$brand-primary;
 $vert-gap:									24px;
 $line-height:         			1.75;
 $line-height-sm:						1.57;
+$line-height-small:         1.57;
 
 //== Typography
 //----------------------------------------------------------------
@@ -116,10 +117,13 @@ $btn-outlined-danger-border:        1px solid $brand-danger;
 
 //-- Forms
 //-----------------------------------
-$input-height-base: 			38px;
-$input-height-lg:					44px;
+$input-height-base: 			2.375em;
+$input-height-lg:					2.750em;
+$input-height-large:      2.750em;
+$input-height-small:      2.000em;
 $input-color:							#000;
 $input-border-color:			#b6b6b6;
+$input-border:			      #b6b6b6;
 $input-border-invert:			#fff;
 $input-border-radius:			0px;
 $legend-color:            $gray-dark;
@@ -163,3 +167,6 @@ $tablet-land:    #{"only screen and (max-width: 991px)"};
 $tablet-port:    #{"only screen and (max-width: 768px)"};
 $mobile-land:		 #{"only screen and (max-width: 480px)"};
 $mobile-port:		 #{"only screen and (max-width: 360px)"};
+
+//-- My style
+$navbar-height:                    3.125em !default;

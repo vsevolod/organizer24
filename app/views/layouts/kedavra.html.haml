@@ -19,7 +19,11 @@
         = theme_render 'off_canvas_menu'
         .site-layout
           = theme_render 'header_toolbar'
-          .page= yield
+          .page
+            - if @breadcrumbs
+              .container.space-top
+                %ol.breadcrumb= render_breadcrumbs separator: '', tag: :li
+            = yield
           %footer.footer
             = theme_render 'footer'
       %a.exit-off-canvas

@@ -1,4 +1,4 @@
-check_services_inputs = ->
+Organizer.check_services_inputs = ->
   cost = 0
   time = 0
   values = []
@@ -36,12 +36,12 @@ check_services_inputs = ->
 $ ->
 
   if $('.check_services input').length > 0
-    check_services_inputs()
+    Organizer.check_services_inputs()
     $('.check_services input').each ->
       $(this).attr('disabled', false)
 
     $('#second').on('click ifChanged', '.check_services input', ->
-      setTimeout(check_services_inputs, 50)
+      setTimeout(Organizer.check_services_inputs, 50)
     )
 
   $('body').on('click', '.AutoPhoneClick', ->

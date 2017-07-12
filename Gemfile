@@ -53,6 +53,7 @@ gem 'sass-rails'
 gem 'puma'
 
 group :development do
+  gem 'dotenv-rails'
   gem 'pry-byebug'
   gem 'test-unit'
 end
@@ -62,6 +63,7 @@ group :production do
 end
 
 group :test do
+  gem 'dotenv-rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
@@ -76,6 +78,8 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'colorbox-rails', git: 'https://github.com/stevo/colorbox-rails.git'
+
+gem 'xyeger'
 
 gem 'daemons'
 gem 'sidekiq'

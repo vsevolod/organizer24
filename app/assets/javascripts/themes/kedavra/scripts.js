@@ -544,6 +544,7 @@ jQuery(document).ready(function($) {
 	*******************************************/
 	$clearChecks.click(function(){
 		$(this).parent().find('.icheckbox').removeClass('checked');
+    alert('qwer');
 	});
 	
 	/*Color Switcher
