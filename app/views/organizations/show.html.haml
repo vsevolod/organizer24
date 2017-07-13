@@ -1,4 +1,4 @@
 - content_for :bottom_js do
   = javascript_include_tag 'fc', 'month_calendar'
 
-= render "organizations/templates/#{@organization.get_theme}"
+= theme_render 'organizations/show'

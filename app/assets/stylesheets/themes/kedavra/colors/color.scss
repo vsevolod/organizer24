@@ -1,0 +1,782 @@
+//
+// Color Schemes hex #448956
+// --------------------------------------------------
+
+//--To globally change Primary color edit this line
+
+$brand-primary:         #3dc054;
+
+//---------------------------------------------------
+
+$iconColor: 					$brand-primary;
+$link-color:					$brand-primary;
+$link-hover-color:    darken($link-color, 10%);
+
+//--Typography
+//------------------------------------------------------------------------------------------
+.primary-color, .text-primary {
+	color: $brand-primary !important;
+	&:hover { color: $brand-primary !important; }
+}
+a, a:hover, a:focus { color: $link-color; }
+ul.featured-list li:before { color: $brand-primary; }
+
+//--Header Toolbar
+//------------------------------------------------------------------------------------------
+.header-toolbar {
+	a:hover {
+		color: $brand-primary !important;
+	}
+	.social-bar {
+		a:hover { color: $brand-primary; }
+	}
+	.tools li {
+		ul li a:hover { color: $brand-primary !important; }
+		&:hover {
+			a {
+				color: $brand-primary;
+				i { color: $brand-primary; }
+			}
+		}
+	}
+}
+
+//--Header
+//------------------------------------------------------------------------------------------
+.header {
+	.search {
+		i:hover { color: $brand-primary; }
+	}
+	.tools {
+		a:hover, a:focus { color: $brand-primary; }
+		.signup:hover {
+			background: $brand-primary;
+		}
+		.user:hover > a { color: $brand-primary; }
+		.cart-btn {
+			&:hover {
+				.link {
+					color: $brand-primary;
+					&:before {
+						color: $brand-primary;
+					}
+				}
+			}
+		}
+	}
+	.user:hover > a { color: $brand-primary; }
+	.cart-btn {
+		.cart-dropdown {
+			.owl-prev, .owl-next {
+				div { background: $brand-primary !important; }
+			}
+			.item {
+				.delete:hover { background: $brand-primary !important; }
+				a .overlay, .qnt-count .incr-btn:hover { background: $brand-primary !important; }
+				.qnt-count .incr-btn.inactive:hover { background: #e7ecee !important; }
+			}
+		}
+	}
+	.quick-search {
+		border-bottom: 1px solid darken($brand-primary, 5%);
+		.overlay { background: $brand-primary; }
+		.search-field:focus::-moz-placeholder { color: $brand-primary; opacity: 1; }
+		.search-field:focus:-ms-input-placeholder { color: $brand-primary; }
+		.search-field:focus::-webkit-input-placeholder  { color: $brand-primary; }
+	}
+	&.transparent.opaque .inner .tools {
+		a {
+			&:hover, &:focus { color: $brand-primary; }
+		}
+		.signup:hover { background: $brand-primary; }
+	}
+}
+.no-svg .header .tools .cart-btn {
+	background: url(../../img/cart-btn/png/cart-btn-448956.png) 0px 0px no-repeat !important;
+}
+.header.transparent.opaque .inner .tools .btn-transparent:hover {
+	color: $brand-primary !important;
+	border-color: $brand-primary;
+}
+
+//--Navigation
+//------------------------------------------------------------------------------------------
+.menu ul li {
+	a {
+		&:hover, &:focus { color: $brand-primary; }
+	}
+	&.active, &:hover, &:focus {
+		a { color: $brand-primary; }
+	}
+	.submenu {
+		li {
+			&:hover a, &.active a, &:focus a, a i { color: $brand-primary; }
+			.sub-submenu {
+				li a:hover, li.active a { color: $brand-primary; }
+			}
+		}
+	}
+}
+.transparent.opaque li:hover a, .transparent.opaque li.active a { color: $brand-primary; }
+.scroller .menu li a:after { background: $brand-primary; }
+.mega-menu {
+	a:hover { border-bottom-color: $brand-primary; }
+	ul li {
+		&.active a { color: $brand-primary !important; }
+		a:hover { color: $brand-primary !important; }
+	}
+	.img-link:hover, img-link.active { color: $brand-primary !important; }
+}
+#nav-toggle {
+	&:hover {
+		span, span:before, span:after { background: $brand-primary; }
+	}
+	&.active {
+		span { background-color: transparent; }
+	}
+	&.active:hover {
+		span:before, span:after { background: $brand-primary; }
+	}
+}
+.mobile-navi {
+	.mobile-search button[type=submit]:hover i { color: $brand-primary; }
+	a {
+		&:hover, &:focus { color: $brand-primary; }
+	}
+	ul li {
+		&.current a { color: $brand-primary; }
+		span:hover { color: $brand-primary; }
+		ul.submenu li {
+			a {
+				&:hover, &:focus { color: $brand-primary; }
+			}
+			&.current a { color: $brand-primary; }
+			ul.sub-submenu li {
+				a {
+					&:hover, &:focus { color: $brand-primary; }
+				}
+				&.current a { color: $brand-primary; }
+			}
+		}
+	}
+}
+
+//--Buttons
+//------------------------------------------------------------------------------------------
+.btn-primary {
+  background: $brand-primary;
+	&:hover { background: darken($brand-primary, 10%); }
+}
+.btn-transparent {
+	background: rgba(255,255,255,0.20);
+	&:hover {
+		background: #fff;
+		&.btn-primary { color: $brand-primary !important; }
+	}
+}
+.no-rgba .btn-transparent {
+	background: #fff;
+	&.btn-primary { color: $brand-primary !important; }
+}
+.btn-outlined {
+	&.btn-primary {
+		background: transparent;
+		border-color: $brand-primary !important;
+		color: $brand-primary !important;
+		&:hover { background: $brand-primary; }
+	}
+}
+
+//--Forms
+//------------------------------------------------------------------------------------------
+.submit-with-price {
+	background: $brand-primary;
+	&:hover { background: darken($brand-primary, 10%); }
+}
+.checkbox, .radio {
+	.iradio.checked {
+		border-color: $brand-primary;
+		&:after { background: $brand-primary; }
+	}
+	.icheckbox.checked {
+		border-color: $brand-primary;
+		&:after { color: $brand-primary; }
+	}
+}
+.light-version .submit-with-price:hover { color: $brand-primary; }
+.form-3d .datePicker .datepicker .fa {
+	&:hover {
+		color: $brand-primary !important;
+		border-color: $brand-primary !important;
+	}
+}
+.form-control {
+	border-color: $brand-primary;
+	&:focus {
+		box-shadow: 0 0 5px 0px $brand-primary;
+		border-color: $brand-primary;
+	}
+}
+
+
+//--Modals
+//------------------------------------------------------------------------------------------
+.modal-header {
+	a {
+		border-bottom-color: transparent;
+		&:hover {
+			color: $link-hover-color;
+			border-bottom-color: $link-hover-color;
+		}
+	}
+	.close { color: $brand-primary; }
+}
+.share-modal .modal-content .bar.mail { background: $brand-primary; }
+
+//--Home
+//------------------------------------------------------------------------------------------
+.hero-static {
+	&.fullscreen {
+		.overlay-block {
+			.opacity-70 {
+				background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), .7);
+			}
+			.opacity-70 {
+				background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), .7);
+			}
+			.opacity-97 {
+				background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), .97);
+			}
+			#slide-up-toggle { background: $brand-primary; }
+		}
+	}
+}
+.fp-banner, .fw-img-banner {
+	.meta a {
+		color: lighten($brand-primary, 5%);
+		&:hover { border-bottom-color: $brand-primary; }
+	}
+}
+.category-bars a .overlay {
+	background: $brand-primary;
+	background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+}
+.category-tiles .category:hover .overlay { background: $brand-primary; }
+
+//--Blog
+//------------------------------------------------------------------------------------------
+.recent-post, .blog .list-view .post,
+.search-results .post {
+	h3, h4, h5 {
+		a:hover { color: $brand-primary; }
+	}
+	.meta a:hover {
+		color: $brand-primary;
+		border-color: $brand-primary;
+	}
+}
+.blog, .search-results {
+	.grid-view {
+		.post {
+			.featured-img .meta {
+				background: $brand-primary;
+				background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+			}
+			h3 a:hover { color: $brand-primary; }
+			.taxonomy a:hover {
+				color: $brand-primary;
+				border-color: $brand-primary;
+			}
+		}
+	}
+}
+.post-controls {
+	.next-post, .prev-post {
+		&:hover { color: darken($brand-primary, 10%); }
+	}
+}
+.post-meta {
+	.taxonomy a:hover { border-color: $brand-primary; }
+	.post-toolbox {
+		.buttons a:hover {
+			background: $brand-primary;
+			border-color: $brand-primary;
+		}
+	}
+}
+.archive-list li a:hover { color: darken($brand-primary, 10%); }
+.fw-grid-gallery .fw-block-3 a {
+	background-color: $brand-primary;
+}
+
+//--Shop
+//------------------------------------------------------------------------------------------
+.catalog-grid {
+	.badge.sale { background: $brand-primary; }
+	.item {
+		.share-opts a {
+			&.mail {
+				background: $brand-primary;
+				&:hover { background: darken($brand-primary, 10%); }
+			}
+		}
+		footer {
+			.tools a {
+				&:hover, &.share-btn.active {
+					background: $brand-primary;
+					border-color: $brand-primary;
+				}
+				&.add-cart {
+					background: $brand-primary;
+					border-color: $brand-primary;
+					&:hover { background: darken($brand-primary, 10%); }
+				}
+			}
+		}
+	}
+	&.type-1 .item footer p { color: $brand-primary; }
+}
+.catalog-list .item {
+	h3 a:hover { color: $brand-primary; }
+	footer .tools a {
+		&:hover, &.share-btn.active {
+			background: $brand-primary;
+			border-color: $brand-primary;
+		}
+		&.add-cart {
+			background: $brand-primary;
+			border-color: $brand-primary;
+			&:hover { background: darken($brand-primary, 10%); }
+		}
+	}
+}
+.shopping-cart {
+	.item .details a:hover { color: $brand-primary; }
+	.qnt-count .incr-btn {
+		&:hover { background: $brand-primary }
+		&.inactive {
+			&:hover { background: #e7ecee; }
+		}
+	}
+}
+.size-switcher .iradio.checked {
+	background: $brand-primary;
+	border-color: $brand-primary;
+}
+.sp-tools .qnt-count .incr-btn {
+	&:hover { background: $brand-primary }
+	&.inactive {
+		&:hover { background: #e7ecee; }
+	}
+}
+.info-tile-radio {
+	.tile {
+		label span.pricing { color: $brand-primary; }
+		.iradio.checked { border-color: $brand-primary; }
+	}
+}
+.tracking-timeline {
+	.timeline {
+		.checkpoint {
+			span.active { background: $brand-primary; }
+			&.active { background: $brand-primary; }
+		}
+	}
+}
+.deliv-method .icon:before { color: $brand-primary; }
+.shop-history {
+	.panel-group .panel .panel-heading .panel-title h3 a {
+		&:hover { color: $brand-primary; }
+	}
+	.panel-group .panel .panel-heading .badge.primary { background: $brand-primary; }
+}
+.pricing-plan.type-1 .price-title, .pricing-plan.type-2 .price-title, .pricing-plan.type-3 .price-title {
+	background-color: $brand-primary;
+}
+.pricing-plan.type-1 h5, .pricing-plan.type-2 .pricing-content li b, .pricing-plan.type-3 h3, .pricing-plan.type-3 .pricing-content li b {
+	color: $brand-primary;
+}
+.pricing-plan.type-3 {
+	border-color: $brand-primary;
+}
+
+//--Pages
+//------------------------------------------------------------------------------------------
+.specialty-page .error-numb { color: $brand-primary; }
+.sp-form button[type=submit]:hover i { color: $brand-primary; }
+.big-links li a {
+	span { color: $brand-primary; }
+	&:hover { color: $brand-primary; }
+}
+.team-member {
+	.img .social-strip {
+		background: $brand-primary;
+		background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+	}
+	.social-icons a {
+		background: $brand-primary;
+		&:hover { background: darken($brand-primary, 10%); }
+	}
+}
+.team-member-img .social {
+	background: $brand-primary;
+	background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+}
+.user-account label span { color: $brand-primary; }
+.account-settings {
+	.pass-block {
+		&.expanded {
+			background: $brand-primary;
+			.close:hover { color: $brand-primary; }
+		}
+	}
+	.user-avatar {
+		.upload {
+			background: $brand-primary;
+			background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+		}
+		.delete {
+			&:hover {
+				background: $brand-primary;
+				background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.8);
+			}
+		}
+	}
+}
+.schedule {
+	.event {
+		background: $brand-primary;
+		&::before { background: $brand-primary; }
+		&:hover, &:focus { color: $brand-primary; }
+	}
+}
+.coming-soon-tile { background: $brand-primary; }
+.post-toolbox .buttons a:hover {
+	background-color: $brand-primary;
+	border-color: $brand-primary;
+}
+
+//--Sidebar
+//------------------------------------------------------------------------------------------
+.sidebar {
+	.widget {
+		&.featured-posts {
+			.post {
+				h4 a:hover, h5 a:hover { color: $brand-primary; }
+				.meta a:hover {
+					color: $brand-primary;
+					border-bottom-color: $brand-primary;
+				}
+			}
+		}
+		&.categories .category .cat-text h4 a:hover { color: $brand-primary; }
+		&.search form button[type=submit]:hover i { color: $brand-primary; }
+		&.subscribe form button[type=submit] {
+			background: $brand-primary;
+			&:hover { background: darken($brand-primary, 10%); }
+		}
+		&.shop-categories a:hover, &.shop-links a:hover { color: $brand-primary; }
+		&.shop-categories .all a, &.shop-links .all a {
+			color: $brand-primary;
+			&:hover { border-color: $brand-primary; }
+		}
+		&.shop-filters .clear {
+			color: $brand-primary;
+			&:hover { border-bottom-color: $brand-primary; }
+		}
+		&.cart-content .item {
+			h4 a:hover { color: $brand-primary; }
+			.price span { color: $brand-primary; }
+			.qnt-count .incr-btn:hover { background: $brand-primary; }
+		}
+	}
+}
+.sidebar-button {
+	background: $brand-primary;
+	&:hover { background: darken($brand-primary, 10%); }
+}
+.sidebar .widget.rposts .rpost .rpost-text h4 a {
+	color: $brand-primary;
+}
+
+//--Widgets
+//------------------------------------------------------------------------------------------
+.ms-staff-carousel .ms-staff-info .ms-socials a {
+	background: $brand-primary;
+	&:hover { background: darken($brand-primary, 10%); }
+}
+.ms-skin-default .ms-caption {
+	background: $brand-primary;
+	background: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.75);
+}
+.ms-showcase .ms-layer.product-price { color: $brand-primary; }
+.package-carousel .owl-prev, .package-carousel .owl-next {
+	div { background: $brand-primary; }
+}
+.nav-tabs {
+	li a span { color: $brand-primary; }
+	&.vertical li {
+		a {
+			&:after { background: $brand-primary; }
+			&:hover { color: $brand-primary; }
+		}
+		&.active a, &.active a:hover, &.active a:focus {
+			color: $brand-primary !important;
+		}
+	}
+}
+.panel .panel-heading a:hover { color: $brand-primary; }
+.panel-primary {
+	.panel-heading {
+		background: $brand-primary;
+		border-bottom-color: $brand-primary;
+	}
+}
+.info-box.primary { background: $brand-primary; }
+.info-string { background: $brand-primary; }
+.pricing-plan.type-2.active {
+	border-color: $brand-primary;
+	header { background: $brand-primary; }
+}
+.harmonic .item .image { border-color: $brand-primary; }
+.filters li {
+	&:hover {
+		a { color: $brand-primary; }
+	}
+	&.current a {
+		background-color: $brand-primary;
+		color: #fff;
+	}
+}
+.gallery-grid.masonry .item { background: $brand-primary; }
+.gallery-grid.masonry .item figure.effect-02 {
+	background: $brand-primary;
+	background: -webkit-linear-gradient(top, rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 1) 0%, rgba(255,255,255,0.4) 100%);
+	background: linear-gradient(to bottom, rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 1) 0%,rgba(255,255,255,0.4) 100%); 
+}
+.countdown span { color: $brand-primary; }
+.tile-btn {
+	.inner { border-color: $brand-primary; }
+	&:after { background: $brand-primary; }
+}
+.image-3d, .thumbnail-3d {
+	&.primary {
+		&:after { background: $brand-primary; }
+		img { border-color: $brand-primary; }
+	}
+}
+.thumbnail-zoom,
+.thumbnail-link {
+	.overlay { background: $brand-primary; }
+}
+.toolbox {
+	.heading .back-btn:hover { background: $brand-primary; }
+	.layout-view a {
+		&.grid {
+			&.active, &:hover {
+				span:before, span:after { background: $brand-primary; }
+			}
+		}
+		&.list {
+			&.active, &:hover {
+				span:before, span:after { background: $brand-primary; }
+			}
+		}
+	}
+}
+.breadcrumb li a:hover { border-bottom-color: $brand-primary; }
+.sorting .sort li {
+	a:hover { color: $brand-primary; }
+	&.active a { color: $brand-primary; }
+}
+.pagination li.active a {
+	background: $brand-primary;
+	color: #fff !important;
+}
+.datepicker .prev, 
+.datepicker .next {
+	&:hover { color: $brand-primary; }
+}
+.datepicker table tr td.selected,
+.datepicker table tr td.selected:hover,
+.datepicker table tr td.selected.disabled,
+.datepicker table tr td.selected.disabled:hover {
+  background-color: $brand-primary;
+}
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.today {
+  background-color: $brand-primary;
+}
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active:hover:hover,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active.disabled:hover:hover,
+.datepicker table tr td.active:active,
+.datepicker table tr td.active:hover:active,
+.datepicker table tr td.active.disabled:active,
+.datepicker table tr td.active.disabled:hover:active,
+.datepicker table tr td.active.active,
+.datepicker table tr td.active:hover.active,
+.datepicker table tr td.active.disabled.active,
+.datepicker table tr td.active.disabled:hover.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active:hover.disabled,
+.datepicker table tr td.active.disabled.disabled,
+.datepicker table tr td.active.disabled:hover.disabled,
+.datepicker table tr td.active[disabled],
+.datepicker table tr td.active:hover[disabled],
+.datepicker table tr td.active.disabled[disabled],
+.datepicker table tr td.active.disabled:hover[disabled],
+.datepicker table tr td.active:active,
+.datepicker table tr td.active:hover:active,
+.datepicker table tr td.active.disabled:active,
+.datepicker table tr td.active.disabled:hover:active,
+.datepicker table tr td.active.active,
+.datepicker table tr td.active:hover.active,
+.datepicker table tr td.active.disabled.active,
+.datepicker table tr td.active.disabled:hover.active {
+  background-color: $brand-primary;
+}
+.datepicker table tr td span.active,
+.datepicker table tr td span.active:hover,
+.datepicker table tr td span.active.disabled,
+.datepicker table tr td span.active.disabled:hover {
+  background-color: $brand-primary;
+}
+.datepicker table tr td span.active:hover,
+.datepicker table tr td span.active:hover:hover,
+.datepicker table tr td span.active.disabled:hover,
+.datepicker table tr td span.active.disabled:hover:hover,
+.datepicker table tr td span.active:active,
+.datepicker table tr td span.active:hover:active,
+.datepicker table tr td span.active.disabled:active,
+.datepicker table tr td span.active.disabled:hover:active,
+.datepicker table tr td span.active.active,
+.datepicker table tr td span.active:hover.active,
+.datepicker table tr td span.active.disabled.active,
+.datepicker table tr td span.active.disabled:hover.active,
+.datepicker table tr td span.active.disabled,
+.datepicker table tr td span.active:hover.disabled,
+.datepicker table tr td span.active.disabled.disabled,
+.datepicker table tr td span.active.disabled:hover.disabled,
+.datepicker table tr td span.active[disabled],
+.datepicker table tr td span.active:hover[disabled],
+.datepicker table tr td span.active.disabled[disabled],
+.datepicker table tr td span.active.disabled:hover[disabled],
+.datepicker table tr td span.active:active,
+.datepicker table tr td span.active:hover:active,
+.datepicker table tr td span.active.disabled:active,
+.datepicker table tr td span.active.disabled:hover:active,
+.datepicker table tr td span.active.active,
+.datepicker table tr td span.active:hover.active,
+.datepicker table tr td span.active.disabled.active,
+.datepicker table tr td span.active.disabled:hover.active {
+  background-color: $brand-primary;
+}
+.datepicker th.datepicker-switch {
+	&:hover { color: $brand-primary; }
+}
+.datepicker thead tr:last-child,
+.datepicker tbody tr {
+	border-bottom-color: $brand-primary;
+}
+.info-block .close:hover { background: $brand-primary; }
+.icon-block a:hover { color: $brand-primary; }
+.featured-icon {
+	&.icon-alt {
+		&.rounded.primary { background: $brand-primary; }
+		&.circle.primary { background: $brand-primary; }
+	}
+}
+.sticky-btns span {
+	background: $brand-primary;
+	&:hover { background: darken($brand-primary, 10%); }
+}
+.noUi-connect { background: $brand-primary; }
+.ih-item.circle .img:before { box-shadow: inset 0 0 0 16px rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.5), 0 1px 2px rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.3); }
+
+//--Footer
+//------------------------------------------------------------------------------------------
+.footer {
+	.featured-post, .category, .contacts {
+		h4, h5 {
+			a:hover {
+				color: $brand-primary;
+				border-bottom-color: $brand-primary;
+			}
+		}
+		.meta {
+			a:hover {
+				color: $brand-primary;
+				border-bottom-color: $brand-primary;
+			}
+		}
+	}
+	.contacts .social-bar a:hover { color: darken($brand-primary, 10%); }
+	.subscribe form {
+		button[type=submit] {
+			background: $brand-primary;
+			&:hover { background: darken($brand-primary, 10%); }
+		}
+	}
+	.copyright {
+		p a:hover {
+			color: $brand-primary;
+			border-bottom: 1px solid $brand-primary;
+		}
+	}
+	.footer-subscribe-widget {
+		background-color: $brand-primary;
+	}
+	.copyright {
+		background-color: $brand-primary;
+	}
+	h3 {
+		color: $brand-primary;
+	}
+	.featured-post h5 a, .footer .features h5 a, .footer .contacts h5 a {
+		color: $brand-primary;
+	}
+	.footer-subscribe-widget .btn {
+		background-color: $brand-primary;
+		&:hover {
+			border-color: $brand-primary;
+			background-color: #fff;
+		}
+	}
+}
+
+// Icons Color Schemes
+// --------------------------------------------------
+.icon-apple, .icon-auto-washing, .icon-bag,
+.icon-browser, .icon-chart, .icon-church, .icon-ufo,
+.icon-comments, .icon-constellation, .icon-dental,
+.icon-dollar, .icon-equalizer, .icon-headphones-2,
+.icon-iron-1, .icon-iron-2, .icon-iron-3, .icon-like,
+.icon-map, .icon-money, .icon-moon, .icon-no-handwashing,
+.icon-no-spin, .icon-notebook, .icon-office, .icon-piano,
+.icon-rocket, .icon-scale-1, .icon-scale-2, .icon-search,
+.icon-spatula, .icon-telescope, .icon-tooth, .icon-tree { 
+	&:after { color: $iconColor; }
+}
+.icon-camera, .icon-capitol, .icon-cassete, .icon-globe,
+.icon-hammer, .icon-handwashing, .icon-headphones-1,
+.icon-holder, .icon-house, .icon-ipad, .icon-lamp,
+.icon-lens, .icon-music, .icon-phone, .icon-roller,
+.icon-rover, .icon-space-helmet, .icon-university-hat,
+.icon-window {
+	&:before { color: $iconColor; }
+}
+
+.progress, .counters-v3 .group {
+	border-color: $brand-primary;
+}
+.counters-v3 .group, .progress.inverted .progress-bar {
+	color: $brand-primary;
+}
+.progress-bar, .progress.inverted, .counters-v1 .group, .counters-v2 .group {
+	background-color: $brand-primary;
+}

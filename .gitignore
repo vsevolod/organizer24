@@ -7,6 +7,7 @@
 # Ignore bundler config
 /.bundle
 /.rspec
+/.byebug_history
 
 # Ignore files in config dir
 /config/database.yml

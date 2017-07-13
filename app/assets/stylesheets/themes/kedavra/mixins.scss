@@ -1,0 +1,149 @@
+//
+// Mixins
+// --------------------------------------------------
+
+//-- Paragraph styles
+//----------------------------------------------------
+@mixin paragraph()
+{
+	font-size: ($font-size-base * 0.8125) !important;
+	line-height: $line-height;
+	margin-bottom: $vert-gap;
+}
+@mixin paragraph-sm()
+{
+	font-size: ($font-size-base * 0.75) !important;
+	line-height: $line-height-sm;
+	margin-bottom: ($vert-gap/1.5);
+}
+@mixin paragraph-lg()
+{
+	font-size: $font-size-base !important;
+	line-height: $line-height;
+	margin-bottom: $vert-gap;
+}
+
+//-- List styles
+//----------------------------------------------------
+@mixin list-style()
+{
+	font-size: ($font-size-base * 0.875);
+	font-weight: 400;
+	line-height: $line-height-sm;
+	margin-bottom: $vert-gap;
+	padding-left: 17px;
+	li {
+		margin-bottom: ($vert-gap/3);
+	}
+}
+
+//-- Transitions & Opacity
+//----------------------------------------------------
+@mixin transition($property, $speed)
+{
+	-webkit-transition: $property $speed ease;
+	-moz-transition: $property $speed ease;
+	transition: $property $speed ease;
+}
+@mixin no-transition()
+{
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+@mixin opacity($val1, $val2)
+{
+	opacity: $val1;
+	filter: alpha(opacity=$val2);
+}
+
+//-- Transforms
+//----------------------------------------------------
+@mixin translate($val...)
+{
+	-webkit-transform: translate($val);
+	-moz-transform: translate($val);
+	-ms-transform: translate($val);
+	transform: translate($val);
+}
+@mixin rotate($deg)
+{
+	-webkit-transform: rotate($deg);
+	-moz-transform: rotate($deg);
+	-ms-transform: rotate($deg);
+	transform: rotate($deg);
+}
+
+//-- Border radius
+//----------------------------------------------------
+@mixin border-radius()
+{
+	-webkit-border-radius: $border-radius-base;
+	-moz-border-radius: $border-radius-base;
+	border-radius: $border-radius-base;
+}
+@mixin border-round()
+{
+	-webkit-border-radius: $border-radius-round;
+	-moz-border-radius: $border-radius-round;
+	border-radius: $border-radius-round;
+}
+@mixin no-border-radius()
+{
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+@mixin custom-border-radius($val)
+{
+	-webkit-border-radius: $val;
+	-moz-border-radius: $val;
+	border-radius: $val;
+}
+
+//-- RGBa Color / Background
+//----------------------------------------------------
+@mixin color-rgba($color, $opacity)
+{
+	color: rgba(red($color), green($color), blue($color), $opacity);
+	
+}
+@mixin background-rgba($color, $opacity)
+{
+	background: rgba(red($color), green($color), blue($color), $opacity);
+}
+
+//-- Responsive background
+//----------------------------------------------------
+@mixin responsive-background()
+{
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	@media #{$tablet-land} {
+		-webkit-background-size: auto;
+		-moz-background-size: auto;
+		-o-background-size: auto;
+		background-size: auto;
+	}
+}
+	
+//-- Forms
+//----------------------------------------------------
+@mixin form-control-focus()
+{
+  &:focus {
+		-webkit-box-shadow: 0 0 5px 0px $brand-primary;
+		-moz-box-shadow: 0 0 5px 0px $brand-primary;
+		box-shadow: 0 0 5px 0px $brand-primary;
+  }
+}
+// Placeholder text
+@mixin placeholder($color)
+{
+  &::-moz-placeholder           { color: $color;   // Firefox
+                                  opacity: 1; } 
+  &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}

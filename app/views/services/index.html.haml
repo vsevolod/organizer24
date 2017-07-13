@@ -1,6 +1,6 @@
 %h2 Услуги 
 %br/
-- if current_user && current_user.owner_or_worker?( @organization )
+- if owner_or_worker?
   = link_to 'Добавить услугу', [:new, :service], :class => 'btn btn-success'
   = link_to 'Добавить коллекцию', new_service_path( :service => { :is_collection => true } ), :class => 'btn btn-success'
 

@@ -1,0 +1,18 @@
+= content_for :left_widgets do
+  #modal-workers
+    - @presenter.enabled_workers.each do |worker|
+      .side-widgets.overflow
+        .s-widget.m-b-25.text-center.worker-profile-menu
+          = link_to '#', :data => { :worker_id => worker.id } do
+            = image_tag worker.photo.url(:sadmin_left), :title => worker.name, class: 'profile-pic animated'
+          %h4.m-0= worker.name
+          = worker.profession
+- unless current_user.worker
+  #sub_worker_list
+    - @presenter.enabled_workers.each do |worker|
+      .side-widgets.overflow
+        .s-widget.m-b-25.text-center.worker-profile-menu
+          = link_to '#', :data => { :worker_id => worker.id } do
+            = image_tag worker.photo.url(:sadmin_left), :title => worker.name, class: 'profile-pic animated'
+          %h4.m-0= worker.name
+          = worker.profession

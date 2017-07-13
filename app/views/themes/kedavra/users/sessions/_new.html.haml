@@ -1,0 +1,22 @@
+/ Login Page
+.specialty-page-bg{:style => "background-image:url(#{image_path('speciality-page/banner.jpg')};"}
+%section.specialty-page
+  .container
+    .row
+      .col-md-8.col-md-offset-2.col-sm-12
+        .page-heading
+          %h2 Вход
+        .row
+          = form_for(@resource, :as => resource_name, :url => session_path(resource_name), :html => { class: 'signup-form space-bottom' }) do |f|
+            .form-group
+              = f.label :phone, class: 'sr-only'
+              = f.text_field :phone, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Телефон', required: true
+            .form-group
+              = f.label :password, class: 'sr-only'
+              = f.password_field :password, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Пароль', required: true
+            - if devise_mapping.rememberable?
+              .form-group
+                = f.label :remember_me
+                = f.check_box :remember_me
+            = f.submit "Войти", :class => 'btn btn-md btn-primary btn-center'
+            = render "/users/links"

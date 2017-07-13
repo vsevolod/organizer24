@@ -1,0 +1,44 @@
+- services = worker.services.not_collections
+- services = services.where( :show_by_owner => false ) unless @presenter.owner_or_worker?
+- expired_services = worker.services_workers.can_be_expired
+- services.group_by(&:category_id).each do |category_id, group_services|
+  - category_name = Dictionary.where(id: category_id).first_or_initialize(name: 'Прочее').name
+  - translit_name = Russian.translit(category_name).gsub(/ /, '_')
+  .sidebar
+    .widget.shop-filters
+      %h3= category_name
+      %span.clear.clearChecks Очистить
+      - group_services.sort_by{|gs| gs.position.to_i}.each do |service|
+        .checkbox
+          %label
+            %input{ id: "appointment_#{service.id}", name: 'service', type: 'checkbox', value: service.id}
+            = service.name
+            - if service.cost.to_i > 0
+              #{service.cost} руб.
+            - if service.description.present?
+              %span.badge.tooltips{id: "service_help_#{service.id}", data: {placement: 'right', toggle: 'tooltip', original_title: service.description}} ?
+        %br/
+
+- if false
+  .col-md-6
+    .tile
+      %h2.tile-title= category_name
+      .listview.narrow
+        - group_services.sort_by{|gs| gs.position.to_i}.each do |service|
+          .p-5
+            .pull-right
+              - if service.cost.to_i > 0
+                #{service.cost} руб.
+            .media-body.service
+              = check_box_tag "service[#{service.id}]", service.id, false
+              = label_tag "service[#{service.id}]", service.name, class: 'stitle'
+              - if service.description.present?
+                %span.badge.tooltips{id: "service_help_#{service.id}", data: {placement: 'right', toggle: 'tooltip', original_title: service.description}} ?
+              - if service.new_date_cost.present?
+                %span.badge.badge-alert.tooltips{ id: "service_alert_#{service.id}", data: {placement: 'right', toggle: 'tooltip', original_title: "С #{Russian.strftime(service.new_date_cost, '%d %B')} стоимость будет #{service.new_cost} руб."}} !
+              - if expired_service = expired_services.find{|ws| ws.service_id == service.id}
+                %span.badge.badge-important{id: "service_expired_#{service.id}"} X
+                :javascript
+                  $(function(){
+                    $('#service_expired_#{service.id}').popover({placement: 'right', content: 'Запись на услугу прекращается с #{l expired_service.date_off}', trigger: 'focus hover'})
+                  });

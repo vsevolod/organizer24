@@ -1,0 +1,201 @@
+//
+// Footer
+// --------------------------------------------------
+.footer {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	background: $footer-bg;
+	@media #{$tablet-port} { text-align: center; }
+	@media #{$mobile-land} {
+		.row > div {
+			width: 100%;
+		}
+	}
+	h3, h4 {
+		font-size: 1em;
+		font-weight: bold;
+		text-transform: uppercase;
+		border-bottom: 1px solid #c8c8c8;
+		margin: 0 -15px 15px;
+		padding: 7px 15px 23px;
+		color: $gray-dark;
+		@media #{$mobile-land} {
+			margin: 0 0 15px;
+			padding: 7px 0 13px;
+		}
+	}
+	h3 {
+		font-size: ($font-size-base * 1.5);
+		color: $brand-primary;
+		margin: 0 -15px 15px 0;
+		padding: 0 15px 23px 0;
+		@media #{$tablet-port} {
+			margin-left: -15px;
+		}
+		@media #{$mobile-land} {
+			margin: 0 0 15px;
+			padding: 7px 0 13px;
+		}
+	}
+	.flickr-wiget {
+		.flickr_badge_image {
+			float: left;
+			margin: 6px;
+			@media #{$tablet-land} {
+				margin: 0 3px 2px 0;
+			}
+			@media #{$tablet-port} {
+				float: none;
+				display: inline-block;
+				margin: 6px;
+			}
+		}
+	}
+	.featured-post, .features, .contacts {
+		margin-bottom: ($vert-gap/2);
+		h5 {
+			font-size: ($font-size-base * 0.875);
+			margin-bottom: ($vert-gap*0.3);
+			a {
+				color: $brand-primary;
+				text-decoration: none;
+				&:hover { color: $text-color; }
+			}
+		}
+		.devider {
+			display: block;
+			width: 50px;
+			height: 1px;
+			background: $text-color;
+			@media #{$tablet-port} { margin: auto; }
+		}
+		.meta {
+			margin-top: ($vert-gap*0.2);
+			font-size: $font-size-small;
+			.left, .right {
+				float: left;
+				@media #{$desktop} { 
+				 	float: none;
+				 	width: 100% !important;
+				}
+			}
+			.left { width: 65%; }
+			.right { width: 35%; }
+			a { 
+				display: inline-block;
+				margin-right: 4px;
+				margin-bottom: 4px;
+				text-decoration: none;
+				border-bottom: 1px solid transparent;
+				&:hover {
+					color: $brand-primary;
+					border-bottom: 1px solid $brand-primary;
+				}
+			}
+			span {
+				margin-right: 4px;
+				margin-bottom: 4px;
+			}
+		}
+	}
+	.featured-post {
+		h4, h5 { margin-bottom: ($vert-gap*0.25); }
+	}
+	.contacts {
+		h4, h5 {
+			font-weight: bold;
+			margin-bottom: ($vert-gap*0.2);
+		}
+		a {
+			text-decoration: none !important;
+		}
+		p { margin-bottom: ($vert-gap/1.8); }
+		.social-bar {
+			a {
+				text-decoration: none;
+				font-size: 2em;
+				margin: 10px 18px 10px 0;
+				&:hover { color: darken($brand-primary, 10%); }
+			}
+		}
+	}
+	.subscribe {
+		max-width: 400px;
+		margin: 10px auto ($vert-gap/1.5) auto;
+		form {
+			.form-control {
+				float: left;
+				width: 84%;
+				@media #{$desktop} { width: 80%; }
+				@media #{$tablet-land} { width: 75%; }
+				@media #{$tablet-port} { width: 83%; }
+				@media #{$mobile-port} { width: 82%; }
+			}
+			button[type=submit] {
+				float: right;
+				width: 40px;
+				height: 38px;
+				@include border-radius();
+				background: $brand-primary;
+				border: none;
+				color: #fff;
+				font-size: 1.3em;
+				@include transition(background, 0.3s);
+				&:hover { background: darken($brand-primary, 10%); }
+			}
+			&:after {
+				visibility: hidden;
+				display: block;
+				content: "";
+				clear: both;
+				height: 0;
+			}
+		}
+	}
+	.copyright {
+		background: $brand-primary;
+		padding: ($vert-gap/1.5) 0;
+		.container {
+			position: relative;
+		}
+		p {
+			position: absolute;
+			left: 0;
+			margin-bottom: 0;
+			display: inline-block;
+			font-size: ($font-size-base * 0.75) !important;
+			color: #fff;
+			@media #{$tablet-land} {
+				position: relative;
+				display: block;
+				float: left;
+			}
+			a {
+				text-decoration: none;
+				border-bottom: 1px solid transparent;
+				color: #fff;
+				color: #fff;
+				&:hover {
+					border-bottom: 1px solid #fff;
+				}
+			}
+		}
+		.social-bar {
+			a {
+				color: #fff;
+				&:hover {
+					opacity: .8;
+				}
+			}
+			@media #{$tablet-land} {
+				display: block;
+				float: left;
+				margin-left: 50px;
+			}
+			@media only screen and (max-width: 600px) {
+				display: none;
+			}
+		}
+	}
+}

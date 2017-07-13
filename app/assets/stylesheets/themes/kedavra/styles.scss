@@ -1,0 +1,50 @@
+/*
+ *Kedabra HTML5 Multipurpose Template Styles v2.1
+ *Copyright 2015 8Guild.com
+ */
+ 
+//Import Google Fonts (Open Sans) 
+@import "variables.scss";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+
+//Import Bootstrap 3.2.0
+@import "_bootstrap.scss";
+
+//Import FontAwesome 4.7.0
+@import "_font-awesome";
+
+//Import Kedavra Icons
+@import "icons/flaticon.scss"; 
+
+//Animations
+@import "animations/animate.scss"; 
+
+//Core Variables and Mixins
+@import "mixins.scss";
+
+//iHover
+@import "ihover/ihover.scss"; 
+
+//Light Gallery Plugin
+@import "lightgallery/lightgallery.scss";
+
+//Interactive Credit Card
+@import "card/card.scss";
+
+//Core CSS
+@import "scaffolding.scss";
+@import "type.scss";
+@import "buttons.scss";
+@import "forms.scss"; 
+
+// Components
+@import "header.scss";
+@import "home.scss";
+@import "navi.scss";
+@import "footer.scss";
+@import "shop.scss";
+@import "blog.scss";
+@import "sidebar.scss";
+@import "pages.scss";
+@import "widgets.scss";
+@import "modals.scss";

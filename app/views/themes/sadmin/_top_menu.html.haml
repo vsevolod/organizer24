@@ -1,5 +1,5 @@
 #top-menu.media
-  - if current_user && !current_user.new_record? && current_user.owner_or_worker?(@organization)
+  - if owner_or_worker?
     .pull-left.tm-icon
       = link_to '/notifications' do
         %i.sa-top-message

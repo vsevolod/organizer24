@@ -8,7 +8,7 @@
   - if @user.new_record?
     %b Пользователь не зарегистрирован
 - if @user.new_record?
-  - if current_user.owner_or_worker?(@organization)
+  - if owner_or_worker?
     = form_tag update_all_appointments_path do
       = hidden_field_tag :old_phone, @user.phone
       .control-group
@@ -22,10 +22,10 @@
         = text_field_tag :firstname, @appointments.first.try(:firstname), class: 'form-control'
       = submit_tag 'Изменить записи', class: 'btn btn-danger'
 - else
-  - if current_user.owner_or_worker?(@organization)
+  - if owner_or_worker?
     = link_to 'Удалить пользователя', @user, method: :delete, class: 'btn btn-danger'
     %br/
-  - if current_user.owner_or_worker?(@organization) || current_user == @user
+  - if owner_or_worker? || current_user == @user
     = simple_form_for @user do |f|
       = f.input :phone
       = f.input :lastname

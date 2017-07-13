@@ -1,0 +1,74 @@
+/ Footer Subscribe
+.footer-subscribe-widget.light-version
+  .container
+    .row
+      .col-md-7
+        %p Subscribe to our news. Don`t worry, we don`t spam you!
+      .col-md-5
+        %form#update-subscribe-form.validate{:action => "http://8guild.us3.list-manage1.com/subscribe/post?u=168a366a98d3248fbc35c0b67&id=06b7eb4e02", :method => "post", :name => "subscribe-form", :novalidate => "", :target => "_blank"}
+          .row
+            .col-sm-8
+              %input#subscr-email.form-control{:name => "EMAIL", :placeholder => "Email", :required => "", :type => "email"}/
+            / real people should not fill this in and expect good things - do not remove this or risk form bot signups
+            %div{:style => "position: absolute; left: -5000px;"}
+              %input{:name => "b_168a366a98d3248fbc35c0b67_06b7eb4e02", :tabindex => "-1", :type => "text", :value => ""}/
+            .col-sm-4
+              %button.btn.btn-transparent.btn-md.btn-primary{:type => "submit"} Subscribe
+.container.space-top
+  .row
+    / Featured Posts
+    .col-md-3.col-sm-3.col-xs-6
+      %h3 Kedavra
+      %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+    / Featured Posts
+    .col-md-3.col-sm-3.col-xs-6
+      %h4 Popular posts
+      .featured-post
+        %h5
+          %a{:href => "#"} Omnis iste natus error sit dolor set amet
+        .meta.group
+          .right
+            %span.text-muted 5 min read
+      .featured-post
+        %h5
+          %a{:href => "#"} Lorem ipsum dolor sit amet consectetur
+        .meta.group
+          .right
+            %span.text-muted 1 min read
+    / Flickr wiget
+    .col-md-3.col-sm-3.col-xs-6
+      .flickr-wiget
+        %h4 Flickr Widget
+        %script{:src => "http://www.flickr.com/badge_code_v2.gne?count=6&display=random&size=s&layout=x&source=user&user=64742456@N00", :type => "text/javascript"}
+    / Contact Info
+    .col-md-3.col-sm-3.col-xs-6
+      .contacts
+        %h4 Contact Info
+        %h5 Address:
+        %p 105448 Casa Blanca BLVD New York
+        %h5 Phone numbers:
+        %p
+          +9 876 543 00 21
+          %br>/
+          +0 123 400 56 78
+        %h5 E-mail:
+        %p
+          %a{:href => "mailto:info@your-domain.com"} info@your-domain.com
+/ Copyright
+.copyright.text-center
+  .container
+    %p.pull-left
+      %a{:href => "http://8guild.com/", :target => "_blank"} 8 Guild
+      \- Quality premium themes build by creatives
+    .social-bar
+      %a{:href => "#"}
+        %i.fa.fa-facebook
+      %a{:href => "#"}
+        %i.fa.fa-twitter
+      %a{:href => "#"}
+        %i.fa.fa-pinterest
+      %a{:href => "#"}
+        %i.fa.fa-github-alt
+      %a{:href => "#"}
+        %i.fa.fa-google-plus
+/ Footer Close

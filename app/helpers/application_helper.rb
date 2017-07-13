@@ -34,7 +34,18 @@ module ApplicationHelper
   end
 
   def theme_render(path, *options)
-    render "/themes/#{@organization.get_theme}/#{path}", *options
+    file_path = "/themes/#{@organization.get_theme}/#{path}"
+    unless lookup_context.template_exists?(file_path, nil, true)
+      file_path.gsub!(@organization.get_theme, 'default')
+    end
+    render file_path, *options
+  end
+
+  def active_link_to(url, active_class: 'active', &block)
+    klass = "#{active_class if current_page?(url)}"
+    content_tag :li, class: klass do
+      link_to url, &block
+    end
   end
 
   private

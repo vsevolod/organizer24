@@ -59,6 +59,7 @@ module Paperclip
         end
       end
 
+      print '.'
       dst
     end
 

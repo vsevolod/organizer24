@@ -1,0 +1,84 @@
+/ Header
+%header.header.sticky
+  / Adding class "sticky" to header enables its pinning to top on scroll. Please note in a "boxed" mode header doesn't stick to the top.
+  .inner
+    .container.group
+      / Logo
+      = link_to domain_organization_path(@organization), class: 'logo', alt: @organization.name do
+        %h3= @organization.name
+      / Navigation Toggle
+      #nav-toggle.left-off-canvas-toggle
+        %span
+      / Site Navigation
+      .navigation
+        / Menu
+        %nav.menu
+          %ul.nav
+            - @organization.pages.where.not(menu_name: nil).each do |page|
+              = active_link_to "/#{page.permalink}" do
+                = page.menu_name
+            - if @organization.show_photogallery? || owner_or_worker?
+              = active_link_to '/category_photos' do
+                %i.icon-th
+                Фотогалерея
+            - if !@organization.registration_before? || current_user
+              = active_link_to '/calendar' do
+                %i.icon-calendar
+                Записаться
+            - if current_user && current_user.persisted?
+              - if owner_or_worker?
+                %li.dropdown
+                  %a.dropdown-toggle{ 'href' => '#', 'data-toggle' => 'dropdown' }
+                    Отчеты
+                    %b.caret
+                  %ul.dropdown-menu
+                    = active_link_to '/users/statistic' do
+                      %i.icon-user
+                      По клиентам
+                    = active_link_to '/services/statistic' do
+                      %i.icon-list-alt
+                      По услугам
+                %li.dropdown
+                  %a.dropdown-toggle{ 'href' => '#', 'data-toggle' => 'dropdown' }
+                    Настройки
+                    %b.caret
+                  %ul.dropdown-menu
+                    = active_link_to '/pages' do
+                      %i.icon-list-alt
+                      Страницы
+                    = active_link_to '/edit' do
+                      %i.icon-pencil
+                      Организация
+                    = active_link_to '/services' do
+                      %i.icon-list-alt
+                      Услуги
+                    = active_link_to '/workers' do
+                      %i.icon-user
+                      Мастера
+                    = active_link_to '/dictionaries' do
+                      %i.icon-list
+                      Словари
+                    = active_link_to '/codes' do
+                      %i.icon-gift
+                      Сертификаты
+                    = active_link_to '/notifications' do
+                      %i.icon-envelope
+                      Уведомления
+                = active_link_to '/appointments/phonebook' do
+                  %i.icon-list-alt
+                  Телефонная книга
+              = active_link_to '/dashboard' do
+                %i.icon-home
+                Кабинет
+              %li
+                - if owner_or_worker?
+                  = link_to "СМС: #{@organization.sms_ru.try(:balance)} р.", '/notifications', class: 'brand'
+      / Tools
+      .tools.group
+        - if current_user
+          = link_to 'Выход', destroy_user_session_path, method: :delete, class: 'pull-right'
+        - else
+          = link_to 'Вход', new_user_session_path, class: 'pull-right'
+          = link_to 'Регистрация', new_user_registration_path, class: 'signup pull-right'
+      / Tools Close
+/ Header Close

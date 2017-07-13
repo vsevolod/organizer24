@@ -1,0 +1,31 @@
+!!!
+/ Conditionals for IE8-9 Support
+/[if IE] <html lang='ru' class='ie'>
+%html{ lang: I18n.locale }
+  %head
+    %title= @organization.name
+    %meta{ charset: 'utf-8' }/
+    %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }/
+    %meta{ content: '', name: 'description' }/
+    %meta{ content: 'width=device-width, initial-scale=1', name: 'viewport' }/
+    = stylesheet_link_tag "company"
+    = stylesheet_link_tag 'themes/kedavra'
+    = include_gon(init: true)
+    = csrf_meta_tags
+    = yield :js
+  %body.parallax.animated.fadeIn
+    .off-canvas-wrap{ data: { offcanvas: '' } }
+      .inner-wrap
+        = theme_render 'off_canvas_menu'
+        .site-layout
+          = theme_render 'header_toolbar'
+          .page
+            - if @breadcrumbs
+              .container.space-top
+                %ol.breadcrumb= render_breadcrumbs separator: '', tag: :li
+            = yield
+          %footer.footer
+            = theme_render 'footer'
+      %a.exit-off-canvas
+    = javascript_include_tag 'themes/kedavra'
+    = yield :bottom_js

@@ -7,4 +7,8 @@ module UsersHelper
     result << "Имя: #{user.name}"      if user.name
     result * joins
   end
+
+  def owner_or_worker?
+    @owner_or_worker ||= !current_user&.new_record? && current_user.owner_or_worker?(@organization)
+  end
 end
