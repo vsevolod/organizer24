@@ -9,6 +9,10 @@ module UsersHelper
   end
 
   def owner_or_worker?
-    @owner_or_worker ||= !current_user&.new_record? && current_user.owner_or_worker?(@organization)
+    if defined?(@owner_or_worker)
+      @owner_or_worker
+    else
+      @owner_or_worker = !!(current_user && current_user.persisted? && current_user.owner_or_worker?(@organization))
+    end
   end
 end
