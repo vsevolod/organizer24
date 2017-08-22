@@ -4,12 +4,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout :company
 
   def new
+    @remote = params[:remote] == 'true'
     @resource = resource_class.new
+
     if defined?(@organization)
       @resource.role = 'client'
       @resource.current_step = 1
       @resource.phone = params[:user][:phone] if (params[:user] || {})[:phone]
-      render action: :edit, layout: params[:remote] == 'true' ? false : company
+      render action: :edit, layout: !@remote && company
     else
       @resource.role = 'admin'
       respond_with @resource

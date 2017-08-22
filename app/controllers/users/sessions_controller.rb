@@ -6,13 +6,11 @@ class Users::SessionsController < Devise::SessionsController
   layout :company, except: 'new'
 
   def new
+    @remote = params[:remote] == 'true'
     @resource = resource_class.new
     @resource.phone = prepare_phone(params[:user][:phone]) if (params[:user] || {})[:phone]
-    if params[:remote] == 'true'
-      render layout: false
-    else
-      render layout: company
-    end
+
+    render layout: !@remote && company
   end
 
   def create

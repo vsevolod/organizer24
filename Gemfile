@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
 #gem 'rails', '4.2.7'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.5'
 
 gem 'cocoon'
 gem 'event-calendar', require: 'event_calendar'
@@ -53,17 +53,15 @@ gem 'sass-rails'
 gem 'puma'
 
 group :development do
-  gem 'dotenv-rails'
   gem 'pry-byebug'
   gem 'test-unit'
 end
 
-group :production do
-  gem 'therubyracer'
-end
+# group :production do
+#   gem 'therubyracer'
+# end
 
 group :test do
-  gem 'dotenv-rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
