@@ -57,9 +57,9 @@ group :development do
   gem 'test-unit'
 end
 
-# group :production do
-#   gem 'therubyracer'
-# end
+group :production do
+  gem 'therubyracer'
+end
 
 group :test do
   gem 'database_cleaner'
