@@ -54,23 +54,29 @@ gem 'puma'
 
 group :development do
   gem 'pry-byebug'
-  gem 'test-unit'
 end
 
-group :production do
-  gem 'therubyracer'
+if ENV['RAILS_ENV'] == 'production' #?!
+  group :production do
+    gem 'therubyracer'
+  end
+end
+
+group :development, :test do
+  gem 'rspec-rails'
 end
 
 group :test do
+  gem 'timecop'
+  gem 'json_matchers'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'email_spec'
   gem 'database_cleaner'
-  gem 'capybara'
-  gem 'launchy'
-  gem 'rspec-rails'
   gem 'simplecov'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'guard-rspec'
-  gem 'cucumber-rails', require: false
 end
 
 gem 'jquery-rails'

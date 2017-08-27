@@ -10,12 +10,18 @@ class Appointment < ApplicationRecord
   has_many :services_users, foreign_key: :phone, primary_key: :phone
   has_and_belongs_to_many :services # Услуги
 
-  before_save :update_complete_time
-  # TODO
-  # before_save :update_cost
+  validates :start, presence: true
+  validates :phone, presence: true
+  validates :firstname, presence: true, unless: :'free?'
+  validates :worker, presence: true
+  validates :organization, showing_time: { start: :start, showing_time: :showing_time }
+  validates :showing_time, numericality: { greater_than: 0 }
+
   before_validation :check_start_time
   before_validation :cost_time_by_services!
   before_validation :check_services_on_expire
+
+  before_save :update_complete_time
   after_save :notify_owner, if: :can_notify_owner?
   after_save :change_start_notification, if: :start_or_status_changed
 
@@ -37,7 +43,7 @@ class Appointment < ApplicationRecord
     state :cancel_owner # Отменена владельцем
 
     event :first_owner_view do
-      transitions to: :offer, from: :free
+      transitions from: [:offer, :free], to: :offer
     end
 
     event :complete_appointment do
@@ -51,13 +57,6 @@ class Appointment < ApplicationRecord
 
   FINISH_STATES = %w(complete missing lated cancel_owner cancel_client).freeze
   STARTING_STATES = %w(taken your-offer offer approve).freeze
-
-  validates :start, presence: true
-  validates :phone, presence: true
-  validates :firstname, presence: true, unless: :'free?'
-  validates :worker, presence: true
-  validates :organization, showing_time: { start: :start, showing_time: :showing_time }
-  validates :showing_time, numericality: { greater_than: 0 }
 
   # FIXME: appointment_services - это правильная форма? сравнить при написании view
   # attr_accessible :start, :organization_id, :appointment_services, :showing_time, :service_ids, :phone, :firstname, :lastname, :services_users_attributes, :worker_id, :comment
@@ -142,7 +141,7 @@ class Appointment < ApplicationRecord
     end
     if !text.blank? && !organization.owner_phones.include?(phone) # Не уведомляем если на телефон мастера
       # Проверка на наличие мастера онлайн
-      phone = worker(organization).try(:phone) || organization.owner.phone
+      phone = worker&.phone || organization.owner.phone
       # if $redis.hkeys('phones').include?(phone)
       #  $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
       # end
@@ -198,12 +197,6 @@ class Appointment < ApplicationRecord
   private
 
   def check_start_time
-    # TODO: remove after 26.10.2014 (and change time zone for server)
-    # if Rails.env == 'production' && self.start_changed?
-    #  if self.start && self.start.to_date >= '26.10.2014'.to_date
-    #    self.start = self.start - 1.hour
-    #  end
-    # end
     if %w(taken offer approve).include? status
       errors[:start] = 'не может быть меньше текущего времени' if start <= Time.zone.now
     end

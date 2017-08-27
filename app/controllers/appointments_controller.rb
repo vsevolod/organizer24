@@ -67,6 +67,7 @@ class AppointmentsController < CompanyController
     else
       session[:phone] = params[:user][:phone]
     end
+
     respond_to do |format|
       if @appointment.save
         session[:appointment_new] = @appointment.id
@@ -81,7 +82,7 @@ class AppointmentsController < CompanyController
           JS
         end
       else
-        format.html { redirect_to :back, notice: "При сохранении возникла ошибка: #{@appointment.errors.full_messages.join('; ')}" }
+        format.html { redirect_back fallback_location: '/calendar', notice: "При сохранении возникла ошибка: #{@appointment.errors.full_messages.join('; ')}" }
         format.js { render js: "alert('Не добавлено: #{@appointment.errors.full_messages.join('; ')}');Organizer.removeOtherElements();" }
       end
     end
