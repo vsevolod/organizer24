@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: organizations
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  activity_id :integer
+#  domain      :string(255)
+#  owner_id    :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  settings    :text
+#
+
 class Organization < ApplicationRecord
   ACCESSORS = [
     :slot_minutes,          # Кол-во минут

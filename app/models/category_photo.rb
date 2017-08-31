@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: category_photos
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  ancestry        :string(255)
+#  organization_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class CategoryPhoto < ApplicationRecord
   has_ancestry
 

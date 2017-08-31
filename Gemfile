@@ -63,6 +63,7 @@ if ENV['RAILS_ENV'] == 'production' #?!
 end
 
 group :development, :test do
+  gem 'annotate', require: false
   gem 'rspec-rails'
 end
 

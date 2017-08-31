@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: services_users
+#
+#  id              :integer          not null, primary key
+#  service_id      :integer
+#  organization_id :integer
+#  phone           :string(255)
+#  cost            :integer
+#  showing_time    :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class ServicesUser < ApplicationRecord
   belongs_to :service
   belongs_to :user, primary_key: :phone, foreign_key: :phone

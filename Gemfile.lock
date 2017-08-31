@@ -62,6 +62,9 @@ GEM
       sprockets (>= 3.0, < 5)
       tilt
     angularjs-rails-resource (2.2.2)
+    annotate (2.7.2)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 13.0)
     arel (7.1.4)
     bcrypt (3.1.11)
     breadcrumbs_on_rails (3.0.1)
@@ -394,6 +397,7 @@ DEPENDENCIES
   ancestry
   angular-rails-templates
   angularjs-rails-resource
+  annotate
   breadcrumbs_on_rails
   ckeditor
   cocoon

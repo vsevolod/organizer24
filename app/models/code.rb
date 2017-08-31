@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: codes
+#
+#  id              :integer          not null, primary key
+#  number          :string(255)
+#  worker_id       :integer
+#  cost            :float
+#  status          :string(255)
+#  user_id         :integer
+#  organization_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class Code < ApplicationRecord
   include AASM
 

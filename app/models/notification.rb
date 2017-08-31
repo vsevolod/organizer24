@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id                :integer          not null, primary key
+#  user_id           :integer
+#  worker_id         :integer
+#  organization_id   :integer
+#  cost              :float
+#  length            :integer
+#  status            :string(255)
+#  notification_type :string(255)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  appointment_id    :integer
+#
+
 class Notification < ApplicationRecord
   include AASM
 

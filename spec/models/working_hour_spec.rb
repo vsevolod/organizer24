@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: working_hours
+#
+#  id              :integer          not null, primary key
+#  week_day        :integer
+#  begin_time      :integer
+#  end_time        :integer
+#  organization_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  worker_id       :integer
+#
+
 require 'spec_helper'
 
 describe WorkingHour do

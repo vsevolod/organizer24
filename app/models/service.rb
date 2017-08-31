@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: services
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  showing_time    :integer
+#  cost            :integer
+#  organization_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  is_collection   :boolean
+#  show_by_owner   :boolean          default(FALSE), not null
+#  bottom_cost     :integer
+#  top_cost        :integer
+#  description     :text
+#  category_id     :integer
+#  position        :integer
+#  new_cost        :integer
+#  new_date_cost   :date
+#
+
 class Service < ApplicationRecord
   scope :not_collections, -> { where("is_collection != 't' OR is_collection IS NULL") }
 

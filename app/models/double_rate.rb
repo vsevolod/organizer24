@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: double_rates
+#
+#  id              :integer          not null, primary key
+#  week_day        :integer
+#  begin_time      :integer
+#  end_time        :integer
+#  organization_id :integer
+#  worker_id       :integer
+#  day             :date
+#  rate            :float
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class DoubleRate < ApplicationRecord
   # attr_accessible :begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate
   attr_accessor :begin_hour, :begin_minute, :end_hour, :end_minute

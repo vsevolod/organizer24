@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: appointments
+#
+#  id              :integer          not null, primary key
+#  start           :datetime
+#  showing_time    :integer
+#  status          :string(255)
+#  user_id         :integer
+#  organization_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  cost            :integer
+#  phone           :string(255)
+#  complete_time   :datetime
+#  firstname       :string(255)
+#  lastname        :string(255)
+#  worker_id       :integer
+#  comment         :string(255)
+#
+
 class Appointment < ApplicationRecord
   include AASM
 
