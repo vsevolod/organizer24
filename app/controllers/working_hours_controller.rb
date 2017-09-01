@@ -53,9 +53,9 @@ class WorkingHoursController < CompanyController
     # Подсчет мультипликаторов
     rates = @worker.double_rates.where('date(day) >= :start AND date(day) <= :end OR week_day IS NOT NULL', start: @start, end: @end)
     @periods = []
-    ((@start.to_date)..(@end.to_date)).each_with_index do |_t, index|
+    ((@start.to_date)...(@end.to_date)).each_with_index do |_t, index|
       current_day = @start + index.days
-      whs = @worker.working_hours.where(week_day: [1, 2, 3, 4, 5, 6, 0][index % 7]).order(:begin_time)
+      whs = @worker.working_hours.where(week_day: current_day.wday).order(:begin_time)
       double_rates = rates.where('week_day = :week_day OR day = :current_day', week_day: current_day.wday, current_day: current_day.localtime.to_date)
       @periods << if (!@worker.finished_date || current_day <= @worker.finished_date) && Time.zone.now.to_date + @organization.last_day.to_i.days <= current_day.to_date
                     double_rates.map do |double_rate|
