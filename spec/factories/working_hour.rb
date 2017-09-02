@@ -17,5 +17,12 @@ FactoryGirl.define do
       end
       end_minute 59
     end
+
+    trait :all_day do
+      begin_hour 0
+      begin_minute 0
+      end_hour 23
+      end_minute 59
+    end
   end
 end

@@ -21,7 +21,7 @@ class ShowingTimeValidator < ActiveModel::EachValidator
     unless (whs + drs).map { |wh| [wh.begin_time, wh.end_time] }.union.inject(false) do |flag, range|
              flag || (range.first <= record.start_seconds && range.last >= record.end_seconds)
            end
-      record.errors[:base] = 'В это время мастер не работает'
+      record.errors.add(:base, 'В это время мастер не работает')
     end
   end
 end

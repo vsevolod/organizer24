@@ -14,9 +14,14 @@ FactoryGirl.define do
     activity
     owner
 
-    after(:create) do |organization|
-      FactoryGirl.create(:worker, :working_now, organization: organization)
+    after(:create) do |organization, _evaluator|
       FactoryGirl.create(:category_photo, organization: organization)
+    end
+
+    trait :with_worker do
+      after(:create) do |organization, _evaluator|
+        FactoryGirl.create(:worker, :working_now, organization: organization)
+      end
     end
 
     trait :with_services do

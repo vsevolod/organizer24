@@ -11,7 +11,7 @@ class Users::PasswordsController < Devise::PasswordsController
                       User.send_reset_password_instructions_by_phone(resource_params)
                 end
     if resource.new_record? && !send_to_email
-      resource.errors[:phone] = 'Пользователь с таким телефоном не найден'
+      resource.errors.add(:phone, 'Пользователь с таким телефоном не найден')
     end
 
     if resource.new_record?

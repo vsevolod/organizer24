@@ -1,11 +1,11 @@
 .utopia-login
   %h1
-    - if @resource.new_record?
+    - if resource.new_record?
       Регистрация
     - else
       Редактирование
   .utopia
-    = simple_form_for(@resource, :as => resource_name, :url => registration_path(resource_name), :wrapper => :bootstrap, :html => { :method => (@resource.new_record? ? :post : :put ) }) do |f|
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :wrapper => :bootstrap, :html => { :method => (resource.new_record? ? :post : :put ) }) do |f|
       = f.input :role, :as => :hidden
       = f.input :lastname
       = f.input :firstname
@@ -15,7 +15,7 @@
       = f.input :password_confirmation, :as => :password
       - if @appointment_id
         = hidden_field_tag :appointment_id, @appointment_id
-      - if @resource.new_record?
+      - if resource.new_record?
         = f.submit 'Зарегистрироваться', :class => 'btn btn-normal'
       - else
         = f.input :current_password, :as => :password

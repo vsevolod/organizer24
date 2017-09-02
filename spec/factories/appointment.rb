@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :appointment do
-    start Time.zone.now + Random.new.rand(1..10).hours
+    start Time.current + Random.new.rand(1..10).hours
     status 'free'
     cost 100
     user
@@ -15,6 +15,11 @@ FactoryGirl.define do
       after(:build) do |appointment|
         appointment.worker = appointment.organization.workers.take
       end
+    end
+
+    trait :completed do
+      showing_time 30
+      status :complete
     end
 
     trait :valid do

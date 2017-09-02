@@ -28,6 +28,7 @@ gem 'pg'
 gem 'breadcrumbs_on_rails'
 
 gem 'active_model_serializers'
+# gem 'torihiki', git: 'https://github.com/vforvova/simple_transaction'
 
 # Assets
 
