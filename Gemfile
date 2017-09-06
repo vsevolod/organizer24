@@ -53,6 +53,10 @@ gem 'sass-rails'
 
 gem 'puma'
 
+# API
+gem 'grape'
+gem 'grape-entity'
+
 group :development do
   gem 'pry-byebug'
 end

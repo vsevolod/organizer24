@@ -14,6 +14,8 @@ guard 'rspec', cmd: 'bundle exec rspec' do
   watch('config/routes.rb')                           { 'spec/routing' }
   watch('app/controllers/application_controller.rb')  { 'spec/controllers' }
 
+  watch(%r{^app/api/(.+)\.rb$})                       { |m| "spec/requests/api/#{m[1]}_spec.rb" }
+
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 

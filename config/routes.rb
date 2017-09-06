@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :user_admins
   # mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount Ckeditor::Engine => '/ckeditor'
+  mount API::Root => '/'
 
   # Sidekiq
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
