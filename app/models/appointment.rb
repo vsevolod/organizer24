@@ -167,7 +167,8 @@ class Appointment < ApplicationRecord
       #  $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
       # end
       case
-      when worker.telegram_enabled
+      when worker.user.telegram_user
+        TelegramJob.perform_later(message: message.text, telegram_user_id: worker.user.telegram_user.telegram_id)
         # TODO Sent message to telegram
       when worker.push_key.present?
         BoxCarJob.perform_later({ message: text, authentication_token: worker.push_key} )

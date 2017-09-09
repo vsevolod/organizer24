@@ -1,4 +1,4 @@
-require_dependency 'app/controllers/users'
+require_dependency './app/controllers/users'
 
 module API
   module V1

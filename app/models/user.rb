@@ -33,6 +33,7 @@ class User < ApplicationRecord
   ROLES = %w(admin client).freeze
 
   has_one :my_organization, class_name: 'Organization', foreign_key: :owner_id, dependent: :destroy, validate: false
+  has_one :telegram_user, -> { where(confirmed: true) }, foreign_key: :phone, primary_key: :phone
   has_many :workers, primary_key: 'phone', foreign_key: 'phone'
   has_many :organizations
   has_many :appointments
