@@ -56,6 +56,7 @@ gem 'puma'
 # API
 gem 'grape'
 gem 'grape-entity'
+gem 'grape_on_rails_routes'
 
 group :development do
   gem 'pry-byebug'

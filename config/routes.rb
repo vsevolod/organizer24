@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get '/modal' => 'organizations#modal', :as => :modal
     get '/calendar(/:year(/:month))' => 'calendar#index', :as => :date_calendar, :constraints => { year: /\d{4}/, month: /\d{1,2}/ }
 
+    resource :telegram_user, only: [:new, :create, :show]
+
     resources :appointments do
       resources :services_users do
         collection do

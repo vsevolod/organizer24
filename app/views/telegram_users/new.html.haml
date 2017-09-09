@@ -1,0 +1,4 @@
+= form_tag '/telegram_user', method: :post do
+  = text_field_tag :confirmation_number, nil, class: 'form-control'
+
+  = submit_tag 'Подтвердить', class: 'btn btn-success'

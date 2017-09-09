@@ -11,6 +11,20 @@ module API
           }
         end
 
+        rescue_from ActiveRecord::RecordInvalid do |e|
+          error_response status: 422, message: {
+            code: :invalid,
+            errors: e.record.errors.full_messages
+          }
+        end
+
+        rescue_from PhoneService::NotValidPhone do |e|
+          error_response status: 422, message: {
+            code: :invalid,
+            errors: 'Указан неверный номер телефона'
+          }
+        end
+
         rescue_from :all do |e|
           Rails.logger.error e.message
 
