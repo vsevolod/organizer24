@@ -1,6 +1,10 @@
 #top-menu.media
   - if owner_or_worker?
     .pull-left.tm-icon
+      = link_to telegram_user_path do
+        %i.sa-top-updates
+        %span Telegram
+    .pull-left.tm-icon
       = link_to '/notifications' do
         %i.sa-top-message
         %i.n-count.animated

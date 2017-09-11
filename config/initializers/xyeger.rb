@@ -1,5 +1,6 @@
 Xyeger.configure do |config|
-  config.formatter = Xyeger::Formatters::Values.new(colored: true)
+  config.output = STDOUT                      # default to STDOUT
+  config.formatter = Xyeger::Formatters::Values.new
+  config.app = 'Organizer'                    # default to ENV['XYEGER_APPNAME'] or emtpy string
+  config.env = Rails.env                      # default to ENV['XYEGER_ENV'] or empty string
 end
-
-Sidekiq::Logging.logger.formatter = Xyeger::Formatters::SidekiqJson.new

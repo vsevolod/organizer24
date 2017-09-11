@@ -33,24 +33,25 @@ class User < ApplicationRecord
   ROLES = %w(admin client).freeze
 
   has_one :my_organization, class_name: 'Organization', foreign_key: :owner_id, dependent: :destroy, validate: false
+  has_one :telegram_user, -> { where(confirmed: true) }, foreign_key: :phone, primary_key: :phone
   has_many :workers, primary_key: 'phone', foreign_key: 'phone'
   has_many :organizations
   has_many :appointments
   has_many :appointments_by_phone, class_name: 'Appointment', foreign_key: :phone, primary_key: :phone
   has_many :addresses
   has_many :services_users, foreign_key: :phone, primary_key: :phone
+
   accepts_nested_attributes_for :addresses
   accepts_nested_attributes_for :my_organization
 
   validates :phone, :firstname, :lastname, presence: true
   validates :phone, uniqueness: true
   validates :email, presence: { if: :is_admin? }, format: { with: /\A[^@]+@[^@]+\z/, if: :is_admin? }
-
   validates :phone, format: { with: /\A[\d\W]+\z/ }
-
   validates :password, presence: { if: proc { |u| u.new_record? } }
   validates :password, confirmation: { if: proc { |u| !u.blank? } }
   validates :password, length: { within: 3..100, allow_blank: true }
+
   before_save :check_phone
   before_save :update_appointments
 
@@ -128,16 +129,16 @@ class User < ApplicationRecord
   end
 
   def self.send_reset_password_instructions_by_phone(options)
-    if user = find_by(phone: options[:phone])
-      number = Random.new.rand(100_000..999_999)
-      user.reset_password_token = Devise.token_generator.digest(self, :reset_password_token, number)
-      user.reset_password_sent_at = Time.now.utc
-      user.save(validate: false)
-      SmsJob.perform_later({ text: "Номер для восстановления пароля: #{number}", phone: user.phone }, 'simple_notify')
-      user
-    else
-      User.new(options)
-    end
+    user = find_by(phone: options[:phone])
+
+    return User.new(options) unless user
+
+    user.confirmation_number = Random.new.rand(100_000..999_999)
+    user.reset_password_token = Devise.token_generator.digest(self, :reset_password_token, user.confirmation_number)
+    user.reset_password_sent_at = Time.now.utc
+    user.save(validate: false)
+    SmsJob.perform_later({ text: "Номер для восстановления пароля: #{user.confirmation_number}", phone: user.phone }, 'simple_notify')
+    user
   end
 
   private

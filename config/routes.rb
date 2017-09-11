@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :user_admins
   # mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount Ckeditor::Engine => '/ckeditor'
+  mount API::Root => '/'
 
   # Sidekiq
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
     get '/edit' => 'organizations#edit', :as => :edit
     get '/modal' => 'organizations#modal', :as => :modal
     get '/calendar(/:year(/:month))' => 'calendar#index', :as => :date_calendar, :constraints => { year: /\d{4}/, month: /\d{1,2}/ }
+
+    resource :telegram_user, only: [:new, :create, :show]
 
     resources :appointments do
       resources :services_users do

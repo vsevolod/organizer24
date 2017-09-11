@@ -1,4 +1,3 @@
-# coding: utf-8
 module UsersHelper
   def full_user_name(user, joins = ' ')
     result = []

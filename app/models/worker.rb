@@ -46,7 +46,7 @@ class Worker < ApplicationRecord
     dative_case
     push_key
     sms_translit
-    telegram_id
+    telegram_enabled
   ]
   store :settings, accessors: SETTINGS_KEYS
 

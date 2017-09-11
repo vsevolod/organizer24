@@ -166,7 +166,10 @@ class Appointment < ApplicationRecord
       # if $redis.hkeys('phones').include?(phone)
       #  $redis.publish 'socket.io#*', [{type: 2, data: ['message', self.user.name, text]}, {rooms: [phone]}].to_msgpack
       # end
-      if worker.push_key.present?
+      case
+      when worker.user.telegram_user
+        TelegramJob.perform_later(message: text, telegram_id: worker.user.telegram_user.telegram_id)
+      when worker.push_key.present?
         BoxCarJob.perform_later({ message: text, authentication_token: worker.push_key} )
       else
         SmsJob.perform_later({ text: text, phone: phone }, 'simple_notify')
@@ -219,14 +222,14 @@ class Appointment < ApplicationRecord
 
   def check_start_time
     if %w(taken offer approve).include? status
-      errors[:start] = 'не может быть меньше текущего времени' if start <= Time.zone.now
+      errors.add(:start, 'не может быть меньше текущего времени') if start <= Time.zone.now
     end
   end
 
   # Проверка сервисов на прекращенные
   def check_services_on_expire
     if worker && date_off = worker.services_workers.can_be_expired.where(date_off: Time.at(0)..start, service_id: service_ids).pluck(:date_off).min
-      errors[:start] = "не может быть больше, #{date_off}"
+      errors.add(:start, "не может быть больше, #{date_off}")
     end
   end
 

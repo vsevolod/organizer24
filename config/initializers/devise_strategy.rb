@@ -1,6 +1,4 @@
 Warden::Strategies.add(:devise_strategy) do
-  include UserService
-
   def valid?
     return false if request.get?
     user_data = params.fetch("user", {})
@@ -11,7 +9,7 @@ Warden::Strategies.add(:devise_strategy) do
     u = if params[:user_admin]
           UserAdmin.find_for_authentication(email: (params[:user_admin] || {})[:email])
         else
-          User.find_for_authentication(phone: prepare_phone((params[:user] || {})[:phone]) )
+          User.find_for_authentication(phone: PhoneService.parse(params.dig(:user, :phone)) )
         end
     if u.nil? || !u.valid_password?((params[:user] || params[:user_admin] || {})[:password])
       fail!('Пользователь или пароль не верен')
@@ -22,5 +20,8 @@ Warden::Strategies.add(:devise_strategy) do
     else
       success!(u)
     end
+  rescue PhoneService::NotValidPhone
+    fail!('Пользователь или пароль не верен')
+    redirect!('/users/sign_in')
   end
 end

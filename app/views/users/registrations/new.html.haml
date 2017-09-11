@@ -4,8 +4,8 @@
   .row
     .span5.well
       %h3 Создать нового пользователя
-      - resource.role = 'admin'
-      = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+      - resource.role ||= 'admin'
+      = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
         = devise_error_messages!
         = f.input :role, :as => :hidden
         = f.input :lastname

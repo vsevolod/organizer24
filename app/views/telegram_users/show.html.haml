@@ -1,0 +1,2 @@
+- unless @telegram_user.confirmed?
+  = link_to 'Ввести номер для подтверждения', new_telegram_user_path, class: 'btn btn-success'

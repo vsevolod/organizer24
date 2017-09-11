@@ -18,5 +18,13 @@ FactoryGirl.define do
         worker.working_hours << build(:working_hour, :now, worker: worker)
       end
     end
+
+    trait :working_all_week do
+      after(:build) do |worker, _evaluator|
+        7.times do |t|
+          worker.working_hours << build(:working_hour, :all_day, worker: worker, week_day: t)
+        end
+      end
+    end
   end
 end

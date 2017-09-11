@@ -1,31 +1,35 @@
-class Users::SessionsController < Devise::SessionsController
-  include UserService
-  include SetLayout
+module Users
+  class SessionsController < Devise::SessionsController
+    include SetLayout
 
-  before_action :find_organization
-  layout :company, except: 'new'
+    before_action :find_organization
+    layout :company, except: 'new'
 
-  def new
-    @remote = params[:remote] == 'true'
-    @resource = resource_class.new
-    @resource.phone = prepare_phone(params[:user][:phone]) if (params[:user] || {})[:phone]
+    def new
+      self.resource = resource_class.new(sign_in_params)
 
-    render layout: !@remote && company
-  end
+      resource.phone = PhoneService.parse(params.dig(:user, :phone))
+      @remote = params[:remote] == 'true'
 
-  def create
-    params[:user][:phone] = prepare_phone(params[:user][:phone])
-    super
-  end
+      clean_up_passwords(resource)
+      yield resource if block_given?
 
-  private
+      render layout: !@remote && company
+    end
 
-  def after_sign_in_path_for(resource)
-    if current_user.is_admin? && !Subdomain.matches?(request)
-      '/organizations/new'
-    else
-      request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    def create
+      params[:user][:phone] = PhoneService.parse(params.dig(:user, :phone))
+      super
+    end
+
+    private
+
+    def after_sign_in_path_for(resource)
+      if current_user.is_admin? && !Subdomain.matches?(request)
+        '/organizations/new'
+      else
+        request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+      end
     end
   end
-
 end

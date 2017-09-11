@@ -28,6 +28,7 @@ gem 'pg'
 gem 'breadcrumbs_on_rails'
 
 gem 'active_model_serializers'
+# gem 'torihiki', git: 'https://github.com/vforvova/simple_transaction'
 
 # Assets
 
@@ -51,6 +52,11 @@ gem 'compass-rails'
 gem 'sass-rails'
 
 gem 'puma'
+
+# API
+gem 'grape'
+gem 'grape-entity'
+gem 'grape_on_rails_routes'
 
 group :development do
   gem 'pry-byebug'

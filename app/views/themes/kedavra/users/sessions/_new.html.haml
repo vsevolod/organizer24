@@ -7,7 +7,7 @@
         .page-heading
           %h2 Вход
         .row
-          = form_for(@resource, :as => resource_name, :url => session_path(resource_name), :html => { class: 'signup-form space-bottom' }) do |f|
+          = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: 'signup-form space-bottom' }) do |f|
             .form-group
               = f.label :phone, class: 'sr-only'
               = f.text_field :phone, class: 'form-control input-lg', 'aria-required' => true, placeholder: 'Телефон', required: true
