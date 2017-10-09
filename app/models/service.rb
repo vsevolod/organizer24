@@ -58,7 +58,7 @@ class Service < ApplicationRecord
       self.new_date_cost = nil
       save
     else
-      delay_until(new_date_cost).update_new_cost!
+      delay_until(new_date_cost.to_time).update_new_cost!
       first_day = [new_date_cost, new_date_cost_was].compact.min
       if is_collection?
         organization.appointments.where('? = (SELECT count(*) FROM appointments_services WHERE appointments_services.appointment_id = appointments.id AND appointments_services.service_id IN (?))', service_ids.count, service_ids)
