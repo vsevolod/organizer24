@@ -9,10 +9,10 @@
   %li
     %a.sa-side-widget{href: "/category_photos"}
       %span.menu-item Фотогалерея
-  - if (contact = @organization.pages.where(permalink: '/contacts').first)
+  - pages.each do |page|
     %li
-      %a.sa-side-contacts{href: "/contacts"}
-        %span.menu-item= contact.name
+      %a{ class: "sa-side-#{page.permalink}", href: page.show_page_link }
+        %span.menu-item= page.menu_name
   - if current_user && !current_user.new_record?
     - if owner_or_worker?
       %li

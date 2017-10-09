@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       end
     end
     resources :dictionaries
-    get ':id', to: 'pages#show'
+    get '/:id', to: 'pages#show'
   end
 
   resources :after_signup

@@ -30,5 +30,6 @@
 #= require cocoon
 #= require calendar_autocomplete
 #= require organizations
+#= require ckeditor/init
 #= require reports
 #= require_self
