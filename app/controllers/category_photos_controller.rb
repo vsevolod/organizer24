@@ -19,7 +19,7 @@ class CategoryPhotosController < CompanyController
   end
 
   def create
-    @category_photo = @organization.category_photos.build(params[:category_photo])
+    @category_photo = @organization.category_photos.build(category_photo_params)
     if @category_photo.save
       redirect_to @category_photo, notice: 'Категория успешно добавлена'
     else
