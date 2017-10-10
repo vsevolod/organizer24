@@ -1,15 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include Errors
+
   private
 
   def find_organization
-    if name = Subdomain.matches?(request)
-      @organization = Organization.find_by(domain: name) || Organization.find_by(domain: request.subdomain)
-    elsif params[:organization_id]
-      @organization = Organization.find(params[:organization_id])
-    end
-    # raise ActiveRecord::RecordNotFound unless @organization
+    name = Subdomain.matches?(request)
+    return unless name
+
+    @organization = Organization.find_by(domain: name)
+    @organization ||= Organization.find_by(domain: request.subdomain)
+
+    raise ActiveRecord::RecordNotFound unless @organization
+    raise Errors::ServiceUnavailableError unless @organization.active?
   end
 
   def organization_root

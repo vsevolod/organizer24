@@ -56,6 +56,7 @@ class Organization < ApplicationRecord
   has_many :dictionaries
   has_many :double_rates
   has_many :services_users
+  has_many :payments
 
   accepts_nested_attributes_for :dictionaries
   accepts_nested_attributes_for :workers
@@ -111,6 +112,10 @@ class Organization < ApplicationRecord
 
   def zone_offset
     Time.find_zone!(timezone).utc_offset
+  end
+
+  def active?
+    payments.active.exists?
   end
 
   private

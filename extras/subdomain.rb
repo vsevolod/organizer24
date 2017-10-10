@@ -1,5 +1,5 @@
 class Subdomain
-  HOME_IP = '89.105.156.230'.freeze
+  HOME_IP = ENV.fetch('HOME_IP', '1.1.1.1').freeze
 
   def self.matches?(request)
     return 'depilate' if Rails.env.development?
@@ -7,11 +7,7 @@ class Subdomain
     name = request.domain || HOME_IP if name.blank? || name == 'www'
     name = name.gsub(/^www\./, '').split('.').first
     case name
-    when 'oneclickbook'
-      false
-    when '1clickbook'
-      false
-    when HOME_IP.scan(/^\d+/).first
+    when 'oneclickbook', '1clickbook', HOME_IP.scan(/^\d+/).first
       false
     else
       name
