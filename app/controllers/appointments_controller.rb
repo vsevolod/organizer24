@@ -140,8 +140,9 @@ class AppointmentsController < CompanyController
   end
 
   def update_all
-    @appointments = @organization.appointments.where(phone: params[:old_phone])
-    @appointments.update_all(phone: params[:phone], lastname: params[:lastname], firstname: params[:firstname])
+    attributes = { phone: params[:phone], lastname: params[:lastname], firstname: params[:firstname] }
+    @organization.appointments.where(phone: params[:old_phone]).update_all(attributes)
+
     redirect_to user_path(id: params[:phone]), notice: 'Записи успешно изменены'
   end
 

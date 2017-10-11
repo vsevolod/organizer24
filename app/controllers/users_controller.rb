@@ -61,10 +61,11 @@ class UsersController < CompanyController
 
   def update
     @user = User.find(params[:id])
+
     if current_user.owner_or_worker?(@organization) || current_user == @user
-      @user.attributes = params[:user]
-      if @user.save
-        if @user.phone_changed? && !current_user.owner_or_worker?(@organization)
+      if @user.update(user_params)
+        @organization.appointments.where(phone: current_user.phone).update_all(user_params)
+        if @user.phone_changed? && current_user == @user
           @user.unconfirmed!
           redirect_to [:confirm_phone, @user], notice: 'Подтвердите свой телефон'
         else
@@ -119,6 +120,10 @@ class UsersController < CompanyController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:phone, :firstname, :lastname, :showing_time, :comment)
+  end
 
   def skip_when_confirmed
     @user = User.find(params[:id])
