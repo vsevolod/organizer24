@@ -39,7 +39,7 @@ class AppointmentsController < CompanyController
   # GET список телефонных номеров и их владельцев
   # FIXME переместить наверно в контроллер workers?!
   def phonebook
-    @phonebook = @organization.appointments.includes(:user).select('DISTINCT(phone), MAX(user_id) as user_id, MAX(firstname) as firstname, MAX(lastname) as lastname').group('phone')
+    @phonebook = @organization.appointments.includes(:user_by_phone).select('DISTINCT(phone), MAX(firstname) as firstname, MAX(lastname) as lastname').group('phone')
   end
 
   def create

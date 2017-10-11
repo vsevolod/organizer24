@@ -8,13 +8,10 @@
     - @phonebook.each do |appointment|
       %tr
         %td
-          - if appointment.user.present?
-            = link_to appointment.user do
-              = appointment.user.lastname
-              = appointment.user.firstname
+          - if user = appointment.user_by_phone.presence
+            = link_to user.name, user
           - else
-            = appointment.lastname
-            = appointment.firstname
+            = appointment.fullname
         %td
           = appointment.phone
         %td
