@@ -47,6 +47,7 @@ class Worker < ApplicationRecord
     push_key
     sms_translit
     telegram_enabled
+    user_notify_text
   ]
   store :settings, accessors: SETTINGS_KEYS
 
@@ -57,4 +58,8 @@ class Worker < ApplicationRecord
   validates_attachment_content_type :photo, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
   scope :enabled, ->{ where(is_enabled: true) }
+
+  def user_notify_template
+    user_notify_text.presence || organization.user_notify_text
+  end
 end

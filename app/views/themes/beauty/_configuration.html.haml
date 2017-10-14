@@ -6,43 +6,9 @@
 = f.input :registration_before, :as => :boolean, :wrapper => 'checkbox'
 = f.input :theme, :collection => Organization::ACTUAL_THEMES.keys
 = f.time_zone_select :timezone, nil, {}, {class: 'form-control'}
-
-%h3 Текст смс
-- appointment = Appointment.last
-.row
-  .span4= f.input :user_notify_text, :as => :text, :input_html => { :size => '150x10' }
-  %code#template_help.span4
-  #template_example.span4= user_notify( @organization.user_notify_text, appointment )
-= content_for :bottom_js do
-  :javascript
-    $(function(){
-      var appointment = #{appointment.to_json};
-      var template = {
-        '<ИМЯ>': appointment.firstname,
-        '<ФАМИЛИЯ>': appointment.lastname,
-        '<ДЕНЬ НЕДЕЛИ>': '#{Organization::GENITIVE_WEEK_DAYS[appointment.start.wday]}',
-        '<ДАТА НАЧАЛА>': '#{Russian.strftime( appointment.start, "%d %B в %H:%M" )}',
-        '<СПИСОК УСЛУГ>': '#{appointment.services.order(:name).pluck(:name).join(', ')}',
-        '<СТОИМОСТЬ>': appointment.cost,
-        '<ПРОДОЛЖИТЕЛЬНОСТЬ>': '#{appointment.showing_time.show_time}',
-        '<МАСТЕР>': '#{appointment.worker.name}',
-        '<ДМАСТЕР>': '#{appointment.worker.dative_case}',
-        '<ТЕЛЕФОН МАСТЕРА>': '#{appointment.worker.phone}'
-      };
-      $('#template_help').html('<br/>');
-      $.each( template, function(key,value){
-        $("#template_help").append("<div>"+key+": "+value+"</div>");
-      });
-      $('#organization_user_notify_text').keyup(function(){
-        var text = $(this).val();
-        $.each(template, function(key, value){
-          text = text.replace(key, value);
-        });
-        $('#template_example').html(text);
-      });
-    });
-
 = f.input :index_header, :as => :text
+
+= render 'organizations/user_notify_text', form: f
 
 %h3 Шаг календаря
 = f.collection_radio_buttons :slot_minutes, [[5,'5 минут'],[10,'10 минут'],[15,'15 минут'],[20,'20 минут'],[30,'пол часа'],[60,'час']], :first, :last

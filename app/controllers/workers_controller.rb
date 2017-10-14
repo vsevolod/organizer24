@@ -56,6 +56,7 @@ class WorkersController < CompanyController
                                      :push_key,
                                      :finished_date,
                                      :sms_translit,
+                                     :user_notify_text,
                                      {
                                        service_ids: [],
                                        double_rates_attributes: [:id, :_destroy, :begin_time, :day, :end_time, :week_day, :begin_hour, :begin_minute, :end_hour, :end_minute, :rate],

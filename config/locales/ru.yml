@@ -203,6 +203,7 @@ ru:
         sms_translit: Показывать смс на английском
         finished_date: Последняя дата для записи
         user: Пользователь
+        user_notify_text: СМС уведомление пользователя
       working_day:
         date: Дата
         begin_time: Время начала

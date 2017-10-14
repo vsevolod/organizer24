@@ -1,4 +1,3 @@
-require 'themed_text'
 class SmsJob < ApplicationJob
   queue_as :default
 
@@ -18,7 +17,7 @@ class SmsJob < ApplicationJob
       notification.user = @appointment.user_by_phone
       notification.organization = @organization
       sms.recipient = @appointment.phone
-      sms.text = themed_text(:user_notify, @organization.user_notify_text, @appointment)
+      sms.text = ThemedTextService.user_notify(@appointment)
       case @organization.domain
       when 'depilate'
         sms.sender = 'depilate.ru'

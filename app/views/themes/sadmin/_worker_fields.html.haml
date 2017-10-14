@@ -7,9 +7,7 @@
   = f.input :dative_case
   = f.input :profession
   = f.input :phone
-  = f.input :sms_translit
   = f.input :photo, :as => :file
-  = f.input :push_key
   = f.input :finished_date
   %h3 Список сервисов
   #collections.controls
@@ -31,3 +29,7 @@
 
   %h3 Время по двойному тарифу
   = render 'workers/double_rate', f: f
+
+  = f.input :push_key
+  = f.input :sms_translit, as: :boolean
+  = render 'organizations/user_notify_text', form: f

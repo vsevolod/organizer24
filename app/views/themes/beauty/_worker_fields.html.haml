@@ -9,8 +9,6 @@
     = f.input :profession
     = f.input :phone
     = f.input :photo, :as => :file
-    = f.input :push_key
-    = f.input :sms_translit
     = f.input :finished_date, as: :string
     - unless f.object.new_record?
       %h1
@@ -34,3 +32,7 @@
             = check_box_tag "worker[service_ids][]", service.id, f.object.services.include?( service )
             = service.name
             (#{service.showing_time}мин., #{service.cost} руб.)
+
+  = f.input :push_key
+  = f.input :sms_translit, as: :boolean
+  = render 'organizations/user_notify_text', form: f

@@ -3,6 +3,7 @@ FactoryGirl.define do
     start Time.current + Random.new.rand(1..10).hours
     status 'free'
     cost 100
+    showing_time 30
     user
 
     after(:build) do |appointment|
@@ -17,8 +18,11 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_worker do
+      worker
+    end
+
     trait :completed do
-      showing_time 30
       status :complete
     end
 
