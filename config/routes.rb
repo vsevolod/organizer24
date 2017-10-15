@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get '/', to: 'organizations#show'
 
     get '/dashboard', to: 'users#dashboard', as: 'dashboard'
+    get '/new_calendar' => 'organizations#new_calendar', as: :new_calendar
     get '/calendar' => 'organizations#calendar', :as => :calendar
     get '/edit' => 'organizations#edit', :as => :edit
     get '/modal' => 'organizations#modal', :as => :modal

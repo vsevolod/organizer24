@@ -34,3 +34,6 @@ public/assets
 
 #script/delayed_job
 app/assets/images/photo_depilate
+/public/packs
+/public/packs-test
+/node_modules

@@ -31,7 +31,6 @@ gem 'active_model_serializers'
 # gem 'torihiki', git: 'https://github.com/vforvova/simple_transaction'
 
 # Assets
-
 gem 'rails-assets-underscore'
 gem 'rails-assets-bootstrap'
 gem 'rails-assets-angular'
@@ -50,6 +49,8 @@ gem 'uglifier'
 gem 'jquery-fileupload-rails'
 gem 'compass-rails'
 gem 'sass-rails'
+
+gem 'webpacker', '~> 3.0'
 
 gem 'puma'
 
