@@ -10,7 +10,7 @@
     = content_for :bottom_js do
       :javascript
         $(function(){
-          var appointment = #{appointment.to_json};
+          var appointment = #{appointment.to_json.html_safe};
           var template = {
             '<ИМЯ>': appointment.firstname,
             '<ФАМИЛИЯ>': appointment.lastname,

@@ -34,7 +34,7 @@ module OrganizationsPresenters
     end
 
     def organization_services
-      @organization_services ||= @organization.get_services(@current_user.phone).to_json
+      @organization_services ||= @organization.get_services(@current_user.phone)
     end
 
     attr_reader :organization

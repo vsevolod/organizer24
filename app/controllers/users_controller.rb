@@ -18,9 +18,9 @@ class UsersController < CompanyController
   def check_phone
     @user = User.find_by(phone: params[:phone])
     if @user
-      render text: 'Exist'
+      render plain: 'Exist'
     else
-      render text: 'New Member'
+      render plain: 'New Member'
     end
   end
 

@@ -27,12 +27,12 @@ class WorkingDaysController < CompanyController
     else
       @working_day.destroy
     end
-    render text: 'Complete'
+    render plain: 'Complete'
   end
 
   def clear_all
     @worker.working_days.destroy_all
-    render text: "$('#worker_month_calendar').fullCalendar('refetchEvents')"
+    render plain: "$('#worker_month_calendar').fullCalendar('refetchEvents')"
   end
 
   private

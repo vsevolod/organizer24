@@ -37,7 +37,7 @@ class ServicesController < CompanyController
     @organization.services.where(id: params[:service]).each do |service|
       service.update_column :position, params[:service].index(service.id.to_s)
     end
-    render text: 'complete'
+    render plain: 'complete'
   end
 
   def destroy

@@ -1,14 +1,14 @@
 - content_for :js do
   = stylesheet_link_tag "fullcalendar.print", media: 'print'
   :javascript
-    var collections_services = #{@presenter.organization_services.as_json};
-    var start_calendar_options = #{@presenter.calendar_settings.to_json};
+    var collections_services = #{@presenter.organization_services.to_json.html_safe};
+    var start_calendar_options = #{@presenter.calendar_settings.to_json.html_safe};
 
 - content_for :bottom_js do
   = javascript_include_tag 'fc', 'calendar'
   - if @presenter.phonebook
     :javascript
-      var phonebook = #{@presenter.phonebook_to_json};
+      var phonebook = #{@presenter.phonebook_to_json.html_safe};
       $(function(){
         Organizer.add_calendar_autocomplete( phonebook );
       });
