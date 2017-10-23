@@ -115,13 +115,13 @@ class AppointmentsController < CompanyController
       @appointment.start = Time.parse(params[:start]) - @organization.zone_offset.seconds
     end
     if @appointment.save
-      render plain: <<-JS
+      render js: <<-JS
         Organizer.draggable_item = null;
         Organizer.calendar_draggable = false;
         #{refresh_calendar}
       JS
     else
-      render plain: "alert('Произошла ошибка: #{@appointment.errors.full_messages.join(', ')}');Organizer.removeOtherElements();"
+      render js: "alert('Произошла ошибка: #{@appointment.errors.full_messages.join(', ')}');Organizer.removeOtherElements();"
     end
   end
 
@@ -163,7 +163,7 @@ class AppointmentsController < CompanyController
     else
       respond_to do |format|
         format.html { render plain: 'У вас не хватает прав' }
-        format.js   { render plain: "alert('Не хватает прав')" }
+        format.js   { render js: "alert('Не хватает прав')" }
       end
     end
   end
