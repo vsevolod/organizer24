@@ -21,7 +21,8 @@ class Organization < ApplicationRecord
     :show_photogallery,     # Показывать фотогалерею
     :timezone,              # Зона (TODO need to deprecate)
     :user_notify_text,      # Текст смс уведомления
-    :index_header           # Заголовок на главной
+    :index_header,          # Заголовок на главной
+    :api_token              # API токен
   ].freeze
 
   # Deprecated

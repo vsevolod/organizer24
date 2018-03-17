@@ -8,3 +8,15 @@
 // layout file, like app/views/layouts/application.html.erb
 
 console.log('Hello World from Webpacker!')
+
+import 'babel-polyfill'
+import Vue from 'vue'
+import App from 'containers/App.vue'
+
+axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+
+new Vue({
+  el: '#app',
+  store,
+  render: h => h(App)
+})

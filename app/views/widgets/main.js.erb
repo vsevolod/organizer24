@@ -1,0 +1,21 @@
+(function (win, params, namespace, undefined) {
+  'use strict';
+  let console = win.console,
+    doc = win.document,
+    nav = win.navigator;
+
+  var urls = {
+    "script": "<%= widget_url('default', format: :js) -%>",
+    "resource": "<%= widget_url('default') -%>"
+  }
+
+  <%= render 'widgets/scripts/utils' %>
+  <%= render 'widgets/scripts/elements' %>
+  <%= render 'widgets/scripts/widget' %>
+  <%= render 'widgets/scripts/storage' %>
+  <%= render 'widgets/scripts/init' %>
+})(
+  this,
+  {"widgetId":"<%=@widget_id-%>"},
+  this.worganizer = this.worganizer || {}
+);

@@ -22,6 +22,13 @@ Rails.application.routes.draw do
     end
 
     get '/', to: 'organizations#show'
+    get '/test', to: 'organizations#test'
+
+    resources :widgets, only: 'show' do
+      collection do
+        get :main
+      end
+    end
 
     get '/dashboard', to: 'users#dashboard', as: 'dashboard'
     get '/new_calendar' => 'organizations#new_calendar', as: :new_calendar
