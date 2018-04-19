@@ -13,7 +13,7 @@ class Smsru
     @recipient ||= notification.organization ? notification.organization.sms_ru.try(:phone)  : get_options['phone']
     @sender    ||= notification.organization ? notification.organization.sms_ru.try(:sender) : get_options['sender']
     @api_id      = notification.organization ? notification.organization.sms_ru.try(:api_id) : get_options['api_id']
-    @translit    = notification.worker ? (notification.worker.sms_translit ? '1' : '0') : (notification.organization && notification.organization.sms_ru.try(:translit) ? '1' : '0')
+    @translit    = notification.worker ? notification.worker.sms_translit : (notification.organization && notification.organization.sms_ru.try(:translit) ? '1' : '0')
   end
 
   # with api_id
