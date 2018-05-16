@@ -25,6 +25,14 @@ module AppointmentsPresenters
                         end.where('date(start) >= ? AND date(start) < ?', @start, @end)
     end
 
+    def notifications
+      @notifications ||= Notification.where(appointment_id: appointments.map(&:id)).inject({}) do |h, n|
+        h[n.appointment_id] ||= n
+        h[n.appointment_id] = n if h[n.appointment_id].created_at < n.created_at
+        h
+      end
+    end
+
     def render_periods
       @periods = appointments.includes(:services).map do |appointment|
         editable = is_owner? || (appointment.phone == @current_user.phone && appointment.starting_state?) # FIXME: заменить после на appointment.user == @current_user
@@ -39,7 +47,7 @@ module AppointmentsPresenters
                     editable: false,
                     splitted: false,
                     is_owner: is_owner?,
-                    notification: appointment.notifications.order('updated_at DESC').first_or_initialize.status,
+                    notification: notifications[appointment.id].try(:status) || 'start',
                     'data-cost' => appointment.cost,
                     'data-inner-class' => 'legend-taken',
                     'data-showing-time' => appointment.showing_time,
@@ -87,11 +95,15 @@ module AppointmentsPresenters
       services = @user_services[appointment.phone] || add_to_user_services(appointment.phone)
       services_users = services.find_all { |arr| (arr.first & appointment.service_ids).any? }
       services_users.map do |ids, cost, showing_time|
-        service = Service.find(ids.first)
+        service = worker_services.find{|s| s.id == ids.first }.dup
         service.cost = cost
         service.showing_time = showing_time
         service
       end
+    end
+
+    def worker_services
+      @worker.services
     end
   end
 end
