@@ -13,6 +13,17 @@ module Operations
         Time.zone = @organization.timezone
         @except_ids << worker.id
 
+        if sidekiq_count > Worker.count * 2
+          SmsJob.perform_later(
+            {
+              text: "ERRORS: #{sidekiq_count}; IDS: #{except_ids}, wcount: #{workers.count}",
+              phone: '+79131991854'
+            },
+            'simple_notify'
+          )
+          return
+        end
+
         enqueue
 
         send
@@ -85,6 +96,10 @@ module Operations
 
       def today
         Time.current.at_beginning_of_day
+      end
+
+      def sidekiq_count
+        @sidekiq_count ||= Sidekiq::ScheduledSet.new.count{|s| s.args.first['arguments'].last == 'day_report' }
       end
     end
   end
